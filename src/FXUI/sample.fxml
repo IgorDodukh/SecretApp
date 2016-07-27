@@ -22,11 +22,11 @@
 
 <AnchorPane fx:id="allApp" cache="true" nodeOrientation="LEFT_TO_RIGHT" prefHeight="300.0" prefWidth="235.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXUI.Controller">
    <children>
-      <Pane layoutY="190.0" prefHeight="20.0" prefWidth="570.0" style="-fx-background-color: #2A434D;">
+      <Pane layoutY="190.0" prefHeight="20.0" prefWidth="570.0" style="-fx-background-color: #234974;">
          <children>
             <ProgressBar layoutY="-1.0" prefHeight="23.0" prefWidth="570.0" progress="1.0" style="-fx-border-width: 0;" visible="false" />
          </children></Pane>
-      <Pane layoutY="404.0" prefHeight="57.0" prefWidth="570.0" style="-fx-background-color: #2A434D;">
+      <Pane layoutY="404.0" prefHeight="57.0" prefWidth="570.0" style="-fx-background-color: #234974;">
          <children>
             <Label fx:id="waitingLabel" layoutX="311.0" layoutY="13.0" prefHeight="32.0" prefWidth="173.0" text="Test is running..." textFill="WHITE" visible="false">
                <font>
@@ -45,17 +45,17 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label prefHeight="32.0" prefWidth="173.0" text="Select Browser" textFill="#4986a1">
+            <Label prefHeight="32.0" prefWidth="173.0" text="Select Browser" textFill="#2d6ca2">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Label text="Select Test Type" textFill="#4986a1" GridPane.rowIndex="1">
+            <Label text="Select Test Type" textFill="#2d6ca2" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Label text="Select Environment" textFill="#4986a1" GridPane.rowIndex="2">
+            <Label text="Select Environment" textFill="#2d6ca2" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -87,17 +87,17 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="loginLabel" text="Login:" textFill="#4986a1">
+            <Label fx:id="loginLabel" text="Login:" textFill="#2d6ca2">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Label fx:id="passwordLabel" text="Password:" textFill="#4986a1" GridPane.rowIndex="2">
+            <Label fx:id="passwordLabel" text="Password:" textFill="#2d6ca2" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Button fx:id="startButton" mnemonicParsing="false" onAction="#clickStartButton" prefHeight="25.0" prefWidth="105.0" style="-fx-text-fill: white;" stylesheets="file:/C:/appFiles/buttons.css" text="Start" GridPane.rowIndex="4">
+            <Button fx:id="startButton" mnemonicParsing="false" onAction="#clickStartButton" prefHeight="25.0" prefWidth="105.0" style="-fx-text-fill: white;" stylesheets="file:/C:/appFiles/startButton.css" text="Start" GridPane.rowIndex="4">
                <font>
                   <Font name="Segoe UI Bold" size="16.0" />
                </font>
@@ -105,7 +105,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="stopButton" disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" style="-fx-text-fill: white;" stylesheets="file:/C:/appFiles/buttons.css" text="Stop" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <Button fx:id="stopButton" disable="true" mnemonicParsing="false" onAction="#clickStopButton" prefHeight="25.0" prefWidth="105.0" style="-fx-text-fill: white;" stylesheets="file:/C:/appFiles/stopButton.css" text="Stop" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <font>
                   <Font name="Segoe UI Bold" size="16.0" />
                </font>
@@ -115,12 +115,12 @@
             </Button>
          </children>
       </GridPane>
-      <PasswordField fx:id="passwordField" layoutX="310.0" layoutY="321.0" prefHeight="25.0" prefWidth="227.0">
+      <PasswordField fx:id="passwordField" layoutX="310.0" layoutY="321.0" prefHeight="30.0" prefWidth="227.0">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor>
       </PasswordField>
-      <TextField fx:id="loginField" layoutX="310.0" layoutY="251.0" prefHeight="33.0" prefWidth="227.0">
+      <TextField fx:id="loginField" layoutX="310.0" layoutY="251.0" prefHeight="30.0" prefWidth="227.0">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor>
@@ -130,7 +130,7 @@
             <Image url="file:/C:/appFiles/pic/fslogo.png" />
          </image>
       </ImageView>
-      <Pane prefHeight="31.0" prefWidth="570.0" style="-fx-background-color: #2A434D; -fx-text-fill: white;" styleClass="menuStyle.css">
+      <Pane prefHeight="31.0" prefWidth="570.0" style="-fx-background-color: #234974; -fx-text-fill: white;" styleClass="menuStyle.css">
          <children>
             <MenuBar id="menuBar" layoutY="-2.0" prefHeight="32.0" prefWidth="527.0" stylesheets="file:/C:/appFiles/MainStyle.css" visible="false">
               <menus>

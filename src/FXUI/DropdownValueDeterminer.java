@@ -18,7 +18,7 @@ public class DropdownValueDeterminer {
 
 
     public void entityTypeDropdown(int entityTypeComboBoxIndex, String login, String password, String testCardNumber, WebDriver driver) throws InterruptedException {
-        Controller.resultMessage += "Oh boy, you are lucky.\n" + "Test has been finished.\n";
+        Controller.resultMessage += "Test has been finished.\n";
         if (entityTypeComboBoxIndex == 0) {
             BrowserSettings.progressVariable = 3;
             configureMerchant.setupNewMerchant(login, password, driver);

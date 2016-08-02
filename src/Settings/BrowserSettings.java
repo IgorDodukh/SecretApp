@@ -104,8 +104,8 @@ public class BrowserSettings {
     protected static String inventoryNotes = "My Notes " + generateRandomData.generateRandomString(10);
 
 //    Authorize credentials
-    public static String authApiLoginId = "3y8Z2fk5Z3n";
-    public static String authTransactionKey = "2s25qyDYe249uTRx";
+    public static String authApiLoginId = "";
+    public static String authTransactionKey = "";
 
 //    UPS credentials
     protected static String upsUserName = "Dev.api@dydacomp";
@@ -152,7 +152,7 @@ public class BrowserSettings {
     public void tearDown(WebDriver driver) {
         System.out.println("Close WebDriver");
         totalResultMessage += "Close WebDriver";
-        driver.close();
+        driver.quit();
     }
 
 }

@@ -12,13 +12,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.io.File;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 public class Controller extends Main {
-
-//    private final ImageIcon luckyIcon = new ImageIcon("C:\\appFiles\\pic\\smile2.png");
-
     public WebDriver driver;
 
     private Exception exceptionValue;
@@ -29,7 +25,11 @@ public class Controller extends Main {
     public static String magentoIndexName = "";
     public static int addProgressValue = 0;
     private boolean exceptionStatus = false;
-    private String testCardNumber = "";
+    public static String testCardNumber = "";
+
+    public static String browserComboBoxValue = "";
+    public static String entityComboBoxValue = "";
+    public static String environmentComboBoxValue = "";
 
     private TestStatus testStatus = new TestStatus();
     private BrowserSettings browserSettings = new BrowserSettings();
@@ -99,29 +99,19 @@ public class Controller extends Main {
         entityTypeComboBoxIndex = entityTypeComboBox.getSelectionModel().getSelectedIndex();
 
         if (loginFilled && passFilled){
-            String infoMessage = "";
-            infoMessage += "Selected Browser: " + browsersComboBox.getSelectionModel().getSelectedItem() + "\n";
-            infoMessage += "Selected Test: " + entityTypeComboBox.getSelectionModel().getSelectedItem() + "\n";
-            infoMessage += "Selected Environment: " + environmentsComboBox.getSelectionModel().getSelectedItem() + "\n\n";
-            infoMessage += "Performing the test will take some time. Please wait!\nMake a cup of tea or hug somebody. He (or she) will be happy :)\n\n";
+            browserComboBoxValue = browsersComboBox.getSelectionModel().getSelectedItem();
+            entityComboBoxValue = entityTypeComboBox.getSelectionModel().getSelectedItem();
+            environmentComboBoxValue = environmentsComboBox.getSelectionModel().getSelectedItem();
 
-            Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-            confirmationAlert.setTitle("Lucky Confirmation Dialog");
-            confirmationAlert.setHeaderText("Test is starting now.");
-            confirmationAlert.setContentText(infoMessage);
+            if (entityTypeComboBoxIndex == 0) {
+                GeneratePopupBox.indentifyPopupBox();
+            } else if (entityTypeComboBoxIndex == 5) {
+                GeneratePopupBox.magentoPopupBox();
+            } else if (entityTypeComboBoxIndex == 1) {
+                GeneratePopupBox.creditCardsPopupBox();
+            } else GeneratePopupBox.confirmationPopupBox();
 
-            try {
-                File f = new File("C:/appFiles/confirmationDialog.css");
-                DialogPane dialogPane = confirmationAlert.getDialogPane();
-                dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
-                dialogPane.getStyleClass().add("myDialog");
-            } catch (Exception e){
-                System.out.println(e.getClass().toString() + "\n" +  e.getLocalizedMessage());
-            }
-
-            Optional<ButtonType> response = confirmationAlert.showAndWait();
-
-            if (response.get() == ButtonType.OK) {
+            if (GeneratePopupBox.confirmationResponse.get() == ButtonType.OK) {
                 final String[] driverWarning = {""};
                 final String[] driverExceptionMessage = {""};
 
@@ -137,19 +127,17 @@ public class Controller extends Main {
                 task.setOnSucceeded(e -> {
                     waitingLabel.textProperty().unbind();
                     // this message will be seen.
-                    waitingLabel.setText("Test is running... " + String.valueOf(addProgressValue) + "%");
+                    waitingLabel.setText("Test is running... " /*+ String.valueOf(addProgressValue) + "%"*/);
                 });
 
                 Thread thread = new Thread(task);
                 thread.setDaemon(true);
                 thread.start();
 
-                testStatus.startTest(startButton, stopButton, waitingLabel, waitingAnimation);
-                System.out.println("Test Started");
-
                 ExecutionTimeCounter.startCounter();
 
                 Runnable runnable = () -> {
+                    startButton.setDisable(true);
                     try {
                         if (browserComboBoxIndex == 0) {
                             driverWarning[0] += "Chrome";
@@ -163,26 +151,28 @@ public class Controller extends Main {
                     } catch (Exception e1) {
                         exceptionStatus = true;
                         testStatus.stopTest(startButton, stopButton, waitingLabel, waitingAnimation);
-//                    if (!Objects.equals(e1.getClass().getSimpleName(), "SessionNotCreatedException")){
-//                        driverExceptionMessage[0] += " session has been stopped unexpectedly.";
-//                    } else if (!Objects.equals(e1.getClass().getSimpleName(), "IllegalStateException")){
-//                        driverExceptionMessage[0] += " WebDriver was not found";
-//                    } else {
-//                        driverExceptionMessage[0] += " browser has been stopped unexpectedly.";
-//                    }
-//                        Alert exceptionAlert = new Alert(Alert.AlertType.INFORMATION);
-//                        exceptionAlert.setTitle("Test Failed. Running time: " + ExecutionTimeCounter.executionTime);
-//                        exceptionAlert.setHeaderText("Test was failed because of some unexpectedly reasons.");
-//                        exceptionAlert.setContentText(driverWarning[0] + driverExceptionMessage[0]);
-//                        try {
-//                            File f = new File("C:/appFiles/exceptionDialog.css");
-//                            DialogPane dialogPane = exceptionAlert.getDialogPane();
-//                            dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
-//                            dialogPane.getStyleClass().add("myDialog");
-//                        } catch (Exception e){
-//                            System.out.println(e.getClass().toString() + "\n" +  e.getLocalizedMessage());
-//                        }
+                    if (!Objects.equals(e1.getClass().getSimpleName(), "SessionNotCreatedException")){
+                        driverExceptionMessage[0] += " session has been stopped unexpectedly.";
+                    } else if (!Objects.equals(e1.getClass().getSimpleName(), "IllegalStateException")){
+                        driverExceptionMessage[0] += " WebDriver was not found";
+                    } else {
+                        driverExceptionMessage[0] += " browser has been stopped unexpectedly.";
                     }
+                        Alert exceptionAlert = new Alert(Alert.AlertType.INFORMATION);
+                        exceptionAlert.setTitle("Test Failed. Running time: " + ExecutionTimeCounter.executionTime);
+                        exceptionAlert.setHeaderText("Test was failed because of some unexpectedly reasons.");
+                        exceptionAlert.setContentText(driverWarning[0] + driverExceptionMessage[0]);
+                        try {
+                            File f = new File("C:/appFiles/exceptionDialog.css");
+                            DialogPane dialogPane = exceptionAlert.getDialogPane();
+                            dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
+                            dialogPane.getStyleClass().add("myDialog");
+                        } catch (Exception e){
+                            System.out.println(e.getClass().toString() + "\n" +  e.getLocalizedMessage());
+                        }
+                    }
+                    testStatus.startTest(startButton, stopButton, waitingLabel, waitingAnimation);
+                    System.out.println("Test Started");
                     browserSettings.setUp(environmentComboBoxIndex, browserComboBoxIndex, driver);
                     try {
                         dropdownValueDeterminer.entityTypeDropdown(entityTypeComboBoxIndex, login, password, testCardNumber, driver);
@@ -208,18 +198,21 @@ public class Controller extends Main {
                 };
                 Thread thread1 = new Thread(runnable);
                 thread1.start();
-            }else if (response.get() == ButtonType.CANCEL || response.get() == ButtonType.CLOSE) {
+            }else if (GeneratePopupBox.confirmationResponse.get() == ButtonType.CANCEL || GeneratePopupBox.confirmationResponse.get() == ButtonType.CLOSE) {
                 System.out.println("No/Close button");}
         }
     }
 
     public void clickStopButton() {
         testStatus.stopTest(startButton, stopButton, waitingLabel, waitingAnimation);
-
-        try {
-            driver.close();
-        } catch (Exception e){
+        Runnable runnable2 = () -> {
+            try {
+                driver.close();
+            } catch (Exception e) {
                 System.out.println(e.getCause().toString());
-        }
+            }
+        };
+        Thread thread2 = new Thread(runnable2);
+        thread2.start();
     }
 }

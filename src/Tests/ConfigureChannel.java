@@ -24,7 +24,7 @@ public class ConfigureChannel extends BrowserSettings {
 
         MagentoAdminPanel magentoAdminPanel = new MagentoAdminPanel(driver);
         magentoAdminPanel.adminPanelLogin();
-        magentoAdminPanel.openSettingsPage();
+//        magentoAdminPanel.openSettingsPage();
         magentoAdminPanel.configureAdvancedExportSettings(email, merchantPassword);
         magentoAdminPanel.saveMagentoConfig();
         magentoAdminPanel.addFSChannelID();

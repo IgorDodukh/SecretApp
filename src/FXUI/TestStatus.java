@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
  */
 public class TestStatus {
 
+
     public void startTest(Button startButton, Button stopButton, Label waitingLabel, ImageView waitingAnimation/*, ProgressBar progressBar*/) {
         startButton.setDisable(true);
         stopButton.setDisable(false);
@@ -17,6 +18,7 @@ public class TestStatus {
 //        progressBar.setVisible(true);
         Controller.addProgressValue = 0;
         Controller.resultMessage = "";
+
     }
 
     public void stopTest(Button startButton, Button stopButton, Label waitingLabel, ImageView waitingAnimation/*, ProgressBar progressBar*/) {

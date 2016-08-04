@@ -56,7 +56,7 @@ public class DropdownValueDeterminer {
             BrowserSettings.progressVariable = 4;
             configureChannel.configureMagentoChannel(login, password, driver);
             Controller.resultMessage += "\nMagento "+ Controller.magentoIndexName;
-            Controller.resultMessage += "\nhas been synced with " /*+ Controller.environmentsComboBox.getSelectionModel().getSelectedItem()*/;
+            Controller.resultMessage += " has been synced with " + Controller.environmentComboBoxValue;
         }
     }
 }

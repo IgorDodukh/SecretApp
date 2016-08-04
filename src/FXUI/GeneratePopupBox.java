@@ -49,6 +49,7 @@ public class GeneratePopupBox {
 
 // Create expandable Exception.
             StringWriter sw = new StringWriter();
+            sw.flush();
             PrintWriter pw = new PrintWriter(sw);
             exception.printStackTrace(pw);
             String exceptionText = sw.toString();
@@ -94,7 +95,7 @@ public class GeneratePopupBox {
             successDialog.setContentText(resultMessage);
 
             try {
-                File f = new File("C:/appFiles/successDialog.css");
+                File f = new File("C:/appFiles/DialogBoxes.css");
                 DialogPane dialogPane = successDialog.getDialogPane();
                 dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
                 dialogPane.getStyleClass().add("myDialog");

@@ -6,8 +6,9 @@ import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
@@ -208,6 +209,7 @@ public class Controller extends Main {
         Runnable runnable2 = () -> {
             try {
                 driver.close();
+                throw new Exception("'Stop' button clicked");
             } catch (Exception e) {
                 System.out.println(e.getCause().toString());
             }

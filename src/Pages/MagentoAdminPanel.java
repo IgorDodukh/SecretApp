@@ -4,10 +4,7 @@ import FXUI.Controller;
 import FXUI.ProgressBar;
 import Settings.BrowserSettings;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -31,6 +28,7 @@ public class MagentoAdminPanel extends BrowserSettings {
     private By magentoPopupBoxCloseButtonLocator = By.xpath("//div[@id='message-popup-window']//a/span");
 
     private By magentoConfigSaveButtonLocator = By.xpath("//div[@class='main-col-inner']//button[@class='scalable save']");
+    private By magentoConfigSaveSecondButtonLocator = By.xpath("//div[3]/div/table/tbody/tr/td[2]/button");
 
     private By magentoConfigUsernameFieldLocator = By.xpath("//input[@id='freestyle_advancedexport_api_api_username']");
     private By magentoConfigPassFieldLocator = By.xpath("//input[@id='freestyle_advancedexport_api_api_password']");
@@ -49,74 +47,75 @@ public class MagentoAdminPanel extends BrowserSettings {
         wait.until(ExpectedConditions.elementToBeClickable(magentoLoginFieldLocator));
         ProgressBar.addProgressValue(progressVariable);
 
+        totalResultMessage += "Fill Magento credentials\n";
         driver.findElement(magentoLoginFieldLocator).sendKeys(magentoLogin);
         driver.findElement(magentoPasswordFieldLocator).sendKeys(magentoPassword);
         driver.findElement(magentoLoginButtonLocator).click();
         ProgressBar.addProgressValue(progressVariable);
 
         try{
-            final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Login page was not loaded");
+            final Wait<WebDriver> wait2 = new WebDriverWait(driver, 2).withMessage("Popup message was not found");
             wait2.until(ExpectedConditions.visibilityOfElementLocated(magentoPopupBoxLocator));
             driver.findElement(magentoPopupBoxCloseButtonLocator).click();
-        }catch (NoSuchElementException e){
+        }catch (Exception e){
             System.out.println("Popup was not found");
         }
         ProgressBar.addProgressValue(progressVariable);
     }
 
     public void openSettingsPage() {
-        totalResultMessage += "Open Magento settings page\n";
-        String systemMenuItem;
-        int systemItem = 0;
-
-        totalResultMessage += "Click 'System' menu item\n";
-        for (int i = 1; i <= 50; i++){
-            By magentoMenuBarSystemButtonLocator = By.xpath("//div[@class='nav-bar']/ul/li[" + i + "]/a");
-            systemMenuItem = driver.findElement(magentoMenuBarSystemButtonLocator).getText();
-            if (Objects.equals(systemMenuItem, "System")) {
-                driver.findElement(magentoMenuBarSystemButtonLocator).click();
-                systemItem = i;
-                break;
-            }
-        }
-        ProgressBar.addProgressValue(progressVariable);
-
-        String configurationMenuItem;
-        totalResultMessage += "Click 'Configuration' menu item\n";
-
-        for (int i = 1; i <= 50; i++){
-            By magentoMenuBarConfigButtonLocator = By.xpath("//div[@class='nav-bar']/ul/li[" + systemItem + "]/ul/li[" + i + "]");
-            configurationMenuItem = driver.findElement(magentoMenuBarConfigButtonLocator).getText();
-            if (Objects.equals(configurationMenuItem, "Configuration")) {
-                Actions action = new Actions(driver);
-                WebElement ele = driver.findElement(magentoMenuBarConfigButtonLocator);
-                action.moveToElement(ele).build().perform();
-                driver.findElement(magentoMenuBarConfigButtonLocator).click();
-                break;
-            }
-        }
-        try {
-            final Wait<WebDriver> wait = new WebDriverWait(driver, 2).withMessage("Config page was not loaded");
-            wait.until(ExpectedConditions.elementToBeClickable(magentoLoginButtonLocator));
-            driver.findElement(magentoLoginFieldLocator).sendKeys(magentoLogin);
-            driver.findElement(magentoPasswordFieldLocator).sendKeys(magentoPassword);
-            driver.findElement(magentoLoginButtonLocator).click();
-
-        } catch (NoSuchElementException e) {
-            System.out.println("00");
-        }
-        try{
-            final Wait<WebDriver> wait2 = new WebDriverWait(driver, 2).withMessage("Login page was not loaded");
-            wait2.until(ExpectedConditions.visibilityOfElementLocated(magentoPopupBoxLocator));
-            driver.findElement(magentoPopupBoxCloseButtonLocator).click();
-        }catch (NoSuchElementException e){
-            System.out.println("Popup was not found");
-        }
-        ProgressBar.addProgressValue(progressVariable);
-
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Config page was not loaded");
-        wait.until(ExpectedConditions.elementToBeClickable(magentoConfigSaveButtonLocator));
-
+//        totalResultMessage += "Open Magento settings page\n";
+//        String systemMenuItem;
+//        int systemItem = 0;
+//
+//        totalResultMessage += "Click 'System' menu item\n";
+//        for (int i = 1; i <= 50; i++){
+//            By magentoMenuBarSystemButtonLocator = By.xpath("//div[@class='nav-bar']/ul/li[" + i + "]/a");
+//            systemMenuItem = driver.findElement(magentoMenuBarSystemButtonLocator).getText();
+//            if (Objects.equals(systemMenuItem, "System")) {
+//                Actions action = new Actions(driver);
+//                WebElement ele = driver.findElement(magentoMenuBarSystemButtonLocator);
+//                action.moveToElement(ele).build().perform();
+//                driver.findElement(magentoMenuBarSystemButtonLocator).click();
+//                systemItem = i;
+//                break;
+//            }
+//        }
+//        ProgressBar.addProgressValue(progressVariable);
+//
+//        String configurationMenuItem;
+//        totalResultMessage += "Click 'Configuration' menu item\n";
+//
+//        for (int i = 1; i <= 50; i++){
+//            By magentoMenuBarConfigButtonLocator = By.xpath("//div[@class='nav-bar']/ul/li[" + systemItem + "]/ul/li[" + i + "]");
+//            configurationMenuItem = driver.findElement(magentoMenuBarConfigButtonLocator).getText();
+//            if (Objects.equals(configurationMenuItem, "Configuration")) {
+////                Actions action = new Actions(driver);
+////                WebElement ele = driver.findElement(magentoMenuBarConfigButtonLocator);
+////                action.moveToElement(ele).build().perform();
+//                driver.findElement(magentoMenuBarConfigButtonLocator).click();
+//                break;
+//            }
+//        }
+//        try {
+//            final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Config page was not loaded");
+//            wait.until(ExpectedConditions.elementToBeClickable(magentoConfigSaveButtonLocator));
+//        } catch (NoSuchElementException e) {
+//            final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Config page was not loaded");
+//            wait.until(ExpectedConditions.elementToBeClickable(magentoLoginButtonLocator));
+//            driver.findElement(magentoLoginFieldLocator).sendKeys(magentoLogin);
+//            driver.findElement(magentoPasswordFieldLocator).sendKeys(magentoPassword);
+//            driver.findElement(magentoLoginButtonLocator).click();
+//            try{
+//                final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Login page was not loaded");
+//                wait2.until(ExpectedConditions.visibilityOfElementLocated(magentoPopupBoxLocator));
+//                driver.findElement(magentoPopupBoxCloseButtonLocator).click();
+//            }catch (NoSuchElementException e1){
+//                System.out.println("Popup was not found");
+//            }
+//        }
+//
+//        ProgressBar.addProgressValue(progressVariable);
 
         String advancedExportMenuItem;
         totalResultMessage += "Open Advanced Export settings page\n";
@@ -140,7 +139,6 @@ public class MagentoAdminPanel extends BrowserSettings {
         String magentoAutenticationURL = magentoFSLink + "api/api/authentication";
         String magentoNotificationURL = magentoFSLink + "api/api/notification";
         String magentoQueueServiceURL = magentoFSLink + "api/Magento/CreateEntities";
-
 
         totalResultMessage += "Fill 'Username' field\n";
         driver.findElement(magentoConfigUsernameFieldLocator).clear();
@@ -170,10 +168,13 @@ public class MagentoAdminPanel extends BrowserSettings {
 
     public void saveMagentoConfig() {
         totalResultMessage += "Click 'Save Config' button\n";
-        driver.findElement(magentoConfigSaveButtonLocator).click();
+        try {
+            driver.findElement(magentoConfigSaveButtonLocator).click();
+        }catch (Exception e){
+            driver.findElement(magentoConfigSaveSecondButtonLocator).click();
+        }
+//        driver.findElement(magentoConfigSaveButtonLocator).click();
 
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Config page was not loaded");
-        wait.until(ExpectedConditions.elementToBeClickable(magentoConfigSaveButtonLocator));
         ProgressBar.addProgressValue(progressVariable);
     }
 
@@ -202,7 +203,7 @@ public class MagentoAdminPanel extends BrowserSettings {
 
         totalResultMessage += "Save new Channel ID\n";
         driver.findElement(magentoConfigSaveButtonLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Config page was not loaded");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Save button was not found");
         wait.until(ExpectedConditions.elementToBeClickable(magentoConfigSaveButtonLocator));
         ProgressBar.addProgressValue(progressVariable);
     }

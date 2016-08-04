@@ -27,17 +27,17 @@ public class BrowserSettings {
                     "https://my.freestylecommerce.com/web"));
 
     public static ArrayList<String> magentoEnvironment = new ArrayList<String>(
-            Arrays.asList("https://linux.mailordercentral.com/qatestlab01/index.php/admin/dashboard/",
-                    "https://linux.mailordercentral.com/qatestlab02/index.php/admin/dashboard/",
-                    "https://linux.mailordercentral.com/qatestlab03/index.php/admin/dashboard/",
-                    "https://linux.mailordercentral.com/qatestlab04/index.php/admin/dashboard/",
-                    "https://linux.mailordercentral.com/qatestlab05/index.php/admin/dashboard/",
-                    "https://linux.mailordercentral.com/qatestlab06/index.php/admin/dashboard/",
-                    "https://linux.mailordercentral.com/qatestlab07/index.php/admin/dashboard/",
-                    "https://linux.mailordercentral.com/qatestlab08/index.php/admin/dashboard/",
-                    "https://linux.mailordercentral.com/qatestlab09/index.php/admin/dashboard/",
-                    "https://linux.mailordercentral.com/qatestlab10/index.php/admin/dashboard/",
-                    "https://linux.mailordercentral.com/hercules/index.php/admin/dashboard/"));
+            Arrays.asList("https://linux.mailordercentral.com/qatestlab01/index.php/admin/system_config/edit/section/freestyle_advancedexport/",
+                    "https://linux.mailordercentral.com/qatestlab02/index.php/admin/system_config/edit/section/freestyle_advancedexport/",
+                    "https://linux.mailordercentral.com/qatestlab03/index.php/admin/system_config/edit/section/freestyle_advancedexport/",
+                    "https://linux.mailordercentral.com/qatestlab04/index.php/admin/system_config/edit/section/freestyle_advancedexport/",
+                    "https://linux.mailordercentral.com/qatestlab05/index.php/admin/system_config/edit/section/freestyle_advancedexport/",
+                    "https://linux.mailordercentral.com/qatestlab06/index.php/admin/system_config/edit/section/freestyle_advancedexport/",
+                    "https://linux.mailordercentral.com/qatestlab07/index.php/admin/system_config/edit/section/freestyle_advancedexport/",
+                    "https://linux.mailordercentral.com/qatestlab08/index.php/admin/system_config/edit/section/freestyle_advancedexport/",
+                    "https://linux.mailordercentral.com/qatestlab09/index.php/admin/system_config/edit/section/freestyle_advancedexport/",
+                    "https://linux.mailordercentral.com/qatestlab10/index.php/admin/system_config/edit/section/freestyle_advancedexport/",
+                    "https://linux.mailordercentral.com/hercules/index.php/admin/system_config/edit/section/freestyle_advancedexport/"));
 
 //    protected String userAlreadyLoggedMsg = "This user is already logged in. Do you want to log off the active session?";
 

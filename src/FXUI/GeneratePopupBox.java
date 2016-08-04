@@ -8,7 +8,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.util.Pair;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -18,8 +17,6 @@ import java.util.*;
  * Created by Ihor on 7/15/2016.
  */
 public class GeneratePopupBox {
-    private static final ImageIcon hmm = new ImageIcon("C:\\appFiles\\pic\\hmm.png");
-
     public static Optional<ButtonType> exceptionResponse;
     public static Optional<ButtonType> confirmationResponse = Optional.ofNullable(ButtonType.CANCEL);
     public static Optional<Pair<String, String>> authorizeResponse;
@@ -45,6 +42,7 @@ public class GeneratePopupBox {
         final String finalExceptionMessage = exceptionMessage;
         Platform.runLater(() -> {
             Alert exceptionDialog = new Alert(Alert.AlertType.INFORMATION);
+            exceptionDialog.getDialogPane().setId("exception-dialog");
             exceptionDialog.setTitle("Failed. " + ". Running time: " + ExecutionTimeCounter.executionTime);
             exceptionDialog.setHeaderText("You are not lucky enough today.");
             exceptionDialog.setContentText(finalExceptionMessage);
@@ -89,21 +87,22 @@ public class GeneratePopupBox {
 
     public static void successPopupBox(String resultMessage) {
         Platform.runLater(() -> {
-            Alert exceptionDialog = new Alert(Alert.AlertType.INFORMATION);
-            exceptionDialog.setTitle("Complete." + " Running time: " + ExecutionTimeCounter.executionTime);
-            exceptionDialog.setHeaderText("Oh boy, you are lucky.");
-            exceptionDialog.setContentText(resultMessage);
+            Alert successDialog = new Alert(Alert.AlertType.INFORMATION);
+            successDialog.getDialogPane().setId("success-dialog");
+            successDialog.setTitle("Complete." + " Running time: " + ExecutionTimeCounter.executionTime);
+            successDialog.setHeaderText("Oh boy, you are lucky.");
+            successDialog.setContentText(resultMessage);
 
             try {
                 File f = new File("C:/appFiles/successDialog.css");
-                DialogPane dialogPane = exceptionDialog.getDialogPane();
+                DialogPane dialogPane = successDialog.getDialogPane();
                 dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
                 dialogPane.getStyleClass().add("myDialog");
             } catch (Exception e){
                 System.out.println(e.getClass().toString() + "\n" +  e.getLocalizedMessage());
             }
 
-            exceptionDialog.showAndWait();
+            successDialog.showAndWait();
         });
     }
 
@@ -140,12 +139,13 @@ public class GeneratePopupBox {
         choices.add("Natasha");
 
         ChoiceDialog<String> identifyDialog = new ChoiceDialog<>("Igor", choices);
+        identifyDialog.getDialogPane().setId("indentify-dialog");
         identifyDialog.setTitle("Person identification");
-        identifyDialog.setHeaderText("Please select who are you:");
+        identifyDialog.setHeaderText("Please select who are you\nto identify Authorize.NET credentials");
         identifyDialog.setContentText("I'm ");
 
         try {
-            File f = new File("C:/appFiles/identifyDialog.css");
+            File f = new File("C:/appFiles/DialogBoxes.css");
             DialogPane dialogPane = identifyDialog.getDialogPane();
             dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
             dialogPane.getStyleClass().add("myDialog");
@@ -294,12 +294,13 @@ public class GeneratePopupBox {
         choices.add("American Express");
 
         ChoiceDialog<String> creditCardsDialog = new ChoiceDialog<>("Visa", choices);
+        creditCardsDialog.getDialogPane().setId("credit-cards-dialog");
         creditCardsDialog.setTitle("Select Credit Card type");
         creditCardsDialog.setHeaderText("Choose preferred Card type:");
         creditCardsDialog.setContentText("");
 
         try {
-            File f = new File("C:/appFiles/creditCardsDialog.css");
+            File f = new File("C:/appFiles/DialogBoxes.css");
             DialogPane dialogPane = creditCardsDialog.getDialogPane();
             dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
             dialogPane.getStyleClass().add("myDialog");
@@ -327,13 +328,35 @@ public class GeneratePopupBox {
         Collections.addAll(choices, magentos);
 
         ChoiceDialog<String> magentoDialog = new ChoiceDialog<>("qatestlab01", choices);
+        magentoDialog.getDialogPane().setId("magento-dialog");
         magentoDialog.setTitle("Select Magento Environment");
-        magentoDialog.setHeaderText("Select Magento which you\nwould like" +
-                " to sync with " + Controller.environmentComboBoxValue);
+        magentoDialog.setHeaderText("Select Magento which you\n" +
+                "would like to sync with " + Controller.environmentComboBoxValue);
         magentoDialog.setContentText("");
 
+//        final Hyperlink detailsButton = new Hyperlink();
+//        detailsButton.getStyleClass().setAll("details-button", "more"); //$NON-NLS-1$ //$NON-NLS-2$
+//        detailsButton.setText("moreText");
+//        ButtonBar buttonBar = new ButtonBar();
+//        buttonBar.getButtons().clear();
+//
+//        // show details button if expandable content is present
+//        ButtonBar.setButtonData(detailsButton, ButtonBar.ButtonData.HELP_2);
+//        buttonBar.getButtons().add(detailsButton);
+//        ButtonBar.setButtonUniformSize(detailsButton, false);
+//
+//        magentoDialog.getDialogPane().getButtonTypes().set(5, ButtonBar.setButtonUniformSize(buttonBar, true));
+//        ButtonType buttonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
+//        Button button = new Button();
+//        button.setText("THR");
+//
+//        magentoDialog.getDialogPane().getButtonTypes().addAll();
+//        magentoDialog.getDialogPane().getButtonTypes().addAll(buttonType);
+
+//        magentoDialog.getDialogPane().getButtonTypes().addAll(new ButtonType("Hey", ButtonBar.ButtonData.OK_DONE));
+//        magentoDialog.getDialogPane().lookupButton(new ButtonType("Hey", ButtonBar.ButtonData.OK_DONE)).lookup("#ok");
         try {
-            File f = new File("C:/appFiles/magentoDialog.css");
+            File f = new File("C:/appFiles/DialogBoxes.css");
             DialogPane dialogPane = magentoDialog.getDialogPane();
             dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
             dialogPane.getStyleClass().add("myDialog");
@@ -357,12 +380,13 @@ public class GeneratePopupBox {
         infoMessage += "Performing the test will take some time. Please wait!\nMake a cup of tea or hug somebody. He (or she) will be happy :)\n\n";
 
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.getDialogPane().setId("confirmation-dialog");
         confirmationAlert.setTitle("Lucky Confirmation Dialog");
         confirmationAlert.setHeaderText("Test is starting now.");
         confirmationAlert.setContentText(infoMessage);
 
         try {
-            File f = new File("C:/appFiles/confirmationDialog.css");
+            File f = new File("C:/appFiles/DialogBoxes.css");
             DialogPane dialogPane = confirmationAlert.getDialogPane();
             dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
             dialogPane.getStyleClass().add("myDialog");
@@ -372,4 +396,7 @@ public class GeneratePopupBox {
 
         confirmationResponse = confirmationAlert.showAndWait();
     }
+
+
+
 }

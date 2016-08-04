@@ -1,11 +1,13 @@
 package Pages;
 
 import FXUI.Controller;
-import Settings.BrowserSettings;
 import FXUI.ProgressBar;
+import Settings.BrowserSettings;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -86,21 +88,25 @@ public class MagentoAdminPanel extends BrowserSettings {
             By magentoMenuBarConfigButtonLocator = By.xpath("//div[@class='nav-bar']/ul/li[" + systemItem + "]/ul/li[" + i + "]");
             configurationMenuItem = driver.findElement(magentoMenuBarConfigButtonLocator).getText();
             if (Objects.equals(configurationMenuItem, "Configuration")) {
+                Actions action = new Actions(driver);
+                WebElement ele = driver.findElement(magentoMenuBarConfigButtonLocator);
+                action.moveToElement(ele).build().perform();
                 driver.findElement(magentoMenuBarConfigButtonLocator).click();
                 break;
             }
         }
         try {
-            final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Config page was not loaded");
+            final Wait<WebDriver> wait = new WebDriverWait(driver, 2).withMessage("Config page was not loaded");
             wait.until(ExpectedConditions.elementToBeClickable(magentoLoginButtonLocator));
             driver.findElement(magentoLoginFieldLocator).sendKeys(magentoLogin);
             driver.findElement(magentoPasswordFieldLocator).sendKeys(magentoPassword);
             driver.findElement(magentoLoginButtonLocator).click();
 
         } catch (NoSuchElementException e) {
+            System.out.println("00");
         }
         try{
-            final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Login page was not loaded");
+            final Wait<WebDriver> wait2 = new WebDriverWait(driver, 2).withMessage("Login page was not loaded");
             wait2.until(ExpectedConditions.visibilityOfElementLocated(magentoPopupBoxLocator));
             driver.findElement(magentoPopupBoxCloseButtonLocator).click();
         }catch (NoSuchElementException e){

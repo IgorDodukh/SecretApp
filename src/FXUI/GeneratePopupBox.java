@@ -47,6 +47,7 @@ public class GeneratePopupBox {
             exceptionDialog.setTitle("Failed. " + ProgressBar.currentProgress + "%. Running time: " + ExecutionTimeCounter.executionTime);
             exceptionDialog.setHeaderText("You are not lucky enough today.");
             exceptionDialog.setContentText(finalExceptionMessage);
+            exceptionDialog.initStyle(StageStyle.UTILITY);
 
 // Create expandable Exception.
             StringWriter sw = new StringWriter();
@@ -93,6 +94,7 @@ public class GeneratePopupBox {
             exceptionDialog.setTitle("Test Failed. Running time: " + ExecutionTimeCounter.executionTime);
             exceptionDialog.setHeaderText("Test was failed because of some unexpectedly reasons.");
             exceptionDialog.setContentText(Controller.driverWarning[0] + Controller.driverExceptionMessage[0]);
+            exceptionDialog.initStyle(StageStyle.UTILITY);
 
             try {
                 File f = new File("C:/appFiles/DialogBoxes.css");
@@ -114,6 +116,7 @@ public class GeneratePopupBox {
             successDialog.setTitle("Complete." + ProgressBar.currentProgress + "%. Running time: " + ExecutionTimeCounter.executionTime);
             successDialog.setHeaderText("Oh boy, you are lucky.");
             successDialog.setContentText(resultMessage);
+            successDialog.initStyle(StageStyle.UTILITY);
 
             try {
                 File f = new File("C:/appFiles/DialogBoxes.css");
@@ -160,6 +163,7 @@ public class GeneratePopupBox {
         identifyDialog.setTitle("Person identification");
         identifyDialog.setHeaderText("Please select who are you\nto identify Authorize.NET credentials");
         identifyDialog.setContentText("I'm ");
+        identifyDialog.initStyle(StageStyle.UTILITY);
 
         try {
             File f = new File("C:/appFiles/DialogBoxes.css");
@@ -315,6 +319,7 @@ public class GeneratePopupBox {
         creditCardsDialog.setTitle("Select Credit Card type");
         creditCardsDialog.setHeaderText("Choose preferred Card type:");
         creditCardsDialog.setContentText("");
+        creditCardsDialog.initStyle(StageStyle.UTILITY);
 
         try {
             File f = new File("C:/appFiles/DialogBoxes.css");
@@ -350,6 +355,7 @@ public class GeneratePopupBox {
         magentoDialog.setHeaderText("Select Magento which you\n" +
                 "would like to sync with " + Controller.environmentComboBoxValue);
         magentoDialog.setContentText("I want to choose ");
+        magentoDialog.initStyle(StageStyle.UTILITY);
 
 //        final Hyperlink detailsButton = new Hyperlink();
 //        detailsButton.getStyleClass().setAll("details-button", "more"); //$NON-NLS-1$ //$NON-NLS-2$

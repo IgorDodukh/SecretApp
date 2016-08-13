@@ -3,17 +3,15 @@ package FXUI;
 import Settings.BrowserSettings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
-import org.openqa.selenium.*;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.io.File;
-import java.util.*;
+import java.util.Objects;
 
 public class Controller extends Main {
     public WebDriver driver;
@@ -26,6 +24,7 @@ public class Controller extends Main {
     public static String magentoIndexName = "";
     public static int addProgressValue = 0;
     private boolean exceptionStatus = false;
+    private boolean stopButtonClicked = false;
     public static String testCardNumber = "";
 
     public static String browserComboBoxValue = "";
@@ -36,6 +35,9 @@ public class Controller extends Main {
     private BrowserSettings browserSettings = new BrowserSettings();
     private DropdownValueDeterminer dropdownValueDeterminer = new DropdownValueDeterminer();
     public ChangeLabelValue changeLabelValue = new ChangeLabelValue();
+
+    public static final String[] driverWarning = {""};
+    public static final String[] driverExceptionMessage = {""};
 
     private int browserComboBoxIndex;
     private int environmentComboBoxIndex;
@@ -48,19 +50,18 @@ public class Controller extends Main {
             );
     private ObservableList<String> entityTypes =
             FXCollections.observableArrayList(
+                    "Sync Magento with FS",
                     "Configure Merchant",
                     "Create Customer",
                     "Create Product",
                     "Create Supplier",
                     "Create Warehouse & Bin",
-                    "Sync Magento with FS",
                     "Reorder the last Order"
             );
     private ObservableList<String> environments =
             FXCollections.observableArrayList(
                     "QA01", "QA03", "QA05", "Production (for mad guys)"
             );
-
 
     public ComboBox<String> browsersComboBox;
     public ComboBox<String> entityTypeComboBox;
@@ -87,10 +88,11 @@ public class Controller extends Main {
         environmentsComboBox.setItems(environments);
         environmentsComboBox.getSelectionModel().select(0);
 
-        buildVersion.setText("Build Version: 1.45 beta");
+        buildVersion.setText("Build Version: 1.50 beta");
     }
 
     public void clickStartButton() throws InterruptedException {
+        stopButtonClicked = false;
         String login = loginField.getText();
         String password = String.valueOf(passwordField.getCharacters());
         FieldsValidation.loginPassValidation(login, password, loginField, passwordField, loginLabel, passwordLabel);
@@ -104,36 +106,41 @@ public class Controller extends Main {
             entityComboBoxValue = entityTypeComboBox.getSelectionModel().getSelectedItem();
             environmentComboBoxValue = environmentsComboBox.getSelectionModel().getSelectedItem();
 
-            if (entityTypeComboBoxIndex == 0) {
+            if (entityTypeComboBoxIndex == 1) {
                 GeneratePopupBox.indentifyPopupBox();
-            } else if (entityTypeComboBoxIndex == 5) {
+            } else if (entityTypeComboBoxIndex == 0) {
                 GeneratePopupBox.magentoPopupBox();
-            } else if (entityTypeComboBoxIndex == 1) {
+            } else if (entityTypeComboBoxIndex == 2) {
                 GeneratePopupBox.creditCardsPopupBox();
             } else GeneratePopupBox.confirmationPopupBox();
 
-            if (GeneratePopupBox.confirmationResponse.get() == ButtonType.OK) {
-                final String[] driverWarning = {""};
-                final String[] driverExceptionMessage = {""};
+            if(GeneratePopupBox.confirmationResponse == null){
+                System.out.println("Popup canceled");
+            }
+            else if (GeneratePopupBox.confirmationResponse.get() == ButtonType.OK) {
 
-                Task<Void> task = new Task<Void>() {
-                    @Override public Void call() throws InterruptedException {
-                        updateMessage("Test is running... ");
-                        return null;
-                    }
-                };
-
-                waitingLabel.textProperty().bind(task.messageProperty());
-
-                task.setOnSucceeded(e -> {
-                    waitingLabel.textProperty().unbind();
-                    // this message will be seen.
-                    waitingLabel.setText("Test is running... " /*+ String.valueOf(addProgressValue) + "%"*/);
-                });
-
-                Thread thread = new Thread(task);
-                thread.setDaemon(true);
-                thread.start();
+//                Task<Void> task = new Task<Void>() {
+//                    @Override public Void call() throws InterruptedException {
+//                        updateMessage("Test is running... ");
+//                        return null;
+//                    }
+//                };
+//
+//                waitingLabel.textProperty().bind(task.messageProperty());
+//
+//                task.setOnSucceeded(e -> {
+//                    waitingLabel.textProperty().unbind();
+//                    // this message will be seen.
+//                    waitingLabel.setText("Test is running... " + String.valueOf(addProgressValue) + "%");
+//                });
+//
+//                Thread thread = new Thread(task);
+//                thread.setDaemon(true);
+//                thread.start();
+/**/
+//                ChangeLabelValue.changeWaitingLabelValue(waitingLabel, addProgressValue);
+                ProgressBar.addProgressValue(addProgressValue);
+//                ProgressBar.updateWaitingLabel(waitingLabel);
 
                 ExecutionTimeCounter.startCounter();
 
@@ -143,7 +150,10 @@ public class Controller extends Main {
                         if (browserComboBoxIndex == 0) {
                             driverWarning[0] += "Chrome";
                             System.setProperty("webdriver.chrome.driver", "C:\\appFiles\\drivers\\chromedriver.exe");
-                            driver = new ChromeDriver();
+                            ChromeOptions options = new ChromeOptions();
+                            options.addArguments("--disable-extensions");
+                            driver = new ChromeDriver(options);
+//                            driver = new ChromeDriver();
 
                         } else if (browserComboBoxIndex == 1) {
                             driverWarning[0] += "Firefox";
@@ -159,18 +169,7 @@ public class Controller extends Main {
                     } else {
                         driverExceptionMessage[0] += " browser has been stopped unexpectedly.";
                     }
-                        Alert exceptionAlert = new Alert(Alert.AlertType.INFORMATION);
-                        exceptionAlert.setTitle("Test Failed. Running time: " + ExecutionTimeCounter.executionTime);
-                        exceptionAlert.setHeaderText("Test was failed because of some unexpectedly reasons.");
-                        exceptionAlert.setContentText(driverWarning[0] + driverExceptionMessage[0]);
-                        try {
-                            File f = new File("C:/appFiles/exceptionDialog.css");
-                            DialogPane dialogPane = exceptionAlert.getDialogPane();
-                            dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
-                            dialogPane.getStyleClass().add("myDialog");
-                        } catch (Exception e){
-                            System.out.println(e.getClass().toString() + "\n" +  e.getLocalizedMessage());
-                        }
+                        if(!stopButtonClicked)GeneratePopupBox.failedPopupBox();
                     }
                     testStatus.startTest(startButton, stopButton, waitingLabel, waitingAnimation);
                     System.out.println("Test Started");
@@ -188,7 +187,7 @@ public class Controller extends Main {
                         ExecutionTimeCounter.stopCounter();
                         if (exceptionStatus) {
                             testStatus.stopTest(startButton, stopButton, waitingLabel, waitingAnimation);
-                            GeneratePopupBox.exceptionPopupBox(exceptionValue);
+                            if(!stopButtonClicked)GeneratePopupBox.exceptionPopupBox(exceptionValue);
                         }
                     }
                     if (!exceptionStatus) {
@@ -206,12 +205,13 @@ public class Controller extends Main {
 
     public void clickStopButton() {
         testStatus.stopTest(startButton, stopButton, waitingLabel, waitingAnimation);
+        stopButtonClicked = true;
         Runnable runnable2 = () -> {
             try {
                 driver.close();
-                throw new Exception("'Stop' button clicked");
+                System.out.println("'Stop' button clicked");
             } catch (Exception e) {
-                System.out.println(e.getCause().toString());
+                System.out.println("Exception caught");
             }
         };
         Thread thread2 = new Thread(runnable2);

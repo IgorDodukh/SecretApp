@@ -57,7 +57,7 @@ public class InventoryPage extends BrowserSettings {
         driver.findElement(productInventoryFilterByFieldLocator).sendKeys(Keys.ENTER);
         ProgressBar.addProgressValue(progressVariable);
 
-        final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Product search didn't finished");
+        final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Product search was not finished");
         wait2.until(ExpectedConditions.elementToBeClickable(firstProductSKULocator));
 
         Assert.assertEquals(driver.findElement(firstProductSKULocator).getText(), productSku, "Found Product has not expected SKU");

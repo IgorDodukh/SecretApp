@@ -198,7 +198,7 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
         totalResultMessage += "Click 'Save and Close' button\n";
         driver.findElement(saveAndCloseContextualButtonLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
-        wait.until(ExpectedConditions.visibilityOfElementLocated(testResultPopupLocator));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(popupOkBtnLocator));
         ProgressBar.addProgressValue(3);
 
         totalResultMessage += "Confirm popup message\n";

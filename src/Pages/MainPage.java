@@ -74,18 +74,15 @@ public class MainPage extends BrowserSettings {
         ProgressBar.addProgressValue(progressVariable);
     }
 
-// --Commented out by Inspection START (7/14/2016 10:10 PM):
-//    public void openCustomersGrid () {
-//        totalResultMessage += "Open Customers grid\n";
-//        driver.findElement(customersMenuButtonLocator).click();
-//        driver.findElement(customersGridButtonLocator).click();
-//    }
-// --Commented out by Inspection STOP (7/14/2016 10:10 PM)
-
     public void openAddWarehousePage () {
         totalResultMessage += "Open 'Add Warehouse' page\n";
+        totalResultMessage += " - Click 'Inventory' menu item\n";
         driver.findElement(headerMenuLocator).click();
+        totalResultMessage += " - Click 'Warehouse' menu item\n";
         driver.findElement(searchWarehouseButtonLocator).click();
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Add Warehouse' button is not clickable");
+        wait.until(ExpectedConditions.elementToBeClickable(addWarehouseButtonLocator));
+        totalResultMessage += " - Click 'Add Warehouse' button\n";
         driver.findElement(addWarehouseButtonLocator).click();
         Assert.assertEquals(driver.findElement(addPageBreadcrumpLocator).getText(), "Add", "Warehouse creating page is not loaded");
         ProgressBar.addProgressValue(progressVariable);
@@ -135,18 +132,21 @@ public class MainPage extends BrowserSettings {
 
     public void openSuppliersPage() {
         totalResultMessage += "Open 'Suppliers' page\n";
-        ProgressBar.addProgressValue(5);
         driver.findElement(productsMenuButtonLocator).click();
         driver.findElement(suppliersMenuButtonLocator).click();
         ProgressBar.addProgressValue(progressVariable);
     }
 
-    public void openAddSupplierPage() {
+    public void openAddSupplierPage() throws InterruptedException {
         totalResultMessage += "Open 'Add Supplier' page\n";
-        ProgressBar.addProgressValue(5);
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Suppliers grid was not loaded");
+        wait.until(ExpectedConditions.elementToBeClickable(addSupplierButtonLocator));
+        Thread.sleep(1000);
+        ProgressBar.addProgressValue(progressVariable);
+        totalResultMessage += " - Click 'Add Supplier' button\n";
         driver.findElement(addSupplierButtonLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Add Supplier' page popup was not loaded");
-        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(supplierAccountNumberFieldLocator));
+        final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("'Add Supplier' page popup was not loaded");
+        WebElement element = wait2.until(ExpectedConditions.elementToBeClickable(supplierAccountNumberFieldLocator));
         Assert.assertEquals(element.isDisplayed(), true, "'Shipping Methods' page title was not found");
         ProgressBar.addProgressValue(progressVariable);
     }

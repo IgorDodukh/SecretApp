@@ -18,7 +18,7 @@ import java.util.*;
  */
 public class GeneratePopupBox {
     public static Optional<ButtonType> exceptionResponse;
-    public static Optional<ButtonType> confirmationResponse = Optional.ofNullable(ButtonType.CANCEL);
+    public static Optional<ButtonType> confirmationResponse;
     public static Optional<Pair<String, String>> authorizeResponse;
     private static String[] magentos = {
             "qatestlab01",
@@ -43,13 +43,12 @@ public class GeneratePopupBox {
         Platform.runLater(() -> {
             Alert exceptionDialog = new Alert(Alert.AlertType.INFORMATION);
             exceptionDialog.getDialogPane().setId("exception-dialog");
-            exceptionDialog.setTitle("Failed. " + ". Running time: " + ExecutionTimeCounter.executionTime);
+            exceptionDialog.setTitle("Failed. " + ProgressBar.currentProgress + "%. Running time: " + ExecutionTimeCounter.executionTime);
             exceptionDialog.setHeaderText("You are not lucky enough today.");
             exceptionDialog.setContentText(finalExceptionMessage);
 
 // Create expandable Exception.
             StringWriter sw = new StringWriter();
-            sw.flush();
             PrintWriter pw = new PrintWriter(sw);
             exception.printStackTrace(pw);
             String exceptionText = sw.toString();
@@ -74,7 +73,28 @@ public class GeneratePopupBox {
             exceptionDialog.getDialogPane().setExpandableContent(expContent);
 
             try {
-                File f = new File("C:/appFiles/exceptionDialog.css");
+                File f = new File("C:/appFiles/DialogBoxes.css");
+                DialogPane dialogPane = exceptionDialog.getDialogPane();
+                dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
+                dialogPane.getStyleClass().add("myDialog");
+            } catch (Exception e){
+                System.out.println(e.getClass().toString() + "\n" +  e.getLocalizedMessage());
+            }
+
+            exceptionResponse = exceptionDialog.showAndWait();
+        });
+    }
+
+    public static void failedPopupBox() {
+        Platform.runLater(() -> {
+            Alert exceptionDialog = new Alert(Alert.AlertType.INFORMATION);
+            exceptionDialog.getDialogPane().setId("exception-dialog");
+            exceptionDialog.setTitle("Test Failed. Running time: " + ExecutionTimeCounter.executionTime);
+            exceptionDialog.setHeaderText("Test was failed because of some unexpectedly reasons.");
+            exceptionDialog.setContentText(Controller.driverWarning[0] + Controller.driverExceptionMessage[0]);
+
+            try {
+                File f = new File("C:/appFiles/DialogBoxes.css");
                 DialogPane dialogPane = exceptionDialog.getDialogPane();
                 dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
                 dialogPane.getStyleClass().add("myDialog");
@@ -90,7 +110,7 @@ public class GeneratePopupBox {
         Platform.runLater(() -> {
             Alert successDialog = new Alert(Alert.AlertType.INFORMATION);
             successDialog.getDialogPane().setId("success-dialog");
-            successDialog.setTitle("Complete." + " Running time: " + ExecutionTimeCounter.executionTime);
+            successDialog.setTitle("Complete." + ProgressBar.currentProgress + "%. Running time: " + ExecutionTimeCounter.executionTime);
             successDialog.setHeaderText("Oh boy, you are lucky.");
             successDialog.setContentText(resultMessage);
 
@@ -125,11 +145,6 @@ public class GeneratePopupBox {
 
             hmmDialog.showAndWait();
         });
-
-/*        JOptionPane.showMessageDialog(null,
-                transactionWarning + "\nOk, I'll give you another try.",
-                "Warning",
-                JOptionPane.PLAIN_MESSAGE, hmm);*/
     }
 
     public static void indentifyPopupBox() {
@@ -333,7 +348,7 @@ public class GeneratePopupBox {
         magentoDialog.setTitle("Select Magento Environment");
         magentoDialog.setHeaderText("Select Magento which you\n" +
                 "would like to sync with " + Controller.environmentComboBoxValue);
-        magentoDialog.setContentText("");
+        magentoDialog.setContentText("I want to choose ");
 
 //        final Hyperlink detailsButton = new Hyperlink();
 //        detailsButton.getStyleClass().setAll("details-button", "more"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -350,6 +365,7 @@ public class GeneratePopupBox {
 //        ButtonType buttonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
 //        Button button = new Button();
 //        button.setText("THR");
+
 //
 //        magentoDialog.getDialogPane().getButtonTypes().addAll();
 //        magentoDialog.getDialogPane().getButtonTypes().addAll(buttonType);

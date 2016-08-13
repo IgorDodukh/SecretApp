@@ -55,6 +55,7 @@ public class AddSupplierPage extends BrowserSettings {
         WebElement urlField = driver.findElement(supplierURLFieldLocator);
         urlField.click();
         Thread.sleep(500);
+        ProgressBar.addProgressValue(progressVariable);
         urlField.sendKeys(url);
         ProgressBar.addProgressValue(progressVariable);
 
@@ -109,7 +110,7 @@ public class AddSupplierPage extends BrowserSettings {
         totalResultMessage += "Saving new Supplier:\n";
         totalResultMessage += " - Click 'Save and Close' button\n";
         driver.findElement(saveAndCloseContextualButtonLocator).click();
-        ProgressBar.addProgressValue(2);
+        ProgressBar.addProgressValue(progressVariable);
 
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(popupBoxMessageLocator));

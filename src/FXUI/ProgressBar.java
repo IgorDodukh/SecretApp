@@ -1,22 +1,45 @@
 package FXUI;
 
+import javafx.scene.control.Label;
+
 /**
  * Created by Ihor on 7/17/2016.
  */
 public class ProgressBar {
+    static int currentProgress;
 
     public static void addProgressValue(int i) {
-        Controller.addProgressValue = Controller.addProgressValue + i;
-        Controller controller = new Controller();
+        currentProgress = Controller.addProgressValue + i;
+//        Controller.addProgressValue = Controller.addProgressValue + i;
+        Controller.addProgressValue = currentProgress;
+//        ChangeLabelValue.changeWaitingLabelValue(Controller.addProgressValue);
+    }
 
-//        Task<Void> task2 = new Task<Void>() {
-//            @Override public Void call() throws InterruptedException {
-//                updateMessage("Test is running... " + String.valueOf(Controller.addProgressValue) + "%");
-//                return null;
-//            }
-//        };
+    public static void updateWaitingLabel(Label label) {
+//        Controller controller = new Controller();
+//        Platform.runLater(() -> {
+//            Task<Void> task = new Task<Void>() {
+//                @Override public Void call() throws InterruptedException {
+//                    updateMessage("Test is running... ");
+//                    return null;
+//                }
+//            };
 //
-//        controller.waitingLabel.textProperty().bind(task2.messageProperty());
+//            label.textProperty().bind(task.messageProperty());
+//            task.setOnSucceeded(e -> {
+//                label.textProperty().unbind();
+//                // this message will be seen.
+//                label.setText("Test is running... " + String.valueOf(Controller.addProgressValue) + "%");
+//            });
+//
+//            Thread thread = new Thread(task);
+//            thread.setDaemon(true);
+//            thread.start();
+//        });
+    }
+
+
+/**/
 //
 //        task2.setOnSucceeded(e -> {
 //            controller.waitingLabel.textProperty().unbind();
@@ -31,4 +54,4 @@ public class ProgressBar {
 
 //        controller.waitingLabel.textProperty().setValue("Test is running... " + Controller.addProgressValue + "%");
     }
-}
+//}

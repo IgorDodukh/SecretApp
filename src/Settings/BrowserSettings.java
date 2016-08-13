@@ -132,7 +132,7 @@ public class BrowserSettings {
     public String magentoPassword = "#Dydacomp1";
     public static String magentoChannelID;
     public static String magentoFSLink;
-    protected static int timeoutVariable = 10;
+    protected static int timeoutVariable = 20;
     public static int progressVariable;
 
     public static String totalResultMessage = "";

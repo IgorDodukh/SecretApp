@@ -120,12 +120,12 @@
             </Button>
          </children>
       </GridPane>
-      <PasswordField fx:id="passwordField" layoutX="310.0" layoutY="321.0" prefHeight="30.0" prefWidth="227.0" text="Password#1">
+      <PasswordField fx:id="passwordField" layoutX="310.0" layoutY="321.0" prefHeight="30.0" prefWidth="227.0" text="78qa22!#">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor>
       </PasswordField>
-      <TextField fx:id="loginField" layoutX="310.0" layoutY="251.0" prefHeight="30.0" prefWidth="227.0" text="IgorQA@dydacomp.biz">
+      <TextField fx:id="loginField" layoutX="310.0" layoutY="251.0" prefHeight="30.0" prefWidth="227.0" text="newadmin@dydacomp.biz">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor>

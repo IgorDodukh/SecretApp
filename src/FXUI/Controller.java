@@ -39,6 +39,8 @@ public class Controller extends Main {
     public static final String[] driverWarning = {""};
     public static final String[] driverExceptionMessage = {""};
 
+    private Thread thread1;
+
     private int browserComboBoxIndex;
     private int environmentComboBoxIndex;
     private int entityTypeComboBoxIndex;
@@ -196,7 +198,7 @@ public class Controller extends Main {
                         GeneratePopupBox.successPopupBox(resultMessage);
                     }
                 };
-                Thread thread1 = new Thread(runnable);
+                thread1 = new Thread(runnable);
                 thread1.start();
             }else if (GeneratePopupBox.confirmationResponse.get() == ButtonType.CANCEL || GeneratePopupBox.confirmationResponse.get() == ButtonType.CLOSE) {
                 System.out.println("No/Close button");}
@@ -205,6 +207,7 @@ public class Controller extends Main {
 
     public void clickStopButton() {
         testStatus.stopTest(startButton, stopButton, waitingLabel, waitingAnimation);
+        thread1.interrupt();
         stopButtonClicked = true;
         Runnable runnable2 = () -> {
             try {

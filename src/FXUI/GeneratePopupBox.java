@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.stage.StageStyle;
 import javafx.util.Pair;
 
 import java.io.File;
@@ -401,6 +402,7 @@ public class GeneratePopupBox {
         confirmationAlert.setTitle("Lucky Confirmation Dialog");
         confirmationAlert.setHeaderText("Test is starting now.");
         confirmationAlert.setContentText(infoMessage);
+        confirmationAlert.initStyle(StageStyle.UTILITY);
 
         try {
             File f = new File("C:/appFiles/DialogBoxes.css");

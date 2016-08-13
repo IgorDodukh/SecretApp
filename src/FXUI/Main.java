@@ -15,6 +15,7 @@ public class Main extends Application {
         primaryStage.setTitle("QA life easier");
         primaryStage.setScene(new Scene(root, 560, 450));
         primaryStage.show();
+
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(new Image("file:///C:/appFiles/pic/logo.png"));
     }

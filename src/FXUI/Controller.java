@@ -9,7 +9,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import org.apache.commons.configuration.ConfigurationException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -146,11 +145,7 @@ public class Controller extends Main {
         entityTypeComboBoxIndex = entityTypeComboBox.getSelectionModel().getSelectedIndex();
 
         if (loginFilled && passFilled){
-            try {
-                CrunchifyUpdateConfig.main(driverWarning);
-            } catch (ConfigurationException e) {
-                e.printStackTrace();
-            }
+            CrunchifyUpdateConfig.main(driverWarning);
             browserComboBoxValue = browsersComboBox.getSelectionModel().getSelectedItem();
             entityComboBoxValue = entityTypeComboBox.getSelectionModel().getSelectedItem();
             environmentComboBoxValue = environmentsComboBox.getSelectionModel().getSelectedItem();

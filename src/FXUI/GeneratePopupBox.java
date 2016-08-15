@@ -2,6 +2,7 @@ package FXUI;
 
 import Settings.BrowserSettings;
 import Settings.CrunchifyGetPropertyValues;
+import Settings.CrunchifyReadConfigMain;
 import Settings.CrunchifyUpdateConfig;
 import javafx.application.Platform;
 import javafx.scene.control.*;
@@ -9,9 +10,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.StageStyle;
 import javafx.util.Pair;
-import org.apache.commons.configuration.ConfigurationException;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.*;
@@ -42,6 +43,7 @@ public class GeneratePopupBox {
             "30",
             "60",};
     public static String currentTimeout;
+    public static String currentUser;
 
     public static void exceptionPopupBox(Exception exception) {
         String exceptionMessage = "";
@@ -141,19 +143,40 @@ public class GeneratePopupBox {
     }
 
     public static void indentifyPopupBox() {
+        try {
+            CrunchifyReadConfigMain.main(timeouts);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         List<String> choices = new ArrayList<>();
         choices.add("Igor");
         choices.add("Vika");
         choices.add("Oksanka");
         choices.add("Natasha");
 
-        ChoiceDialog<String> identifyDialog = new ChoiceDialog<>("Igor", choices);
+        ChoiceDialog<String> identifyDialog = new ChoiceDialog<>(CrunchifyGetPropertyValues.user, choices);
         identifyDialog.getDialogPane().setId("indentify-dialog");
         identifyDialog.setTitle("Person identification");
         identifyDialog.setHeaderText("Please select who are you\nto identify Authorize.NET credentials");
         identifyDialog.setContentText("I'm ");
         identifyDialog.initStyle(StageStyle.UTILITY);
 
+        identifyDialog.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if(Objects.equals(newValue, "Igor")){
+                BrowserSettings.authApiLoginId = "3y8Z2fk5Z3n";
+                BrowserSettings.authTransactionKey = "2s25qyDYe249uTRx";
+            } else if(Objects.equals(newValue, "Vika")){
+                BrowserSettings.authApiLoginId = "3Ud359XbX6";
+                BrowserSettings.authTransactionKey = "67FK5537ng85nAPw";
+            } else if(Objects.equals(newValue, "Oksanka")){
+                BrowserSettings.authApiLoginId = "2L6UmL7rE";
+                BrowserSettings.authTransactionKey = "36Sc34JmhE9m493t";
+            } else if(Objects.equals(newValue, "Natasha")){
+                BrowserSettings.authApiLoginId = "3z42Rqc3pMrX";
+                BrowserSettings.authTransactionKey = "5gt38eVNu529t6ZP";
+            }
+            currentUser = newValue;
+        });
         try {
             File f = new File("C:/appFiles/styles/DialogBoxes.css");
             DialogPane dialogPane = identifyDialog.getDialogPane();
@@ -165,21 +188,9 @@ public class GeneratePopupBox {
 // Traditional way to get the response value.
         Optional<String> result = identifyDialog.showAndWait();
         if (result.isPresent()){
-            if(Objects.equals(result.get(), "Igor")){
-                BrowserSettings.authApiLoginId = "3y8Z2fk5Z3n";
-                BrowserSettings.authTransactionKey = "2s25qyDYe249uTRx";
-            } else if(Objects.equals(result.get(), "Vika")){
-                BrowserSettings.authApiLoginId = "3Ud359XbX6";
-                BrowserSettings.authTransactionKey = "67FK5537ng85nAPw";
-            } else if(Objects.equals(result.get(), "Oksanka")){
-                BrowserSettings.authApiLoginId = "2L6UmL7rE";
-                BrowserSettings.authTransactionKey = "36Sc34JmhE9m493t";
-            } else if(Objects.equals(result.get(), "Natasha")){
-                BrowserSettings.authApiLoginId = "3z42Rqc3pMrX";
-                BrowserSettings.authTransactionKey = "5gt38eVNu529t6ZP";
-            }
             GeneratePopupBox.confirmationPopupBox();
         } else System.out.println("Person select cancelled");
+        CrunchifyUpdateConfig.main(timeouts);
     }
 
     public static void creditCardsPopupBox() {
@@ -308,11 +319,7 @@ public class GeneratePopupBox {
             if (result.isPresent()){
                 currentTimeout = result.get();
                 BrowserSettings.timeoutVariable = Integer.valueOf(currentTimeout);
-                try {
-                    CrunchifyUpdateConfig.main(timeouts);
-                } catch (ConfigurationException e) {
-                    e.printStackTrace();
-                }
+                CrunchifyUpdateConfig.main(timeouts);
             } else System.out.println("Select Magento cancelled");
         });
     }

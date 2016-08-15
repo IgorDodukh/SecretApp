@@ -1,5 +1,6 @@
 package Settings;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,25 +15,25 @@ public class CrunchifyGetPropertyValues {
     public static String timeoutProperty;
     public static String loginProperty;
     public static String passProperty;
+    public static String user;
 
     public String getPropValues() throws IOException {
 
         try {
             Properties prop = new Properties();
-            String propFileName = "\\config\\config.properties";
-//            File f = new File("C:/appFiles/config.properties");
+            InputStream input = new FileInputStream("C:\\appFiles\\config.properties");
 
-            inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+            inputStream = input;
 
             if (inputStream != null) {
                 prop.load(inputStream);
             } else {
-                throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
+                throw new FileNotFoundException("property file '" + input.toString() + "' not found in the classpath");
             }
 
             // get the property value and print it out
             timeoutProperty = prop.getProperty("timeoutVariable");
-            String user = prop.getProperty("user");
+            user = prop.getProperty("user");
             loginProperty = prop.getProperty("lastEmail");
             passProperty = prop.getProperty("lastPassword");
 

@@ -11,11 +11,14 @@ import java.util.Objects;
  * Created by Ihor on 8/14/2016.
  */
 public class CrunchifyUpdateConfig {
-    public static void main(String[] args) throws ConfigurationException {
+    public static void main(String[] args) {
 
-        // You have to create config.properties file under resources folder or anywhere you want :)
-        // Here I'm updating file which is already exist under /Documents
-        PropertiesConfiguration config = new PropertiesConfiguration("\\config\\config.properties");
+        PropertiesConfiguration config = null;
+        try {
+            config = new PropertiesConfiguration("C:\\appFiles\\config.properties");
+        } catch (ConfigurationException e) {
+            e.printStackTrace();
+        }
         if(!Objects.equals(GeneratePopupBox.currentTimeout, null)) {
             config.setProperty("timeoutVariable", GeneratePopupBox.currentTimeout);
         }
@@ -23,12 +26,20 @@ public class CrunchifyUpdateConfig {
             config.setProperty("lastEmail", Controller.login);
             config.setProperty("lastPassword", Controller.password);
         }
-        config.save();
+        if(!Objects.equals(GeneratePopupBox.currentUser, null)) {
+            config.setProperty("user", GeneratePopupBox.currentUser);
+        }
+
+        try {
+            config.save();
+        } catch (ConfigurationException e) {
+            e.printStackTrace();
+        }
 
         System.out.println("Config Property Successfully Updated..");
         System.out.println("New timeout: " + config.getProperty("timeoutVariable").toString());
         System.out.println("New email: " + config.getProperty("lastEmail").toString());
         System.out.println("New pass: " + config.getProperty("lastPassword").toString());
-//        System.out.println(BrowserSettings.timeoutVariable);
+        System.out.println("New user: " + config.getProperty("user").toString());
     }
 }

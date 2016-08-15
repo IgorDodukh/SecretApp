@@ -1,13 +1,15 @@
 package FXUI;
 
 import Settings.BrowserSettings;
+import Settings.CrunchifyGetPropertyValues;
+import Settings.CrunchifyUpdateConfig;
 import javafx.application.Platform;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.StageStyle;
 import javafx.util.Pair;
+import org.apache.commons.configuration.ConfigurationException;
 
 import java.io.File;
 import java.io.PrintWriter;
@@ -33,6 +35,13 @@ public class GeneratePopupBox {
             "qatestlab09",
             "qatestlab10",
             "hercules",};
+
+    public static String[] timeouts = {
+            "10",
+            "20",
+            "30",
+            "60",};
+    public static String currentTimeout;
 
     public static void exceptionPopupBox(Exception exception) {
         String exceptionMessage = "";
@@ -75,7 +84,7 @@ public class GeneratePopupBox {
             exceptionDialog.getDialogPane().setExpandableContent(expContent);
 
             try {
-                File f = new File("C:/appFiles/DialogBoxes.css");
+                File f = new File("C:/appFiles/styles/DialogBoxes.css");
                 DialogPane dialogPane = exceptionDialog.getDialogPane();
                 dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
                 dialogPane.getStyleClass().add("myDialog");
@@ -97,7 +106,7 @@ public class GeneratePopupBox {
             exceptionDialog.initStyle(StageStyle.UTILITY);
 
             try {
-                File f = new File("C:/appFiles/DialogBoxes.css");
+                File f = new File("C:/appFiles/styles/DialogBoxes.css");
                 DialogPane dialogPane = exceptionDialog.getDialogPane();
                 dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
                 dialogPane.getStyleClass().add("myDialog");
@@ -119,7 +128,7 @@ public class GeneratePopupBox {
             successDialog.initStyle(StageStyle.UTILITY);
 
             try {
-                File f = new File("C:/appFiles/DialogBoxes.css");
+                File f = new File("C:/appFiles/styles/DialogBoxes.css");
                 DialogPane dialogPane = successDialog.getDialogPane();
                 dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
                 dialogPane.getStyleClass().add("myDialog");
@@ -128,26 +137,6 @@ public class GeneratePopupBox {
             }
 
             successDialog.showAndWait();
-        });
-    }
-
-    public static void hmmPopupBox(String transactionWarning) {
-        Platform.runLater(() -> {
-            Alert hmmDialog = new Alert(Alert.AlertType.INFORMATION);
-            hmmDialog.setTitle("Warning");
-            hmmDialog.setHeaderText("Hey, you are inattentive.");
-            hmmDialog.setContentText(transactionWarning + "\nOk, I'll give you another try.");
-
-            try {
-                File f = new File("C:/appFiles/hmmDialog.css");
-                DialogPane dialogPane = hmmDialog.getDialogPane();
-                dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
-                dialogPane.getStyleClass().add("myDialog");
-            } catch (Exception e){
-                System.out.println(e.getClass().toString() + "\n" +  e.getLocalizedMessage());
-            }
-
-            hmmDialog.showAndWait();
         });
     }
 
@@ -166,7 +155,7 @@ public class GeneratePopupBox {
         identifyDialog.initStyle(StageStyle.UTILITY);
 
         try {
-            File f = new File("C:/appFiles/DialogBoxes.css");
+            File f = new File("C:/appFiles/styles/DialogBoxes.css");
             DialogPane dialogPane = identifyDialog.getDialogPane();
             dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
             dialogPane.getStyleClass().add("myDialog");
@@ -193,120 +182,6 @@ public class GeneratePopupBox {
         } else System.out.println("Person select cancelled");
     }
 
-    public static void authorizePopupBox() {
-        final boolean[] idFieldBlank = new boolean[1];
-        final boolean[] keyFieldBlank = new boolean[1];
-        Platform.runLater(() -> {
-            // Create the custom dialog.
-            Dialog<Pair<String, String>> authorizeDialog = new Dialog<>();
-            authorizeDialog.setTitle("Authorize.Net credentials");
-            authorizeDialog.setHeaderText("Confirm your Authorize.Net credentials here");
-
-// Set the icon (must be included in the project).
-            try {
-                File f = new File("C:/appFiles/authorizeDialog.css");
-                DialogPane dialogPane = authorizeDialog.getDialogPane();
-                dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
-                dialogPane.getStyleClass().add("myDialog");
-            } catch (Exception e){
-                System.out.println(e.getClass().toString() + "\n" +  e.getLocalizedMessage());
-            }
-
-// Set the button types.
-            ButtonType loginButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-            authorizeDialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
-
-// Create the username and password labels and fields.
-            GridPane grid = new GridPane();
-            grid.setHgap(10);
-            grid.setVgap(10);
-
-            TextField apiLoginID = new TextField();
-            apiLoginID.setPromptText("111");
-            TextField transactionKey = new TextField();
-            transactionKey.setPromptText("222");
-
-            grid.add(new Label("API Login ID:"), 0, 0);
-            grid.add(apiLoginID, 1, 0);
-            grid.add(new Label("Transaction Key:"), 0, 1);
-            grid.add(transactionKey, 1, 1);
-
-// Enable/Disable login button depending on whether a username was entered.
-            Node loginButton = authorizeDialog.getDialogPane().lookupButton(loginButtonType);
-            loginButton.setDisable(true);
-
-// Do some validation (using the Java 8 lambda syntax).
-            apiLoginID.textProperty().addListener((observable, oldValue, newValue) -> {
-                    loginButton.setDisable(newValue.trim().isEmpty());
-
-                idFieldBlank[0] = newValue.trim().isEmpty();
-            });
-
-            transactionKey.textProperty().addListener((observable, oldValue, newValue) -> {
-                    loginButton.setDisable(newValue.trim().isEmpty());
-
-                keyFieldBlank[0] = newValue.trim().isEmpty();
-            });
-
-            authorizeDialog.getDialogPane().setContent(grid);
-
-// Request focus on the username field by default.
-//            Platform.runLater(apiLoginID::requestFocus);
-
-// Convert the result to a username-password-pair when the login button is clicked.
-            authorizeDialog.setResultConverter(dialogButton -> {
-                if (dialogButton == loginButtonType) {
-                    return new Pair<>(apiLoginID.getText(), transactionKey.getText());
-                }
-                return null;
-            });
-
-            authorizeResponse = authorizeDialog.showAndWait();
-        });
-
-//        JTextField field1 = new JTextField();
-//        JTextField field2 = new JTextField();
-//        field1.setText(BrowserSettings.authApiLoginId);
-//        field2.setText(BrowserSettings.authTransactionKey);
-//        Object[] message = {
-//                "API Login ID:", field1,
-//                "Transaction Key:                    ", field2,
-//        };
-//        popupOption = JOptionPane.showConfirmDialog(
-//                null,
-//                message,
-//                "Authorize.Net credentials",
-//                JOptionPane.OK_CANCEL_OPTION,
-//                0,
-//                authorize);
-//
-////  Authorize credentials fields validation
-//        String transactionWarning = "It seems you forgot to fill ";
-//        if (field1.getText().length() > 0){
-//            BrowserSettings.authApiLoginId = field1.getText();
-//        } else {
-//            transactionFailed = true;
-//            transactionWarning += "'API Login ID'";
-//        }
-//        if (field2.getText().length() > 0){
-//            BrowserSettings.authTransactionKey = field2.getText();
-//            transactionWarning += " field.";
-//        } else {
-//            if(transactionFailed){
-//                transactionWarning += " and 'Transaction Key' fields.";
-//            } else {
-//                transactionWarning += "'Transaction Key' field.";
-//                transactionFailed = true;
-//            }
-//        }
-//
-//        if (popupOption == JOptionPane.YES_OPTION){
-//            if (transactionFailed){
-//                GeneratePopupBox.hmmPopupBox(transactionWarning);
-//            }
-//        }
-    }
-
     public static void creditCardsPopupBox() {
         List<String> choices = new ArrayList<>();
         choices.add("Visa");
@@ -315,14 +190,30 @@ public class GeneratePopupBox {
         choices.add("American Express");
 
         ChoiceDialog<String> creditCardsDialog = new ChoiceDialog<>("Visa", choices);
-        creditCardsDialog.getDialogPane().setId("credit-cards-dialog");
+        creditCardsDialog.getDialogPane().setId("visa-credit-cards-dialog");
         creditCardsDialog.setTitle("Select Credit Card type");
         creditCardsDialog.setHeaderText("Choose preferred Card type:");
         creditCardsDialog.setContentText("");
         creditCardsDialog.initStyle(StageStyle.UTILITY);
 
+        creditCardsDialog.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                if(Objects.equals(newValue, "Visa")){
+                    creditCardsDialog.getDialogPane().setId("visa-credit-cards-dialog");
+                    Controller.testCardNumber = BrowserSettings.visaTestCardNumber;
+                } else if(Objects.equals(newValue, "Master Card")){
+                    creditCardsDialog.getDialogPane().setId("mc-credit-cards-dialog");
+                    Controller.testCardNumber = BrowserSettings.masterCardTestCardNumber;
+                } else if(Objects.equals(newValue, "Discover")){
+                    creditCardsDialog.getDialogPane().setId("discover-credit-cards-dialog");
+                    Controller.testCardNumber = BrowserSettings.discoverTestCardNumber;
+                } else if(Objects.equals(newValue, "American Express")){
+                    creditCardsDialog.getDialogPane().setId("ae-credit-cards-dialog");
+                    Controller.testCardNumber = BrowserSettings.masterCardTestCardNumber;
+                }
+        });
+
         try {
-            File f = new File("C:/appFiles/DialogBoxes.css");
+            File f = new File("C:/appFiles/styles/DialogBoxes.css");
             DialogPane dialogPane = creditCardsDialog.getDialogPane();
             dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
             dialogPane.getStyleClass().add("myDialog");
@@ -331,16 +222,8 @@ public class GeneratePopupBox {
         }
 // Traditional way to get the response value.
         Optional<String> result = creditCardsDialog.showAndWait();
+
         if (result.isPresent()){
-            if(Objects.equals(result.get(), "Visa")){
-                Controller.testCardNumber = BrowserSettings.visaTestCardNumber;
-            } else if(Objects.equals(result.get(), "Master Card")){
-                Controller.testCardNumber = BrowserSettings.masterCardTestCardNumber;
-            } else if(Objects.equals(result.get(), "Discover")){
-                Controller.testCardNumber = BrowserSettings.discoverTestCardNumber;
-            } else if(Objects.equals(result.get(), "American Express")){
-                Controller.testCardNumber = BrowserSettings.americanExpressTestCardNumber;
-            }
             GeneratePopupBox.confirmationPopupBox();
         } else System.out.println("CC cancelled");
     }
@@ -357,30 +240,8 @@ public class GeneratePopupBox {
         magentoDialog.setContentText("I want to choose ");
         magentoDialog.initStyle(StageStyle.UTILITY);
 
-//        final Hyperlink detailsButton = new Hyperlink();
-//        detailsButton.getStyleClass().setAll("details-button", "more"); //$NON-NLS-1$ //$NON-NLS-2$
-//        detailsButton.setText("moreText");
-//        ButtonBar buttonBar = new ButtonBar();
-//        buttonBar.getButtons().clear();
-//
-//        // show details button if expandable content is present
-//        ButtonBar.setButtonData(detailsButton, ButtonBar.ButtonData.HELP_2);
-//        buttonBar.getButtons().add(detailsButton);
-//        ButtonBar.setButtonUniformSize(detailsButton, false);
-//
-//        magentoDialog.getDialogPane().getButtonTypes().set(5, ButtonBar.setButtonUniformSize(buttonBar, true));
-//        ButtonType buttonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
-//        Button button = new Button();
-//        button.setText("THR");
-
-//
-//        magentoDialog.getDialogPane().getButtonTypes().addAll();
-//        magentoDialog.getDialogPane().getButtonTypes().addAll(buttonType);
-
-//        magentoDialog.getDialogPane().getButtonTypes().addAll(new ButtonType("Hey", ButtonBar.ButtonData.OK_DONE));
-//        magentoDialog.getDialogPane().lookupButton(new ButtonType("Hey", ButtonBar.ButtonData.OK_DONE)).lookup("#ok");
         try {
-            File f = new File("C:/appFiles/DialogBoxes.css");
+            File f = new File("C:/appFiles/styles/DialogBoxes.css");
             DialogPane dialogPane = magentoDialog.getDialogPane();
             dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
             dialogPane.getStyleClass().add("myDialog");
@@ -411,7 +272,7 @@ public class GeneratePopupBox {
         confirmationAlert.initStyle(StageStyle.UTILITY);
 
         try {
-            File f = new File("C:/appFiles/DialogBoxes.css");
+            File f = new File("C:/appFiles/styles/DialogBoxes.css");
             DialogPane dialogPane = confirmationAlert.getDialogPane();
             dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
             dialogPane.getStyleClass().add("myDialog");
@@ -422,6 +283,60 @@ public class GeneratePopupBox {
         confirmationResponse = confirmationAlert.showAndWait();
     }
 
+    public static void configPopupBox() {
+        Platform.runLater(() -> {
+            List<String> choices = new ArrayList<>();
+            Collections.addAll(choices, timeouts);
 
+            ChoiceDialog<String> configDialog = new ChoiceDialog<>(String.valueOf(CrunchifyGetPropertyValues.timeoutProperty), choices);
+            configDialog.getDialogPane().setId("config-dialog");
+            configDialog.setTitle("Configurations");
+            configDialog.setHeaderText("Configure Secret App");
+            configDialog.setContentText("Preferred Timeout (sec.): ");
+            configDialog.initStyle(StageStyle.UTILITY);
 
+            try {
+                File f = new File("C:/appFiles/styles/DialogBoxes.css");
+                DialogPane dialogPane = configDialog.getDialogPane();
+                dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
+                dialogPane.getStyleClass().add("myDialog");
+            } catch (Exception e){
+                System.out.println(e.getClass().toString() + "\n" +  e.getLocalizedMessage());
+            }
+// Traditional way to get the response value.
+            Optional<String> result = configDialog.showAndWait();
+            if (result.isPresent()){
+                currentTimeout = result.get();
+                BrowserSettings.timeoutVariable = Integer.valueOf(currentTimeout);
+                try {
+                    CrunchifyUpdateConfig.main(timeouts);
+                } catch (ConfigurationException e) {
+                    e.printStackTrace();
+                }
+            } else System.out.println("Select Magento cancelled");
+        });
+    }
+
+    public static void aboutPopupBox() {
+        Platform.runLater(() -> {
+            Alert exceptionDialog = new Alert(Alert.AlertType.INFORMATION);
+            exceptionDialog.getDialogPane().setId("about-dialog");
+            exceptionDialog.setTitle("About");
+            exceptionDialog.setHeaderText("Hi there! It's About of Secret App");
+            exceptionDialog.setContentText("This application is developed to make QA life easier " +
+                    "while doing routine things...");
+            exceptionDialog.initStyle(StageStyle.UTILITY);
+
+            try {
+                File f = new File("C:/appFiles/styles/DialogBoxes.css");
+                DialogPane dialogPane = exceptionDialog.getDialogPane();
+                dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
+                dialogPane.getStyleClass().add("myDialog");
+            } catch (Exception e){
+                System.out.println(e.getClass().toString() + "\n" +  e.getLocalizedMessage());
+            }
+
+            exceptionResponse = exceptionDialog.showAndWait();
+        });
+    }
 }

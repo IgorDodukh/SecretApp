@@ -1,20 +1,27 @@
 package FXUI;
 
 import Settings.BrowserSettings;
+import Settings.CrunchifyGetPropertyValues;
+import Settings.CrunchifyReadConfigMain;
+import Settings.CrunchifyUpdateConfig;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import org.apache.commons.configuration.ConfigurationException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class Controller extends Main {
     public WebDriver driver;
+
+    Controller controller = Controller.this;
 
     private Exception exceptionValue;
     static boolean loginFilled;
@@ -34,12 +41,15 @@ public class Controller extends Main {
     private TestStatus testStatus = new TestStatus();
     private BrowserSettings browserSettings = new BrowserSettings();
     private DropdownValueDeterminer dropdownValueDeterminer = new DropdownValueDeterminer();
-    public ChangeLabelValue changeLabelValue = new ChangeLabelValue();
 
     public static final String[] driverWarning = {""};
     public static final String[] driverExceptionMessage = {""};
 
+    public static String login;
+    public static String password;
+
     private Thread thread1;
+    private Thread thread2;
 
     private int browserComboBoxIndex;
     private int environmentComboBoxIndex;
@@ -74,13 +84,27 @@ public class Controller extends Main {
     public PasswordField passwordField;
     public Button startButton;
     public Button stopButton;
-    public ProgressBar progressBar;
+    public Button configButton;
+//    public ProgressBar progressBar;
     public Label waitingLabel;
+    public Label progressLabel;
     public Label buildVersion;
     public ImageView waitingAnimation;
+    public MenuItem menuConfigs;
+//    public Button hideButton;
+//    public Button closeButton;
+    public MenuItem closeMenuButton;
+    public MenuBar myMenuBar;
+    public MenuItem aboutButton;
 
     @FXML
-    private void initialize(){
+    private void initialize() {
+        try {
+            CrunchifyReadConfigMain.main(driverWarning);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Read Config Exception: " + e.getCause().toString());
+        }
         browsersComboBox.setItems(browsers);
         browsersComboBox.getSelectionModel().select(0);
 
@@ -90,13 +114,31 @@ public class Controller extends Main {
         environmentsComboBox.setItems(environments);
         environmentsComboBox.getSelectionModel().select(0);
 
-        buildVersion.setText("Build Version: 1.50 beta");
+        buildVersion.setText("Build Version: 1.60 beta");
+
+        loginField.setText(CrunchifyGetPropertyValues.loginProperty);
+        passwordField.setText(CrunchifyGetPropertyValues.passProperty);
+
+        closeMenuButton.setOnAction(t -> System.exit(0));
+        aboutButton.setOnAction(t -> GeneratePopupBox.aboutPopupBox());
+//        closeMenuButton.setOnAction(event -> ((Stage)((Button)event.getSource()).getScene().getWindow()).close());
+//        hideButton.setOnAction(e -> ((Stage)((Button)e.getSource()).getScene().getWindow()).setIconified(true));
     }
 
-    public void clickStartButton() throws InterruptedException {
+    public void clickConfigsButton() throws IOException {
+            GeneratePopupBox.configPopupBox();
+            try {
+                CrunchifyReadConfigMain.main(driverWarning);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
+
+    public synchronized void clickStartButton() throws InterruptedException {
+
         stopButtonClicked = false;
-        String login = loginField.getText();
-        String password = String.valueOf(passwordField.getCharacters());
+        login = loginField.getText();
+        password = String.valueOf(passwordField.getCharacters());
         FieldsValidation.loginPassValidation(login, password, loginField, passwordField, loginLabel, passwordLabel);
 
         browserComboBoxIndex = browsersComboBox.getSelectionModel().getSelectedIndex();
@@ -104,6 +146,11 @@ public class Controller extends Main {
         entityTypeComboBoxIndex = entityTypeComboBox.getSelectionModel().getSelectedIndex();
 
         if (loginFilled && passFilled){
+            try {
+                CrunchifyUpdateConfig.main(driverWarning);
+            } catch (ConfigurationException e) {
+                e.printStackTrace();
+            }
             browserComboBoxValue = browsersComboBox.getSelectionModel().getSelectedItem();
             entityComboBoxValue = entityTypeComboBox.getSelectionModel().getSelectedItem();
             environmentComboBoxValue = environmentsComboBox.getSelectionModel().getSelectedItem();
@@ -120,33 +167,24 @@ public class Controller extends Main {
                 System.out.println("Popup canceled");
             }
             else if (GeneratePopupBox.confirmationResponse.get() == ButtonType.OK) {
-
-//                Task<Void> task = new Task<Void>() {
-//                    @Override public Void call() throws InterruptedException {
-//                        updateMessage("Test is running... ");
-//                        return null;
-//                    }
-//                };
-//
-//                waitingLabel.textProperty().bind(task.messageProperty());
-//
-//                task.setOnSucceeded(e -> {
-//                    waitingLabel.textProperty().unbind();
-//                    // this message will be seen.
-//                    waitingLabel.setText("Test is running... " + String.valueOf(addProgressValue) + "%");
-//                });
-//
-//                Thread thread = new Thread(task);
-//                thread.setDaemon(true);
-//                thread.start();
-/**/
-//                ChangeLabelValue.changeWaitingLabelValue(waitingLabel, addProgressValue);
-                ProgressBar.addProgressValue(addProgressValue);
-//                ProgressBar.updateWaitingLabel(waitingLabel);
-
                 ExecutionTimeCounter.startCounter();
-
-                Runnable runnable = () -> {
+//                Runnable runnableProgress = () -> {
+//                    progressLabel.setVisible(true);
+//                    boolean i = true;
+//                    final String[] progress = {""};
+//                    while (i){
+//                        ChangeLabelValue.changeWaitingLabelValue(progressLabel, addProgressValue);
+//                        i = false;
+//                    }
+//                    progressLabel.textProperty().addListener((observable, oldValue, newValue) -> {
+//                        progress[0] = String.valueOf(addProgressValue) + "%";
+//                        if (!Objects.equals(newValue, "")) {
+//                            System.out.println("progr. val. = " + progress[0] + ", new = " + newValue);
+//                            ChangeLabelValue.changeWaitingLabelValue(progressLabel, addProgressValue);
+//                        }
+//                    });
+//                };
+                Runnable runnableTest = () -> {
                     startButton.setDisable(true);
                     try {
                         if (browserComboBoxIndex == 0) {
@@ -155,15 +193,13 @@ public class Controller extends Main {
                             ChromeOptions options = new ChromeOptions();
                             options.addArguments("--disable-extensions");
                             driver = new ChromeDriver(options);
-//                            driver = new ChromeDriver();
-
                         } else if (browserComboBoxIndex == 1) {
                             driverWarning[0] += "Firefox";
                             driver = new FirefoxDriver();
                         }
                     } catch (Exception e1) {
                         exceptionStatus = true;
-                        testStatus.stopTest(startButton, stopButton, waitingLabel, waitingAnimation);
+                        testStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
                     if (!Objects.equals(e1.getClass().getSimpleName(), "SessionNotCreatedException")){
                         driverExceptionMessage[0] += " session has been stopped unexpectedly.";
                     } else if (!Objects.equals(e1.getClass().getSimpleName(), "IllegalStateException")){
@@ -173,7 +209,7 @@ public class Controller extends Main {
                     }
                         if(!stopButtonClicked)GeneratePopupBox.failedPopupBox();
                     }
-                    testStatus.startTest(startButton, stopButton, waitingLabel, waitingAnimation);
+                    testStatus.startTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
                     System.out.println("Test Started");
                     browserSettings.setUp(environmentComboBoxIndex, browserComboBoxIndex, driver);
                     try {
@@ -188,26 +224,27 @@ public class Controller extends Main {
                     } finally {
                         ExecutionTimeCounter.stopCounter();
                         if (exceptionStatus) {
-                            testStatus.stopTest(startButton, stopButton, waitingLabel, waitingAnimation);
+                            testStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
                             if(!stopButtonClicked)GeneratePopupBox.exceptionPopupBox(exceptionValue);
                         }
                     }
                     if (!exceptionStatus) {
                         browserSettings.tearDown(driver);
-                        testStatus.stopTest(startButton, stopButton, waitingLabel, waitingAnimation);
+                        testStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
                         GeneratePopupBox.successPopupBox(resultMessage);
                     }
                 };
-                thread1 = new Thread(runnable);
+                thread1 = new Thread(runnableTest);
                 thread1.start();
+//                thread2 = new Thread(runnableProgress);
+//                thread2.start();
             }else if (GeneratePopupBox.confirmationResponse.get() == ButtonType.CANCEL || GeneratePopupBox.confirmationResponse.get() == ButtonType.CLOSE) {
                 System.out.println("No/Close button");}
         }
     }
 
     public void clickStopButton() {
-        testStatus.stopTest(startButton, stopButton, waitingLabel, waitingAnimation);
-        thread1.interrupt();
+        testStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
         stopButtonClicked = true;
         Runnable runnable2 = () -> {
             try {

@@ -10,10 +10,11 @@ import javafx.scene.image.ImageView;
  */
 public class TestStatus {
 
-    public void startTest(Button startButton, Button stopButton, Label waitingLabel, ImageView waitingAnimation/*, ProgressBar progressBar*/) {
+    public void startTest(Button startButton, Button stopButton, Label waitingLabel, Label progressLabel, ImageView waitingAnimation/*, ProgressBar progressBar*/) {
         startButton.setDisable(true);
         stopButton.setDisable(false);
         waitingLabel.setVisible(true);
+        progressLabel.setVisible(true);
         waitingAnimation.setVisible(true);
 //        progressBar.setVisible(true);
         Controller.addProgressValue = 0;
@@ -21,10 +22,11 @@ public class TestStatus {
         BrowserSettings.totalResultMessage = "";
     }
 
-    public void stopTest(Button startButton, Button stopButton, Label waitingLabel, ImageView waitingAnimation/*, ProgressBar progressBar*/) {
+    public void stopTest(Button startButton, Button stopButton, Label waitingLabel, Label progressLabel, ImageView waitingAnimation/*, ProgressBar progressBar*/) {
         startButton.setDisable(false);
         stopButton.setDisable(true);
         waitingLabel.setVisible(false);
+        progressLabel.setVisible(false);
         waitingAnimation.setVisible(false);
 //        progressBar.setVisible(false);
         Controller.addProgressValue = 0;

@@ -12,10 +12,10 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("QA life easier");
+        primaryStage.setTitle("Secret App");
+//        primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setScene(new Scene(root, 560, 450));
         primaryStage.show();
-
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(new Image("file:///C:/appFiles/pic/logo.png"));
     }

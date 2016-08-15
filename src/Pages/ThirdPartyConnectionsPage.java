@@ -54,7 +54,9 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
 
     public void openThirdPartyPage() {
         totalResultMessage += "Open Third Party Connections page\n";
+        totalResultMessage += " - Click 'Set Up' button\n";
         driver.findElement(setUpButtonLocator).click();
+        totalResultMessage += " - Click '3rd Party Connections' button\n";
         driver.findElement(thirdPartyButtonLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Third Party' page was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(authorizeLoginFieldLocator));

@@ -2,7 +2,6 @@ package FXUI;
 
 import Settings.BrowserSettings;
 import Settings.CrunchifyGetPropertyValues;
-import Settings.CrunchifyReadConfigMain;
 import Settings.CrunchifyUpdateConfig;
 import javafx.application.Platform;
 import javafx.scene.control.*;
@@ -42,8 +41,8 @@ public class GeneratePopupBox {
             "20",
             "30",
             "60",};
-    public static String currentTimeout;
-    public static String currentUser;
+    public static String currentTimeout = "";
+    public static String currentUser = "";
 
     public static void exceptionPopupBox(Exception exception) {
         String exceptionMessage = "";
@@ -143,11 +142,6 @@ public class GeneratePopupBox {
     }
 
     public static void indentifyPopupBox() {
-        try {
-            CrunchifyReadConfigMain.main(timeouts);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         List<String> choices = new ArrayList<>();
         choices.add("Igor");
         choices.add("Vika");
@@ -176,7 +170,13 @@ public class GeneratePopupBox {
                 BrowserSettings.authTransactionKey = "5gt38eVNu529t6ZP";
             }
             currentUser = newValue;
+            try {
+                CrunchifyUpdateConfig.main();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
+
         try {
             File f = new File("C:/appFiles/styles/DialogBoxes.css");
             DialogPane dialogPane = identifyDialog.getDialogPane();
@@ -190,7 +190,6 @@ public class GeneratePopupBox {
         if (result.isPresent()){
             GeneratePopupBox.confirmationPopupBox();
         } else System.out.println("Person select cancelled");
-        CrunchifyUpdateConfig.main(timeouts);
     }
 
     public static void creditCardsPopupBox() {
@@ -319,7 +318,11 @@ public class GeneratePopupBox {
             if (result.isPresent()){
                 currentTimeout = result.get();
                 BrowserSettings.timeoutVariable = Integer.valueOf(currentTimeout);
-                CrunchifyUpdateConfig.main(timeouts);
+                try {
+                    CrunchifyUpdateConfig.main();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } else System.out.println("Select Magento cancelled");
         });
     }

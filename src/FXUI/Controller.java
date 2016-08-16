@@ -20,8 +20,6 @@ import java.util.Objects;
 public class Controller extends Main {
     public WebDriver driver;
 
-    Controller controller = Controller.this;
-
     private Exception exceptionValue;
     static boolean loginFilled;
     static boolean passFilled;
@@ -97,13 +95,9 @@ public class Controller extends Main {
     public MenuItem aboutButton;
 
     @FXML
-    private void initialize() {
-        try {
-            CrunchifyReadConfigMain.main(driverWarning);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Read Config Exception: " + e.getCause().toString());
-        }
+    private void initialize() throws IOException {
+
+
         browsersComboBox.setItems(browsers);
         browsersComboBox.getSelectionModel().select(0);
 
@@ -127,13 +121,13 @@ public class Controller extends Main {
     public void clickConfigsButton() throws IOException {
             GeneratePopupBox.configPopupBox();
             try {
-                CrunchifyReadConfigMain.main(driverWarning);
+                CrunchifyReadConfigMain.main();
             } catch (IOException e) {
                 e.printStackTrace();
             }
     }
 
-    public synchronized void clickStartButton() throws InterruptedException {
+    public synchronized void clickStartButton() throws InterruptedException, IOException {
 
         stopButtonClicked = false;
         login = loginField.getText();
@@ -145,7 +139,9 @@ public class Controller extends Main {
         entityTypeComboBoxIndex = entityTypeComboBox.getSelectionModel().getSelectedIndex();
 
         if (loginFilled && passFilled){
-            CrunchifyUpdateConfig.main(driverWarning);
+
+            CrunchifyUpdateConfig.main();
+
             browserComboBoxValue = browsersComboBox.getSelectionModel().getSelectedItem();
             entityComboBoxValue = entityTypeComboBox.getSelectionModel().getSelectedItem();
             environmentComboBoxValue = environmentsComboBox.getSelectionModel().getSelectedItem();

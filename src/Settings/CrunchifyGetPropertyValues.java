@@ -19,6 +19,8 @@ public class CrunchifyGetPropertyValues {
 
     public String getPropValues() throws IOException {
 
+//        http://stackoverflow.com/questions/15337409/updating-property-value-in-properties-file-without-deleting-other-values
+
         try {
             Properties prop = new Properties();
             InputStream input = new FileInputStream("C:\\appFiles\\config.properties");
@@ -38,7 +40,7 @@ public class CrunchifyGetPropertyValues {
             passProperty = prop.getProperty("lastPassword");
 
             result = "Last credentials: " + loginProperty + ", " + passProperty ;
-            System.out.println(result + "\nTimeout is set to " + timeoutProperty + " by user=" + user);
+//            System.out.println(result + "\nTimeout is set to " + timeoutProperty + " by user=" + user);
         } catch (Exception e) {
             System.out.println("Exception: " + e);
         } finally {

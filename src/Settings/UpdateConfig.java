@@ -64,47 +64,4 @@ public class UpdateConfig {
         System.out.println("Config Property Successfully Updated..");
         System.out.println("New user: " + props.getProperty("user"));
     }
-
-//    public static void main() throws IOException {
-//
-//        FileInputStream in = new FileInputStream("C:\\appFiles\\config.properties");
-//        Properties props = new Properties();
-//        props.load(in);
-//        in.close();
-//
-//        FileOutputStream out = new FileOutputStream("C:\\appFiles\\config.properties");
-//
-//
-//        if(GeneratePopupBox.isConfigMenu) {
-//            props.setProperty("timeoutVariable", GeneratePopupBox.currentTimeout);
-//            if(Objects.equals(Controller.login, "") && Objects.equals(Controller.password, "")) {
-//                props.setProperty("lastEmail", GetPropertyValues.loginProperty);
-//                props.setProperty("lastPassword", GetPropertyValues.passProperty);
-//            } else if(!Objects.equals(Controller.login, "") && !Objects.equals(Controller.password, "")){
-//                props.setProperty("lastEmail", Controller.login);
-//                props.setProperty("lastPassword", Controller.password);
-//            }
-//            props.setProperty("user", GetPropertyValues.user);
-//        }
-//        if(Controller.isStartButton){
-//            props.setProperty("timeoutVariable", GetPropertyValues.timeoutProperty);
-//            props.setProperty("lastEmail", Controller.login);
-//            props.setProperty("lastPassword", Controller.password);
-//            props.setProperty("user", GetPropertyValues.user);
-//        }
-//        if(Controller.isStartButton && GeneratePopupBox.isConfigUser) {
-//            props.setProperty("timeoutVariable", GetPropertyValues.timeoutProperty);
-//            props.setProperty("lastEmail", GetPropertyValues.loginProperty);
-//            props.setProperty("lastPassword", GetPropertyValues.passProperty);
-//            props.setProperty("user", GeneratePopupBox.currentUser);
-//        }
-//        props.store(out, null);
-//        out.close();
-//
-//        System.out.println("Config Property Successfully Updated..");
-//        System.out.println("New timeout: " + props.getProperty("timeoutVariable"));
-//        System.out.println("New email: " + props.getProperty("lastEmail"));
-//        System.out.println("New pass: " + props.getProperty("lastPassword"));
-//        System.out.println("New user: " + props.getProperty("user"));
-//    }
 }

@@ -46,7 +46,6 @@ public class Controller extends Main {
     public static String login;
     public static String password;
 
-    private Thread thread1;
     private Thread thread2;
 
     private int browserComboBoxIndex;
@@ -114,6 +113,15 @@ public class Controller extends Main {
 
         closeMenuButton.setOnAction(t -> System.exit(0));
         aboutButton.setOnAction(t -> GeneratePopupBox.aboutPopupBox());
+
+//        Add UI Elements listener
+        KeysListener.comboboxKeyListener(browsersComboBox, this);
+        KeysListener.comboboxKeyListener(entityTypeComboBox, this);
+        KeysListener.comboboxKeyListener(environmentsComboBox, this);
+        KeysListener.textFieldKeyListener(loginField, this);
+        KeysListener.passFieldKeyListener(passwordField, this);
+        KeysListener.buttonsKeyListener(startButton, this);
+
 //        closeMenuButton.setOnAction(event -> ((Stage)((Button)event.getSource()).getScene().getWindow()).close());
 //        hideButton.setOnAction(e -> ((Stage)((Button)e.getSource()).getScene().getWindow()).setIconified(true));
     }
@@ -222,7 +230,7 @@ public class Controller extends Main {
                         GeneratePopupBox.successPopupBox(resultMessage);
                     }
                 };
-                thread1 = new Thread(runnableTest);
+                Thread thread1 = new Thread(runnableTest);
                 thread1.start();
 //                thread2 = new Thread(runnableProgress);
 //                thread2.start();

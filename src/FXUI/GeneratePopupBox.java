@@ -1,8 +1,8 @@
 package FXUI;
 
 import Settings.BrowserSettings;
-import Settings.CrunchifyGetPropertyValues;
-import Settings.CrunchifyUpdateConfig;
+import Settings.GetPropertyValues;
+import Settings.UpdateConfig;
 import javafx.application.Platform;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -148,7 +148,7 @@ public class GeneratePopupBox {
         choices.add("Oksanka");
         choices.add("Natasha");
 
-        ChoiceDialog<String> identifyDialog = new ChoiceDialog<>(CrunchifyGetPropertyValues.user, choices);
+        ChoiceDialog<String> identifyDialog = new ChoiceDialog<>(GetPropertyValues.user, choices);
         identifyDialog.getDialogPane().setId("indentify-dialog");
         identifyDialog.setTitle("Person identification");
         identifyDialog.setHeaderText("Please select who are you\nto identify Authorize.NET credentials");
@@ -171,7 +171,7 @@ public class GeneratePopupBox {
             }
             currentUser = newValue;
             try {
-                CrunchifyUpdateConfig.main();
+                UpdateConfig.updateUser();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -298,7 +298,7 @@ public class GeneratePopupBox {
             List<String> choices = new ArrayList<>();
             Collections.addAll(choices, timeouts);
 
-            ChoiceDialog<String> configDialog = new ChoiceDialog<>(String.valueOf(CrunchifyGetPropertyValues.timeoutProperty), choices);
+            ChoiceDialog<String> configDialog = new ChoiceDialog<>(String.valueOf(GetPropertyValues.timeoutProperty), choices);
             configDialog.getDialogPane().setId("config-dialog");
             configDialog.setTitle("Configurations");
             configDialog.setHeaderText("Configure Secret App");
@@ -319,7 +319,7 @@ public class GeneratePopupBox {
                 currentTimeout = result.get();
                 BrowserSettings.timeoutVariable = Integer.valueOf(currentTimeout);
                 try {
-                    CrunchifyUpdateConfig.main();
+                    UpdateConfig.updateTimeout();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

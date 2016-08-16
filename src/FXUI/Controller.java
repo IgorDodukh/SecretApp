@@ -1,9 +1,9 @@
 package FXUI;
 
 import Settings.BrowserSettings;
-import Settings.CrunchifyGetPropertyValues;
-import Settings.CrunchifyReadConfigMain;
-import Settings.CrunchifyUpdateConfig;
+import Settings.GetPropertyValues;
+import Settings.ReadConfigMain;
+import Settings.UpdateConfig;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -23,6 +23,7 @@ public class Controller extends Main {
     private Exception exceptionValue;
     static boolean loginFilled;
     static boolean passFilled;
+
     static String resultMessage = "";
     public static int magentoIndex;
     public static String magentoIndexName = "";
@@ -96,8 +97,6 @@ public class Controller extends Main {
 
     @FXML
     private void initialize() throws IOException {
-
-
         browsersComboBox.setItems(browsers);
         browsersComboBox.getSelectionModel().select(0);
 
@@ -109,8 +108,8 @@ public class Controller extends Main {
 
         buildVersion.setText("Build Version: 1.60 beta");
 
-        loginField.setText(CrunchifyGetPropertyValues.loginProperty);
-        passwordField.setText(CrunchifyGetPropertyValues.passProperty);
+        loginField.setText(GetPropertyValues.loginProperty);
+        passwordField.setText(GetPropertyValues.passProperty);
 
         closeMenuButton.setOnAction(t -> System.exit(0));
         aboutButton.setOnAction(t -> GeneratePopupBox.aboutPopupBox());
@@ -119,16 +118,13 @@ public class Controller extends Main {
     }
 
     public void clickConfigsButton() throws IOException {
-            GeneratePopupBox.configPopupBox();
-            try {
-                CrunchifyReadConfigMain.main();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        ReadConfigMain.main();
+        GeneratePopupBox.configPopupBox();
     }
 
     public synchronized void clickStartButton() throws InterruptedException, IOException {
 
+        ReadConfigMain.main();
         stopButtonClicked = false;
         login = loginField.getText();
         password = String.valueOf(passwordField.getCharacters());
@@ -140,7 +136,7 @@ public class Controller extends Main {
 
         if (loginFilled && passFilled){
 
-            CrunchifyUpdateConfig.main();
+            UpdateConfig.updateCredentials();
 
             browserComboBoxValue = browsersComboBox.getSelectionModel().getSelectedItem();
             entityComboBoxValue = entityTypeComboBox.getSelectionModel().getSelectedItem();

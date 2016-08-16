@@ -17,9 +17,6 @@ public class Main extends Application {
 //        primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setScene(new Scene(root, 560, 450));
         primaryStage.show();
-
-        ReadConfigMain.main();
-
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(new Image("file:///C:/appFiles/pic/logo.png"));
     }

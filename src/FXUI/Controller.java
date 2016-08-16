@@ -108,6 +108,7 @@ public class Controller extends Main {
 
         buildVersion.setText("Build Version: 1.60 beta");
 
+        ReadConfigMain.main();
         loginField.setText(GetPropertyValues.loginProperty);
         passwordField.setText(GetPropertyValues.passProperty);
 

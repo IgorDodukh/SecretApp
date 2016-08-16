@@ -170,11 +170,6 @@ public class GeneratePopupBox {
                 BrowserSettings.authTransactionKey = "5gt38eVNu529t6ZP";
             }
             currentUser = newValue;
-            try {
-                UpdateConfig.updateUser();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         });
 
         try {
@@ -188,6 +183,11 @@ public class GeneratePopupBox {
 // Traditional way to get the response value.
         Optional<String> result = identifyDialog.showAndWait();
         if (result.isPresent()){
+            try {
+                UpdateConfig.updateUser();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             GeneratePopupBox.confirmationPopupBox();
         } else System.out.println("Person select cancelled");
     }

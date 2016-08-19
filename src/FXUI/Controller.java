@@ -116,9 +116,9 @@ public class Controller extends Main {
         aboutButton.setOnAction(t -> GeneratePopupBox.aboutPopupBox());
 
 //Add UI Elements listener
-        KeysListener.comboboxKeyListener(browsersComboBox, this);
-        KeysListener.comboboxKeyListener(entityTypeComboBox, this);
-        KeysListener.comboboxKeyListener(environmentsComboBox, this);
+        KeysListener.comboBoxKeyListener(browsersComboBox, this);
+        KeysListener.comboBoxKeyListener(entityTypeComboBox, this);
+        KeysListener.comboBoxKeyListener(environmentsComboBox, this);
         KeysListener.textFieldKeyListener(loginField, this);
         KeysListener.passFieldKeyListener(passwordField, this);
         KeysListener.buttonsKeyListener(startButton, this);

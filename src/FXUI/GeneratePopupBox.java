@@ -410,7 +410,7 @@ public class GeneratePopupBox {
                     " - 'Credit Cards' popup box design improvement (changing logos)";
 
 
-            Label label = new Label("Last release includes the following changes:");
+            Label label = new Label("Last release '#1.60 beta' includes the following changes:");
 
             TextArea textArea = new TextArea(newChanges);
             textArea.setEditable(false);

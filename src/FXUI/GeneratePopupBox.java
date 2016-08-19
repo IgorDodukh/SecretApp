@@ -390,24 +390,56 @@ public class GeneratePopupBox {
 
     public static void aboutPopupBox() {
         Platform.runLater(() -> {
-            Alert exceptionDialog = new Alert(Alert.AlertType.INFORMATION);
-            exceptionDialog.getDialogPane().setId("about-dialog");
-            exceptionDialog.setTitle("About");
-            exceptionDialog.setHeaderText("Hi there! It's About of Secret App");
-            exceptionDialog.setContentText("This application is developed to make QA life easier " +
-                    "while doing routine things...");
-            exceptionDialog.initStyle(StageStyle.UTILITY);
+            Alert aboutDialog = new Alert(Alert.AlertType.INFORMATION);
+            aboutDialog.getDialogPane().setId("about-dialog");
+            aboutDialog.setTitle("About");
+            aboutDialog.setHeaderText("Hi there! It's About of Secret App");
+            aboutDialog.setContentText("This application is developed to make QA life easier " +
+                    "while doing routine things...\n\n");
+            aboutDialog.initStyle(StageStyle.UTILITY);
+
+            // Create expandable Exception.
+
+            String newChanges = " - Add menu:\n" +
+                    " \t- 'Configs':\n" +
+                    "\t \t- Timeout config. User can manually change value of timeouts during tests executing (maybe sometimes it will be useful)\n" +
+                    " \t- 'Exit': close an app\n" +
+                    "\t- 'About': popup box with some info\n" +
+                    " - 'Sync Magento' test is moved to the TOP since it was the most offen used test\n" +
+                    " - 'Configure merchant' test asks you to indentify person. YOUR SELECTION BECOMES REMEMBERED FOR FUTURE USAGES\n" +
+                    " - 'Credit Cards' popup box design improvement (changing logos)";
+
+
+            Label label = new Label("Last release includes the following changes:");
+
+            TextArea textArea = new TextArea(newChanges);
+            textArea.setEditable(false);
+            textArea.setWrapText(true);
+
+            textArea.setMaxWidth(Double.MAX_VALUE);
+            textArea.setMaxHeight(Double.MAX_VALUE);
+            GridPane.setVgrow(textArea, Priority.ALWAYS);
+            GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+            GridPane expContent = new GridPane();
+            expContent.setMaxWidth(Double.MAX_VALUE);
+            expContent.add(label, 0, 0);
+            expContent.add(textArea, 0, 1);
+
+// Set expandable Exception into the dialog pane.
+            aboutDialog.getDialogPane().setExpandableContent(expContent);
+
 
             try {
                 File f = new File("C:/appFiles/styles/DialogBoxes.css");
-                DialogPane dialogPane = exceptionDialog.getDialogPane();
+                DialogPane dialogPane = aboutDialog.getDialogPane();
                 dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
                 dialogPane.getStyleClass().add("myDialog");
             } catch (Exception e){
                 System.out.println(e.getClass().toString() + "\n" +  e.getLocalizedMessage());
             }
 
-            exceptionResponse = exceptionDialog.showAndWait();
+            exceptionResponse = aboutDialog.showAndWait();
         });
     }
 }

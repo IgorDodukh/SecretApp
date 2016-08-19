@@ -65,7 +65,8 @@ public class Controller extends Main {
                     "Create Product",
                     "Create Supplier",
                     "Create Warehouse & Bin",
-                    "Reorder the last Order"
+                    "Reorder the last Order",
+                    "Create User"
             );
     private ObservableList<String> environments =
             FXCollections.observableArrayList(
@@ -105,7 +106,7 @@ public class Controller extends Main {
         environmentsComboBox.setItems(environments);
         environmentsComboBox.getSelectionModel().select(0);
 
-        buildVersion.setText("Build Version: 1.60 beta");
+        buildVersion.setText("Build Version: 1.65 beta");
 
         ReadConfigMain.main();
         loginField.setText(GetPropertyValues.loginProperty);
@@ -114,7 +115,7 @@ public class Controller extends Main {
         closeMenuButton.setOnAction(t -> System.exit(0));
         aboutButton.setOnAction(t -> GeneratePopupBox.aboutPopupBox());
 
-//        Add UI Elements listener
+//Add UI Elements listener
         KeysListener.comboboxKeyListener(browsersComboBox, this);
         KeysListener.comboboxKeyListener(entityTypeComboBox, this);
         KeysListener.comboboxKeyListener(environmentsComboBox, this);
@@ -157,6 +158,8 @@ public class Controller extends Main {
                 GeneratePopupBox.magentoPopupBox();
             } else if (entityTypeComboBoxIndex == 2) {
                 GeneratePopupBox.creditCardsPopupBox();
+            } else if (entityTypeComboBoxIndex == 7) {
+                GeneratePopupBox.userTypePopupBox();
             } else GeneratePopupBox.confirmationPopupBox();
 
             if(GeneratePopupBox.confirmationResponse == null){

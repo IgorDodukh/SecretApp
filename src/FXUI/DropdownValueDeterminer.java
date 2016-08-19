@@ -4,6 +4,8 @@ import Settings.BrowserSettings;
 import Tests.*;
 import org.openqa.selenium.WebDriver;
 
+import java.util.Objects;
+
 /**
  * Created by Ihor on 7/16/2016.
  */
@@ -15,6 +17,7 @@ public class DropdownValueDeterminer {
     private CreateSupplier createSupplier = new CreateSupplier();
     private MakeReorder makeReorder = new MakeReorder();
     private ConfigureChannel configureChannel = new ConfigureChannel();
+    private AddUsers addUsers = new AddUsers();
 
 
     public void entityTypeDropdown(int entityTypeComboBoxIndex, String login, String password, String testCardNumber, WebDriver driver) throws InterruptedException {
@@ -57,6 +60,12 @@ public class DropdownValueDeterminer {
             configureChannel.configureMagentoChannel(login, password, driver);
             Controller.resultMessage += "\nMagento "+ Controller.magentoIndexName;
             Controller.resultMessage += " has been synced with " + Controller.environmentComboBoxValue;
+        } else if (entityTypeComboBoxIndex == 7) {
+            BrowserSettings.progressVariable = 4;
+            if(Objects.equals(GeneratePopupBox.userTypeToCreate, "Merchant")) {
+                addUsers.addTenant(login, password);
+            }
+            Controller.resultMessage += "New " + GeneratePopupBox.userTypeToCreate + " has been created";
         }
     }
 }

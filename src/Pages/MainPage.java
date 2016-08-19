@@ -66,6 +66,10 @@ public class MainPage extends BrowserSettings {
 
     private By syncButtonLocator = By.xpath("//*[@class='nav navbar-nav']/li[7]");
 
+    private By manageMerchantButtonLocator = By.xpath("//a[@href='/web/Merchant/SearchMerchant']");
+    private By addMerchantButtonLocator = By.xpath("//button[@id='createMerchant']");
+
+
     public void openAddCustomerPage() {
         totalResultMessage += "Open 'Add Customer' page\n";
         driver.findElement(customersMenuButtonLocator).click();
@@ -193,5 +197,13 @@ public class MainPage extends BrowserSettings {
 
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Sync' page was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(siteLogoIconLocator));
+    }
+
+    public void openUsersPage() {
+        totalResultMessage += "Open 'Manage Merchant' page\n";
+        driver.findElement(setupButtonLocator).click();
+        driver.findElement(manageMerchantButtonLocator).click();
+        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Manage Merchant' page was not loaded");
+        wait.until(ExpectedConditions.elementToBeClickable(addMerchantButtonLocator));
     }
 }

@@ -36,7 +36,7 @@ public class GenerateRandomData {
                 "_-.";   //special characters
         String email="";
         String temp=RandomStringUtils.random(length,allowedChars);
-        email=temp.substring(0,temp.length()-9)+"@test.org";
+        email=temp.substring(0,temp.length()-9)+"@dydacomp.biz";
         return email;
     }
 

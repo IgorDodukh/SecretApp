@@ -43,6 +43,7 @@ public class GeneratePopupBox {
             "60",};
     public static String currentTimeout = "";
     public static String currentUser = "";
+    public static String userTypeToCreate = "";
 
     public static void exceptionPopupBox(Exception exception) {
         String exceptionMessage = "";
@@ -190,6 +191,66 @@ public class GeneratePopupBox {
             }
             GeneratePopupBox.confirmationPopupBox();
         } else System.out.println("Person select cancelled");
+    }
+
+    public static void userTypePopupBox() {
+        List<String> choices = new ArrayList<>();
+        choices.add("Merchant");
+        choices.add("Merchant Admin");
+        choices.add("Merchandiser");
+        choices.add("Picker");
+        choices.add("Packer");
+        choices.add("Shipper");
+        choices.add("CSR");
+        choices.add("CSR Manager");
+        choices.add("Purchase Manager");
+        choices.add("Warehouse Manager");
+
+        ChoiceDialog<String> identifyDialog = new ChoiceDialog<>("Merchant", choices);
+        identifyDialog.getDialogPane().setId("users-dialog");
+        identifyDialog.setTitle("User Type Selecting");
+        identifyDialog.setHeaderText("Please select type of user\nwhich you would like to create");
+//        identifyDialog.setContentText("I would like to choose ");
+        identifyDialog.initStyle(StageStyle.UTILITY);
+
+        identifyDialog.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if(Objects.equals(newValue, "Merchant")){
+                System.out.println(newValue);
+            } else if(Objects.equals(newValue, "Merchant Admin")){
+                System.out.println(newValue);
+            } else if(Objects.equals(newValue, "Merchandiser")){
+                System.out.println(newValue);
+            } else if(Objects.equals(newValue, "Picker")){
+                System.out.println(newValue);
+            } else if(Objects.equals(newValue, "Packer")){
+                System.out.println(newValue);
+            } else if(Objects.equals(newValue, "Shipper")){
+                System.out.println(newValue);
+            } else if(Objects.equals(newValue, "CSR")){
+                System.out.println(newValue);
+            } else if(Objects.equals(newValue, "CSR Manager")){
+                System.out.println(newValue);
+            } else if(Objects.equals(newValue, "Purchase Manager")){
+                System.out.println(newValue);
+            } else if(Objects.equals(newValue, "Warehouse Manager")){
+                System.out.println(newValue);
+            }
+        });
+
+        try {
+            File f = new File("C:/appFiles/styles/DialogBoxes.css");
+            DialogPane dialogPane = identifyDialog.getDialogPane();
+            dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
+            dialogPane.getStyleClass().add("myDialog");
+        } catch (Exception e){
+            System.out.println(e.getClass().toString() + "\n" +  e.getLocalizedMessage());
+        }
+// Traditional way to get the response value.
+        Optional<String> result = identifyDialog.showAndWait();
+        if (result.isPresent()){
+            userTypeToCreate = result.get();
+            GeneratePopupBox.confirmationPopupBox();
+        } else System.out.println("User Type selecting cancelled");
     }
 
     public static void creditCardsPopupBox() {

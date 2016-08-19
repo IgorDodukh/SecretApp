@@ -138,6 +138,11 @@ public class BrowserSettings {
 
     public static String totalResultMessage = "";
 
+    //Corporate mail box access
+    public String mailboxUrl = "gmail.com";
+    public String mailboxLogin = "wildcard@dydacomp.biz";
+    public String mailboxPassword = "Dydacomp2014!";
+
     @BeforeTest
     public void setUp(int envIndex, int browserIndex, WebDriver driver) {
         System.out.println("Run WebDriver");

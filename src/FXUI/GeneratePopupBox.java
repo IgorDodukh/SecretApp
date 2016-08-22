@@ -24,14 +24,6 @@ public class GeneratePopupBox {
 
     private static final AppStyles appStyles = new AppStyles();
 
-    public static boolean customerFirstNameBlank = false;
-    public static boolean customerLastNameBlank = false;
-    public static boolean productNameBlank = false;
-    public static boolean productSkuBlank = false;
-    public static boolean warehouseNameBlank = false;
-    public static boolean binNameBlank = false;
-    public static boolean supplierNameBlank = false;
-
     public static Optional<ButtonType> exceptionResponse;
     public static Optional<ButtonType> confirmationResponse;
     private static final String[] magentos = {
@@ -127,6 +119,21 @@ public class GeneratePopupBox {
             failedDialog.setTitle("Test Failed. Running time: " + ExecutionTimeCounter.executionTime);
             failedDialog.setHeaderText("Test was failed because of some unexpectedly reasons.");
             failedDialog.setContentText(Controller.driverWarning[0] + Controller.driverExceptionMessage[0]);
+            failedDialog.initStyle(StageStyle.UTILITY);
+
+            appStyles.setDialogStyle(failedDialog);
+
+            exceptionResponse = failedDialog.showAndWait();
+        });
+    }
+
+    public static void failedConnectionPopupBox() {
+        Platform.runLater(() -> {
+            Alert failedDialog = new Alert(Alert.AlertType.INFORMATION);
+            appStyles.setDialogLogo(failedDialog, "sad.png");
+            failedDialog.setTitle("Connection warning");
+            failedDialog.setHeaderText("Test was not starter.");
+            failedDialog.setContentText("Please check your internet connection.");
             failedDialog.initStyle(StageStyle.UTILITY);
 
             appStyles.setDialogStyle(failedDialog);

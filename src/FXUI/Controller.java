@@ -16,6 +16,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 import java.util.Objects;
 
 public class Controller extends Main {
@@ -94,9 +96,33 @@ public class Controller extends Main {
     public MenuItem aboutButton;
     public MenuItem namesConfigs;
 
+    boolean internetExist = true;
+
+    public boolean checkIntConnection()
+    {
+        boolean status = false;
+        Socket sock = new Socket();
+        InetSocketAddress address = new InetSocketAddress("www.google.com", 80);
+        try{
+            sock.connect(address, 3000);
+            if(sock.isConnected()){
+                status=true;
+                System.out.println("Connection success: " + sock.isConnected());
+            }
+        } catch(Exception e){
+            System.out.println("Test Connection exception: " + e.getMessage());
+        }finally{
+            try{
+                sock.close();
+            }catch(Exception e){
+                System.out.println("Test Connection exception: " + e.getMessage());
+            }
+        }
+        return status;
+    }
+
     @FXML
     private void initialize() throws IOException {
-        //TODO: check internet connection before running tests (after confirm 'confirmation' popup box)
         //TODO: implement installation by installer
         browsersComboBox.setItems(browsers);
         browsersComboBox.getSelectionModel().select(0);
@@ -149,7 +175,7 @@ public class Controller extends Main {
     }
 
     public synchronized void clickStartButton() throws IOException {
-
+        internetExist = checkIntConnection();
         ReadConfigMain.main();
         stopButtonClicked = false;
         login = loginField.getText();
@@ -178,10 +204,12 @@ public class Controller extends Main {
                 GeneratePopupBox.userTypePopupBox();
             } else GeneratePopupBox.confirmationPopupBox();
 
+
+
             if(GeneratePopupBox.confirmationResponse == null){
                 System.out.println("Popup canceled");
             }
-            else if (GeneratePopupBox.confirmationResponse.get() == ButtonType.OK) {
+            else if (GeneratePopupBox.confirmationResponse.get() == ButtonType.OK && internetExist) {
                 ExecutionTimeCounter.startCounter();
 //                Runnable runnableProgress = () -> {
 //                    progressLabel.setVisible(true);
@@ -251,10 +279,12 @@ public class Controller extends Main {
                 };
                 Thread thread1 = new Thread(runnableTest);
                 thread1.start();
-//                thread2 = new Thread(runnableProgress);
-//                thread2.start();
+            } else if(!internetExist) {
+                GeneratePopupBox.failedConnectionPopupBox();
             }else if (GeneratePopupBox.confirmationResponse.get() == ButtonType.CANCEL || GeneratePopupBox.confirmationResponse.get() == ButtonType.CLOSE) {
-                System.out.println("No/Close button");}
+                System.out.println("No/Close button");
+            }
+            GeneratePopupBox.confirmationResponse = null;
         }
     }
 

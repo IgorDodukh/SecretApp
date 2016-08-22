@@ -13,24 +13,25 @@ import org.testng.Assert;
 /**
  * Created by igor on 28.05.16.
  */
+@SuppressWarnings("ALL")
 public class ShippingMethodsPage extends BrowserSettings {
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public ShippingMethodsPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    private By addShippingMethodButtonLocator = By.xpath("//button[@id='add_shippingMethod']");
-    private By addShippingMethodTitleLocator = By.xpath("//h2/strong");
+    private final By addShippingMethodButtonLocator = By.xpath("//button[@id='add_shippingMethod']");
+    private final By addShippingMethodTitleLocator = By.xpath("//h2/strong");
 
-    private By shippingMethodNameFieldLocator = By.xpath("//input[@id='ShippingMethod_Name']");
-    private By upsMethodDropdownLocator = By.xpath("//select[@id='selectCarrierList']/option[2]");
-    private By upsTypeGroundDropdownLocator = By.xpath("//select[@id='selectServiceList']/option[6]");
-    private By favoriteShippingMethodSetYesLocator = By.xpath("//div[@id='toggleIsFavoriteShippingMethod_div']/span[1]");
-    private By shippingChargeFieldLocator = By.xpath("//input[@id='priceValue']");
-    private By saveAndCloseContextualButtonLocator = By.xpath("//*[@id='btnSaveAndClose']/div[2]");
+    private final By shippingMethodNameFieldLocator = By.xpath("//input[@id='ShippingMethod_Name']");
+    private final By upsMethodDropdownLocator = By.xpath("//select[@id='selectCarrierList']/option[2]");
+    private final By upsTypeGroundDropdownLocator = By.xpath("//select[@id='selectServiceList']/option[6]");
+    private final By favoriteShippingMethodSetYesLocator = By.xpath("//div[@id='toggleIsFavoriteShippingMethod_div']/span[1]");
+    private final By shippingChargeFieldLocator = By.xpath("//input[@id='priceValue']");
+    private final By saveAndCloseContextualButtonLocator = By.xpath("//*[@id='btnSaveAndClose']/div[2]");
     private By saveSettingsSuccessPopupLocator = By.xpath("//div[@role='dialog']/*[3]");
-    private By confirmPopupButtonLocator = By.xpath("//div[1]/button[@class='primary-button']");
+    private final By confirmPopupButtonLocator = By.xpath("//div[1]/button[@class='primary-button']");
 
 
     public void openShippingMethodCreatingForm() {

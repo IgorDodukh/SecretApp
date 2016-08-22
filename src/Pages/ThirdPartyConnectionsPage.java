@@ -11,44 +11,34 @@ import org.testng.Assert;
 import java.util.Objects;
 
 /**
- * Created by igor on 27.05.16.
+ * Created by igor on 27.05.16. All rights reserved!
  */
 public class ThirdPartyConnectionsPage extends BrowserSettings {
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public ThirdPartyConnectionsPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    private By authorizeLoginFieldLocator = By.xpath("//input[@id='passwordAuthorizenetLoginId']");
-    private By authorizeKeyFieldLocator = By.xpath("//input[@id='passwordTransactionKey']");
-    private By authorizeTestButtonLocator = By.xpath("//input[@id='btnPaymentGatewaryTestConnect']");
-//    private By authorizeTestResultPopupLocator = By.xpath("//div[@id='ThirdPartyConnectionsManagement']");
-    private By confirmPopupButtonLocator = By.xpath("//div[1]/button[@class='primary-button']");
+    private final By authorizeLoginFieldLocator = By.xpath("//input[@id='passwordAuthorizenetLoginId']");
+    private final By authorizeKeyFieldLocator = By.xpath("//input[@id='passwordTransactionKey']");
 
-    private By carrierGetawayTabLocator = By.xpath("//a[@id='leftNav_item_2']");
-    private By upsConfigurationCheckboxLocator = By.xpath("//input[@id='upsConnectionsChk']");
-    private By upsUserNameFieldLocator = By.xpath("//input[@id='txtUPSUserName']");
-    private By upsPasswordFieldLocator = By.xpath("//input[@id='passwordUPSPassword']");
-    private By upsShipperNumberFieldLocator = By.xpath("//input[@id='txtUPSShipperNumber']");
-    private By upsLicenseNumberFieldLocator = By.xpath("//input[@id='txtUPSAccessLicenseNumber']");
+    private final By carrierGetawayTabLocator = By.xpath("//a[@id='leftNav_item_2']");
+    private final By upsConfigurationCheckboxLocator = By.xpath("//input[@id='upsConnectionsChk']");
+    private final By upsUserNameFieldLocator = By.xpath("//input[@id='txtUPSUserName']");
+    private final By upsPasswordFieldLocator = By.xpath("//input[@id='passwordUPSPassword']");
+    private final By upsShipperNumberFieldLocator = By.xpath("//input[@id='txtUPSShipperNumber']");
+    private final By upsLicenseNumberFieldLocator = By.xpath("//input[@id='txtUPSAccessLicenseNumber']");
 
-    private By upsTestButtonLocator = By.xpath("//input[@id='btnUPSTestConnect']");
-    private By testResultPopupLocator = By.xpath("//div[@id='ThirdPartyConnectionsManagement']");
+    private final By uspsConfigurationCheckboxLocator = By.xpath("//input[@id='uspsConnectionsChk']");
+    private final By uspsAccountIdFieldLocator = By.xpath("//input[@id='txtUSPSAccountID']");
+    private final By uspsPasswordFieldLocator = By.xpath("//input[@id='passwordUSPSPassword']");
 
-    private By uspsConfigurationCheckboxLocator = By.xpath("//input[@id='uspsConnectionsChk']");
-    private By uspsAccountIdFieldLocator = By.xpath("//input[@id='txtUSPSAccountID']");
-    private By uspsPasswordFieldLocator = By.xpath("//input[@id='passwordUSPSPassword']");
+    private final By saveAndCloseContextualButtonLocator = By.xpath("//*[@id='btnSaveAndClose']/div[2]");
+    private final By popupOkBtnLocator = By.xpath("//button[@class='primary-button']");
 
-    private By uspsTestButtonLocator = By.xpath("//input[@id='btnUSPSTestConnect']");
-
-    private By saveAndCloseContextualButtonLocator = By.xpath("//*[@id='btnSaveAndClose']/div[2]");
-    private By saveContextualButtonLocator = By.xpath("//*[@id='btnSave']/div[2]");
-    private By popupBoxMessageLocator = By.xpath("(//div[@id='warehouseMessageBox']//*)[1]");
-    private By popupOkBtnLocator = By.xpath("//button[@class='primary-button']");
-
-    private By setUpButtonLocator = By.xpath("//ul[@id='topRightNav']/li[2]");
-    private By thirdPartyButtonLocator = By.xpath("//ul[@id='topRightNav']/li[2]/ul/li[6]");
+    private final By setUpButtonLocator = By.xpath("//ul[@id='topRightNav']/li[2]");
+    private final By thirdPartyButtonLocator = By.xpath("//ul[@id='topRightNav']/li[2]/ul/li[6]");
 
 
 
@@ -76,16 +66,6 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
         keyField.clear();
         keyField.sendKeys(transactionKey);
         ProgressBar.addProgressValue(progressVariable);
-
-//        log("Make Test for Authorize");
-//        driver.findElement(authorizeTestButtonLocator).click();
-//        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Authorize test result popup was not found");
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(testResultPopupLocator));
-//
-//        String currentPopupMessage = driver.findElement(testResultPopupLocator).getText();
-//        Assert.assertEquals(currentPopupMessage, "The connection test was successful.", "Authorize test result unexpected popup message.");
-//
-//        driver.findElement(confirmPopupButtonLocator).click();
     }
 
     public void configureUPSAccount(String userName, String password, String licenseNumber, String shipperNumber) {
@@ -133,18 +113,6 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
         shipperNumberField.clear();
         shipperNumberField.sendKeys(shipperNumber);
         ProgressBar.addProgressValue(progressVariable);
-
-//          Test for UPS connection
-
-//        log("Make Test for UPS");
-//        driver.findElement(upsTestButtonLocator).click();
-//        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("UPS test result popup was not found");
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(testResultPopupLocator));
-//
-//        String currentPopupMessage = driver.findElement(testResultPopupLocator).getText();
-//        Assert.assertEquals(currentPopupMessage, "The connection test was successful.", "UPS test result unexpected popup message.");
-//
-//        driver.findElement(confirmPopupButtonLocator).click();
     }
 
     public void configureUSPSAccount(String accountId, String passPhrase) {
@@ -181,19 +149,6 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
         passPhraseField.clear();
         passPhraseField.sendKeys(passPhrase);
         ProgressBar.addProgressValue(progressVariable);
-
-//        log("Make Test for USPS");
-//        driver.findElement(uspsTestButtonLocator).click();
-//        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("USPS test result popup was not found");
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(testResultPopupLocator));
-//
-//        String currentPopupMessage = driver.findElement(testResultPopupLocator).getText();
-//        Assert.assertEquals(currentPopupMessage, "The connection test was successful.", "USPS test result unexpected popup message");
-//        Thread.sleep(5000);
-//
-//        driver.findElement(confirmPopupButtonLocator).click();
-//        Thread.sleep(5000);
-
     }
 
     public void saveThirdPartyConnectionSettings () {

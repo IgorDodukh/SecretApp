@@ -12,20 +12,20 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 /**
- * Created by igor on 27.05.16.
+ * Created by igor on 27.05.16. All rights reserved!
  */
 public class SettingsPage extends BrowserSettings {
 
-    private WebDriver driver;
+    private final WebDriver driver;
     public SettingsPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    private By orderProcessingTabLocator = By.xpath("//aside[@id='leftNav']//li[4]");
-    private By alwaysShipAheadNoSettingChangesAllowedRadiobuttonLocator = By.xpath("//div[@id='shipahead']/span[1]//input");
-    private By saveAndCloseContextualButtonLocator = By.xpath("//*[@id='btnSaveAndClose']/div[2]");
-    private By saveSettingsSuccessPopupLocator = By.xpath("//*[@id='dydacomp_messagebox']");
-    private By confirmPopupButtonLocator = By.xpath("//div[1]/button[@class='primary-button']");
+    private final By orderProcessingTabLocator = By.xpath("//aside[@id='leftNav']//li[4]");
+    private final By alwaysShipAheadNoSettingChangesAllowedRadiobuttonLocator = By.xpath("//div[@id='shipahead']/span[1]//input");
+    private final By saveAndCloseContextualButtonLocator = By.xpath("//*[@id='btnSaveAndClose']/div[2]");
+    private final By saveSettingsSuccessPopupLocator = By.xpath("//*[@id='dydacomp_messagebox']");
+    private final By confirmPopupButtonLocator = By.xpath("//div[1]/button[@class='primary-button']");
 
 
 

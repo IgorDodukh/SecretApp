@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 
 /**
- * Created by Ihor on 7/16/2016.
+ * Created by Ihor on 7/16/2016. All rights reserved!
  */
 public class TestStatus {
 

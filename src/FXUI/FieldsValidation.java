@@ -6,7 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 
 /**
- * Created by Ihor on 7/13/2016.
+ * Created by Ihor on 7/13/2016. All rights reserved!
  */
 public class FieldsValidation {
 
@@ -31,7 +31,4 @@ public class FieldsValidation {
             Controller.passFilled = true;
         }
     }
-
-
-
 }

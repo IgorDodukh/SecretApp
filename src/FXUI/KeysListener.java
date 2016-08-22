@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 /**
- * Created by Ihor on 8/16/2016.
+ * Created by Ihor on 8/16/2016. All rights reserved!
  */
 public class KeysListener {
     public static void comboBoxKeyListener(ComboBox comboBox, Controller controller) {
@@ -33,7 +33,7 @@ public class KeysListener {
         if(Objects.equals(key.getCode().toString(), "ENTER")){
             try {
                 controller.clickStartButton();
-            } catch (InterruptedException | IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }

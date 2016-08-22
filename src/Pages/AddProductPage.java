@@ -11,62 +11,45 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 /**
- * Created by igor on 21.04.16.
+ * Created by igor on 21.04.16. All rights reserved!
  */
 public class AddProductPage extends BrowserSettings{
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public AddProductPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    private By productDetailsTabTitleLocator = By.xpath("//section[@class='tabContainer columns']/h2/strong");
-    private By productSkuFieldLocator = By.xpath("//input[@name='productInfo_Sku']");
-    private By productNameFieldLocator = By.xpath("//input[@name='productInfo_Name']");
-    private By productWeightFieldLocator = By.xpath("//input[@name='productInfo_WeightLB']");
-    private By productShortDescriptionLocator = By.xpath("//textarea[@id='productInfo_Desc']");
+    private final By productSkuFieldLocator = By.xpath("//input[@name='productInfo_Sku']");
+    private final By productNameFieldLocator = By.xpath("//input[@name='productInfo_Name']");
+    private final By productWeightFieldLocator = By.xpath("//input[@name='productInfo_WeightLB']");
+    private final By productShortDescriptionLocator = By.xpath("//textarea[@id='productInfo_Desc']");
 
-    private By productPricingTabLocator = By.xpath("//li[@id='pricingTab']");
-    private By productPricingTabTitleLocator = By.xpath("//*[@id='pricingModule']//h4/strong");
-    private By productRetailPriceLocator = By.cssSelector("#retail-price");
+    private final By productPricingTabLocator = By.xpath("//li[@id='pricingTab']");
+    private final By productRetailPriceLocator = By.cssSelector("#retail-price");
 
-    private By salesChannelsTabTitleLocator = By.xpath("//*[@id='subTitle']/h2");
-    private By productSalesChannelsTabLocator = By.xpath("//li[@id='salesChannelsTab']");
-    private By salesChannelNameFieldLocator = By.xpath("//*[@id='control_autoCompleteSingle_1']");
-    private By salesChannelTooltipLocator = By.xpath("//li[@class='ui-menu-item']");
-    private By salesChannelAddButtonLocator = By.xpath("//*[@id='salesChannelsTable']//img[2]");
+    private final By productSalesChannelsTabLocator = By.xpath("//li[@id='salesChannelsTab']");
+    private final By salesChannelNameFieldLocator = By.xpath("//*[@id='control_autoCompleteSingle_1']");
+    private final By salesChannelTooltipLocator = By.xpath("//li[@class='ui-menu-item']");
+    private final By salesChannelAddButtonLocator = By.xpath("//*[@id='salesChannelsTable']//img[2]");
 
-    private By suppliersTabTitleLocator = By.xpath("//*[@id='subTitle']/h2/strong");
-    private By productSuppliersTabLocator = By.xpath("//li[@id='suppliersTab']");
-    private By addSupplierButtonLocator = By.xpath("//*[@id='add_supplier']");
-    private By addSupplierPopupLocator = By.xpath("//*[@id='dydacomp_messagebox']");
-    private By selectSupplierCheckboxLocator = By.xpath("//input[@name='chxBox_supplier']");
-    private By addSelectedSupplierButtonLocator = By.xpath("//*[@id='add_selected_supplier']");
-    private By selectAddedSupplierLocator = By.xpath("//*[@id='SuppliersItemsTable']/tbody/tr");
-    private By openAddedSupplierToEditButtonLocator = By.xpath("//*[@id='rowActions']/input[1]");
-    private By warehouseTabLocator = By.xpath("//*[@id='li_Warehouse']");
-    private By unitCostFieldLocator = By.xpath("//*[@id='txtPrice']");
-    private By unitCostAddButtonLocator = By.xpath("//*[@id='add_item']");
-    private By supplierSaveOkButton = By.xpath("//*[@id='btnOkButton1']");
-    private By viewCostLinkLocator = By.xpath("//*[@id='SuppliersItemsTable']/tbody/tr/td[3]/a");
-    private By saveAndCloseProductButtonLocator = By.xpath("//*[@id='btnSaveAndClose']/div[2]");
+    private final By productSuppliersTabLocator = By.xpath("//li[@id='suppliersTab']");
+    private final By addSupplierButtonLocator = By.xpath("//*[@id='add_supplier']");
+    private final By selectSupplierCheckboxLocator = By.xpath("//input[@name='chxBox_supplier']");
+    private final By addSelectedSupplierButtonLocator = By.xpath("//*[@id='add_selected_supplier']");
+    private final By selectAddedSupplierLocator = By.xpath("//*[@id='SuppliersItemsTable']/tbody/tr");
+    private final By openAddedSupplierToEditButtonLocator = By.xpath("//*[@id='rowActions']/input[1]");
+    private final By warehouseTabLocator = By.xpath("//*[@id='li_Warehouse']");
+    private final By unitCostFieldLocator = By.xpath("//*[@id='txtPrice']");
+    private final By unitCostAddButtonLocator = By.xpath("//*[@id='add_item']");
+    private final By supplierSaveOkButton = By.xpath("//*[@id='btnOkButton1']");
+    private final By saveAndCloseProductButtonLocator = By.xpath("//*[@id='btnSaveAndClose']/div[2]");
 
-    private By productMessageBoxLocator = By.xpath("//*[@id='productMessageBox']");
-    private By popupOkBtnLocator = By.xpath("//button[@class='primary-button']");
+    private final By productMessageBoxLocator = By.xpath("//*[@id='productMessageBox']");
+    private final By popupOkBtnLocator = By.xpath("//button[@class='primary-button']");
 
-    private By inventoryMenuItemLocator = By.xpath("//nav/ul/li[4]");
-    private By productInventoryMenuItemLocator = By.xpath("//nav/ul/li[4]/ul/li[4]");
-    private By productInventoryFilterByFieldLocator = By.xpath("//label/input");
-    private By siteLogoIconLocator = By.xpath("//img[@id='logoIcon']");
-
-
-
-
-    private By saveProductPopupMessage = By.xpath("(//div[@id='productMessageBox']//*)[1]");
-    private By filterProductsFieldLocator = By.xpath("//*[@id='searchProductResult_filter']/label/input");
-    private By productSkuInTheGridLocator = By.xpath("((//*[@id='searchProductResult'])//tbody/tr/*)[2]");
-    private By productNameInTheGridLocator = By.xpath("((//*[@id='searchProductResult'])//tbody/tr/*)[3]");
-    private By productRetailPriceInTheGridLocator = By.xpath("((//*[@id='searchProductResult'])//tbody/tr/*)[4]");
+    private final By inventoryMenuItemLocator = By.xpath("//nav/ul/li[4]");
+    private final By siteLogoIconLocator = By.xpath("//img[@id='logoIcon']");
 
     public void addProductInfo(String sku, String name, String weight, String shortDescription) {
         totalResultMessage += "Adding product info:\n";

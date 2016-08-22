@@ -6,12 +6,12 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
 /**
- * Created by Ihor on 7/19/2016.
+ * Created by Ihor on 7/19/2016. All rights reserved!
  */
 public class ConfigureChannel extends BrowserSettings {
     @Test
     public void configureMagentoChannel(String email, String merchantPassword, WebDriver driver) throws InterruptedException {
-
+// TODO: re-count percent values for current test progress
         LoginPage loginPage = new LoginPage(driver);
         loginPage.loginMerchant(email, merchantPassword);
 

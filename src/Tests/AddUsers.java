@@ -7,7 +7,7 @@ import Settings.BrowserSettings;
 import org.testng.annotations.Test;
 
 /**
- * Created by Ihor on 8/17/2016.
+ * Created by Ihor on 8/17/2016. All rights reserved!
  */
 public class AddUsers extends BrowserSettings {
 

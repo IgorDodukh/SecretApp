@@ -8,32 +8,21 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
- * Created by igor on 17.04.16.
+ * Created by igor on 17.04.16. All rights reserved!
  */
 public class LoginPage extends BrowserSettings{
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    private By emailInputLocator = By.xpath("//input[@name='UserName']");
-    private By passwordInputLocator = By.xpath("//input[@name='UserPassword']");
-    private By loginButtonLocator = By.xpath("//input[@value='Login']");
-    private By siteLogoLocator = By.xpath("//img[@id='logoIcon']");
-    private By msgBox = By.xpath("//div[@id='dydacomp_messagebox']");
-    private By alreadyLoggedMsgBoxLocator = By.xpath("//div[@id='dydacomp_messagebox']/p");
-    private By msgBoxOkButton = By.xpath("//button[@autotest-id='btnOK']");
-    private By closeMsgBoxLocator = By.xpath("//span[@class='ui-icon ui-icon-closethick']");
-    private By signInDropdown = By.xpath("//li[@id='SignIn']");
-    private By logOutButton = By.xpath("//a[@href='/web/Home/Logout']");
-    private By wrongCredentialsLocator = By.xpath("//div[@id='LoginMessage']");
-
-    private By siteLogoIconLocator = By.xpath("//img[@id='logoIcon']");
-
-
-//    public String credentialsStatus = "";
-
+    private final By emailInputLocator = By.xpath("//input[@name='UserName']");
+    private final By passwordInputLocator = By.xpath("//input[@name='UserPassword']");
+    private final By loginButtonLocator = By.xpath("//input[@value='Login']");
+    private final By msgBox = By.xpath("//div[@id='dydacomp_messagebox']");
+    private final By msgBoxOkButton = By.xpath("//button[@autotest-id='btnOK']");
+    private final By siteLogoIconLocator = By.xpath("//img[@id='logoIcon']");
 
     public void loginMerchant(String email, String pass) throws InterruptedException {
         totalResultMessage += "Login user to FS:\n";

@@ -7,10 +7,10 @@ import javafx.scene.control.Label;
 import java.util.Objects;
 
 /**
- * Created by Ihor on 7/29/2016.
+ * Created by Ihor on 7/29/2016. All rights reserved!
  */
 public  class ChangeLabelValue {
-    static int currentValue = 1;
+    public static int currentValue = 1;
     public static void changeWaitingLabelValue(Label label, int value) {
         Platform.runLater(() -> {
             Task<Void> task = new Task<Void>() {

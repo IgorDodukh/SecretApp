@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
 /**
- * Created by igor on 27.05.16.
+ * Created by igor on 27.05.16. All rights reserved!
  */
 public class ConfigureMerchant extends BrowserSettings {
     @Test

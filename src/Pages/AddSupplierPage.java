@@ -10,36 +10,34 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
- * Created by Ihor on 6/27/2016.
+ * Created by Ihor on 6/27/2016. All rights reserved!
  */
 public class AddSupplierPage extends BrowserSettings {
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public AddSupplierPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    private By supplierAccountNumberFieldLocator = By.xpath("//input[@id='acct_no']");
-    private By supplierNameFieldLocator = By.xpath("//input[@id='supplier_name']");
-    private By supplierURLFieldLocator = By.xpath("//input[@id='siteURL']");
-    private By supplierAddressFieldLocator = By.xpath("//input[@id='address']");
-    private By supplierZipFieldLocator = By.xpath("//input[@id='zip']");
+    private final By supplierAccountNumberFieldLocator = By.xpath("//input[@id='acct_no']");
+    private final By supplierNameFieldLocator = By.xpath("//input[@id='supplier_name']");
+    private final By supplierURLFieldLocator = By.xpath("//input[@id='siteURL']");
+    private final By supplierAddressFieldLocator = By.xpath("//input[@id='address']");
+    private final By supplierZipFieldLocator = By.xpath("//input[@id='zip']");
 
-    private By supplierEmailToFieldLocator = By.xpath("//input[@id='email_to']");
-    private By supplierEmailBCCFieldLocator = By.xpath("//input[@id='email_bcc']");
-    private By supplierEmailCCFieldLocator = By.xpath("//input[@id='email_cc']");
+    private final By supplierEmailToFieldLocator = By.xpath("//input[@id='email_to']");
+    private final By supplierEmailBCCFieldLocator = By.xpath("//input[@id='email_bcc']");
+    private final By supplierEmailCCFieldLocator = By.xpath("//input[@id='email_cc']");
 
-    private By contactFirstNameFieldLocator = By.xpath("//input[@id='first_name']");
-    private By contactLastNameFieldLocator = By.xpath("//input[@id='last_name']");
-    private By contactPhoneFieldLocator = By.xpath("//input[@id='phone']");
-    private By contactEmailFieldLocator = By.xpath("//input[@id='email']");
-    private By contactJobTitleFieldLocator = By.xpath("//input[@id='job_title']");
-    private By contactFaxFieldLocator = By.xpath("//input[@id='fax']");
+    private final By contactFirstNameFieldLocator = By.xpath("//input[@id='first_name']");
+    private final By contactLastNameFieldLocator = By.xpath("//input[@id='last_name']");
+    private final By contactPhoneFieldLocator = By.xpath("//input[@id='phone']");
+    private final By contactEmailFieldLocator = By.xpath("//input[@id='email']");
+    private final By contactJobTitleFieldLocator = By.xpath("//input[@id='job_title']");
+    private final By contactFaxFieldLocator = By.xpath("//input[@id='fax']");
 
-    private By saveAndCloseContextualButtonLocator = By.xpath("//a[@id='btnSaveAndClose']");
-    private By popupBoxMessageLocator = By.xpath("//div[@id='dydacomp_messagebox']");
-    private By popupOkBtnLocator = By.xpath("//button[@class='primary-button']");
-
+    private final By saveAndCloseContextualButtonLocator = By.xpath("//a[@id='btnSaveAndClose']");
+    private final By popupBoxMessageLocator = By.xpath("//div[@id='dydacomp_messagebox']");
 
     public void addSupplierContactInfo(String accountNumber, String name, String url, String address1, String zip, String email, String first, String last) throws InterruptedException {
         totalResultMessage += "Adding Supplier info:\n";

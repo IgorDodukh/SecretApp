@@ -1,5 +1,6 @@
 package Settings;
 
+import FXUI.AppStyles;
 import FXUI.Controller;
 import FXUI.GeneratePopupBox;
 
@@ -9,59 +10,105 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * Created by Ihor on 8/14/2016.
+ * Created by Ihor on 8/14/2016. All rights reserved!
  */
 public class UpdateConfig {
 
-    public static void updateTimeout() throws IOException {
-        FileInputStream in = new FileInputStream("C:\\appFiles\\timeout.properties");
-        Properties props = new Properties();
-        props.load(in);
-        in.close();
+    public static void updateSystemVariables() throws IOException {
+        try {
+            FileInputStream in = new FileInputStream(AppStyles.mainPath + "\\properties\\systemVar.properties");
+            Properties props = new Properties();
+            props.load(in);
+            in.close();
 
-        FileOutputStream out = new FileOutputStream("C:\\appFiles\\timeout.properties");
+            FileOutputStream out = new FileOutputStream(AppStyles.mainPath + "\\properties\\systemVar.properties");
 
-        props.setProperty("timeoutVariable", GeneratePopupBox.currentTimeout);
+            props.setProperty("timeoutVariable", GeneratePopupBox.currentTimeout);
+            props.setProperty("randomValue", GeneratePopupBox.currentRandomLength);
+            props.setProperty("defaultPath", GeneratePopupBox.currentMainPath);
 
-        props.store(out, null);
-        out.close();
+            props.store(out, null);
+            out.close();
 
-        System.out.println("Config Property Successfully Updated..");
-        System.out.println("New timeout: " + props.getProperty("timeoutVariable"));
+            System.out.println("Config Property Successfully Updated..");
+            System.out.println("New timeout: " + props.getProperty("timeoutVariable"));
+            System.out.println("New random length: " + props.getProperty("randomValue"));
+        } catch (Exception e) {
+            GeneratePopupBox.warningPopupBox(e.getMessage());
+            System.out.println("Exception: " + e);
+        }
     }
 
     public static void updateCredentials() throws IOException {
-        FileInputStream in = new FileInputStream("C:\\appFiles\\credentials.properties");
-        Properties props = new Properties();
-        props.load(in);
-        in.close();
+        try {
+            FileInputStream in = new FileInputStream(AppStyles.mainPath + "\\properties\\credentials.properties");
+            Properties props = new Properties();
+            props.load(in);
+            in.close();
 
-        FileOutputStream out = new FileOutputStream("C:\\appFiles\\credentials.properties");
-        props.setProperty("lastEmail", Controller.login);
-        props.setProperty("lastPassword", Controller.password);
+            FileOutputStream out = new FileOutputStream(AppStyles.mainPath + "\\properties\\credentials.properties");
+            props.setProperty("lastEmail", Controller.login);
+            props.setProperty("lastPassword", Controller.password);
 
-        props.store(out, null);
-        out.close();
+            props.store(out, null);
+            out.close();
 
-        System.out.println("Config Property Successfully Updated..");
-        System.out.println("New email: " + props.getProperty("lastEmail"));
-        System.out.println("New pass: " + props.getProperty("lastPassword"));
+            System.out.println("Config Property Successfully Updated..");
+            System.out.println("New email: " + props.getProperty("lastEmail"));
+            System.out.println("New pass: " + props.getProperty("lastPassword"));
+
+        } catch (Exception e) {
+                GeneratePopupBox.warningPopupBox(e.getMessage());
+                System.out.println("Exception: " + e);
+            }
     }
 
     public static void updateUser() throws IOException {
-        FileInputStream in = new FileInputStream("C:\\appFiles\\user.properties");
-        Properties props = new Properties();
-        props.load(in);
-        in.close();
+        try {
+            FileInputStream in = new FileInputStream(AppStyles.mainPath + "\\properties\\user.properties");
+            Properties props = new Properties();
+            props.load(in);
+            in.close();
 
-        FileOutputStream out = new FileOutputStream("C:\\appFiles\\user.properties");
+            FileOutputStream out = new FileOutputStream(AppStyles.mainPath + "\\properties\\user.properties");
 
-        props.setProperty("user", GeneratePopupBox.currentUser);
+            props.setProperty("user", GeneratePopupBox.currentUser);
 
-        props.store(out, null);
-        out.close();
+            props.store(out, null);
+            out.close();
 
-        System.out.println("Config Property Successfully Updated..");
-        System.out.println("New user: " + props.getProperty("user"));
+            System.out.println("Config Property Successfully Updated..");
+            System.out.println("New user: " + props.getProperty("user"));
+        } catch (Exception e) {
+        GeneratePopupBox.warningPopupBox(e.getMessage());
+        System.out.println("Exception: " + e);
+    }
+    }
+
+    public static void updateNames() throws IOException {
+        try {
+            FileInputStream in = new FileInputStream(AppStyles.mainPath + "\\properties\\names.properties");
+            Properties props = new Properties();
+            props.load(in);
+            in.close();
+
+            FileOutputStream out = new FileOutputStream(AppStyles.mainPath + "\\properties\\names.properties");
+
+            props.setProperty("customerFirstName", GeneratePopupBox.currentCustomerFirstName);
+            props.setProperty("customerLastName", GeneratePopupBox.currentCustomerLastName);
+            props.setProperty("productSKU", GeneratePopupBox.currentProductSKU);
+            props.setProperty("productName", GeneratePopupBox.currentProductName);
+            props.setProperty("supplierName", GeneratePopupBox.currentSupplierName);
+            props.setProperty("warehouseName", GeneratePopupBox.currentWarehouseName);
+            props.setProperty("binName", GeneratePopupBox.currentBinName);
+
+            props.store(out, null);
+            out.close();
+
+            System.out.println("Names Property Successfully Updated..");
+        } catch (Exception e) {
+        GeneratePopupBox.warningPopupBox(e.getMessage());
+        System.out.println("Exception: " + e);
+    }
     }
 }

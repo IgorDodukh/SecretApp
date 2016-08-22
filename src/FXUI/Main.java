@@ -1,6 +1,5 @@
 package FXUI;
 
-import Settings.ReadConfigMain;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,12 +15,12 @@ public class Main extends Application {
         primaryStage.setTitle("Secret App");
 //        primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setScene(new Scene(root, 560, 450));
-        primaryStage.show();
         primaryStage.setResizable(false);
-        primaryStage.getIcons().add(new Image("file:///C:/appFiles/pic/logo.png"));
+        primaryStage.getIcons().add(new Image("file:///" + AppStyles.mainPath.replace("\\", "/") + "/pic/logo.png"));
+        primaryStage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String args) {
         launch(args);
     }
 }

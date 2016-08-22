@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -18,7 +19,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Controller extends Main {
-    public WebDriver driver;
+    private WebDriver driver;
 
     private Exception exceptionValue;
     static boolean loginFilled;
@@ -36,9 +37,9 @@ public class Controller extends Main {
     public static String entityComboBoxValue = "";
     public static String environmentComboBoxValue = "";
 
-    private TestStatus testStatus = new TestStatus();
-    private BrowserSettings browserSettings = new BrowserSettings();
-    private DropdownValueDeterminer dropdownValueDeterminer = new DropdownValueDeterminer();
+    private final TestStatus testStatus = new TestStatus();
+    private final BrowserSettings browserSettings = new BrowserSettings();
+    private final DropdownValueDeterminer dropdownValueDeterminer = new DropdownValueDeterminer();
 
     public static final String[] driverWarning = {""};
     public static final String[] driverExceptionMessage = {""};
@@ -46,18 +47,16 @@ public class Controller extends Main {
     public static String login;
     public static String password;
 
-    private Thread thread2;
-
     private int browserComboBoxIndex;
     private int environmentComboBoxIndex;
     private int entityTypeComboBoxIndex;
 
-    private ObservableList<String> browsers =
+    private final ObservableList<String> browsers =
             FXCollections.observableArrayList(
                     "Google Chrome",
                     "Mozilla Firefox"
             );
-    private ObservableList<String> entityTypes =
+    private final ObservableList<String> entityTypes =
             FXCollections.observableArrayList(
                     "Sync Magento with FS",
                     "Configure Merchant",
@@ -68,10 +67,11 @@ public class Controller extends Main {
                     "Reorder the last Order",
                     "Create User"
             );
-    private ObservableList<String> environments =
+    private final ObservableList<String> environments =
             FXCollections.observableArrayList(
                     "QA01", "QA03", "QA05", "Production (for mad guys)"
             );
+
 
     public ComboBox<String> browsersComboBox;
     public ComboBox<String> entityTypeComboBox;
@@ -82,31 +82,42 @@ public class Controller extends Main {
     public PasswordField passwordField;
     public Button startButton;
     public Button stopButton;
-    public Button configButton;
 //    public ProgressBar progressBar;
     public Label waitingLabel;
     public Label progressLabel;
     public Label buildVersion;
     public ImageView waitingAnimation;
+    public ImageView companyLogo;
     public MenuItem menuConfigs;
-//    public Button hideButton;
-//    public Button closeButton;
     public MenuItem closeMenuButton;
     public MenuBar myMenuBar;
     public MenuItem aboutButton;
+    public MenuItem namesConfigs;
 
     @FXML
     private void initialize() throws IOException {
+        //TODO: check internet connection before running tests (after confirm 'confirmation' popup box)
+        //TODO: implement installation by installer
         browsersComboBox.setItems(browsers);
         browsersComboBox.getSelectionModel().select(0);
+        AppStyles.setComboBoxStyle(browsersComboBox);
 
         entityTypeComboBox.setItems(entityTypes);
         entityTypeComboBox.getSelectionModel().select(0);
+        AppStyles.setComboBoxStyle(entityTypeComboBox);
 
         environmentsComboBox.setItems(environments);
         environmentsComboBox.getSelectionModel().select(0);
+        AppStyles.setComboBoxStyle(environmentsComboBox);
 
-        buildVersion.setText("Build Version: 1.65 beta");
+        AppStyles.setButtonsStyle(startButton);
+        AppStyles.setButtonsStyle(stopButton);
+        AppStyles.setMenuBarStyle(myMenuBar);
+
+        companyLogo.setImage(new Image("file:///" + AppStyles.mainPath.replace("\\", "/") + "/pic/fslogo.png"));
+        waitingAnimation.setImage(new Image("file:///" + AppStyles.mainPath.replace("\\", "/") + "/pic/spinner.gif"));
+
+        buildVersion.setText("Build Version: 1.72 beta");
 
         ReadConfigMain.main();
         loginField.setText(GetPropertyValues.loginProperty);
@@ -129,10 +140,15 @@ public class Controller extends Main {
 
     public void clickConfigsButton() throws IOException {
         ReadConfigMain.main();
-        GeneratePopupBox.configPopupBox();
+        GeneratePopupBox.configVariablesPopupBox();
     }
 
-    public synchronized void clickStartButton() throws InterruptedException, IOException {
+    public void clickConfigNamesMenu() throws IOException {
+        ReadConfigMain.main();
+        GeneratePopupBox.configNamesPopupBox();
+    }
+
+    public synchronized void clickStartButton() throws IOException {
 
         ReadConfigMain.main();
         stopButtonClicked = false;
@@ -188,7 +204,7 @@ public class Controller extends Main {
                     try {
                         if (browserComboBoxIndex == 0) {
                             driverWarning[0] += "Chrome";
-                            System.setProperty("webdriver.chrome.driver", "C:\\appFiles\\drivers\\chromedriver.exe");
+                            System.setProperty("webdriver.chrome.driver", AppStyles.mainPath + "\\drivers\\chromedriver.exe");
                             ChromeOptions options = new ChromeOptions();
                             options.addArguments("--disable-extensions");
                             driver = new ChromeDriver(options);

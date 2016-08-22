@@ -9,7 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
 /**
- * Created by Ihor on 7/7/2016.
+ * Created by Ihor on 7/7/2016. All rights reserved!
  */
 public class MakeReorder extends BrowserSettings {
 

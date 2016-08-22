@@ -11,7 +11,6 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -20,7 +19,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="allApp" cache="true" nodeOrientation="LEFT_TO_RIGHT" prefHeight="300.0" prefWidth="235.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXUI.Controller">
+<AnchorPane fx:id="" cache="true" nodeOrientation="LEFT_TO_RIGHT" prefHeight="300.0" prefWidth="235.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXUI.Controller">
    <children>
       <Pane layoutY="190.0" prefHeight="20.0" prefWidth="570.0" style="-fx-background-color: #234974;">
          <children>
@@ -32,15 +31,12 @@
               <menus>
                 <Menu mnemonicParsing="false" style="-fx-text-fill: white;" text="App  ">
                   <items>
-                    <MenuItem fx:id="menuConfigs" mnemonicParsing="false" onAction="#clickConfigsButton" text="Configs" />
+                        <MenuItem fx:id="namesConfigs" mnemonicParsing="false" onAction="#clickConfigNamesMenu" text="Default names" />
+                    <MenuItem fx:id="menuConfigs" mnemonicParsing="false" onAction="#clickConfigsButton" text="System Variables" />
                         <MenuItem fx:id="closeMenuButton" mnemonicParsing="false" text="Exit" />
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Configs" visible="false">
-                  <items>
-                        <MenuItem fx:id="authConfigs" mnemonicParsing="false" text="Authorize.Net" />
-                  </items>
-                </Menu>
+                <Menu mnemonicParsing="false" text="Configs" visible="false" />
                 <Menu mnemonicParsing="false" text="Help">
                   <items>
                     <MenuItem fx:id="aboutButton" mnemonicParsing="false" text="About" />
@@ -51,30 +47,6 @@
                   <Insets />
                </opaqueInsets>
             </MenuBar>
-            <Button fx:id="closeButton" layoutX="511.0" layoutY="-5.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="59.0" style="-fx-background-color: transparent;" text="✕" textFill="WHITE" visible="false">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button fx:id="hideButton" layoutX="461.0" layoutY="-5.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="49.0" style="-fx-background-color: transparent;" text="⚊" textFill="WHITE" visible="false">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button fx:id="configButton" layoutX="2.0" layoutY="-5.0" mnemonicParsing="false" onAction="#clickConfigsButton" prefHeight="39.0" prefWidth="68.0" style="-fx-background-color: transparent;" text="Config" textFill="WHITE" visible="false">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
          </children></Pane>
       <Pane layoutY="404.0" prefHeight="57.0" prefWidth="570.0" style="-fx-background-color: #234974;">
          <children>
@@ -83,11 +55,7 @@
                   <Font name="System Bold" size="22.0" />
                </font>
             </Label>
-            <ImageView fx:id="waitingAnimation" fitHeight="40.0" fitWidth="37.0" layoutX="126.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false">
-               <image>
-                  <Image url="file:/C:/appFiles/pic/spinner.gif" />
-               </image>
-            </ImageView>
+            <ImageView fx:id="waitingAnimation" fitHeight="40.0" fitWidth="37.0" layoutX="126.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false" />
             <Label fx:id="progressLabel" layoutX="489.0" layoutY="13.0" prefHeight="32.0" prefWidth="68.0" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="22.0" />
@@ -120,7 +88,7 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <ComboBox fx:id="browsersComboBox" prefHeight="25.0" prefWidth="230.0" stylesheets="file:/C:/appFiles/styles/comboBoxes.css" GridPane.columnIndex="1">
+            <ComboBox fx:id="browsersComboBox" prefHeight="25.0" prefWidth="230.0" GridPane.columnIndex="1">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></ComboBox>
@@ -157,7 +125,7 @@
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Button fx:id="startButton" mnemonicParsing="false" onAction="#clickStartButton" prefHeight="25.0" prefWidth="105.0" style="-fx-text-fill: white;" stylesheets="file:/C:/appFiles/styles/startButton.css" text="Start" GridPane.rowIndex="4">
+            <Button fx:id="startButton" mnemonicParsing="false" onAction="#clickStartButton" prefHeight="25.0" prefWidth="105.0" style="-fx-text-fill: white;" text="Start" GridPane.rowIndex="4">
                <font>
                   <Font name="Segoe UI Bold" size="16.0" />
                </font>
@@ -165,7 +133,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="stopButton" disable="true" mnemonicParsing="false" onAction="#clickStopButton" prefHeight="25.0" prefWidth="105.0" style="-fx-text-fill: white;" stylesheets="file:/C:/appFiles/styles/stopButton.css" text="Stop" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <Button fx:id="stopButton" disable="true" mnemonicParsing="false" onAction="#clickStopButton" prefHeight="25.0" prefWidth="105.0" style="-fx-text-fill: white;" text="Stop" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <font>
                   <Font name="Segoe UI Bold" size="16.0" />
                </font>
@@ -185,11 +153,7 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <ImageView fitHeight="64.0" fitWidth="260.0" layoutX="31.0" layoutY="267.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="file:/C:/appFiles/pic/fslogo.png" />
-         </image>
-      </ImageView>
+      <ImageView fx:id="companyLogo" fitHeight="64.0" fitWidth="260.0" layoutX="31.0" layoutY="267.0" pickOnBounds="true" preserveRatio="true" />
       <Label fx:id="buildVersion" layoutX="31.0" layoutY="375.0" prefHeight="21.0" prefWidth="173.0" text="Build" textFill="#a7a7a7">
          <font>
             <Font name="Arial" size="10.0" />

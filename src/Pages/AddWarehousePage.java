@@ -11,39 +11,37 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 /**
- * Created by igor on 18.04.16.
+ * Created by igor on 18.04.16. All rights reserved!
  */
 public class AddWarehousePage extends BrowserSettings {
 
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public AddWarehousePage(WebDriver driver) {
         this.driver = driver;
     }
 
-    private By warehouseNameFieldLocator = By.xpath("//input[@id='warehouseName']");
-    private By warehouseContactNameFieldLocator = By.xpath("//input[@id='contactName']");
-    private By warehousePhoneFieldLocator = By.xpath("//input[@id='phoneNumber']");
-    private By pickingReadyTimeFieldLocator = By.xpath("//input[@id='pickingReadyTime']");
-    private By pickingCutoffTimeFieldLocator = By.xpath("//input[@id='pickingCutoffTime']");
-    private By addressFieldLocator = By.xpath("//input[@id='address_warehouse']");
-    private By zipFieldLocator = By.xpath("//input[@id='zip_warehouse']");
-    private By warehouseInfoTitleLocator = By.xpath("//*[@id='subTitle']/h2/strong");
-    private By binsTabLocator = By.xpath("//*[@id='leftNav']/ul/li[2]/a");
-    private By addWarehouseBinButtonLocator = By.xpath("//input[@id='add_bin']");
-    private By addBinPopupTitleLocator = By.xpath("//*[@class='ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable']");
+    private final By warehouseNameFieldLocator = By.xpath("//input[@id='warehouseName']");
+    private final By warehouseContactNameFieldLocator = By.xpath("//input[@id='contactName']");
+    private final By warehousePhoneFieldLocator = By.xpath("//input[@id='phoneNumber']");
+    private final By pickingReadyTimeFieldLocator = By.xpath("//input[@id='pickingReadyTime']");
+    private final By pickingCutoffTimeFieldLocator = By.xpath("//input[@id='pickingCutoffTime']");
+    private final By addressFieldLocator = By.xpath("//input[@id='address_warehouse']");
+    private final By zipFieldLocator = By.xpath("//input[@id='zip_warehouse']");
+    private final By warehouseInfoTitleLocator = By.xpath("//*[@id='subTitle']/h2/strong");
+    private final By binsTabLocator = By.xpath("//*[@id='leftNav']/ul/li[2]/a");
+    private final By addWarehouseBinButtonLocator = By.xpath("//input[@id='add_bin']");
+    private final By addBinPopupTitleLocator = By.xpath("//*[@class='ui-dialog ui-widget ui-widget-content ui-corner-all ui-draggable']");
 
-    private By newBinNameLocator = By.xpath("//*[@id='txtBinName']");
-    private By pickBinTypeLocator = By.xpath("//*[@id='selectBinType']/option[@value='2']");
-    private By saveNewBinBtnLocator = By.xpath("//*[@id='save_BinAddClone']");
-    private By newBinNameInBinsGridLocator = By.xpath("((//*[@id='warehouseBinsResult']//tr/*)[6])");
+    private final By newBinNameLocator = By.xpath("//*[@id='txtBinName']");
+    private final By pickBinTypeLocator = By.xpath("//*[@id='selectBinType']/option[@value='2']");
+    private final By saveNewBinBtnLocator = By.xpath("//*[@id='save_BinAddClone']");
+    private final By newBinNameInBinsGridLocator = By.xpath("((//*[@id='warehouseBinsResult']//tr/*)[6])");
 
-    private By saveContextualButton = By.xpath("//a[@id='btnSave']");
-//    private By saveAndCloseContextualButtonLocator = By.xpath("//a[@id='btnSaveAndClose']");
+    private final By saveContextualButton = By.xpath("//a[@id='btnSave']");
 
-    private By popupBoxMessageLocator = By.xpath("(//div[@id='warehouseMessageBox']//*)[1]");
-    private By popupOkBtnLocator = By.xpath("//button[@class='primary-button']");
-
+    private final By popupBoxMessageLocator = By.xpath("(//div[@id='warehouseMessageBox']//*)[1]");
+    private final By popupOkBtnLocator = By.xpath("//button[@class='primary-button']");
 
     public void addWarehouseInfo(String warehouseName, String contactName, String phone, String startTime, String endTime, String addressLine1, String zip) {
         totalResultMessage += "Adding Warehouse info:\n";

@@ -8,16 +8,16 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
- * Created by Ihor on 8/18/2016.
+ * Created by Ihor on 8/18/2016. All rights reserved!
  */
 public class CorporateMailBox extends BrowserSettings {
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public CorporateMailBox(WebDriver driver) {
         this.driver = driver;
     }
 
-    By mailboxLoginLocator = By.xpath("//input[@id='Email']");
+    private final By mailboxLoginLocator = By.xpath("//input[@id='Email']");
 
     public void openMailBox() {
         driver.get(mailboxUrl);

@@ -9,28 +9,28 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
- * Created by Ihor on 8/18/2016.
+ * Created by Ihor on 8/18/2016. All rights reserved!
  */
 public class ManageMerchantPage extends BrowserSettings {
-    private WebDriver driver;
+    private final WebDriver driver;
 
-    GenerateRandomData generateRandomData = new GenerateRandomData();
-    String randomInt = generateRandomData.generateRandomNumber(8);
+    private final GenerateRandomData generateRandomData = new GenerateRandomData();
+    private final String randomInt = generateRandomData.generateRandomNumber(8);
     public ManageMerchantPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    private By addMerchantButtonLocator = By.xpath("//button[@id='createMerchant']");
-    private By merchantNameFieldLocator = By.xpath("//input[@id='MerchantName']");
-    private By merchantBusinessNameFieldLocator = By.xpath("//input[@id='txtBusinessName']");
-    private By merchantFirstNameFieldLocator = By.xpath("//input[@id='FirstName']");
-    private By merchantLastNameFieldLocator = By.xpath("//input[@id='LastName']");
-    private By merchantPhoneFieldLocator = By.xpath("//input[@id='txtCompanyPhone']");
-    private By merchantZipFieldLocator = By.xpath("//input[@id='txtZipCode']");
-    private By merchantAddressFieldLocator = By.xpath("//input[@id='txtAddress1']");
-    private By merchantSaveAndCloseButtonLocator = By.xpath("//a[@id='btnSaveAndClose']");
-    private By merchantSavePopupLocator = By.xpath("//span[@id='ui-dialog-title-dydacomp_messagebox']");
-    private By merchantOkButtonPopupLocator = By.xpath("//span[@autotest-id='btnOK']");
+    private final By addMerchantButtonLocator = By.xpath("//button[@id='createMerchant']");
+    private final By merchantNameFieldLocator = By.xpath("//input[@id='MerchantName']");
+    private final By merchantBusinessNameFieldLocator = By.xpath("//input[@id='txtBusinessName']");
+    private final By merchantFirstNameFieldLocator = By.xpath("//input[@id='FirstName']");
+    private final By merchantLastNameFieldLocator = By.xpath("//input[@id='LastName']");
+    private final By merchantPhoneFieldLocator = By.xpath("//input[@id='txtCompanyPhone']");
+    private final By merchantZipFieldLocator = By.xpath("//input[@id='txtZipCode']");
+    private final By merchantAddressFieldLocator = By.xpath("//input[@id='txtAddress1']");
+    private final By merchantSaveAndCloseButtonLocator = By.xpath("//a[@id='btnSaveAndClose']");
+    private final By merchantSavePopupLocator = By.xpath("//span[@id='ui-dialog-title-dydacomp_messagebox']");
+    private final By merchantOkButtonPopupLocator = By.xpath("//span[@autotest-id='btnOK']");
 
 
     public void openAddMerchantForm() {

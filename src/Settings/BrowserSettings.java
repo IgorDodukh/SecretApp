@@ -11,22 +11,22 @@ import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by igor on 17.04.16.
+ * Created by igor on 17.04.16. All rights reserved!
  */
 
 public class BrowserSettings {
-    public WebDriver driver;
+    protected WebDriver driver;
 
-    private static GenerateRandomData generateRandomData = new GenerateRandomData();
+    private static final GenerateRandomData generateRandomData = new GenerateRandomData();
 
     //    List of Environments
-    private static ArrayList<String> fsEnvironment = new ArrayList<String>(
+    private static final ArrayList<String> fsEnvironment = new ArrayList<>(
             Arrays.asList("https://qa01.freestylecommerce.info/web",
                     "https://qa03.freestylecommerce.info/web",
                     "https://qa05.freestylecommerce.info/web",
                     "https://my.freestylecommerce.com/web"));
 
-    public static ArrayList<String> magentoEnvironment = new ArrayList<String>(
+    protected static final ArrayList<String> magentoEnvironment = new ArrayList<>(
             Arrays.asList("https://linux.mailordercentral.com/qatestlab01/index.php/admin/system_config/edit/section/freestyle_advancedexport/",
                     "https://linux.mailordercentral.com/qatestlab02/index.php/admin/system_config/edit/section/freestyle_advancedexport/",
                     "https://linux.mailordercentral.com/qatestlab03/index.php/admin/system_config/edit/section/freestyle_advancedexport/",
@@ -39,87 +39,89 @@ public class BrowserSettings {
                     "https://linux.mailordercentral.com/qatestlab10/index.php/admin/system_config/edit/section/freestyle_advancedexport/",
                     "https://linux.mailordercentral.com/hercules/index.php/admin/system_config/edit/section/freestyle_advancedexport/"));
 
-//    protected String userAlreadyLoggedMsg = "This user is already logged in. Do you want to log off the active session?";
-
-//    Customer data
-    public static String firstName = "FirstName_" + generateRandomData.generateRandomNumber(4);
-    public static String lastName = "LastName_" + generateRandomData.generateRandomNumber(4);
-    protected static String customerEmail = firstName + "@dydacomp.biz";
-    protected static String phone = generateRandomData.generateRandomNumber(10);
+    //    Customer data
+    public static String customerFirstName = "FirstName";
+    public static String customerLastName = "LastName";
+    public static int randomValueLength = 4;
+    public static final String firstName = customerFirstName +"_" + generateRandomData.generateRandomNumber(randomValueLength);
+    public static final String lastName = customerLastName + "_" + generateRandomData.generateRandomNumber(randomValueLength);
+    protected static final String customerEmail = firstName + "@dydacomp.biz";
+    protected static final String phone = generateRandomData.generateRandomNumber(10);
 
 //    Billing Address data
-    public static String billingAddressTitle = "Billing Address";
-    protected static String addressFirstName = "TesterBillingFirstName";
-    protected static String addressLastName = "TesterBillingLastName";
-    protected static String addressLine1 = "Tester Billing Address Line 11";
-    protected static String addressZip = "10113";
+    protected static final String addressFirstName = "Billing" + customerFirstName;
+    protected static final String addressLastName = "Billing" + customerLastName;
+    protected static final String addressLine1 = "Billing Address Line 11";
+    protected static final String addressZip = "10113";
 
 //    Shipping Address data
-    protected static String shippingAddressTitle = "Shipping Address";
-    protected static String paymentMethodsTitle = "Payment Method";
+    protected static final String shippingAddressTitle = "Shipping Address";
+    protected static final String paymentMethodsTitle = "Payment Method";
 
 //    CreditCard info
-    public static String visaTestCardNumber = "4005550000000019";
-    public static String masterCardTestCardNumber = "5424180279791765";
-    public static String discoverTestCardNumber = "6011000993010978";
-    public static String americanExpressTestCardNumber = "372700997251009";
-    protected static String addCustomerPopupMessage = "The customer has been successfully created.";
-    public static String saveSupplierPopupMessage = "Supplier was created successfully.\n";
-    protected static String saveSettingsPopupMessage = "Configuration has been saved successfully.";
+    public static final String visaTestCardNumber = "4005550000000019";
+    public static final String masterCardTestCardNumber = "5424180279791765";
+    public static final String discoverTestCardNumber = "6011000993010978";
+    public static final String americanExpressTestCardNumber = "372700997251009";
+    protected static final String saveSettingsPopupMessage = "Configuration has been saved successfully.";
 
-//    Warehouse data
-    public static String warehouseName = "Test Warehouse_" + generateRandomData.generateRandomNumber(5);
-    protected static String warehouseContactName = "Test Warehouse Contact Name";
-    protected static String startPickupTime = "08:00";
-    protected static String endPickupTime = "21:00";
+    //    Warehouse data
+    public static String warehouseNameValue = "Test Warehouse";
+    public static final String warehouseName = warehouseNameValue + "_" + generateRandomData.generateRandomNumber(randomValueLength);
+    protected static final String warehouseContactName = "Test Warehouse Contact Name";
+    protected static final String startPickupTime = "08:00";
+    protected static final String endPickupTime = "21:00";
 
 //    Bin data
     public static String newBinName = "Test Warehouse Bin";
-    protected static String saveWarehousePopupMessage = "Save warehouse successfully";
+    protected static final String saveWarehousePopupMessage = "Save warehouse successfully";
 
 //    Product data
-    private static String prodNum = generateRandomData.generateRandomNumber(4);
-    public static String productSku = "ProductSKU " + prodNum;
-    protected static String productName = "ProductName " + prodNum;
-    protected static String productWeight = generateRandomData.generateRandomNumber(1);
-    protected static String productDescription = productSku + " Description";
-    protected static String productRetailPrice = generateRandomData.generateRandomNumber(3);
-    protected static String productSalesChannel = "Call Center";
+    public static String productSKUStart = "ProductSKU";
+    public static String productNameStart = "ProductName";
+    private static final String prodNum = generateRandomData.generateRandomNumber(randomValueLength);
+    public static final String productSku = productSKUStart + " " + prodNum;
+    protected static final String productName = productNameStart + " " + prodNum;
+    protected static final String productWeight = generateRandomData.generateRandomNumber(1);
+    protected static final String productDescription = productSku + " Description";
+    protected static final String productRetailPrice = generateRandomData.generateRandomNumber(3);
+    protected static final String productSalesChannel = "Call Center";
 
 //    Supplier data
-    protected static String supplierAccountNumber = generateRandomData.generateRandomNumber(5);
-    public static String supplierName = "MySupplier_" + supplierAccountNumber;
-    protected static String supplierURL = generateRandomData.generateRandomNumber(5) + ".site.blabla";
-    protected static String supplierAddress = "Lucky Street " + generateRandomData.generateRandomNumber(3);
-    protected static String supplierEmail = supplierName + "@dydacomp.biz";
+    public static String supplierNameValue = "MySupplier";
+    protected static final String supplierAccountNumber = generateRandomData.generateRandomNumber(randomValueLength);
+    public static final String supplierName = supplierNameValue + "_" + supplierAccountNumber;
+    protected static final String supplierURL = generateRandomData.generateRandomNumber(5) + ".site.blabla";
+    protected static final String supplierAddress = "Lucky Street " + generateRandomData.generateRandomNumber(3);
+    protected static final String supplierEmail = supplierName + "@dydacomp.biz";
 
 //    Bin Data
-    public static String binName = productName + " Bin " + generateRandomData.generateRandomNumber(2);
-    protected static String binPriority = generateRandomData.generateRandomNumber(3);
+    public static final String binName = productName + " Bin " + generateRandomData.generateRandomNumber(randomValueLength);
+    protected static final String binPriority = generateRandomData.generateRandomNumber(3);
 
 //    Inventory Data
-    protected static String inventoryLotNumber = generateRandomData.generateRandomNumber(5);
-    protected static String inventoryUnitCost = generateRandomData.generateRandomNumber(2);
-    public static String inventoryQty = generateRandomData.generateRandomNumberAllovedDigits(6, "");
-    protected static String inventoryNotes = "My Notes " + generateRandomData.generateRandomString(10);
+    protected static final String inventoryLotNumber = generateRandomData.generateRandomNumber(5);
+    protected static final String inventoryUnitCost = generateRandomData.generateRandomNumber(2);
+    public static final String inventoryQty = generateRandomData.generateRandomNumberAllovedDigits(6, "");
+    protected static final String inventoryNotes = "My Notes " + generateRandomData.generateRandomString(10);
 
 //    Authorize credentials
     public static String authApiLoginId = "";
     public static String authTransactionKey = "";
 
 //    UPS credentials
-    protected static String upsUserName = "Dev.api@dydacomp";
-    protected static String upsPassword = "7xy7mZBcXYEKw358gCKrDaqqeX";
-    protected static String upsLicenseNumber = "0C8701ECC4023070";
-    protected static String upsShipperNumber = "08611E";
+    protected static final String upsUserName = "Dev.api@dydacomp";
+    protected static final String upsPassword = "7xy7mZBcXYEKw358gCKrDaqqeX";
+    protected static final String upsLicenseNumber = "0C8701ECC4023070";
+    protected static final String upsShipperNumber = "08611E";
 
 //    USPS credentials
-    protected static String uspsAccountId = "2502974";
-    protected static String uspsPassPhrase = "EliManningHOF!1?";
+    protected static final String uspsAccountId = "2502974";
+    protected static final String uspsPassPhrase = "EliManningHOF!1?";
 
 //    create UPS Ground shipping method
-    protected static String upsGroundMethodName = "UPS Ground-" + generateRandomData.generateRandomNumber(2);
-    protected static String shippingMethodPrice = generateRandomData.generateRandomNumber(1);
+    protected static final String upsGroundMethodName = "UPS Ground-" + generateRandomData.generateRandomNumber(2);
+    protected static final String shippingMethodPrice = generateRandomData.generateRandomNumber(1);
 
 // For reorder
     protected static String orderedItems = "";
@@ -128,10 +130,10 @@ public class BrowserSettings {
     public static String orderNumber = "";
 
 // Magento config
-    public String magentoLogin = "FSAWS_Admin";
-    public String magentoPassword = "#Dydacomp1";
-    public static String magentoChannelID;
-    public static String magentoFSLink;
+protected final String magentoLogin = "FSAWS_Admin";
+    protected final String magentoPassword = "#Dydacomp1";
+    protected static String magentoChannelID;
+    protected static String magentoFSLink;
 
     public static int timeoutVariable = 30;
     public static int progressVariable;
@@ -139,7 +141,7 @@ public class BrowserSettings {
     public static String totalResultMessage = "";
 
     //Corporate mail box access
-    public String mailboxUrl = "gmail.com";
+    protected final String mailboxUrl = "gmail.com";
     public String mailboxLogin = "wildcard@dydacomp.biz";
     public String mailboxPassword = "Dydacomp2014!";
 

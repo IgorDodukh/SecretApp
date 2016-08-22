@@ -1,7 +1,7 @@
 package FXUI;
 
 /**
- * Created by Ihor on 7/17/2016.
+ * Created by Ihor on 7/17/2016. All rights reserved!
  */
 public class ProgressBar {
     static int currentProgress;

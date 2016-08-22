@@ -12,31 +12,31 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.Objects;
 
 /**
- * Created by Ihor on 7/20/2016.
+ * Created by Ihor on 7/20/2016. All rights reserved!
  */
 public class MagentoAdminPanel extends BrowserSettings {
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public MagentoAdminPanel(WebDriver driver) {
         this.driver = driver;
     }
 
-    private By magentoLoginFieldLocator = By.xpath("//div[@class='login-box']//input[@id='username']");
-    private By magentoPasswordFieldLocator = By.xpath("//div[@class='login-box']//input[@id='login']");
-    private By magentoLoginButtonLocator = By.xpath("//div[@class='login-box']//input[@value='Login']");
-    private By magentoPopupBoxLocator = By.xpath("//div[@id='message-popup-window']");
-    private By magentoPopupBoxCloseButtonLocator = By.xpath("//div[@id='message-popup-window']//a/span");
+    private final By magentoLoginFieldLocator = By.xpath("//div[@class='login-box']//input[@id='username']");
+    private final By magentoPasswordFieldLocator = By.xpath("//div[@class='login-box']//input[@id='login']");
+    private final By magentoLoginButtonLocator = By.xpath("//div[@class='login-box']//input[@value='Login']");
+    private final By magentoPopupBoxLocator = By.xpath("//div[@id='message-popup-window']");
+    private final By magentoPopupBoxCloseButtonLocator = By.xpath("//div[@id='message-popup-window']//a/span");
 
-    private By magentoConfigSaveButtonLocator = By.xpath("//div[@class='main-col-inner']//button[@class='scalable save']");
-    private By magentoConfigSaveSecondButtonLocator = By.xpath("//div[3]/div/table/tbody/tr/td[2]/button");
+    private final By magentoConfigSaveButtonLocator = By.xpath("//div[@class='main-col-inner']//button[@class='scalable save']");
+    private final By magentoConfigSaveSecondButtonLocator = By.xpath("//div[3]/div/table/tbody/tr/td[2]/button");
 
-    private By magentoConfigUsernameFieldLocator = By.xpath("//input[@id='freestyle_advancedexport_api_api_username']");
-    private By magentoConfigPassFieldLocator = By.xpath("//input[@id='freestyle_advancedexport_api_api_password']");
-    private By magentoConfigAuthFieldLocator = By.xpath("//input[@id='freestyle_advancedexport_api_api_authorization_url']");
-    private By magentoConfigNotificationFieldLocator = By.xpath("//input[@id='freestyle_advancedexport_api_api_service_url']");
-    private By magentoConfigQueueServiceFieldLocator = By.xpath("//input[@id='freestyle_advancedexport_queue_queue_service_url']");
-    private By magentoChannelIDFieldLocator = By.xpath("//input[@id='freestyle_advancedexport_settings_chanel_id']");
-    private By magentoWebSitesDropdownLocator = By.xpath("//div[@class='switcher']//select");
+    private final By magentoConfigUsernameFieldLocator = By.xpath("//input[@id='freestyle_advancedexport_api_api_username']");
+    private final By magentoConfigPassFieldLocator = By.xpath("//input[@id='freestyle_advancedexport_api_api_password']");
+    private final By magentoConfigAuthFieldLocator = By.xpath("//input[@id='freestyle_advancedexport_api_api_authorization_url']");
+    private final By magentoConfigNotificationFieldLocator = By.xpath("//input[@id='freestyle_advancedexport_api_api_service_url']");
+    private final By magentoConfigQueueServiceFieldLocator = By.xpath("//input[@id='freestyle_advancedexport_queue_queue_service_url']");
+    private final By magentoChannelIDFieldLocator = By.xpath("//input[@id='freestyle_advancedexport_settings_chanel_id']");
+    private final By magentoWebSitesDropdownLocator = By.xpath("//div[@class='switcher']//select");
 
     public void adminPanelLogin() {
         totalResultMessage += "Open Magento admin panel\n";

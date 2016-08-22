@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
 /**
- * Created by Ihor on 6/27/2016.
+ * Created by Ihor on 6/27/2016. All rights reserved!
  */
 public class CreateSupplier extends BrowserSettings {
 

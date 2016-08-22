@@ -7,17 +7,17 @@ import org.openqa.selenium.WebDriver;
 import java.util.Objects;
 
 /**
- * Created by Ihor on 7/16/2016.
+ * Created by Ihor on 7/16/2016. All rights reserved!
  */
 public class DropdownValueDeterminer {
-    private ConfigureMerchant configureMerchant = new ConfigureMerchant();
-    private AddNewCustomer addNewCustomer = new AddNewCustomer();
-    private AddProductWithInventory addProductWithInventory = new AddProductWithInventory();
-    private AddWarehouseAndBin addWarehouseAndBin = new AddWarehouseAndBin();
-    private CreateSupplier createSupplier = new CreateSupplier();
-    private MakeReorder makeReorder = new MakeReorder();
-    private ConfigureChannel configureChannel = new ConfigureChannel();
-    private AddUsers addUsers = new AddUsers();
+    private final ConfigureMerchant configureMerchant = new ConfigureMerchant();
+    private final AddNewCustomer addNewCustomer = new AddNewCustomer();
+    private final AddProductWithInventory addProductWithInventory = new AddProductWithInventory();
+    private final AddWarehouseAndBin addWarehouseAndBin = new AddWarehouseAndBin();
+    private final CreateSupplier createSupplier = new CreateSupplier();
+    private final MakeReorder makeReorder = new MakeReorder();
+    private final ConfigureChannel configureChannel = new ConfigureChannel();
+    private final AddUsers addUsers = new AddUsers();
 
 
     public void entityTypeDropdown(int entityTypeComboBoxIndex, String login, String password, String testCardNumber, WebDriver driver) throws InterruptedException {

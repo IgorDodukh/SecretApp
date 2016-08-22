@@ -11,39 +11,35 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 /**
- * Created by Ihor on 6/29/2016.
+ * Created by Ihor on 6/29/2016. All rights reserved!
  */
 public class InventoryPage extends BrowserSettings {
-    public WebDriver driver;
+    private final WebDriver driver;
 
     public InventoryPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    private By productInventoryFilterByFieldLocator = By.xpath("//label/input");
-    private By firstProductLocator = By.xpath("//tr[1]/td[3]");
-    private By firstProductSKULocator = By.xpath("//tr[1]/td[2]");
-    private By firstProductAddButtonLocator = By.xpath("//tr[1]//button[@id='create_Inventory']");
+    private final By productInventoryFilterByFieldLocator = By.xpath("//label/input");
+    private final By firstProductLocator = By.xpath("//tr[1]/td[3]");
+    private final By firstProductSKULocator = By.xpath("//tr[1]/td[2]");
+    private final By firstProductAddButtonLocator = By.xpath("//tr[1]//button[@id='create_Inventory']");
 
-    private By lotNumberFieldLocator = By.xpath("//input[@id='txtLotNum']");
-    private By unitCostFieldLocator = By.xpath("//input[@id='txtUnitCost']");
-    private By binDropdownLocator = By.xpath("//select[@id='bin_1']");
-    private By binDropdownAddNewBinButtonLocator = By.xpath("//select[@id='bin_1']//option[2]");
-//    private By binDropdownFirstExistingLocator = By.xpath("//select[@id='bin_1']//option[1]");
+    private final By lotNumberFieldLocator = By.xpath("//input[@id='txtLotNum']");
+    private final By unitCostFieldLocator = By.xpath("//input[@id='txtUnitCost']");
+    private final By binDropdownAddNewBinButtonLocator = By.xpath("//select[@id='bin_1']//option[2]");
 
-    private By addBinNameFieldLocator = By.xpath("//input[@id='txtBinName']");
-    private By addBinPickBinDropdownLocator = By.xpath("//select[@id='selectBinType']/option[2]");
-    private By addBinPriorityFieldLocator = By.xpath("//input[@id='binPriority']");
-    private By addBinLowLevelFieldLocator = By.xpath("//input[@id='productInfo_LowLevel']");
-    private By addBinQuantityFieldLocator = By.xpath("//input[@id='quantity_1']");
-    private By addBinQuantityValueLocator = By.xpath("//form/div[6]/*");
-    private By addBinNotesFieldLocator = By.xpath("//textarea[@id='txtComment']");
+    private final By addBinNameFieldLocator = By.xpath("//input[@id='txtBinName']");
+    private final By addBinPickBinDropdownLocator = By.xpath("//select[@id='selectBinType']/option[2]");
+    private final By addBinPriorityFieldLocator = By.xpath("//input[@id='binPriority']");
+    private final By addBinQuantityFieldLocator = By.xpath("//input[@id='quantity_1']");
+    private final By addBinQuantityValueLocator = By.xpath("//form/div[6]/*");
+    private final By addBinNotesFieldLocator = By.xpath("//textarea[@id='txtComment']");
 
-    private By saveBinButtonLocator = By.xpath("//input[@id='save_BinAddClone']");
+    private final By saveBinButtonLocator = By.xpath("//input[@id='save_BinAddClone']");
 
-    private By saveAndCloseProductButtonLocator = By.xpath("//a[@id='btnSaveAndClose']");
-    private By popupBoxMessageLocator = By.xpath("//*[@id='dydacomp_messagebox']");
-    private By popupOkBtnLocator = By.xpath("//button[@class='primary-button']");
+    private final By saveAndCloseProductButtonLocator = By.xpath("//a[@id='btnSaveAndClose']");
+    private final By popupBoxMessageLocator = By.xpath("//*[@id='dydacomp_messagebox']");
 
 
 

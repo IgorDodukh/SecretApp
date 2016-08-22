@@ -11,20 +11,20 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
- * Created by Ihor on 7/20/2016.
+ * Created by Ihor on 7/20/2016. All rights reserved!
  */
 public class SyncPage extends BrowserSettings{
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public SyncPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    private By syncFilterByFieldLocator = By.xpath("//div[@class='dataTables_filter']//input");
-    private By syncChannelInGridLocator = By.xpath("//table/tbody//tr[1]/td[2]");
-    private By syncViewChannelButtonLocator = By.xpath("//table/tbody//tr[1]//input[@name='view_salesChannel']");
-    private By channelOverviewTabLocator = By.xpath("//aside[@id='leftNav']//ul[1]/li/a");
-    private By channelIDLocator = By.xpath("//input[@id='txtChannelId']");
+    private final By syncFilterByFieldLocator = By.xpath("//div[@class='dataTables_filter']//input");
+    private final By syncChannelInGridLocator = By.xpath("//table/tbody//tr[1]/td[2]");
+    private final By syncViewChannelButtonLocator = By.xpath("//table/tbody//tr[1]//input[@name='view_salesChannel']");
+    private final By channelOverviewTabLocator = By.xpath("//aside[@id='leftNav']//ul[1]/li/a");
+    private final By channelIDLocator = By.xpath("//input[@id='txtChannelId']");
 
     public void openChannel() throws InterruptedException {
         totalResultMessage += "Search needed Channel\n";

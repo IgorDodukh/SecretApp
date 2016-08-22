@@ -1,11 +1,10 @@
 package FXUI;
 
 /**
- * Created by Ihor on 7/15/2016.
+ * Created by Ihor on 7/15/2016. All rights reserved!
  */
-public class ExecutionTimeCounter {
-    static long start = 0;
-    static long stop = 0;
+class ExecutionTimeCounter {
+    private static long start = 0;
     static String executionTime = "";
 
        public static void startCounter() {
@@ -13,7 +12,7 @@ public class ExecutionTimeCounter {
         }
 
        public static void stopCounter() {
-           stop = System.currentTimeMillis();
+           long stop = System.currentTimeMillis();
            long diffMsec = stop -  start;
            long diffSec = diffMsec / 1000;
 

@@ -13,29 +13,27 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Created by Ihor on 7/11/2016.
+ * Created by Ihor on 7/11/2016. All rights reserved!
  */
 public class ViewOrderPage extends BrowserSettings {
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public ViewOrderPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    private By firstOrderFromTheListLocator = By.xpath("//tbody//tr[2]/td/a");
-    private By orderSummaryTabLocator = By.xpath("//aside[@id='leftNav']//li[1]/a");
-    private By customerNameLocator = By.xpath("//tbody//tr[2]/td[4]");
-    private By shippingDetailsTabLocator = By.xpath("//aside[@id='leftNav']//li[4]/a");
-    private By paymentDetailsTabLocator = By.xpath("//aside[@id='leftNav']//li[6]/a");
-    private By customerNumberFieldLocator = By.xpath("//input[@id='customerNumber']");
+    private final By firstOrderFromTheListLocator = By.xpath("//tbody//tr[2]/td/a");
+    private final By orderSummaryTabLocator = By.xpath("//aside[@id='leftNav']//li[1]/a");
+    private final By customerNameLocator = By.xpath("//tbody//tr[2]/td[4]");
+    private final By shippingDetailsTabLocator = By.xpath("//aside[@id='leftNav']//li[4]/a");
 
-    private By linkToOrdersGridLocator = By.xpath("//section[@id='titleSection']//li[1]");
-    private By addOrderButtonLocator = By.xpath("//a[@href='/web/Order/OrderCreating']");
-    private By addItemButtonLocator = By.xpath("//div[@class='input-group-btn']/button[@class='btn btn-default']");
+    private final By linkToOrdersGridLocator = By.xpath("//section[@id='titleSection']//li[1]");
+    private final By addOrderButtonLocator = By.xpath("//a[@href='/web/Order/OrderCreating']");
+    private final By addItemButtonLocator = By.xpath("//div[@class='input-group-btn']/button[@class='btn btn-default']");
 
-    private By orderedSkuListLocator = By.xpath("//div[@id='ship_items_list']/div//span[1]");
+    private final By orderedSkuListLocator = By.xpath("//div[@id='ship_items_list']/div//span[1]");
 
-    private By shippingMethodLocator = By.xpath("//section[@class='columns shipping_details shipment ng-scope']//div/p[2]/span[1]");
+    private final By shippingMethodLocator = By.xpath("//section[@class='columns shipping_details shipment ng-scope']//div/p[2]/span[1]");
 
     public void openViewOrderPage() throws InterruptedException {
         totalResultMessage += "Open 'View Order' page\n";

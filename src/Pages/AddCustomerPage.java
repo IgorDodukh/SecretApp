@@ -11,61 +11,45 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 /**
- * Created by igor on 17.04.16.
+ * Created by igor on 17.04.16. All rights reserved!
  */
 public class AddCustomerPage extends BrowserSettings {
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public AddCustomerPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    private By firstNameFieldLocator = By.xpath("//input[@id='customer_first_name']");
-    private By lastNameFieldLocator = By.xpath("//input[@id='customer_last_name']");
-    private By emailFieldLocator = By.xpath("//input[@id='customer_email']");
-    private By phoneFieldLocator = By.xpath("//input[@id='customer_phone']");
+    private final By firstNameFieldLocator = By.xpath("//input[@id='customer_first_name']");
+    private final By lastNameFieldLocator = By.xpath("//input[@id='customer_last_name']");
+    private final By emailFieldLocator = By.xpath("//input[@id='customer_email']");
+    private final By phoneFieldLocator = By.xpath("//input[@id='customer_phone']");
 
-    private By billingAddressTabLocator = By.xpath("//*[@id='tabBillingAddresses']");
-    private By billingAddressTitleLocator = By.xpath("(//*[@class='columns colx_h2'])[1]");
-    private By getBillingAddressBtnLocator = By.xpath("//a[@id='addNewBillingAddressBtn']");
-    private By newBillingAddressSectionLocator = By.xpath("//div[@id='new_billing_address_section_basic']");
-    private By billingAddressFirstNameLocator = By.xpath("//input[@id='first_name_basic']");
-    private By billingAddressLastNameLocator = By.xpath("//input[@id='last_name_basic']");
-    private By billingAddressAddr1Locator = By.xpath("//input[@id='address_basic']");
-    private By billingAddressZipLocator = By.xpath("//input[@id='zip_basic']");
+    private final By billingAddressTabLocator = By.xpath("//*[@id='tabBillingAddresses']");
+    private final By getBillingAddressBtnLocator = By.xpath("//a[@id='addNewBillingAddressBtn']");
+    private final By newBillingAddressSectionLocator = By.xpath("//div[@id='new_billing_address_section_basic']");
+    private final By billingAddressFirstNameLocator = By.xpath("//input[@id='first_name_basic']");
+    private final By billingAddressLastNameLocator = By.xpath("//input[@id='last_name_basic']");
+    private final By billingAddressAddr1Locator = By.xpath("//input[@id='address_basic']");
+    private final By billingAddressZipLocator = By.xpath("//input[@id='zip_basic']");
 
-    private By sameAsBillingButtonLocator = By.xpath("(//input[@class='sameAddBtn primary-button sameBillingAddBtn'])[3]");
+    private final By sameAsBillingButtonLocator = By.xpath("(//input[@class='sameAddBtn primary-button sameBillingAddBtn'])[3]");
 
-    private By shippingAddressTabLocator = By.xpath("//*[@id='tabShippingAddresses']");
-    private By shippingAddressTitleLocator = By.xpath("(//*[@class='columns colx_h2'])[2]");
-    private By getShippingAddressBtnLocator = By.xpath("//a[@id='addNewshippingAddressBtn']");
-    private By newShippingAddressSectionLocator = By.xpath("(//div[@id='new_billing_address_section_basic'])[3]");
+    private final By shippingAddressTabLocator = By.xpath("//*[@id='tabShippingAddresses']");
+    private final By shippingAddressTitleLocator = By.xpath("(//*[@class='columns colx_h2'])[2]");
+    private final By getShippingAddressBtnLocator = By.xpath("//a[@id='addNewshippingAddressBtn']");
+    private final By newShippingAddressSectionLocator = By.xpath("(//div[@id='new_billing_address_section_basic'])[3]");
 
-    private By paymentDetailsTabLocator = By.xpath("//li[@id='tabPaymentMethods']");
-    private By paymentDetailsTabTitleLocator = By.xpath("//*[@tooltipid='Customer_PaymentMethods']");
-    private By addNewCardBtnLocator = By.xpath("//*[@id='linkAddNewCard']");
-    private By cardStackLocator = By.xpath("(//*[@class='card stack'])[2]");
-    private By cardNumberFieldLocator = By.xpath("(//*[@name='card_no'])[2]");
-    private By cardExpiredYearLocator = By.xpath("(//*[@id='card_expYear'])[2]/option[7]");
-    private By saveCardLinkLocator = By.xpath("(//*[@id='linkSaveCard'])[2]");
-    private By editCardLinkLocator = By.xpath("(//*[@id='linkEditCard'])[2]");
-//    private By saveContextualButton = By.xpath("//a[@id='btnSave']");
-    private By saveAndCloseContextualButtonLocator = By.xpath("//a[@id='btnSaveAndClose']");
-    private By popupBoxMessageLocator = By.xpath("(//div[@id='customerMessageBox']//*)[1]");
-    private By popupOkBtnLocator = By.xpath("//button[@class='primary-button']");
-
-
-    private By filterCustomersFieldLocator = By.xpath("//*[@aria-controls='searchCustomerResult']");
-    private By customerNameInTheGridLocator = By.xpath("((//*[@id='searchCustomerResult'])//tbody/tr/*)[4]");
-    private By customerEmailInTheGridLocator = By.xpath("((//*[@id='searchCustomerResult'])//tbody/tr/*)[5]");
-    private By customerAddressInTheGridLocator = By.xpath("((//*[@id='searchCustomerResult'])//tbody/tr/*)[7]");
-    private By customerCityInTheGridLocator = By.xpath("((//*[@id='searchCustomerResult'])//tbody/tr/*)[8]");
-//    private By customerStateInTheGridLocator = By.xpath("((//*[@id='searchCustomerResult'])//tbody/tr/*)[9]");
-    private By customerZipInTheGridLocator = By.xpath("((//*[@id='searchCustomerResult'])//tbody/tr/*)[10]/div[1]");
-
-    private By waitingPopupLocator = By.xpath("//*[@id='waitingPopup']");
-    private By waitingPopupTextLocator = By.xpath("//*[@id='waitingPopup']//*[@id='waiting-popup-text']");
-    private By numberOfCustomersLocator = By.xpath("//*[@id='searchCustomerResult']//tbody/tr");
+    private final By paymentDetailsTabLocator = By.xpath("//li[@id='tabPaymentMethods']");
+    private final By paymentDetailsTabTitleLocator = By.xpath("//*[@tooltipid='Customer_PaymentMethods']");
+    private final By addNewCardBtnLocator = By.xpath("//*[@id='linkAddNewCard']");
+    private final By cardStackLocator = By.xpath("(//*[@class='card stack'])[2]");
+    private final By cardNumberFieldLocator = By.xpath("(//*[@name='card_no'])[2]");
+    private final By cardExpiredYearLocator = By.xpath("(//*[@id='card_expYear'])[2]/option[7]");
+    private final By saveCardLinkLocator = By.xpath("(//*[@id='linkSaveCard'])[2]");
+    private final By editCardLinkLocator = By.xpath("(//*[@id='linkEditCard'])[2]");
+    private final By saveAndCloseContextualButtonLocator = By.xpath("//a[@id='btnSaveAndClose']");
+    private final By popupOkBtnLocator = By.xpath("//button[@class='primary-button']");
 
     public void addCustomerInfo(String customerFirstName, String customerLastName, String customerEmail, String customerPhone) {
         totalResultMessage += "Adding customer info:\n";

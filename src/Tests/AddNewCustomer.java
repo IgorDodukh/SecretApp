@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
 /**
- * Created by igor on 17.04.16.
+ * Created by igor on 17.04.16. All rights reserved!
  */
 public class AddNewCustomer extends BrowserSettings{
 

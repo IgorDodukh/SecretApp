@@ -3,7 +3,7 @@ package Settings;
 import org.apache.commons.lang3.RandomStringUtils;
 
 /**
- * Created by igor on 19.04.16.
+ * Created by igor on 19.04.16. All rights reserved!
  */
 public class GenerateRandomData {
     public String generateRandomString(int length){
@@ -34,7 +34,7 @@ public class GenerateRandomData {
         String allowedChars="abcdefghijklmnopqrstuvwxyz" +   //alphabets
                 "1234567890" +   //numbers
                 "_-.";   //special characters
-        String email="";
+        String email= "";
         String temp=RandomStringUtils.random(length,allowedChars);
         email=temp.substring(0,temp.length()-9)+"@dydacomp.biz";
         return email;

@@ -11,63 +11,52 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 /**
- * Created by igor on 17.04.16.
+ * Created by igor on 17.04.16. All rights reserved!
  */
 public class MainPage extends BrowserSettings {
-    private WebDriver driver;
+    private final WebDriver driver;
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    private By customersMenuButtonLocator = By.xpath(".//*[@id='HUD']/nav[2]/div/ul/li[1]/a");
-    private By addCustomerMenuButtonLocator = By.xpath("//li/a[@href='/web/Customer/CreateCustomerView']");
+    private final By customersMenuButtonLocator = By.xpath(".//*[@id='HUD']/nav[2]/div/ul/li[1]/a");
+    private final By addCustomerMenuButtonLocator = By.xpath("//li/a[@href='/web/Customer/CreateCustomerView']");
 
-    private By productsMenuButtonLocator = By.xpath("//*[@class='nav navbar-nav']/li[2]");
-    private By addProductMenuButtonLocator = By.xpath("//li/a[@href='/web/Product/ProductCreate']");
+    private final By productsMenuButtonLocator = By.xpath("//*[@class='nav navbar-nav']/li[2]");
+    private final By addProductMenuButtonLocator = By.xpath("//li/a[@href='/web/Product/ProductCreate']");
 
-    private By suppliersMenuButtonLocator = By.xpath("//li/a[@href='/web/Product/SearchSupplier']");
-    private By addSupplierButtonLocator = By.xpath("//button[@id='add_supplier']");
-    private By supplierAccountNumberFieldLocator = By.xpath("//input[@id='acct_no']");
+    private final By suppliersMenuButtonLocator = By.xpath("//li/a[@href='/web/Product/SearchSupplier']");
+    private final By addSupplierButtonLocator = By.xpath("//button[@id='add_supplier']");
+    private final By supplierAccountNumberFieldLocator = By.xpath("//input[@id='acct_no']");
 
-    private By customersGridButtonLocator = By.xpath(".//*[@id='HUD']/nav[2]/div/ul/li[1]/ul/li[1]/a");
-    private By customerInfoTabLocator = By.xpath("//h2[@tooltipid='Customer_CustomerInfo']");
+    private final By customerInfoTabLocator = By.xpath("//h2[@tooltipid='Customer_CustomerInfo']");
 
-    private By headerMenuLocator = By.xpath(".//*[@id='HUD']/nav[2]/div/ul/li[4]/a");
-    private By searchWarehouseButtonLocator = By.xpath("//a[@href='/web/Inventory/SearchWarehouse']");
-    private By addWarehouseButtonLocator = By.xpath("//button[@tooltipid='addWarehouse']");
-    private By addPageBreadcrumpLocator = By.xpath("//*[@id='breadCrumb']/ul/li[2]/h1");
+    private final By headerMenuLocator = By.xpath(".//*[@id='HUD']/nav[2]/div/ul/li[4]/a");
+    private final By searchWarehouseButtonLocator = By.xpath("//a[@href='/web/Inventory/SearchWarehouse']");
+    private final By addWarehouseButtonLocator = By.xpath("//button[@tooltipid='addWarehouse']");
+    private final By addPageBreadcrumpLocator = By.xpath("//*[@id='breadCrumb']/ul/li[2]/h1");
 
-    private By addCustomerPageTitleLocator = By.xpath("//*[@class='tabContainer columns']//h2/strong");
-    private By productInfoTabLocator = By.xpath("//*[@id='productInfoTab']");
+    private final By addCustomerPageTitleLocator = By.xpath("//*[@class='tabContainer columns']//h2/strong");
 
-    private By setupButtonLocator = By.xpath("//li[@id='Help'][2]");
-    private By settingsButtonLocator = By.xpath("//a[@href='/web/Configuration/ConfigurationManagement']");
-    private By thirdPartyConnectionsButtonLocator = By.xpath("//a[@href='/web/Configuration/ThirdPartyConnectionsManagement']");
-    private By shippingMethodsButtonLocator = By.xpath("//a[@href='/web/Configuration/ShippingMethods']");
-    private By basicSettingTitleLocator = By.xpath("//section[@id='basicSettingTabpage']/div[1]");
-    private By authorizeNetTitleLocator = By.xpath("//section[@id='paymentGateTabpage']/div[1]");
-    private By siteLogoIconLocator = By.xpath("//img[@src='/web/Content/Images/nextgen_logo-white.png']");
+    private final By setupButtonLocator = By.xpath("//li[@id='Help'][2]");
+    private final By settingsButtonLocator = By.xpath("//a[@href='/web/Configuration/ConfigurationManagement']");
+    private final By shippingMethodsButtonLocator = By.xpath("//a[@href='/web/Configuration/ShippingMethods']");
+    private final By basicSettingTitleLocator = By.xpath("//section[@id='basicSettingTabpage']/div[1]");
+    private final By siteLogoIconLocator = By.xpath("//img[@src='/web/Content/Images/nextgen_logo-white.png']");
 
-    private By shippingMethodsPageTitleLocator = By.xpath("//button[@id='btnShippingMethods']");
-    private By addShippingMethodButtonLocator = By.xpath("//button[@id='add_shippingMethod']");
+    private final By addShippingMethodButtonLocator = By.xpath("//button[@id='add_shippingMethod']");
 
-    private By orderProcessingTabLocator = By.xpath("//aside[@id='leftNav']//li[4]");
+    private final By orderProcessingTabLocator = By.xpath("//aside[@id='leftNav']//li[4]");
 
-    private By inventoryMenuButtonLocator = By.xpath("//*[@class='nav navbar-nav']/li[4]");
-    private By binsButtonLocator = By.xpath("//a[@href='/web/Inventory/SearchWarehouseBin']");
-    private By productInventoryButtonLocator = By.xpath("//a[@href='/web/Inventory/ProductInventory']");
-    private By addBinButtonLocator = By.xpath("//button[@id='add_bin']");
-    private By productInventoryFilterByFieldLocator = By.xpath("//label/input");
+    private final By ordersMenuButtonLocator = By.xpath("//*[@class='nav navbar-nav']/li[3]");
+    private final By viewAllOrdersMenuButtonLocator = By.xpath("//li/a[@href='/web/Order/SearchOrderAdvance']");
+    private final By allOrdersTabButtonLocator = By.xpath("//section[@id='tabsSection']/button[6]");
 
-    private By ordersMenuButtonLocator = By.xpath("//*[@class='nav navbar-nav']/li[3]");
-    private By viewAllOrdersMenuButtonLocator = By.xpath("//li/a[@href='/web/Order/SearchOrderAdvance']");
-    private By allOrdersTabButtonLocator = By.xpath("//section[@id='tabsSection']/button[6]");
+    private final By syncButtonLocator = By.xpath("//*[@class='nav navbar-nav']/li[7]");
 
-    private By syncButtonLocator = By.xpath("//*[@class='nav navbar-nav']/li[7]");
-
-    private By manageMerchantButtonLocator = By.xpath("//a[@href='/web/Merchant/SearchMerchant']");
-    private By addMerchantButtonLocator = By.xpath("//button[@id='createMerchant']");
+    private final By manageMerchantButtonLocator = By.xpath("//a[@href='/web/Merchant/SearchMerchant']");
+    private final By addMerchantButtonLocator = By.xpath("//button[@id='createMerchant']");
 
 
     public void openAddCustomerPage() {

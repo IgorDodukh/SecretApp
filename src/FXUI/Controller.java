@@ -152,12 +152,12 @@ public class Controller extends Main {
         aboutButton.setOnAction(t -> GeneratePopupBox.aboutPopupBox());
 
 //Add UI Elements listener
-        KeysListener.comboBoxKeyListener(browsersComboBox, this);
-        KeysListener.comboBoxKeyListener(entityTypeComboBox, this);
-        KeysListener.comboBoxKeyListener(environmentsComboBox, this);
-        KeysListener.textFieldKeyListener(loginField, this);
-        KeysListener.passFieldKeyListener(passwordField, this);
-        KeysListener.buttonsKeyListener(startButton, this);
+        KeysListener.startButtonKeyListener(browsersComboBox, this);
+        KeysListener.startButtonKeyListener(entityTypeComboBox, this);
+        KeysListener.startButtonKeyListener(environmentsComboBox, this);
+        KeysListener.startButtonKeyListener(loginField, this);
+        KeysListener.startButtonKeyListener(passwordField, this);
+        KeysListener.startButtonKeyListener(startButton, this);
 
 //        closeMenuButton.setOnAction(event -> ((Stage)((Button)event.getSource()).getScene().getWindow()).close());
 //        hideButton.setOnAction(e -> ((Stage)((Button)e.getSource()).getScene().getWindow()).setIconified(true));

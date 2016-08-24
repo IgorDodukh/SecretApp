@@ -45,7 +45,7 @@ public class InventoryPage extends BrowserSettings {
 
     public static String createdBin = "";
 
-    public void openAddInventoryForm() {
+    public void openAddInventoryForm(String productSku) {
         totalResultMessage += "Search created Product\n";
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Product Inventory' page popup was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(productInventoryFilterByFieldLocator));

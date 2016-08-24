@@ -39,7 +39,15 @@ public class AddSupplierPage extends BrowserSettings {
     private final By saveAndCloseContextualButtonLocator = By.xpath("//a[@id='btnSaveAndClose']");
     private final By popupBoxMessageLocator = By.xpath("//div[@id='dydacomp_messagebox']");
 
-    public void addSupplierContactInfo(String accountNumber, String name, String url, String address1, String zip, String email, String first, String last) throws InterruptedException {
+    public void addSupplierContactInfo(String accountNumber,
+                                       String name,
+                                       String url,
+                                       String address1,
+                                       String zip,
+                                       String email,
+                                       String first,
+                                       String last)
+            throws InterruptedException {
         totalResultMessage += "Adding Supplier info:\n";
         totalResultMessage += " - Add Supplier Account Number\n";
         driver.findElement(supplierAccountNumberFieldLocator).sendKeys(accountNumber);

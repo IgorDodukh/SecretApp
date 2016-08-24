@@ -15,7 +15,7 @@ public class DropdownValueDeterminer {
     private final AddNewCustomer addNewCustomer = new AddNewCustomer();
     private final AddProductWithInventory addProductWithInventory = new AddProductWithInventory();
     private final AddWarehouseAndBin addWarehouseAndBin = new AddWarehouseAndBin();
-    private final CreateSupplier createSupplier = new CreateSupplier();
+    private final AddSupplier addSupplier = new AddSupplier();
     private final MakeReorder makeReorder = new MakeReorder();
     private final ConfigureChannel configureChannel = new ConfigureChannel();
     private final AddUsers addUsers = new AddUsers();
@@ -26,7 +26,7 @@ public class DropdownValueDeterminer {
         if (entityTypeComboBoxIndex == 1) {
             BrowserSettings.progressVariable = 3;
             configureMerchant.setupNewMerchant(login, password, driver);
-            Controller.resultMessage += "Merchant '" + login + "'\nhas been configured";
+            Controller.resultMessage += "Merchant '" + login + "' has been configured";
         } else if (entityTypeComboBoxIndex == 2) {
             BrowserSettings.progressVariable = 4;
             addNewCustomer.jira3675(login, password, testCardNumber, driver);
@@ -48,16 +48,16 @@ public class DropdownValueDeterminer {
             Controller.resultMessage += "\nBin name is: " + AddWarehouseAndBin.createdBinName;
         } else if (entityTypeComboBoxIndex == 4) {
             BrowserSettings.progressVariable = 4;
-            createSupplier.jira3012(login, password, driver);
+            addSupplier.jira3012(login, password, driver);
             Controller.resultMessage += "New Supplier has been created\n";
-            Controller.resultMessage += "\nSupplier name is: " + CreateSupplier.createdSupplierName;
+            Controller.resultMessage += "\nSupplier name is: " + AddSupplier.createdSupplierName;
         } else if (entityTypeComboBoxIndex == 6) {
             BrowserSettings.progressVariable = 5;
             makeReorder.makeReorder(login, password, driver);
             Controller.resultMessage += "New Order has been created\n";
             Controller.resultMessage += "\nOrder Number is: " + BrowserSettings.orderNumber;
         } else if (entityTypeComboBoxIndex == 0) {
-            BrowserSettings.progressVariable = 4;
+            BrowserSettings.progressVariable = 5;
             configureChannel.configureMagentoChannel(login, password, driver);
             Controller.resultMessage += "\nMagento "+ Controller.magentoIndexName;
             Controller.resultMessage += " has been synced with " + Controller.environmentComboBoxValue;

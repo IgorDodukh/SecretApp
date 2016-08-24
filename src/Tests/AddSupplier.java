@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 /**
  * Created by Ihor on 6/27/2016. All rights reserved!
  */
-public class CreateSupplier extends BrowserSettings {
+public class AddSupplier extends BrowserSettings {
 
     public static String createdSupplierName = "";
     @Test
@@ -25,10 +25,15 @@ public class CreateSupplier extends BrowserSettings {
         mainPage.openAddSupplierPage();
 
         AddSupplierPage addSupplierPage = new AddSupplierPage(driver);
-        addSupplierPage.addSupplierContactInfo(supplierAccountNumber,
-                createdSupplierName = GetPropertyValues.supplierName + " " + new GenerateRandomData().generateRandomNumber(randomValueLength),
-                supplierURL, supplierAddress, addressZip, supplierEmail,
-                AddNewCustomer.createdFirstName, AddNewCustomer.createdLastName);
+        addSupplierPage.addSupplierContactInfo(
+                supplierAccountNumber,
+                createdSupplierName = GetPropertyValues.supplierName + "_" + new GenerateRandomData().generateRandomNumber(randomValueLength),
+                supplierURL,
+                supplierAddress,
+                addressZip,
+                createdSupplierName + "@dydacomp.biz",
+                AddNewCustomer.createdFirstName,
+                AddNewCustomer.createdLastName);
         addSupplierPage.saveSupplier();
     }
 }

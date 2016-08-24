@@ -1,7 +1,7 @@
 package Pages;
 
-import Settings.BrowserSettings;
 import FXUI.ProgressBar;
+import Settings.BrowserSettings;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -43,7 +43,14 @@ public class AddWarehousePage extends BrowserSettings {
     private final By popupBoxMessageLocator = By.xpath("(//div[@id='warehouseMessageBox']//*)[1]");
     private final By popupOkBtnLocator = By.xpath("//button[@class='primary-button']");
 
-    public void addWarehouseInfo(String warehouseName, String contactName, String phone, String startTime, String endTime, String addressLine1, String zip) {
+    public void addWarehouseInfo(
+            String warehouseName,
+            String contactName,
+            String phone,
+            String startTime,
+            String endTime,
+            String addressLine1,
+            String zip) {
         totalResultMessage += "Adding Warehouse info:\n";
         totalResultMessage +=" - Add Warehouse Name\n";
         driver.findElement(warehouseNameFieldLocator).sendKeys(warehouseName);
@@ -75,7 +82,7 @@ public class AddWarehousePage extends BrowserSettings {
         ProgressBar.addProgressValue(progressVariable);
     }
 
-    public void addWarehouseBin (String name) {
+    public void addWarehouseBin (String binName) {
         totalResultMessage += "Select Bins tab\n";
         totalResultMessage += "Adding Bin:\n";
         driver.findElement(binsTabLocator).click();
@@ -89,7 +96,7 @@ public class AddWarehousePage extends BrowserSettings {
         Assert.assertEquals(element.isDisplayed(), true, "Popup for the 'Add Bin' form is not displayed");
 
         totalResultMessage += " - Enter Bin name\n";
-        driver.findElement(newBinNameLocator).sendKeys(name);
+        driver.findElement(newBinNameLocator).sendKeys(binName);
         ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Select Bin type\n";
@@ -99,7 +106,7 @@ public class AddWarehousePage extends BrowserSettings {
         totalResultMessage += "Save new Bin\n";
         driver.findElement(saveNewBinBtnLocator).click();
         ProgressBar.addProgressValue(progressVariable);
-        Assert.assertEquals(driver.findElement(newBinNameInBinsGridLocator).getText(), newBinName, "Unexpected new created bin's name");
+        Assert.assertEquals(driver.findElement(newBinNameInBinsGridLocator).getText(), binName, "Unexpected new created bin's name");
     }
 
     public void saveWarehouse() {

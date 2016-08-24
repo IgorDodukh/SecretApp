@@ -45,7 +45,6 @@ public class MagentoAdminPanel extends BrowserSettings {
 
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Login page was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(magentoLoginFieldLocator));
-        ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += "Fill Magento credentials\n";
         driver.findElement(magentoLoginFieldLocator).sendKeys(magentoLogin);
@@ -173,7 +172,6 @@ public class MagentoAdminPanel extends BrowserSettings {
         }catch (Exception e){
             driver.findElement(magentoConfigSaveSecondButtonLocator).click();
         }
-//        driver.findElement(magentoConfigSaveButtonLocator).click();
 
         ProgressBar.addProgressValue(progressVariable);
     }

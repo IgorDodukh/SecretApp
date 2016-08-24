@@ -13,8 +13,8 @@ import org.testng.annotations.Test;
  * Created by igor on 17.04.16. All rights reserved!
  */
 public class AddNewCustomer extends BrowserSettings{
-    public static String createdFirstName = "";
-    public static String createdLastName = "";
+    public static String createdFirstName = "Some";
+    public static String createdLastName = "Name";
     @Test
     public void jira3675(String email, String password, String cardNumber, WebDriver driver) throws InterruptedException {
         LoginPage loginPage = new LoginPage(driver);

@@ -85,15 +85,12 @@ public class BrowserSettings {
     protected static final String productSalesChannel = "Call Center";
 
 //    Supplier data
-    public static String supplierNameValue = "MySupplier";
-    protected static final String supplierAccountNumber = generateRandomData.generateRandomNumber(randomValueLength);
-    public static final String supplierName = supplierNameValue + "_" + supplierAccountNumber;
-    protected static final String supplierURL = generateRandomData.generateRandomNumber(5) + ".site.blabla";
-    protected static final String supplierAddress = "Lucky Street " + generateRandomData.generateRandomNumber(3);
-    protected static final String supplierEmail = supplierName + "@dydacomp.biz";
+    protected static String supplierAccountNumber = new GenerateRandomData().generateRandomNumber(randomValueLength);
+    protected static String supplierURL = generateRandomData.generateRandomNumber(5) + ".site.blabla";
+    protected static String supplierAddress = "Lucky Street " + generateRandomData.generateRandomNumber(3);
+
 
 //    Bin Data
-    public static final String binName = productName + " Bin " + generateRandomData.generateRandomNumber(randomValueLength);
     protected static final String binPriority = generateRandomData.generateRandomNumber(3);
 
 //    Inventory Data

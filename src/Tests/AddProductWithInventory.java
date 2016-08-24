@@ -34,7 +34,7 @@ public class AddProductWithInventory extends BrowserSettings{
         addProductPage.openInventoryPage();
 
         InventoryPage inventoryPage = new InventoryPage(driver);
-        inventoryPage.openAddInventoryForm();
+        inventoryPage.openAddInventoryForm(createdProductSKU);
         inventoryPage.addInventoryInfo();
         inventoryPage.saveInventory();
     }

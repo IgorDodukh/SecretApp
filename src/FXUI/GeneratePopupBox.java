@@ -65,6 +65,8 @@ public class GeneratePopupBox {
     public static String currentSupplierName = "";
     public static String currentBinName = "";
     public static String currentMainPath = "";
+    public static String currentAuthApiLoginId = "";
+    public static String currentAuthTransactionKey = "";
 
     public static void exceptionPopupBox(Exception exception) {
         String exceptionMessage = "";
@@ -157,7 +159,7 @@ public class GeneratePopupBox {
         });
     }
 
-    public static void indentifyPopupBox() {
+    public static void identifyPopupBox() {
         List<String> choices = new ArrayList<>();
         choices.add("Igor");
         choices.add("Vika");
@@ -171,27 +173,25 @@ public class GeneratePopupBox {
         identifyDialog.setContentText("I'm ");
         identifyDialog.initStyle(StageStyle.UTILITY);
 
-        identifyDialog.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if(Objects.equals(newValue, "Igor")){
-                BrowserSettings.authApiLoginId = "3y8Z2fk5Z3n";
-                BrowserSettings.authTransactionKey = "2s25qyDYe249uTRx";
-            } else if(Objects.equals(newValue, "Vika")){
-                BrowserSettings.authApiLoginId = "3Ud359XbX6";
-                BrowserSettings.authTransactionKey = "67FK5537ng85nAPw";
-            } else if(Objects.equals(newValue, "Oksanka")){
-                BrowserSettings.authApiLoginId = "2L6UmL7rE";
-                BrowserSettings.authTransactionKey = "36Sc34JmhE9m493t";
-            } else if(Objects.equals(newValue, "Natasha")){
-                BrowserSettings.authApiLoginId = "3z42Rqc3pMrX";
-                BrowserSettings.authTransactionKey = "5gt38eVNu529t6ZP";
-            }
-            currentUser = newValue;
-        });
-
         appStyles.setDialogStyle(identifyDialog);
+
 // Traditional way to get the response value.
         Optional<String> result = identifyDialog.showAndWait();
         if (result.isPresent()){
+            if(Objects.equals(result.get(), "Igor")){
+                currentAuthApiLoginId = "3y8Z2fk5Z3n";
+                currentAuthTransactionKey = "2s25qyDYe249uTRx";
+            } else if(Objects.equals(result.get(), "Vika")){
+                currentAuthApiLoginId = "3Ud359XbX6";
+                currentAuthTransactionKey = "67FK5537ng85nAPw";
+            } else if(Objects.equals(result.get(), "Oksanka")){
+                currentAuthApiLoginId = "2L6UmL7rE";
+                currentAuthTransactionKey = "36Sc34JmhE9m493t";
+            } else if(Objects.equals(result.get(), "Natasha")){
+                currentAuthApiLoginId = "3z42Rqc3pMrX";
+                currentAuthTransactionKey = "5gt38eVNu529t6ZP";
+            }
+            currentUser = result.get();
             try {
                 UpdateConfig.updateUser();
             } catch (IOException e) {
@@ -271,16 +271,12 @@ public class GeneratePopupBox {
         creditCardsDialog.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 if(Objects.equals(newValue, "Visa")){
                     appStyles.setDialogLogo(creditCardsDialog, "visa.png");
-                    Controller.testCardNumber = BrowserSettings.visaTestCardNumber;
                 } else if(Objects.equals(newValue, "Master Card")){
                     appStyles.setDialogLogo(creditCardsDialog, "mastercard.png");
-                    Controller.testCardNumber = BrowserSettings.masterCardTestCardNumber;
                 } else if(Objects.equals(newValue, "Discover")){
                     appStyles.setDialogLogo(creditCardsDialog, "discover.png");
-                    Controller.testCardNumber = BrowserSettings.discoverTestCardNumber;
                 } else if(Objects.equals(newValue, "American Express")){
                     appStyles.setDialogLogo(creditCardsDialog, "American-Express.png");
-                    Controller.testCardNumber = BrowserSettings.americanExpressTestCardNumber;
                 }
         });
 
@@ -290,6 +286,15 @@ public class GeneratePopupBox {
         Optional<String> result = creditCardsDialog.showAndWait();
 
         if (result.isPresent()){
+            if(Objects.equals(result.get(), "Visa")){
+                Controller.testCardNumber = BrowserSettings.visaTestCardNumber;
+            } else if(Objects.equals(result.get(), "Master Card")){
+                Controller.testCardNumber = BrowserSettings.masterCardTestCardNumber;
+            } else if(Objects.equals(result.get(), "Discover")){
+                Controller.testCardNumber = BrowserSettings.discoverTestCardNumber;
+            } else if(Objects.equals(result.get(), "American Express")){
+                Controller.testCardNumber = BrowserSettings.americanExpressTestCardNumber;
+            }
             GeneratePopupBox.confirmationPopupBox();
         } else System.out.println("CC cancelled");
     }
@@ -513,9 +518,7 @@ public class GeneratePopupBox {
             Optional<ButtonType> result = configDialog.showAndWait() ;
 
             if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE){
-                while (warningLabel.isVisible()){
-                    configDialog.showAndWait();
-                }
+
                     currentCustomerFirstName = customerFirstNameField.getText();
                     currentCustomerLastName = customerLastNameField.getText();
                     currentProductSKU = productSKUField.getText();
@@ -524,13 +527,6 @@ public class GeneratePopupBox {
                     currentWarehouseName = warehouseNameField.getText();
                     currentBinName = binNameField.getText();
 
-                    BrowserSettings.customerFirstName = currentCustomerFirstName;
-                    BrowserSettings.customerLastName = currentCustomerLastName;
-                    BrowserSettings.productSKUStart = currentProductSKU;
-                    BrowserSettings.productNameStart = currentProductName;
-                    BrowserSettings.supplierNameValue = currentSupplierName;
-                    BrowserSettings.warehouseNameValue = currentWarehouseName;
-                    BrowserSettings.newBinName = currentBinName;
                     try {
                         UpdateConfig.updateNames();
                     } catch (IOException e) {

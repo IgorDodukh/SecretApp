@@ -40,8 +40,8 @@ public class BrowserSettings {
                     "https://linux.mailordercentral.com/hercules/index.php/admin/system_config/edit/section/freestyle_advancedexport/"));
 
     //    Customer data
-    public static String customerFirstName = "FirstName";
-    public static String customerLastName = "LastName";
+    public static String customerFirstName = "";
+    public static String customerLastName = "";
     public static int randomValueLength = 4;
     public static final String firstName = customerFirstName +"_" + generateRandomData.generateRandomNumber(randomValueLength);
     public static final String lastName = customerLastName + "_" + generateRandomData.generateRandomNumber(randomValueLength);
@@ -104,10 +104,6 @@ public class BrowserSettings {
     protected static final String inventoryUnitCost = generateRandomData.generateRandomNumber(2);
     public static final String inventoryQty = generateRandomData.generateRandomNumberAllovedDigits(6, "");
     protected static final String inventoryNotes = "My Notes " + generateRandomData.generateRandomString(10);
-
-//    Authorize credentials
-    public static String authApiLoginId = "";
-    public static String authTransactionKey = "";
 
 //    UPS credentials
     protected static final String upsUserName = "Dev.api@dydacomp";

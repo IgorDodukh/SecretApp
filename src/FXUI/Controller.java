@@ -98,12 +98,11 @@ public class Controller extends Main {
 
     boolean internetExist = true;
 
-    public boolean checkIntConnection()
-    {
+    public boolean checkIntConnection(){
         boolean status = false;
         Socket sock = new Socket();
         InetSocketAddress address = new InetSocketAddress("www.google.com", 80);
-        try{
+        try {
             sock.connect(address, 3000);
             if(sock.isConnected()){
                 status=true;
@@ -111,10 +110,10 @@ public class Controller extends Main {
             }
         } catch(Exception e){
             System.out.println("Test Connection exception: " + e.getMessage());
-        }finally{
-            try{
+        } finally{
+            try {
                 sock.close();
-            }catch(Exception e){
+            } catch(Exception e){
                 System.out.println("Test Connection exception: " + e.getMessage());
             }
         }
@@ -195,7 +194,7 @@ public class Controller extends Main {
             environmentComboBoxValue = environmentsComboBox.getSelectionModel().getSelectedItem();
 
             if (entityTypeComboBoxIndex == 1) {
-                GeneratePopupBox.indentifyPopupBox();
+                GeneratePopupBox.identifyPopupBox();
             } else if (entityTypeComboBoxIndex == 0) {
                 GeneratePopupBox.magentoPopupBox();
             } else if (entityTypeComboBoxIndex == 2) {

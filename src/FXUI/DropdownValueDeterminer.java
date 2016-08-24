@@ -1,5 +1,6 @@
 package FXUI;
 
+import Pages.InventoryPage;
 import Settings.BrowserSettings;
 import Tests.*;
 import org.openqa.selenium.WebDriver;
@@ -30,26 +31,26 @@ public class DropdownValueDeterminer {
             BrowserSettings.progressVariable = 4;
             addNewCustomer.jira3675(login, password, testCardNumber, driver);
             Controller.resultMessage += "New Customer has been created\n";
-            Controller.resultMessage += "\nCustomer name is:\n" + BrowserSettings.firstName + " " + BrowserSettings.lastName;
+            Controller.resultMessage += "\nCustomer name is:\n" + AddNewCustomer.createdFirstName + " " + AddNewCustomer.createdLastName;
 
         } else if (entityTypeComboBoxIndex == 3) {
             BrowserSettings.progressVariable = 2;
             addProductWithInventory.jira3015(login, password, driver);
             Controller.resultMessage += "New Product has been created\n";
-            Controller.resultMessage += "\nProduct SKU is: " + BrowserSettings.productSku;
-            Controller.resultMessage += "\nProduct Bin name is: " + BrowserSettings.binName;
+            Controller.resultMessage += "\nProduct SKU is: " + AddProductWithInventory.createdProductSKU;
+            Controller.resultMessage += "\nProduct Bin name is: " + InventoryPage.createdBin;
             Controller.resultMessage += "\nProduct qty is: " + BrowserSettings.inventoryQty;
         } else if (entityTypeComboBoxIndex == 5) {
             BrowserSettings.progressVariable = 5;
             addWarehouseAndBin.jira3006(login, password, driver);
             Controller.resultMessage += "New Warehouse and Bin have been created\n";
-            Controller.resultMessage += "\nWarehouse name is: " + BrowserSettings.warehouseName;
-            Controller.resultMessage += "\nBin name is: " + BrowserSettings.newBinName;
+            Controller.resultMessage += "\nWarehouse name is: " + AddWarehouseAndBin.createdWarehouseName;
+            Controller.resultMessage += "\nBin name is: " + AddWarehouseAndBin.createdBinName;
         } else if (entityTypeComboBoxIndex == 4) {
             BrowserSettings.progressVariable = 4;
             createSupplier.jira3012(login, password, driver);
             Controller.resultMessage += "New Supplier has been created\n";
-            Controller.resultMessage += "\nSupplier name is: " + BrowserSettings.supplierName;
+            Controller.resultMessage += "\nSupplier name is: " + CreateSupplier.createdSupplierName;
         } else if (entityTypeComboBoxIndex == 6) {
             BrowserSettings.progressVariable = 5;
             makeReorder.makeReorder(login, password, driver);

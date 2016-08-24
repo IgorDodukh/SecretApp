@@ -2,6 +2,8 @@ package Pages;
 
 import Settings.BrowserSettings;
 import FXUI.ProgressBar;
+import Settings.GenerateRandomData;
+import Settings.GetPropertyValues;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -41,8 +43,7 @@ public class InventoryPage extends BrowserSettings {
     private final By saveAndCloseProductButtonLocator = By.xpath("//a[@id='btnSaveAndClose']");
     private final By popupBoxMessageLocator = By.xpath("//*[@id='dydacomp_messagebox']");
 
-
-
+    public static String createdBin = "";
 
     public void openAddInventoryForm() {
         totalResultMessage += "Search created Product\n";
@@ -87,7 +88,7 @@ public class InventoryPage extends BrowserSettings {
 
         totalResultMessage += "Adding Bin info:\n";
         totalResultMessage += " - Add Bin name\n";
-        driver.findElement(addBinNameFieldLocator).sendKeys(binName);
+        driver.findElement(addBinNameFieldLocator).sendKeys(createdBin = GetPropertyValues.binName + new GenerateRandomData().generateRandomNumber(randomValueLength));
         ProgressBar.addProgressValue(progressVariable);
 
         totalResultMessage += " - Select Bin type\n";

@@ -4,6 +4,8 @@ import Pages.AddSupplierPage;
 import Pages.LoginPage;
 import Pages.MainPage;
 import Settings.BrowserSettings;
+import Settings.GenerateRandomData;
+import Settings.GetPropertyValues;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
@@ -12,6 +14,7 @@ import org.testng.annotations.Test;
  */
 public class CreateSupplier extends BrowserSettings {
 
+    public static String createdSupplierName = "";
     @Test
     public void jira3012(String email, String merchantPassword, WebDriver driver) throws InterruptedException {
         LoginPage loginPage = new LoginPage(driver);
@@ -22,7 +25,10 @@ public class CreateSupplier extends BrowserSettings {
         mainPage.openAddSupplierPage();
 
         AddSupplierPage addSupplierPage = new AddSupplierPage(driver);
-        addSupplierPage.addSupplierContactInfo(supplierAccountNumber, supplierName, supplierURL, supplierAddress, addressZip, supplierEmail, firstName, lastName);
+        addSupplierPage.addSupplierContactInfo(supplierAccountNumber,
+                createdSupplierName = GetPropertyValues.supplierName + " " + new GenerateRandomData().generateRandomNumber(randomValueLength),
+                supplierURL, supplierAddress, addressZip, supplierEmail,
+                AddNewCustomer.createdFirstName, AddNewCustomer.createdLastName);
         addSupplierPage.saveSupplier();
     }
 }

@@ -1,6 +1,7 @@
 package Settings;
 
 import FXUI.ProgressBar;
+import Tests.AddNewCustomer;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterTest;
@@ -40,17 +41,13 @@ public class BrowserSettings {
                     "https://linux.mailordercentral.com/hercules/index.php/admin/system_config/edit/section/freestyle_advancedexport/"));
 
     //    Customer data
-    public static String customerFirstName = "";
-    public static String customerLastName = "";
     public static int randomValueLength = 4;
-    public static final String firstName = customerFirstName +"_" + generateRandomData.generateRandomNumber(randomValueLength);
-    public static final String lastName = customerLastName + "_" + generateRandomData.generateRandomNumber(randomValueLength);
-    protected static final String customerEmail = firstName + "@dydacomp.biz";
+    protected static final String customerEmail = AddNewCustomer.createdFirstName + "@dydacomp.biz";
     protected static final String phone = generateRandomData.generateRandomNumber(10);
 
 //    Billing Address data
-    protected static final String addressFirstName = "Billing" + customerFirstName;
-    protected static final String addressLastName = "Billing" + customerLastName;
+    protected static final String addressFirstName = "Billing" + AddNewCustomer.createdFirstName;
+    protected static final String addressLastName = "Billing" + AddNewCustomer.createdLastName;
     protected static final String addressLine1 = "Billing Address Line 11";
     protected static final String addressZip = "10113";
 

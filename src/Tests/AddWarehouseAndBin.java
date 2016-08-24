@@ -4,6 +4,8 @@ import Pages.AddWarehousePage;
 import Pages.LoginPage;
 import Pages.MainPage;
 import Settings.BrowserSettings;
+import Settings.GenerateRandomData;
+import Settings.GetPropertyValues;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
@@ -12,6 +14,8 @@ import org.testng.annotations.Test;
  */
 public class AddWarehouseAndBin extends BrowserSettings {
 
+    public static String createdWarehouseName = "";
+    public static String createdBinName = "";
     @Test
     public void jira3006(String email, String merchantPassword, WebDriver driver) throws InterruptedException {
         LoginPage loginPage = new LoginPage(driver);
@@ -21,8 +25,10 @@ public class AddWarehouseAndBin extends BrowserSettings {
         mainPage.openAddWarehousePage();
 
         AddWarehousePage addWarehousePage = new AddWarehousePage(driver);
-        addWarehousePage.addWarehouseInfo(warehouseName, warehouseContactName, phone, startPickupTime, endPickupTime, addressLine1, addressZip);
-        addWarehousePage.addWarehouseBin(newBinName);
+        addWarehousePage.addWarehouseInfo(
+                createdWarehouseName = GetPropertyValues.warehouseName + "_" + new GenerateRandomData().generateRandomNumber(randomValueLength),
+                warehouseContactName, phone, startPickupTime, endPickupTime, addressLine1, addressZip);
+        addWarehousePage.addWarehouseBin(createdBinName = GetPropertyValues.binName + "_" + new GenerateRandomData().generateRandomNumber(randomValueLength));
         addWarehousePage.saveWarehouse();
     }
 }

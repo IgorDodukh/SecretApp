@@ -13,7 +13,8 @@ import org.testng.annotations.Test;
  * Created by igor on 17.04.16. All rights reserved!
  */
 public class AddNewCustomer extends BrowserSettings{
-    GenerateRandomData generateRandomData = new GenerateRandomData();
+    public static String createdFirstName = "";
+    public static String createdLastName = "";
     @Test
     public void jira3675(String email, String password, String cardNumber, WebDriver driver) throws InterruptedException {
         LoginPage loginPage = new LoginPage(driver);
@@ -24,8 +25,8 @@ public class AddNewCustomer extends BrowserSettings{
 
         AddCustomerPage addCustomerPage = new AddCustomerPage(driver);
         addCustomerPage.addCustomerInfo(
-                GetPropertyValues.customerFirstName + generateRandomData.generateRandomNumber(randomValueLength),
-                GetPropertyValues.customerLastName + generateRandomData.generateRandomNumber(randomValueLength),
+                createdFirstName = GetPropertyValues.customerFirstName + "_" + new GenerateRandomData().generateRandomNumber(randomValueLength),
+                createdLastName = GetPropertyValues.customerLastName + "_" + new GenerateRandomData().generateRandomNumber(randomValueLength),
                 customerEmail, phone);
         addCustomerPage.addBillingAddress(addressFirstName, addressLastName, addressLine1, addressZip);
         addCustomerPage.addShippingAddress();

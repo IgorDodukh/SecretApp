@@ -66,8 +66,8 @@ public class Controller extends Main {
                     "Create Product",
                     "Create Supplier",
                     "Create Warehouse & Bin",
-                    "Reorder the last Order",
-                    "Create User"
+                    "Reorder the last Order"
+//                    "Create User"
             );
     private final ObservableList<String> environments =
             FXCollections.observableArrayList(

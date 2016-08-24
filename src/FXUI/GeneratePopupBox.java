@@ -559,6 +559,7 @@ public class GeneratePopupBox {
                     " - Add tooltip for titles on the 'Variables Configuration' popup box\n" +
                     " - Change 'OK' button name to 'Save' on the configuration dialogs\n" +
                     " - Check internet connection before running test (warning dialog appears if test failed)\n" +
+                    " - Better quality for some emoticons on Popup Boxes\n" +
                     " - NEW BUG: validating fields on the 'Default Names' config dialog.\n" +
                     " - FIXED BUG: Now each new Object will be created with new name during one session\n" +
                     " - FIXED BUG: progress value for 'Configure Magento' test\n" +

@@ -142,7 +142,7 @@ public class Controller extends Main {
         companyLogo.setImage(new Image("file:///" + AppStyles.mainPath.replace("\\", "/") + "/pic/fslogo.png"));
         waitingAnimation.setImage(new Image("file:///" + AppStyles.mainPath.replace("\\", "/") + "/pic/spinner.gif"));
 
-        buildVersion.setText("Build Version: 1.72 beta");
+        buildVersion.setText("Build Version: 1.73 beta");
 
         ReadConfigMain.main();
         loginField.setText(GetPropertyValues.loginProperty);

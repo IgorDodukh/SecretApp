@@ -554,13 +554,17 @@ public class GeneratePopupBox {
                     "\t - 'System Variables' config allow to change:\n" +
                     "\t\t- default timeout value \n" +
                     "\t\t- number of digits for random number which is added to the end of the created object's name\n" +
-                    "\t\t- default path to 'appFiles' folder" +
+                    "\t\t- default path to 'appFiles' folder (temporary will be unavailable)\n" +
                     " - Add warning Popup Box in case when 'appFiles' folder doesn't exist by specified path\n" +
                     " - Add tooltip for titles on the 'Variables Configuration' popup box\n" +
                     " - Change 'OK' button name to 'Save' on the configuration dialogs\n" +
-                    " - Partial refactoring (may occur unexpected bugs)\n";
+                    " - Check internet connection before running test (warning dialog appears if test failed)\n" +
+                    " - NEW BUG: validating fields on the 'Default Names' config dialog.\n" +
+                    " - FIXED BUG: Now each new Object will be created with new name during one session\n" +
+                    " - FIXED BUG: progress value for 'Configure Magento' test\n" +
+                    " - Partial refactoring (may occur unexpected new bugs)\n";
 
-            Label label = new Label("Last release: '#1.72 beta' includes the following new features:");
+            Label label = new Label("Last release: '#1.73 beta' includes the following new features:");
 
             TextArea textArea = new TextArea(newChanges);
             textArea.setEditable(false);

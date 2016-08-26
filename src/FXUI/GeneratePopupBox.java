@@ -390,6 +390,11 @@ public class GeneratePopupBox {
             configsGrid.add(appFilesPathLabel, 0, 2);
             configsGrid.add(appFilesPathField, 1, 2);
 
+            ButtonBar buttonBar = (ButtonBar)configDialog.getDialogPane().lookup(".button-bar");
+            buttonBar.getButtons().forEach(b -> {
+                    b.setStyle("-fx-background-color: indianred;");
+                });
+
             ButtonType saveButton = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
             configDialog.getButtonTypes().set(0, saveButton);
 
@@ -495,10 +500,10 @@ public class GeneratePopupBox {
             configNamesGrid.add(binNameLabel, 0, 7);
             configNamesGrid.add(binNameField, 1, 7);
 
-            ButtonType loginButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
-            configDialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
+            ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
+            configDialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
 
-            Node saveButton = configDialog.getDialogPane().lookupButton(loginButtonType);
+            Node saveButton = configDialog.getDialogPane().lookupButton(saveButtonType);
             saveButton.setDisable(false);
 
             configDialog.getDialogPane().setContent(configNamesGrid);

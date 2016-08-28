@@ -17,8 +17,8 @@ class FieldsListener {
     static boolean warehouseBlank = false;
     static boolean binBlank = false;
     static boolean supplierBlank = false;
-    static boolean loginBlank = false;
-    static boolean passwordBlank = false;
+    public static boolean loginBlank = false;
+    public static boolean passwordBlank = false;
     public static void multipleFieldsValidation(TextField textField, Label fieldLabel, Label warningLabel, Node button) {
 
         textField.textProperty().addListener((observable, oldValue, newValue) -> {

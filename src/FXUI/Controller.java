@@ -26,8 +26,8 @@ public class Controller extends Main {
     public static WebDriver driver;
 
     private Exception exceptionValue;
-    static boolean loginFilled;
-    static boolean passFilled;
+    static boolean loginFilled = true;
+    static boolean passFilled = true;
 
     private static String resultMessage = "";
     public static int magentoIndex;
@@ -195,24 +195,25 @@ public class Controller extends Main {
         stopButtonClicked = false;
         login = loginField.getText();
         password = String.valueOf(passwordField.getCharacters());
-        FieldsValidation.loginPassValidation(loginField, passwordField, loginLabel, passwordLabel);
 
         browserComboBoxIndex = browsersComboBox.getSelectionModel().getSelectedIndex();
         environmentComboBoxIndex = environmentsComboBox.getSelectionModel().getSelectedIndex();
         dropdownIndex = entityTypeComboBox.getSelectionModel().getSelectedIndex();
 
-        if (loginFilled && passFilled){
-            updateCredentials();
+        startButton.setDisable(true);
+        updateCredentials();
 
-            browserComboBoxValue = browsersComboBox.getSelectionModel().getSelectedItem();
-            entityComboBoxValue = entityTypeComboBox.getSelectionModel().getSelectedItem();
-            environmentComboBoxValue = environmentsComboBox.getSelectionModel().getSelectedItem();
+        browserComboBoxValue = browsersComboBox.getSelectionModel().getSelectedItem();
+        entityComboBoxValue = entityTypeComboBox.getSelectionModel().getSelectedItem();
+        environmentComboBoxValue = environmentsComboBox.getSelectionModel().getSelectedItem();
 
-            additionalDialogDeterminer(dropdownIndex);
+        additionalDialogDeterminer(dropdownIndex);
 
-            if(confirmationResponse == null) System.out.println("Popup canceled");
-            else if (confirmationResponse.get() == ButtonType.OK && internetExist) {
-                startCounter();
+        if(confirmationResponse == null) {
+            startButton.setDisable(false);
+            System.out.println("Popup canceled");}
+        else if (confirmationResponse.get() == ButtonType.OK && internetExist) {
+            startCounter();
 //                Runnable runnableProgress = () -> {
 //                    progressLabel.setVisible(true);
 //                    boolean i = true;
@@ -230,46 +231,48 @@ public class Controller extends Main {
 //                    });
 //                };
 
-                Runnable runnableTest = () -> {
-                    comboBoxesHandler.webDriverDeterminer(browserComboBoxIndex, stopButtonClicked);
-                    if(!isExceptionStatus()) {
-                        testStatus.startTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
-                        System.out.println("Test Started");
-                        browserSettings.setUp(environmentComboBoxIndex, browserComboBoxIndex, driver);
-                        try {
-                            comboBoxesHandler.testTypeDeterminer(dropdownIndex, login, password, cardNumber, driver);
-                        } catch (Exception e1) {
-                            exceptionValue = e1;
-                            setExceptionStatus(true);
-                            if (!Objects.equals(e1.getClass().getSimpleName(), "NoSuchWindowException"))
-                                browserSettings.tearDown(driver);
-// Show exception popup box
-                        } finally {
-                            stopCounter();
-                            if (isExceptionStatus()) {
-                                testStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
-                                if (!stopButtonClicked) exceptionPopupBox(exceptionValue);
-                            }
-                        }
-                        if (!isExceptionStatus()) {
+            Runnable runnableTest = () -> {
+                comboBoxesHandler.webDriverDeterminer(browserComboBoxIndex, stopButtonClicked);
+                if(!isExceptionStatus()) {
+                    testStatus.startTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
+                    System.out.println("Test Started");
+                    browserSettings.setUp(environmentComboBoxIndex, browserComboBoxIndex, driver);
+                    try {
+                        comboBoxesHandler.testTypeDeterminer(dropdownIndex, login, password, cardNumber, driver);
+                    } catch (Exception e1) {
+                        exceptionValue = e1;
+                        setExceptionStatus(true);
+                        if (!Objects.equals(e1.getClass().getSimpleName(), "NoSuchWindowException"))
                             browserSettings.tearDown(driver);
+// Show exception popup box
+                    } finally {
+                        stopCounter();
+                        if (isExceptionStatus()) {
                             testStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
-                            successPopupBox(getResultMessage());
+                            if (!stopButtonClicked) exceptionPopupBox(exceptionValue);
                         }
                     }
-                };
-                Thread thread1 = new Thread(runnableTest);
-                thread1.start();
+                    if (!isExceptionStatus()) {
+                        browserSettings.tearDown(driver);
+                        testStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
+                        successPopupBox(getResultMessage());
+                    }
+                }
+            };
+            Thread thread1 = new Thread(runnableTest);
+            thread1.start();
 
             } else if(confirmationResponse.get() == ButtonType.OK && !internetExist)
                 failedPopupBox(getFailedContentText());
-            else if (confirmationResponse.get() == ButtonType.CANCEL || confirmationResponse.get() == ButtonType.CLOSE)
+            else if (confirmationResponse.get() == ButtonType.CANCEL || confirmationResponse.get() == ButtonType.CLOSE) {
+                startButton.setDisable(false);
                 System.out.println("No/Close button");
+            }
             confirmationResponse = null;
             setDriverWarning("");
             setDriverExceptionMessage("");
             setExceptionStatus(false);
-        }
+//        }
     }
 
     public void clickStopButton() {

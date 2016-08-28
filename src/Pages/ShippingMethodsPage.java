@@ -35,7 +35,7 @@ public class ShippingMethodsPage extends BrowserSettings {
 
 
     public void openShippingMethodCreatingForm() {
-        totalResultMessage += "Open 'Add Shipping Method' form\n";
+        setTotalResultMessage(getTotalResultMessage() + "Open 'Add Shipping Method' form\n");
         driver.findElement(addShippingMethodButtonLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Shipping Method Creating Form was not opened");
         wait.until(ExpectedConditions.visibilityOfElementLocated(addShippingMethodTitleLocator));
@@ -45,14 +45,14 @@ public class ShippingMethodsPage extends BrowserSettings {
     }
 
     public void createUPSGroundShippingMethod(String methodName, String shippingCharge) throws InterruptedException {
-        totalResultMessage += "Adding 'UPS Ground' method:\n";
-        totalResultMessage += " - Set 'UPS Ground' method name\n";
+        setTotalResultMessage(getTotalResultMessage() + "Adding 'UPS Ground' method:\n");
+        setTotalResultMessage(getTotalResultMessage() + " - Set 'UPS Ground' method name\n");
         WebElement shippingMethodNameField = driver.findElement(shippingMethodNameFieldLocator);
         shippingMethodNameField.clear();
         shippingMethodNameField.sendKeys(methodName);
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += "Set Shipping Method parameters\n";
+        setTotalResultMessage(getTotalResultMessage() + "Set Shipping Method parameters\n");
         driver.findElement(upsMethodDropdownLocator).click();
         driver.findElement(upsTypeGroundDropdownLocator).click();
         driver.findElement(favoriteShippingMethodSetYesLocator).click();
@@ -63,13 +63,13 @@ public class ShippingMethodsPage extends BrowserSettings {
         shippingChargeField.sendKeys(shippingCharge);
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += "Save 'UPS' method\n";
+        setTotalResultMessage(getTotalResultMessage() + "Save 'UPS' method\n");
         driver.findElement(saveAndCloseContextualButtonLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.elementToBeClickable(confirmPopupButtonLocator));
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += "Confirm success popup\n";
+        setTotalResultMessage(getTotalResultMessage() + "Confirm success popup\n");
         Thread.sleep(1000);
 //        String currentPopupMessage = driver.findElement(saveSettingsSuccessPopupLocator).getText();
 //        Assert.assertEquals(currentPopupMessage, "Create ShippingMethod successfully!", "Unexpected popup message");

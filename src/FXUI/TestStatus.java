@@ -17,9 +17,9 @@ public class TestStatus {
         progressLabel.setVisible(true);
         waitingAnimation.setVisible(true);
 //        progressBar.setVisible(true);
-        Controller.addProgressValue = 0;
-        Controller.resultMessage = "";
-        BrowserSettings.totalResultMessage = "";
+        Controller.setProgressValue(0);
+        Controller.setResultMessage("");
+        BrowserSettings.setTotalResultMessage("");
     }
 
     public void stopTest(Button startButton, Button stopButton, Label waitingLabel, Label progressLabel, ImageView waitingAnimation/*, ProgressBar progressBar*/) {
@@ -29,7 +29,7 @@ public class TestStatus {
         progressLabel.setVisible(false);
         waitingAnimation.setVisible(false);
 //        progressBar.setVisible(false);
-        Controller.addProgressValue = 0;
+        Controller.setProgressValue(0);
 
     }
 }

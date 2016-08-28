@@ -13,8 +13,6 @@ import java.util.Properties;
  * Created by Ihor on 8/14/2016. All rights reserved!
  */
 public class GetPropertyValues {
-    private String result = "";
-
     private InputStream systemVariablesInputStream;
     private InputStream credentialsInputStream;
     private InputStream userInputStream;
@@ -34,7 +32,7 @@ public class GetPropertyValues {
     public static String supplierName;
     public static String binName;
 
-    public String getPropValues() throws IOException {
+    public void getPropValues() throws IOException {
 
 //        http://stackoverflow.com/questions/15337409/updating-property-value-in-properties-file-without-deleting-other-values
 
@@ -94,16 +92,8 @@ public class GetPropertyValues {
             supplierName = namesProp.getProperty("supplierName");
             binName = namesProp.getProperty("binName");
 
-            result = "Last credentials: " + loginProperty + ", " + passProperty ;
-            System.out.println(result + "\nTimeout is set to " + timeoutProperty + " by user=" +
-                    user + " Random: " + randomValueProperty);
-            System.out.println(customerFirstName + ", " + customerLastName + ", " + productSKU +
-                    ", " + productName + ", " + warehouseName + ", " + supplierName + ", " +
-                    binName + "\nPDefault path: " + defaultPathProperty);
-
         } catch (Exception e) {
             GeneratePopupBox.warningPopupBox(e.getMessage());
-            System.out.println("Exception: " + e);
         } finally {
             assert systemVariablesInputStream != null;
             systemVariablesInputStream.close();
@@ -117,7 +107,6 @@ public class GetPropertyValues {
             assert namesInputStream != null;
             namesInputStream.close();
         }
-        return result;
     }
 }
 

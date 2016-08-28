@@ -1,9 +1,7 @@
 package FXUI;
 
 import Settings.BrowserSettings;
-import Settings.GetPropertyValues;
 import Settings.ReadConfigMain;
-import Settings.UpdateConfig;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,29 +9,34 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.Socket;
 import java.util.Objects;
 
+import static FXUI.ComboBoxesHandler.additionalDialogDeterminer;
+import static FXUI.ExecutionTimeCounter.startCounter;
+import static FXUI.ExecutionTimeCounter.stopCounter;
+import static FXUI.GeneratePopupBox.*;
+import static FXUI.InternetConnection.getFailedContentText;
+import static Settings.GetPropertyValues.loginProperty;
+import static Settings.GetPropertyValues.passProperty;
+import static Settings.UpdateConfig.updateCredentials;
+
 public class Controller extends Main {
-    private WebDriver driver;
+    public static WebDriver driver;
 
     private Exception exceptionValue;
     static boolean loginFilled;
     static boolean passFilled;
 
-    static String resultMessage = "";
+    private static String resultMessage = "";
     public static int magentoIndex;
     public static String magentoIndexName = "";
-    public static int addProgressValue = 0;
-    private boolean exceptionStatus = false;
+    private static int addProgressValue = 0;
+    private static boolean exceptionStatus = false;
     private boolean stopButtonClicked = false;
-    public static String testCardNumber = "";
+
+    public static String cardNumber = "";
 
     public static String browserComboBoxValue = "";
     public static String entityComboBoxValue = "";
@@ -41,17 +44,18 @@ public class Controller extends Main {
 
     private final TestStatus testStatus = new TestStatus();
     private final BrowserSettings browserSettings = new BrowserSettings();
-    private final DropdownValueDeterminer dropdownValueDeterminer = new DropdownValueDeterminer();
+    private final ComboBoxesHandler comboBoxesHandler = new ComboBoxesHandler();
+    private InternetConnection internetConnection = new InternetConnection();
 
-    public static final String[] driverWarning = {""};
-    public static final String[] driverExceptionMessage = {""};
+    private static String driverWarning = "";
+    private static String driverExceptionMessage = "";
 
     public static String login;
     public static String password;
 
     private int browserComboBoxIndex;
     private int environmentComboBoxIndex;
-    private int entityTypeComboBoxIndex;
+    private int dropdownIndex;
 
     private final ObservableList<String> browsers =
             FXCollections.observableArrayList(
@@ -96,44 +100,55 @@ public class Controller extends Main {
     public MenuItem aboutButton;
     public MenuItem namesConfigs;
 
-    boolean internetExist = true;
+    public static String getResultMessage() {
+        return resultMessage;
+    }
 
-    public boolean checkIntConnection(){
-        boolean status = false;
-        Socket sock = new Socket();
-        InetSocketAddress address = new InetSocketAddress("www.google.com", 80);
-        try {
-            sock.connect(address, 3000);
-            if(sock.isConnected()){
-                status=true;
-                System.out.println("Connection success: " + sock.isConnected());
-            }
-        } catch(Exception e){
-            System.out.println("Test Connection exception: " + e.getMessage());
-        } finally{
-            try {
-                sock.close();
-            } catch(Exception e){
-                System.out.println("Test Connection exception: " + e.getMessage());
-            }
-        }
-        return status;
+    public static void setResultMessage(String resultMessage) {
+        Controller.resultMessage = resultMessage;
+    }
+
+    public static String getDriverWarning() {
+        return driverWarning;
+    }
+
+    public static void setDriverWarning(String driverWarning) {
+        Controller.driverWarning = driverWarning;
+    }
+
+    public static boolean isExceptionStatus() {
+        return exceptionStatus;
+    }
+
+    public static void setExceptionStatus(boolean exceptionStatus) {
+        Controller.exceptionStatus = exceptionStatus;
+    }
+
+    public static String getDriverExceptionMessage() {
+        return driverExceptionMessage;
+    }
+
+    public static void setDriverExceptionMessage(String driverExceptionMessage) {
+        Controller.driverExceptionMessage = driverExceptionMessage;
+    }
+
+    public static int getAddProgressValue() {
+        return addProgressValue;
+    }
+
+    public static void setProgressValue(int addProgressValue) {
+        Controller.addProgressValue = addProgressValue;
     }
 
     @FXML
     private void initialize() throws IOException {
+        FieldsListener.multipleFieldsValidation(loginField, loginLabel, progressLabel, startButton);
+        FieldsListener.multipleFieldsValidation(passwordField, passwordLabel, progressLabel, startButton);
+
         //TODO: implement installation by installer
-        browsersComboBox.setItems(browsers);
-        browsersComboBox.getSelectionModel().select(0);
-        AppStyles.setComboBoxStyle(browsersComboBox);
-
-        entityTypeComboBox.setItems(entityTypes);
-        entityTypeComboBox.getSelectionModel().select(0);
-        AppStyles.setComboBoxStyle(entityTypeComboBox);
-
-        environmentsComboBox.setItems(environments);
-        environmentsComboBox.getSelectionModel().select(0);
-        AppStyles.setComboBoxStyle(environmentsComboBox);
+        ComboBoxesHandler.comboBoxSetItems(browsersComboBox, browsers, 0);
+        ComboBoxesHandler.comboBoxSetItems(entityTypeComboBox, entityTypes, 0);
+        ComboBoxesHandler.comboBoxSetItems(environmentsComboBox, environments, 0);
 
         AppStyles.setButtonsStyle(startButton);
         AppStyles.setButtonsStyle(stopButton);
@@ -142,14 +157,17 @@ public class Controller extends Main {
         companyLogo.setImage(new Image("file:///" + AppStyles.mainPath.replace("\\", "/") + "/pic/fslogo.png"));
         waitingAnimation.setImage(new Image("file:///" + AppStyles.mainPath.replace("\\", "/") + "/pic/spinner.gif"));
 
-        buildVersion.setText("Build Version: 1.73 beta");
+        buildVersion.setText("Build Version: 1.75 beta");
 
         ReadConfigMain.main();
-        loginField.setText(GetPropertyValues.loginProperty);
-        passwordField.setText(GetPropertyValues.passProperty);
+        loginField.setText(loginProperty);
+        passwordField.setText(passProperty);
+
+        if(Objects.equals(loginField.getText(), "") || Objects.equals(passwordField.getText(), ""))
+            startButton.setDisable(true);
 
         closeMenuButton.setOnAction(t -> System.exit(0));
-        aboutButton.setOnAction(t -> GeneratePopupBox.aboutPopupBox());
+        aboutButton.setOnAction(t -> aboutPopupBox());
 
 //Add UI Elements listener
         KeysListener.startButtonKeyListener(browsersComboBox, this);
@@ -158,58 +176,43 @@ public class Controller extends Main {
         KeysListener.startButtonKeyListener(loginField, this);
         KeysListener.startButtonKeyListener(passwordField, this);
         KeysListener.startButtonKeyListener(startButton, this);
-
-//        closeMenuButton.setOnAction(event -> ((Stage)((Button)event.getSource()).getScene().getWindow()).close());
-//        hideButton.setOnAction(e -> ((Stage)((Button)e.getSource()).getScene().getWindow()).setIconified(true));
     }
 
     public void clickConfigsButton() throws IOException {
         ReadConfigMain.main();
-        GeneratePopupBox.configVariablesPopupBox();
+        configVariablesPopupBox();
     }
 
     public void clickConfigNamesMenu() throws IOException {
         ReadConfigMain.main();
-        GeneratePopupBox.configNamesPopupBox();
+        configNamesPopupBox();
     }
 
     public synchronized void clickStartButton() throws IOException {
-        internetExist = checkIntConnection();
+        boolean internetExist = internetConnection.checkInternetConnection();
+
         ReadConfigMain.main();
         stopButtonClicked = false;
         login = loginField.getText();
         password = String.valueOf(passwordField.getCharacters());
-        FieldsValidation.loginPassValidation(login, password, loginField, passwordField, loginLabel, passwordLabel);
+        FieldsValidation.loginPassValidation(loginField, passwordField, loginLabel, passwordLabel);
 
         browserComboBoxIndex = browsersComboBox.getSelectionModel().getSelectedIndex();
         environmentComboBoxIndex = environmentsComboBox.getSelectionModel().getSelectedIndex();
-        entityTypeComboBoxIndex = entityTypeComboBox.getSelectionModel().getSelectedIndex();
+        dropdownIndex = entityTypeComboBox.getSelectionModel().getSelectedIndex();
 
         if (loginFilled && passFilled){
-
-            UpdateConfig.updateCredentials();
+            updateCredentials();
 
             browserComboBoxValue = browsersComboBox.getSelectionModel().getSelectedItem();
             entityComboBoxValue = entityTypeComboBox.getSelectionModel().getSelectedItem();
             environmentComboBoxValue = environmentsComboBox.getSelectionModel().getSelectedItem();
 
-            if (entityTypeComboBoxIndex == 1) {
-                GeneratePopupBox.identifyPopupBox();
-            } else if (entityTypeComboBoxIndex == 0) {
-                GeneratePopupBox.magentoPopupBox();
-            } else if (entityTypeComboBoxIndex == 2) {
-                GeneratePopupBox.creditCardsPopupBox();
-            } else if (entityTypeComboBoxIndex == 7) {
-                GeneratePopupBox.userTypePopupBox();
-            } else GeneratePopupBox.confirmationPopupBox();
+            additionalDialogDeterminer(dropdownIndex);
 
-
-
-            if(GeneratePopupBox.confirmationResponse == null){
-                System.out.println("Popup canceled");
-            }
-            else if (GeneratePopupBox.confirmationResponse.get() == ButtonType.OK && internetExist) {
-                ExecutionTimeCounter.startCounter();
+            if(confirmationResponse == null) System.out.println("Popup canceled");
+            else if (confirmationResponse.get() == ButtonType.OK && internetExist) {
+                startCounter();
 //                Runnable runnableProgress = () -> {
 //                    progressLabel.setVisible(true);
 //                    boolean i = true;
@@ -226,64 +229,46 @@ public class Controller extends Main {
 //                        }
 //                    });
 //                };
+
                 Runnable runnableTest = () -> {
-                    startButton.setDisable(true);
-                    try {
-                        if (browserComboBoxIndex == 0) {
-                            driverWarning[0] += "Chrome";
-                            System.setProperty("webdriver.chrome.driver", AppStyles.mainPath + "\\drivers\\chromedriver.exe");
-                            ChromeOptions options = new ChromeOptions();
-                            options.addArguments("--disable-extensions");
-                            driver = new ChromeDriver(options);
-                        } else if (browserComboBoxIndex == 1) {
-                            driverWarning[0] += "Firefox";
-                            driver = new FirefoxDriver();
-                        }
-                    } catch (Exception e1) {
-                        exceptionStatus = true;
-                        testStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
-                    if (!Objects.equals(e1.getClass().getSimpleName(), "SessionNotCreatedException")){
-                        driverExceptionMessage[0] += " session has been stopped unexpectedly.";
-                    } else if (!Objects.equals(e1.getClass().getSimpleName(), "IllegalStateException")){
-                        driverExceptionMessage[0] += " WebDriver was not found";
-                    } else {
-                        driverExceptionMessage[0] += " browser has been stopped unexpectedly.";
-                    }
-                        if(!stopButtonClicked)GeneratePopupBox.failedPopupBox();
-                    }
-                    testStatus.startTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
-                    System.out.println("Test Started");
-                    browserSettings.setUp(environmentComboBoxIndex, browserComboBoxIndex, driver);
-                    try {
-                        dropdownValueDeterminer.entityTypeDropdown(entityTypeComboBoxIndex, login, password, testCardNumber, driver);
-                    } catch (Exception e1) {
-                        exceptionValue = e1;
-                        exceptionStatus = true;
-                        if (!Objects.equals(e1.getClass().getSimpleName(), "NoSuchWindowException")) {
-                            browserSettings.tearDown(driver);
-                        }
+                    comboBoxesHandler.webDriverDeterminer(browserComboBoxIndex, stopButtonClicked);
+                    if(!isExceptionStatus()) {
+                        testStatus.startTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
+                        System.out.println("Test Started");
+                        browserSettings.setUp(environmentComboBoxIndex, browserComboBoxIndex, driver);
+                        try {
+                            comboBoxesHandler.testTypeDeterminer(dropdownIndex, login, password, cardNumber, driver);
+                        } catch (Exception e1) {
+                            exceptionValue = e1;
+                            setExceptionStatus(true);
+                            if (!Objects.equals(e1.getClass().getSimpleName(), "NoSuchWindowException"))
+                                browserSettings.tearDown(driver);
 // Show exception popup box
-                    } finally {
-                        ExecutionTimeCounter.stopCounter();
-                        if (exceptionStatus) {
-                            testStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
-                            if(!stopButtonClicked)GeneratePopupBox.exceptionPopupBox(exceptionValue);
+                        } finally {
+                            stopCounter();
+                            if (isExceptionStatus()) {
+                                testStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
+                                if (!stopButtonClicked) exceptionPopupBox(exceptionValue);
+                            }
                         }
-                    }
-                    if (!exceptionStatus) {
-                        browserSettings.tearDown(driver);
-                        testStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
-                        GeneratePopupBox.successPopupBox(resultMessage);
+                        if (!isExceptionStatus()) {
+                            browserSettings.tearDown(driver);
+                            testStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
+                            successPopupBox(getResultMessage());
+                        }
                     }
                 };
                 Thread thread1 = new Thread(runnableTest);
                 thread1.start();
-            } else if(!internetExist) {
-                GeneratePopupBox.failedConnectionPopupBox();
-            }else if (GeneratePopupBox.confirmationResponse.get() == ButtonType.CANCEL || GeneratePopupBox.confirmationResponse.get() == ButtonType.CLOSE) {
+
+            } else if(confirmationResponse.get() == ButtonType.OK && !internetExist)
+                failedPopupBox(getFailedContentText());
+            else if (confirmationResponse.get() == ButtonType.CANCEL || confirmationResponse.get() == ButtonType.CLOSE)
                 System.out.println("No/Close button");
-            }
-            GeneratePopupBox.confirmationResponse = null;
+            confirmationResponse = null;
+            setDriverWarning("");
+            setDriverExceptionMessage("");
+            setExceptionStatus(false);
         }
     }
 

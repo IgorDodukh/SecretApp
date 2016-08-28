@@ -16,7 +16,7 @@ public class AddSupplier extends BrowserSettings {
 
     public static String createdSupplierName = "";
     @Test
-    public void jira3012(String email, String merchantPassword, WebDriver driver) throws InterruptedException {
+    public void addSupplier(String email, String merchantPassword, WebDriver driver) throws InterruptedException {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.loginMerchant(email, merchantPassword);
 

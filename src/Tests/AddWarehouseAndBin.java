@@ -17,7 +17,7 @@ public class AddWarehouseAndBin extends BrowserSettings {
     public static String createdWarehouseName = "";
     public static String createdBinName = "";
     @Test
-    public void jira3006(String email, String merchantPassword, WebDriver driver) throws InterruptedException {
+    public void addWarehouseAndBin(String email, String merchantPassword, WebDriver driver) throws InterruptedException {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.loginMerchant(email, merchantPassword);
 

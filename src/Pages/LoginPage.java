@@ -25,31 +25,31 @@ public class LoginPage extends BrowserSettings{
     private final By siteLogoIconLocator = By.xpath("//img[@id='logoIcon']");
 
     public void loginMerchant(String email, String pass) throws InterruptedException {
-        totalResultMessage += "Login user to FS:\n";
-        totalResultMessage += " - Enter Login\n";
+        setTotalResultMessage(getTotalResultMessage() + "Login user to FS:\n");
+        setTotalResultMessage(getTotalResultMessage() + " - Enter Login\n");
         WebElement login = driver.findElement(emailInputLocator);
         login.clear();
         login.sendKeys(email);
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += " - Enter Password\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Enter Password\n");
         WebElement password = driver.findElement(passwordInputLocator);
         password.clear();
         password.sendKeys(pass);
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += " - Click 'Login' button\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Click 'Login' button\n");
         driver.findElement(loginButtonLocator).click();
         ProgressBar.addProgressValue(progressVariable);
 
         Thread.sleep(1000);
             try {
                 driver.findElement(msgBox);
-                totalResultMessage += "'User is already logged' popup appears\n";
+                setTotalResultMessage(getTotalResultMessage() + "'User is already logged' popup appears\n");
                 driver.findElement(msgBoxOkButton).click();
-                totalResultMessage += "'User is already logged' popup confirmed\n";
+                setTotalResultMessage(getTotalResultMessage() + "'User is already logged' popup confirmed\n");
             } catch (NoSuchElementException e) {
-                totalResultMessage += "User is logging now\n";
+                setTotalResultMessage(getTotalResultMessage() + "User is logging now\n");
             }
         ProgressBar.addProgressValue(progressVariable);
 

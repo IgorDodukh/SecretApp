@@ -14,7 +14,7 @@ public class AddProductWithInventory extends BrowserSettings{
     public static String createdProductSKU = "";
     public static String createdProductName = "";
     @Test
-    public void jira3015(String email, String merchantPassword, WebDriver driver) throws InterruptedException{
+    public void addProductWithInventory(String email, String merchantPassword, WebDriver driver) throws InterruptedException{
 
         LoginPage loginPage = new LoginPage(driver);
         loginPage.loginMerchant(email, merchantPassword);

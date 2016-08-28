@@ -27,7 +27,7 @@ public class SyncPage extends BrowserSettings{
     private final By channelIDLocator = By.xpath("//input[@id='txtChannelId']");
 
     public void openChannel() throws InterruptedException {
-        totalResultMessage += "Search needed Channel\n";
+        setTotalResultMessage(getTotalResultMessage() + "Search needed Channel\n");
 
         String channelName = Controller.magentoIndexName.replace("qatestlab", "");
         driver.findElement(syncFilterByFieldLocator).sendKeys(channelName);
@@ -37,7 +37,7 @@ public class SyncPage extends BrowserSettings{
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Sync' page was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(syncFilterByFieldLocator));
 
-        totalResultMessage += "Open found Channel\n";
+        setTotalResultMessage(getTotalResultMessage() + "Open found Channel\n");
         Thread.sleep(1000);
         driver.findElement(syncChannelInGridLocator).click();
         driver.findElement(syncViewChannelButtonLocator).click();
@@ -48,7 +48,7 @@ public class SyncPage extends BrowserSettings{
     }
 
     public void getChannelID() {
-        totalResultMessage += "Remember Channel ID\n";
+        setTotalResultMessage(getTotalResultMessage() + "Remember Channel ID\n");
         magentoChannelID = driver.findElement(channelIDLocator).getAttribute("value");
         ProgressBar.addProgressValue(progressVariable);
     }

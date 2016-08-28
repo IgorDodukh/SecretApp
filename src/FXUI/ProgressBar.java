@@ -6,7 +6,7 @@ package FXUI;
 public class ProgressBar {
     static int currentProgress;
     public static void addProgressValue(int i) {
-        currentProgress = Controller.addProgressValue + i;
-        Controller.addProgressValue = currentProgress;
+        currentProgress = Controller.getAddProgressValue() + i;
+        Controller.setProgressValue(currentProgress);
     }
 }

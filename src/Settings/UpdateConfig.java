@@ -29,13 +29,8 @@ public class UpdateConfig {
 
             props.store(out, null);
             out.close();
-
-            System.out.println("Config Property Successfully Updated..");
-            System.out.println("New timeout: " + props.getProperty("timeoutVariable"));
-            System.out.println("New random length: " + props.getProperty("randomValue"));
         } catch (Exception e) {
             GeneratePopupBox.warningPopupBox(e.getMessage());
-            System.out.println("Exception: " + e);
         }
     }
 
@@ -52,14 +47,8 @@ public class UpdateConfig {
 
             props.store(out, null);
             out.close();
-
-            System.out.println("Config Property Successfully Updated..");
-            System.out.println("New email: " + props.getProperty("lastEmail"));
-            System.out.println("New pass: " + props.getProperty("lastPassword"));
-
         } catch (Exception e) {
                 GeneratePopupBox.warningPopupBox(e.getMessage());
-                System.out.println("Exception: " + e);
             }
     }
 
@@ -76,12 +65,8 @@ public class UpdateConfig {
 
             props.store(out, null);
             out.close();
-
-            System.out.println("Config Property Successfully Updated..");
-            System.out.println("New user: " + props.getProperty("user"));
         } catch (Exception e) {
         GeneratePopupBox.warningPopupBox(e.getMessage());
-        System.out.println("Exception: " + e);
     }
     }
 

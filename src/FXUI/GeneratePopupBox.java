@@ -91,7 +91,7 @@ public class GeneratePopupBox {
 
             Label label = new Label("The exception stacktrace was:");
 
-            TextArea textArea = new TextArea(BrowserSettings.totalResultMessage + "\n" + exceptionText);
+            TextArea textArea = new TextArea(BrowserSettings.getTotalResultMessage() + "\n" + exceptionText);
             textArea.setEditable(false);
             textArea.setWrapText(true);
 
@@ -108,38 +108,30 @@ public class GeneratePopupBox {
 // Set expandable Exception into the dialog pane.
             exceptionDialog.getDialogPane().setExpandableContent(expContent);
 
-            appStyles.setDialogStyle(exceptionDialog);
+            try {
+                appStyles.setDialogStyle(exceptionDialog);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             exceptionResponse = exceptionDialog.showAndWait();
         });
     }
 
-    public static void failedPopupBox() {
+    public static void failedPopupBox(String contentText) {
         Platform.runLater(() -> {
             Alert failedDialog = new Alert(Alert.AlertType.INFORMATION);
             appStyles.setDialogLogo(failedDialog, "sad.png");
-            failedDialog.setTitle("Test Failed. Running time: " + ExecutionTimeCounter.executionTime);
-            failedDialog.setHeaderText("Test was failed because of some unexpectedly reasons.");
-            failedDialog.setContentText(Controller.driverWarning[0] + Controller.driverExceptionMessage[0]);
+            failedDialog.setTitle("Running Test Failed");
+            failedDialog.setHeaderText("Bad news for you...");
+            failedDialog.setContentText(contentText);
             failedDialog.initStyle(StageStyle.UTILITY);
 
-            appStyles.setDialogStyle(failedDialog);
-
-            exceptionResponse = failedDialog.showAndWait();
-        });
-    }
-
-    public static void failedConnectionPopupBox() {
-        Platform.runLater(() -> {
-            Alert failedDialog = new Alert(Alert.AlertType.INFORMATION);
-            appStyles.setDialogLogo(failedDialog, "sad.png");
-            failedDialog.setTitle("Connection warning");
-            failedDialog.setHeaderText("Test was not starter.");
-            failedDialog.setContentText("Please check your internet connection.");
-            failedDialog.initStyle(StageStyle.UTILITY);
-
-            appStyles.setDialogStyle(failedDialog);
-
+            try {
+                appStyles.setDialogStyle(failedDialog);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             exceptionResponse = failedDialog.showAndWait();
         });
     }
@@ -153,13 +145,17 @@ public class GeneratePopupBox {
             successDialog.setContentText(resultMessage);
             successDialog.initStyle(StageStyle.UTILITY);
 
-            appStyles.setDialogStyle(successDialog);
+            try {
+                appStyles.setDialogStyle(successDialog);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             successDialog.showAndWait();
         });
     }
 
-    public static void identifyPopupBox() {
+    public static void identifyPopupBox() throws IOException {
         List<String> choices = new ArrayList<>();
         choices.add("Igor");
         choices.add("Vika");
@@ -201,7 +197,7 @@ public class GeneratePopupBox {
         } else System.out.println("Person select cancelled");
     }
 
-    public static void userTypePopupBox() {
+    public static void userTypePopupBox() throws IOException {
         List<String> choices = new ArrayList<>();
         choices.add("Merchant");
         choices.add("Merchant Admin");
@@ -254,7 +250,7 @@ public class GeneratePopupBox {
         } else System.out.println("User Type selecting cancelled");
     }
 
-    public static void creditCardsPopupBox() {
+    public static void creditCardsPopupBox() throws IOException {
         List<String> choices = new ArrayList<>();
         choices.add("Visa");
         choices.add("Master Card");
@@ -287,19 +283,19 @@ public class GeneratePopupBox {
 
         if (result.isPresent()){
             if(Objects.equals(result.get(), "Visa")){
-                Controller.testCardNumber = BrowserSettings.visaTestCardNumber;
+                Controller.cardNumber = BrowserSettings.visaTestCardNumber;
             } else if(Objects.equals(result.get(), "Master Card")){
-                Controller.testCardNumber = BrowserSettings.masterCardTestCardNumber;
+                Controller.cardNumber = BrowserSettings.masterCardTestCardNumber;
             } else if(Objects.equals(result.get(), "Discover")){
-                Controller.testCardNumber = BrowserSettings.discoverTestCardNumber;
+                Controller.cardNumber = BrowserSettings.discoverTestCardNumber;
             } else if(Objects.equals(result.get(), "American Express")){
-                Controller.testCardNumber = BrowserSettings.americanExpressTestCardNumber;
+                Controller.cardNumber = BrowserSettings.americanExpressTestCardNumber;
             }
             GeneratePopupBox.confirmationPopupBox();
         } else System.out.println("CC cancelled");
     }
 
-    public static void magentoPopupBox() {
+    public static void magentoPopupBox() throws IOException {
         List<String> choices = new ArrayList<>();
         Collections.addAll(choices, magentos);
 
@@ -308,7 +304,7 @@ public class GeneratePopupBox {
         magentoDialog.setTitle("Select Magento Environment");
         magentoDialog.setHeaderText("Select Magento which you\n" +
                 "would like to sync with " + Controller.environmentComboBoxValue);
-        magentoDialog.setContentText("I want to choose ");
+        magentoDialog.setContentText("I want to choose... ");
         magentoDialog.initStyle(StageStyle.UTILITY);
 
         appStyles.setDialogStyle(magentoDialog);
@@ -322,7 +318,7 @@ public class GeneratePopupBox {
         } else System.out.println("Select Magento cancelled");
     }
 
-    public static void confirmationPopupBox () {
+    public static void confirmationPopupBox () throws IOException {
         String infoMessage = "";
         infoMessage += "Selected Browser: " + Controller.browserComboBoxValue + "\n";
         infoMessage += "Selected Test: " + Controller.entityComboBoxValue + "\n";
@@ -342,257 +338,249 @@ public class GeneratePopupBox {
         confirmationResponse = confirmationAlert.showAndWait();
     }
 
-    public static void configVariablesPopupBox() {
-        Platform.runLater(() -> {
-            Alert configDialog = new Alert(Alert.AlertType.CONFIRMATION);
-            appStyles.setDialogLogo(configDialog, "conf.png");
+    public static void configVariablesPopupBox() throws IOException {
+        Alert configDialog = new Alert(Alert.AlertType.CONFIRMATION);
+        appStyles.setDialogLogo(configDialog, "conf.png");
 
-            configDialog.setTitle("Variables Configurations");
-            configDialog.setHeaderText("Configure your system variables\n(hover over titles for more details)");
-            configDialog.initStyle(StageStyle.UTILITY);
+        configDialog.setTitle("Variables Configurations");
+        configDialog.setHeaderText("Configure your system variables\n(hover over titles for more details)");
+        configDialog.initStyle(StageStyle.UTILITY);
 
-            Label timeoutsLabel = new Label("Preferred waiting timeout (sec.): ");
-            timeoutsLabel.setTooltip(new Tooltip("This timeout will be used each time when test need\n" +
-                    "to wait loading the page or appearing of web element"));
+        Label timeoutsLabel = new Label("Preferred waiting timeout (sec.): ");
+        timeoutsLabel.setTooltip(new Tooltip("This timeout will be used each time when test need\n" +
+                "to wait loading the page or appearing of web element"));
 
-            Label randomValueLabel = new Label("Random value for names contain digit(s): ");
-            randomValueLabel.setTooltip(new Tooltip("This random value is added to the end of the name for each\n" +
-                    "creatable object (Product name, Customer name, etc.) "));
+        Label randomValueLabel = new Label("Random value for names contain digit(s): ");
+        randomValueLabel.setTooltip(new Tooltip("This random value is added to the end of the name for each\n" +
+                "creatable object (Product name, Customer name, etc.) "));
 
-            Label appFilesPathLabel = new Label("Default path to 'appFiles' folder: ");
-            appFilesPathLabel.setTooltip(new Tooltip("Please use the following format:\nC:/Program Files/appFiles"));
+        Label appFilesPathLabel = new Label("Default path to 'appFiles' folder: ");
+        appFilesPathLabel.setTooltip(new Tooltip("Please use the following format:\nC:/Program Files/appFiles"));
 
-            int selectedTimeout = timeouts.indexOf(GetPropertyValues.timeoutProperty);
-            int selectedRandomLength = randomValue.indexOf(GetPropertyValues.randomValueProperty);
+        int selectedTimeout = timeouts.indexOf(GetPropertyValues.timeoutProperty);
+        int selectedRandomLength = randomValue.indexOf(GetPropertyValues.randomValueProperty);
 
-            ComboBox<String> timeoutsComboBox = new ComboBox<>();
-            timeoutsComboBox.setItems(timeouts);
-            timeoutsComboBox.getSelectionModel().select(selectedTimeout);
+        ComboBox<String> timeoutsComboBox = new ComboBox<>();
+        ComboBoxesHandler.comboBoxSetItems(timeoutsComboBox, timeouts, selectedTimeout);
 
-            ComboBox<String> randomValueComboBox = new ComboBox<>();
-            randomValueComboBox.setItems(randomValue);
-            randomValueComboBox.getSelectionModel().select(selectedRandomLength);
+        ComboBox<String> randomValueComboBox = new ComboBox<>();
+        ComboBoxesHandler.comboBoxSetItems(randomValueComboBox, randomValue, selectedRandomLength);
 
-            TextField appFilesPathField = new TextField();
-            appFilesPathField.setText(AppStyles.mainPath.replace("\\","/"));
-            appFilesPathField.setDisable(true);
+        TextField appFilesPathField = new TextField();
+        appFilesPathField.setText(AppStyles.mainPath.replace("\\","/"));
+        appFilesPathField.setDisable(true);
 
-            GridPane configsGrid = new GridPane();
-            configsGrid.vgapProperty().setValue(15);
-            configsGrid.setMaxWidth(Double.MAX_VALUE);
+        GridPane configsGrid = new GridPane();
+        configsGrid.vgapProperty().setValue(15);
+        configsGrid.setMaxWidth(Double.MAX_VALUE);
 
-            configsGrid.add(timeoutsLabel, 0, 0);
-            configsGrid.add(timeoutsComboBox, 1, 0);
+        configsGrid.add(timeoutsLabel, 0, 0);
+        configsGrid.add(timeoutsComboBox, 1, 0);
 
-            configsGrid.add(randomValueLabel, 0, 1);
-            configsGrid.add(randomValueComboBox, 1, 1);
+        configsGrid.add(randomValueLabel, 0, 1);
+        configsGrid.add(randomValueComboBox, 1, 1);
 
-            configsGrid.add(appFilesPathLabel, 0, 2);
-            configsGrid.add(appFilesPathField, 1, 2);
+        configsGrid.add(appFilesPathLabel, 0, 2);
+        configsGrid.add(appFilesPathField, 1, 2);
 
-            ButtonBar buttonBar = (ButtonBar)configDialog.getDialogPane().lookup(".button-bar");
-            buttonBar.getButtons().forEach(b -> {
-                    b.setStyle("-fx-background-color: indianred;");
-                });
+        ButtonType saveButton = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
+        configDialog.getButtonTypes().set(0, saveButton);
 
-            ButtonType saveButton = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
-            configDialog.getButtonTypes().set(0, saveButton);
-
-            configDialog.getDialogPane().setContent(configsGrid);
+        configDialog.getDialogPane().setContent(configsGrid);
+        try {
             appStyles.setDialogStyle(configDialog);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-// Traditional way to get the response value.
-            Optional<ButtonType> result = configDialog.showAndWait();
-            if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE){
-                String oldPath = AppStyles.mainPath.replace("\\", "/");
+        Optional<ButtonType> result = configDialog.showAndWait();
+        if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE){
+            String oldPath = AppStyles.mainPath.replace("\\", "/");
 
-                currentTimeout = timeoutsComboBox.getSelectionModel().getSelectedItem();
-                BrowserSettings.timeoutVariable = Integer.valueOf(currentTimeout);
+            currentTimeout = timeoutsComboBox.getSelectionModel().getSelectedItem();
+            BrowserSettings.timeoutVariable = Integer.valueOf(currentTimeout);
 
-                currentRandomLength = randomValueComboBox.getSelectionModel().getSelectedItem();
-                BrowserSettings.randomValueLength = Integer.valueOf(currentRandomLength);
+            currentRandomLength = randomValueComboBox.getSelectionModel().getSelectedItem();
+            BrowserSettings.randomValueLength = Integer.valueOf(currentRandomLength);
 
-                currentMainPath = appFilesPathField.getText();
+            currentMainPath = appFilesPathField.getText();
+            try {
+                AppStyles.mainPath = currentMainPath;
+                UpdateConfig.updateSystemVariables();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-                System.out.println("Old path: " + oldPath);
-                System.out.println("New path: " + currentMainPath);
-
-                try {
-                    AppStyles.mainPath = currentMainPath;
-                    UpdateConfig.updateSystemVariables();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                if (!Objects.equals(oldPath, currentMainPath)){
-                    GeneratePopupBox.relaunchPopupBox();
-                }
-            } else System.out.println("Configuration popup box cancelled");
-        });
+            if (!Objects.equals(oldPath, currentMainPath)){
+                GeneratePopupBox.relaunchPopupBox();
+            }
+        } else System.out.println("Configuration popup box cancelled");
     }
 
     public static void configNamesPopupBox() {
-        Platform.runLater(() -> {
-            Dialog configDialog = new Dialog();
-            appStyles.setDialogLogo(configDialog, "conf.png");
-            configDialog.setTitle("Names Configurations");
-            configDialog.setHeaderText("Set default names for creatable objects");
-            configDialog.setContentText("");
-            configDialog.initStyle(StageStyle.UTILITY);
 
-            Label warningLabel = new Label("Fill all fields before saving changes.");
-            warningLabel.setStyle("-fx-text-fill: #FF3021;");
-            warningLabel.setVisible(false);
+        Dialog configDialog = new Dialog();
+        appStyles.setDialogLogo(configDialog, "conf.png");
+        configDialog.setTitle("Names Configurations");
+        configDialog.setHeaderText("Set default names for creatable objects");
+        configDialog.setContentText("");
+        configDialog.initStyle(StageStyle.UTILITY);
 
-            Label customerFirstNameLabel = new Label("Customer First Name format: ");
-            customerFirstNameLabel.setCache(false);
+        Label warningLabel = new Label("Fill all fields before saving changes.");
+        warningLabel.setStyle("-fx-text-fill: #FF3021;");
+        warningLabel.setVisible(false);
 
-            Label customerLastNameLabel = new Label("Customer Last Name format: ");
-            customerLastNameLabel.setCache(false);
+        Label customerFirstNameLabel = new Label("Customer First Name format: ");
+        customerFirstNameLabel.setCache(false);
 
-            Label productSKULabel = new Label("Product SKU format: ");
-            productSKULabel.setCache(false);
+        Label customerLastNameLabel = new Label("Customer Last Name format: ");
+        customerLastNameLabel.setCache(false);
 
-            Label productNameLabel = new Label("Product Name format: ");
-            productNameLabel.setCache(false);
+        Label productSKULabel = new Label("Product SKU format: ");
+        productSKULabel.setCache(false);
 
-            Label warehouseNameLabel = new Label("Warehouse Name format: ");
-            warehouseNameLabel.setCache(false);
+        Label productNameLabel = new Label("Product Name format: ");
+        productNameLabel.setCache(false);
 
-            Label supplierNameLabel = new Label("Supplier Name format: ");
-            supplierNameLabel.setCache(false);
+        Label warehouseNameLabel = new Label("Warehouse Name format: ");
+        warehouseNameLabel.setCache(false);
 
-            Label binNameLabel = new Label("Bin Name format: ");
-            binNameLabel.setCache(false);
+        Label supplierNameLabel = new Label("Supplier Name format: ");
+        supplierNameLabel.setCache(false);
 
-            TextField customerFirstNameField = new TextField(GetPropertyValues.customerFirstName);
-            TextField customerLastNameField = new TextField(GetPropertyValues.customerLastName);
-            TextField productSKUField = new TextField(GetPropertyValues.productSKU);
-            TextField productNameField = new TextField(GetPropertyValues.productName);
-            TextField warehouseNameField = new TextField(GetPropertyValues.warehouseName);
-            TextField supplierNameField = new TextField(GetPropertyValues.supplierName);
-            TextField binNameField = new TextField(GetPropertyValues.binName);
+        Label binNameLabel = new Label("Bin Name format: ");
+        binNameLabel.setCache(false);
 
-            GridPane configNamesGrid = new GridPane();
-            configNamesGrid.vgapProperty().setValue(15);
-            configNamesGrid.setMaxWidth(Double.MIN_VALUE);
+        TextField customerFirstNameField = new TextField(GetPropertyValues.customerFirstName);
+        TextField customerLastNameField = new TextField(GetPropertyValues.customerLastName);
+        TextField productSKUField = new TextField(GetPropertyValues.productSKU);
+        TextField productNameField = new TextField(GetPropertyValues.productName);
+        TextField warehouseNameField = new TextField(GetPropertyValues.warehouseName);
+        TextField supplierNameField = new TextField(GetPropertyValues.supplierName);
+        TextField binNameField = new TextField(GetPropertyValues.binName);
 
-            configNamesGrid.add(warningLabel, 0, 0);
+        GridPane configNamesGrid = new GridPane();
+        configNamesGrid.vgapProperty().setValue(15);
+        configNamesGrid.setMaxWidth(Double.MIN_VALUE);
 
-            configNamesGrid.add(customerFirstNameLabel, 0, 1);
-            configNamesGrid.add(customerFirstNameField, 1, 1);
+        configNamesGrid.add(warningLabel, 0, 0);
 
-            configNamesGrid.add(customerLastNameLabel, 0, 2);
-            configNamesGrid.add(customerLastNameField, 1, 2);
+        configNamesGrid.add(customerFirstNameLabel, 0, 1);
+        configNamesGrid.add(customerFirstNameField, 1, 1);
 
-            configNamesGrid.add(productSKULabel, 0, 3);
-            configNamesGrid.add(productSKUField, 1, 3);
+        configNamesGrid.add(customerLastNameLabel, 0, 2);
+        configNamesGrid.add(customerLastNameField, 1, 2);
 
-            configNamesGrid.add(productNameLabel, 0, 4);
-            configNamesGrid.add(productNameField, 1, 4);
+        configNamesGrid.add(productSKULabel, 0, 3);
+        configNamesGrid.add(productSKUField, 1, 3);
 
-            configNamesGrid.add(supplierNameLabel, 0, 5);
-            configNamesGrid.add(supplierNameField, 1, 5);
+        configNamesGrid.add(productNameLabel, 0, 4);
+        configNamesGrid.add(productNameField, 1, 4);
 
-            configNamesGrid.add(warehouseNameLabel, 0, 6);
-            configNamesGrid.add(warehouseNameField, 1, 6);
+        configNamesGrid.add(supplierNameLabel, 0, 5);
+        configNamesGrid.add(supplierNameField, 1, 5);
 
-            configNamesGrid.add(binNameLabel, 0, 7);
-            configNamesGrid.add(binNameField, 1, 7);
+        configNamesGrid.add(warehouseNameLabel, 0, 6);
+        configNamesGrid.add(warehouseNameField, 1, 6);
 
-            ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
-            configDialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
+        configNamesGrid.add(binNameLabel, 0, 7);
+        configNamesGrid.add(binNameField, 1, 7);
 
-            Node saveButton = configDialog.getDialogPane().lookupButton(saveButtonType);
-            saveButton.setDisable(false);
+        ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
+        configDialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
 
-            configDialog.getDialogPane().setContent(configNamesGrid);
+        Node saveButton = configDialog.getDialogPane().lookupButton(saveButtonType);
+        saveButton.setDisable(false);
 
-            FieldsListener.namesSettingsFieldListener(customerFirstNameField, customerFirstNameLabel, warningLabel, saveButton);
-            FieldsListener.namesSettingsFieldListener(customerLastNameField, customerLastNameLabel, warningLabel, saveButton);
-            FieldsListener.namesSettingsFieldListener(productSKUField, productSKULabel, warningLabel, saveButton);
-            FieldsListener.namesSettingsFieldListener(productNameField, productNameLabel, warningLabel, saveButton);
-            FieldsListener.namesSettingsFieldListener(warehouseNameField, warehouseNameLabel, warningLabel, saveButton);
-            FieldsListener.namesSettingsFieldListener(supplierNameField, supplierNameLabel, warningLabel, saveButton);
-            FieldsListener.namesSettingsFieldListener(binNameField, binNameLabel, warningLabel, saveButton);
+        configDialog.getDialogPane().setContent(configNamesGrid);
 
+        FieldsListener.multipleFieldsValidation(customerFirstNameField, customerFirstNameLabel, warningLabel, saveButton);
+        FieldsListener.multipleFieldsValidation(customerLastNameField, customerLastNameLabel, warningLabel, saveButton);
+        FieldsListener.multipleFieldsValidation(productSKUField, productSKULabel, warningLabel, saveButton);
+        FieldsListener.multipleFieldsValidation(productNameField, productNameLabel, warningLabel, saveButton);
+        FieldsListener.multipleFieldsValidation(warehouseNameField, warehouseNameLabel, warningLabel, saveButton);
+        FieldsListener.multipleFieldsValidation(supplierNameField, supplierNameLabel, warningLabel, saveButton);
+        FieldsListener.multipleFieldsValidation(binNameField, binNameLabel, warningLabel, saveButton);
+
+        try {
             appStyles.setDialogStyle(configDialog);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        Optional<ButtonType> result = configDialog.showAndWait() ;
 
-// Traditional way to get the response value.
-            Optional<ButtonType> result = configDialog.showAndWait() ;
+        if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE){
+            currentCustomerFirstName = customerFirstNameField.getText();
+            currentCustomerLastName = customerLastNameField.getText();
+            currentProductSKU = productSKUField.getText();
+            currentProductName = productNameField.getText();
+            currentSupplierName = supplierNameField.getText();
+            currentWarehouseName = warehouseNameField.getText();
+            currentBinName = binNameField.getText();
 
-            if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE){
-
-                    currentCustomerFirstName = customerFirstNameField.getText();
-                    currentCustomerLastName = customerLastNameField.getText();
-                    currentProductSKU = productSKUField.getText();
-                    currentProductName = productNameField.getText();
-                    currentSupplierName = supplierNameField.getText();
-                    currentWarehouseName = warehouseNameField.getText();
-                    currentBinName = binNameField.getText();
-
-                    try {
-                        UpdateConfig.updateNames();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-            } else System.out.println("Configuration popup box cancelled");
-        });
+            try {
+                UpdateConfig.updateNames();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else System.out.println("Configuration popup box cancelled");
     }
 
     public static void aboutPopupBox() {
-        Platform.runLater(() -> {
-            Alert aboutDialog = new Alert(Alert.AlertType.INFORMATION);
-            appStyles.setDialogLogo(aboutDialog, "hi.png");
-            aboutDialog.setTitle("About");
-            aboutDialog.setHeaderText("Hi there! It's About of Secret App");
-            aboutDialog.setContentText("This application is developed to make QA life easier " +
+        Alert aboutDialog = new Alert(Alert.AlertType.INFORMATION);
+        appStyles.setDialogLogo(aboutDialog, "hi.png");
+        aboutDialog.setTitle("About");
+        aboutDialog.setHeaderText("Hi there! It's About of Secret App");
+        aboutDialog.setContentText("This application is developed to make QA life easier " +
                     "while doing routine things...\n\n");
-            aboutDialog.initStyle(StageStyle.UTILITY);
+        aboutDialog.initStyle(StageStyle.UTILITY);
 
             // Create expandable Exception.
 
-            String newChanges =
-                    " - Configuration changes:\n" +
-                    "\t - 'Default Names' config (allow to change default names for creatable 0objects)\n" +
-                    "\t - 'System Variables' config allow to change:\n" +
-                    "\t\t- default timeout value \n" +
-                    "\t\t- number of digits for random number which is added to the end of the created object's name\n" +
-                    "\t\t- default path to 'appFiles' folder (temporary will be unavailable)\n" +
-                    " - Add warning Popup Box in case when 'appFiles' folder doesn't exist by specified path\n" +
-                    " - Add tooltip for titles on the 'Variables Configuration' popup box\n" +
-                    " - Change 'OK' button name to 'Save' on the configuration dialogs\n" +
-                    " - Check internet connection before running test (warning dialog appears if test failed)\n" +
-                    " - Better quality for some emoticons on Popup Boxes\n" +
-                    " - NEW BUG: validating fields on the 'Default Names' config dialog.\n" +
-                    " - FIXED BUG: Now each new Object will be created with new name during one session\n" +
-                    " - FIXED BUG: progress value for 'Configure Magento' test\n" +
-                    " - Partial refactoring (may occur unexpected new bugs)\n";
+        String newChanges =
+                " - Configuration changes:\n" +
+                "\t - 'Default Names' config (allow to change default names for creatable 0objects)\n" +
+                "\t - 'System Variables' config allow to change:\n" +
+                "\t\t- default timeout value \n" +
+                "\t\t- number of digits for random number which is added to the end of the created object's name\n" +
+                "\t\t- default path to 'appFiles' folder (temporary will be unavailable)\n" +
+                " - Add warning Popup Box in case when 'appFiles' folder doesn't exist by specified path\n" +
+                " - Add tooltip for titles on the 'Variables Configuration' popup box\n" +
+                " - Change 'OK' button name to 'Save' on the configuration dialogs\n" +
+                " - Check internet connection before running test (warning dialog appears if test failed)\n" +
+                " - Better quality for some emoticons on Popup Boxes\n" +
+                " - NEW BUG: validating fields on the 'Default Names' config dialog.\n" +
+                " - FIXED BUG: Now each new Object will be created with new name during one session\n" +
+                " - FIXED BUG: progress value for 'Configure Magento' test\n" +
+                " - Partial refactoring (may occur unexpected new bugs)\n";
 
-            Label label = new Label("Last release: '#1.73 beta' includes the following new features:");
+        Label label = new Label("Last release: '#1.73 beta' includes the following new features:");
 
-            TextArea textArea = new TextArea(newChanges);
-            textArea.setEditable(false);
-            textArea.setWrapText(true);
+        TextArea textArea = new TextArea(newChanges);
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
 
-            textArea.setMaxWidth(Double.MAX_VALUE);
-            textArea.setMaxHeight(Double.MAX_VALUE);
-            GridPane.setVgrow(textArea, Priority.ALWAYS);
-            GridPane.setHgrow(textArea, Priority.ALWAYS);
+        textArea.setMaxWidth(Double.MAX_VALUE);
+        textArea.setMaxHeight(Double.MAX_VALUE);
+        GridPane.setVgrow(textArea, Priority.ALWAYS);
+        GridPane.setHgrow(textArea, Priority.ALWAYS);
 
-            GridPane expContent = new GridPane();
-            expContent.setMaxWidth(Double.MAX_VALUE);
-            expContent.add(label, 0, 0);
-            expContent.add(textArea, 0, 1);
+        GridPane expContent = new GridPane();
+        expContent.setMaxWidth(Double.MAX_VALUE);
+        expContent.add(label, 0, 0);
+        expContent.add(textArea, 0, 1);
 
 // Set expandable Exception into the dialog pane.
-            aboutDialog.getDialogPane().setExpandableContent(expContent);
+        aboutDialog.getDialogPane().setExpandableContent(expContent);
 
+        try {
             appStyles.setDialogStyle(aboutDialog);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-            aboutDialog.showAndWait();
-        });
+        aboutDialog.showAndWait();
     }
 
     public static void warningPopupBox(String fileName) {

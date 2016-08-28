@@ -1,5 +1,6 @@
 package Tests;
 
+import Pages.CorporateMailBox;
 import Pages.LoginPage;
 import Pages.MainPage;
 import Pages.ManageMerchantPage;
@@ -22,5 +23,8 @@ public class AddUsers extends BrowserSettings {
         ManageMerchantPage manageMerchantPage = new ManageMerchantPage(driver);
         manageMerchantPage.openAddMerchantForm();
         manageMerchantPage.addMerchantData();
+
+        CorporateMailBox corporateMailBox = new CorporateMailBox(driver);
+        corporateMailBox.openMailBox();
     }
 }

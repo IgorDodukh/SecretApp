@@ -39,14 +39,14 @@ public class MagentoAdminPanel extends BrowserSettings {
     private final By magentoWebSitesDropdownLocator = By.xpath("//div[@class='switcher']//select");
 
     public void adminPanelLogin() {
-        totalResultMessage += "Open Magento admin panel\n";
+        setTotalResultMessage(getTotalResultMessage() + "Open Magento admin panel\n");
         driver.get(magentoEnvironment.get(Controller.magentoIndex));
         ProgressBar.addProgressValue(progressVariable);
 
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Login page was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(magentoLoginFieldLocator));
 
-        totalResultMessage += "Fill Magento credentials\n";
+        setTotalResultMessage(getTotalResultMessage() + "Fill Magento credentials\n");
         driver.findElement(magentoLoginFieldLocator).sendKeys(magentoLogin);
         driver.findElement(magentoPasswordFieldLocator).sendKeys(magentoPassword);
         driver.findElement(magentoLoginButtonLocator).click();
@@ -117,7 +117,7 @@ public class MagentoAdminPanel extends BrowserSettings {
 //        ProgressBar.addProgressValue(progressVariable);
 
         String advancedExportMenuItem;
-        totalResultMessage += "Open Advanced Export settings page\n";
+        setTotalResultMessage(getTotalResultMessage() + "Open Advanced Export settings page\n");
 
         for (int i = 1; i <= 50; i++){
             By advancedExportMenuItemLocator = By.xpath("//ul[@id='system_config_tabs']/li[" + i + "]//dd[1]/a/span");
@@ -139,34 +139,34 @@ public class MagentoAdminPanel extends BrowserSettings {
         String magentoNotificationURL = magentoFSLink + "api/api/notification";
         String magentoQueueServiceURL = magentoFSLink + "api/Magento/CreateEntities";
 
-        totalResultMessage += "Fill 'Username' field\n";
+        setTotalResultMessage(getTotalResultMessage() + "Fill 'Username' field\n");
         driver.findElement(magentoConfigUsernameFieldLocator).clear();
         driver.findElement(magentoConfigUsernameFieldLocator).sendKeys(login);
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += "Fill 'Password' field\n";
+        setTotalResultMessage(getTotalResultMessage() + "Fill 'Password' field\n");
         driver.findElement(magentoConfigPassFieldLocator).clear();
         driver.findElement(magentoConfigPassFieldLocator).sendKeys(password);
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += "Fill 'Authentication Service URL' field\n";
+        setTotalResultMessage(getTotalResultMessage() + "Fill 'Authentication Service URL' field\n");
         driver.findElement(magentoConfigAuthFieldLocator).clear();
         driver.findElement(magentoConfigAuthFieldLocator).sendKeys(magentoAutenticationURL);
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += "Fill 'Notification Service URL' field\n";
+        setTotalResultMessage(getTotalResultMessage() + "Fill 'Notification Service URL' field\n");
         driver.findElement(magentoConfigNotificationFieldLocator).clear();
         driver.findElement(magentoConfigNotificationFieldLocator).sendKeys(magentoNotificationURL);
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += "Fill 'Queue Service URL' field\n";
+        setTotalResultMessage(getTotalResultMessage() + "Fill 'Queue Service URL' field\n");
         driver.findElement(magentoConfigQueueServiceFieldLocator).clear();
         driver.findElement(magentoConfigQueueServiceFieldLocator).sendKeys(magentoQueueServiceURL);
         ProgressBar.addProgressValue(progressVariable);
     }
 
     public void saveMagentoConfig() {
-        totalResultMessage += "Click 'Save Config' button\n";
+        setTotalResultMessage(getTotalResultMessage() + "Click 'Save Config' button\n");
         try {
             driver.findElement(magentoConfigSaveButtonLocator).click();
         }catch (Exception e){
@@ -177,8 +177,8 @@ public class MagentoAdminPanel extends BrowserSettings {
     }
 
     public void addFSChannelID() {
-        totalResultMessage += "Add FS Channel ID\n";
-        totalResultMessage += "Open 'Main Website' setting page\n";
+        setTotalResultMessage(getTotalResultMessage() + "Add FS Channel ID\n");
+        setTotalResultMessage(getTotalResultMessage() + "Open 'Main Website' setting page\n");
 
         driver.findElement(magentoWebSitesDropdownLocator).click();
 
@@ -194,12 +194,12 @@ public class MagentoAdminPanel extends BrowserSettings {
         }
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += "Change FS Channel ID\n";
+        setTotalResultMessage(getTotalResultMessage() + "Change FS Channel ID\n");
         driver.findElement(magentoChannelIDFieldLocator).clear();
         driver.findElement(magentoChannelIDFieldLocator).sendKeys(magentoChannelID);
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += "Save new Channel ID\n";
+        setTotalResultMessage(getTotalResultMessage() + "Save new Channel ID\n");
         driver.findElement(magentoConfigSaveButtonLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Save button was not found");
         wait.until(ExpectedConditions.elementToBeClickable(magentoConfigSaveButtonLocator));

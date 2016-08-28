@@ -52,31 +52,31 @@ public class AddProductPage extends BrowserSettings{
     private final By siteLogoIconLocator = By.xpath("//img[@id='logoIcon']");
 
     public void addProductInfo(String sku, String name, String weight, String shortDescription) {
-        totalResultMessage += "Adding product info:\n";
-        totalResultMessage += " - Add product SKU\n";
+        setTotalResultMessage(getTotalResultMessage() + "Adding product info:\n");
+        setTotalResultMessage(getTotalResultMessage() + " - Add product SKU\n");
         driver.findElement(productSkuFieldLocator).sendKeys(sku);
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += " - Add product Name\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Add product Name\n");
         driver.findElement(productNameFieldLocator).sendKeys(name);
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += " - Add product weight\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Add product weight\n");
         driver.findElement(productWeightFieldLocator).sendKeys(weight);
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += " - Add product Short Description\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Add product Short Description\n");
         driver.findElement(productShortDescriptionLocator).sendKeys(shortDescription);
         ProgressBar.addProgressValue(progressVariable);
     }
 
     public void addProductPrices(String retailPrice) {
-        totalResultMessage += "Adding product prices:\n";
-        totalResultMessage += " - Select 'Pricing' tab\n";
+        setTotalResultMessage(getTotalResultMessage() + "Adding product prices:\n");
+        setTotalResultMessage(getTotalResultMessage() + " - Select 'Pricing' tab\n");
         driver.findElement(productPricingTabLocator).click();
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += " - Add product Retail Price\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Add product Retail Price\n");
         driver.switchTo().frame("pricingIframe");
 
         driver.findElement(productRetailPriceLocator).sendKeys(retailPrice);
@@ -86,12 +86,12 @@ public class AddProductPage extends BrowserSettings{
     }
 
     public void addProductSalesChannel(String channelName) {
-        totalResultMessage += "Adding Sales Channel:\n";
-        totalResultMessage += " - Select 'Sales Channels' tab\n";
+        setTotalResultMessage(getTotalResultMessage() + "Adding Sales Channel:\n");
+        setTotalResultMessage(getTotalResultMessage() + " - Select 'Sales Channels' tab\n");
         driver.findElement(productSalesChannelsTabLocator).click();
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += " - Type 'Call Center' name to the field\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Type 'Call Center' name to the field\n");
         driver.findElement(salesChannelNameFieldLocator).sendKeys(channelName);
         ProgressBar.addProgressValue(progressVariable);
 
@@ -99,18 +99,18 @@ public class AddProductPage extends BrowserSettings{
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(salesChannelTooltipLocator));
         Assert.assertEquals(element.isDisplayed(), true, "'Call Center' tooltip is not displayed");
 
-        totalResultMessage += " - Click 'Call Center' tooltip\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Click 'Call Center' tooltip\n");
         driver.findElement(salesChannelTooltipLocator).click();
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += " - Click 'Plus' icon\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Click 'Plus' icon\n");
         driver.findElement(salesChannelAddButtonLocator).click();
         ProgressBar.addProgressValue(progressVariable);
     }
 
     public void addProductSupplier(String unitCost) throws InterruptedException {
-        totalResultMessage += "Adding Supplier:\n";
-        totalResultMessage += " - Select 'Suppliers' tab\n";
+        setTotalResultMessage(getTotalResultMessage() + "Adding Supplier:\n");
+        setTotalResultMessage(getTotalResultMessage() + " - Select 'Suppliers' tab\n");
         driver.findElement(productSuppliersTabLocator).click();
         ProgressBar.addProgressValue(progressVariable);
 
@@ -119,7 +119,7 @@ public class AddProductPage extends BrowserSettings{
 
         Thread.sleep(1000);
 
-        totalResultMessage += " - Click 'Add Supplier' button\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Click 'Add Supplier' button\n");
         driver.findElement(addSupplierButtonLocator).click();
         ProgressBar.addProgressValue(progressVariable);
         Thread.sleep(2000);
@@ -128,46 +128,46 @@ public class AddProductPage extends BrowserSettings{
         WebElement element2 = wait2.until(ExpectedConditions.elementToBeClickable(selectSupplierCheckboxLocator));
         Assert.assertEquals(element2.isDisplayed(), true, "Popup for the 'Add Supplier' form is not displayed");
 
-        totalResultMessage += " - Select Supplier from the list\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Select Supplier from the list\n");
         driver.findElement(selectSupplierCheckboxLocator).click();
         ProgressBar.addProgressValue(progressVariable);
-        totalResultMessage += " - Add selected Supplier\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Add selected Supplier\n");
         driver.findElement(addSelectedSupplierButtonLocator).click();
         driver.findElement(selectAddedSupplierLocator).click();
         ProgressBar.addProgressValue(progressVariable);
-        totalResultMessage += " - Open Supplier in edit mode\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Open Supplier in edit mode\n");
         driver.findElement(openAddedSupplierToEditButtonLocator).click();
         driver.findElement(warehouseTabLocator).click();
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += " - Add Supplier Unit Cost\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Add Supplier Unit Cost\n");
         Thread.sleep(500);
         driver.findElement(unitCostFieldLocator).sendKeys(unitCost);
         driver.findElement(unitCostAddButtonLocator).click();
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += " - Save Supplier changes\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Save Supplier changes\n");
         Thread.sleep(500);
         driver.findElement(supplierSaveOkButton).click();
         ProgressBar.addProgressValue(progressVariable);
     }
 
     public void saveProduct() {
-        totalResultMessage += "Saving Product:\n";
-        totalResultMessage += " - Click 'Save and Close' button\n";
+        setTotalResultMessage(getTotalResultMessage() + "Saving Product:\n");
+        setTotalResultMessage(getTotalResultMessage() + " - Click 'Save and Close' button\n");
         driver.findElement(saveAndCloseProductButtonLocator).click();
         ProgressBar.addProgressValue(progressVariable);
 
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(productMessageBoxLocator));
 
-        totalResultMessage += " - Confirm success popup\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Confirm success popup\n");
         driver.findElement(popupOkBtnLocator).click();
         ProgressBar.addProgressValue(progressVariable);
     }
 
     public void openInventoryPage() throws InterruptedException {
-        totalResultMessage += "Open 'Product Inventory' page\n";
+        setTotalResultMessage(getTotalResultMessage() + "Open 'Product Inventory' page\n");
         Thread.sleep(2000);
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Product grid was not opened");
         wait.until(ExpectedConditions.elementToBeClickable(siteLogoIconLocator));

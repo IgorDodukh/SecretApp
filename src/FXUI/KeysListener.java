@@ -15,11 +15,14 @@ public class KeysListener {
     }
 
     public static void clickStartButton(KeyEvent key, Controller controller) {
-        if(Objects.equals(key.getCode().toString(), "ENTER")){
-            try {
-                controller.clickStartButton();
-            } catch (IOException e) {
-                e.printStackTrace();
+
+        if(!FieldsListener.isNameBlank) {
+            if (Objects.equals(key.getCode().toString(), "ENTER")) {
+                try {
+                    controller.clickStartButton();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

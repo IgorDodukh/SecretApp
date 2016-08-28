@@ -10,8 +10,11 @@ import javafx.scene.paint.Color;
  */
 public class FieldsValidation {
 
-    public static void loginPassValidation(String loginValue, String password, TextField loginField,
-                                           PasswordField passwordField, Label loginLabel, Label passwordLabel) {
+    public static void loginPassValidation(
+            TextField loginField,
+            PasswordField passwordField,
+            Label loginLabel,
+            Label passwordLabel) {
         if (loginField.getText().isEmpty()){
             loginField.setStyle("-fx-text-box-border: #ff3021;");
             loginLabel.setTextFill(Color.web("#ff3021"));

@@ -46,7 +46,7 @@ public class InventoryPage extends BrowserSettings {
     public static String createdBin = "";
 
     public void openAddInventoryForm(String productSku) {
-        totalResultMessage += "Search created Product\n";
+        setTotalResultMessage(getTotalResultMessage() + "Search created Product\n");
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Product Inventory' page popup was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(productInventoryFilterByFieldLocator));
         ProgressBar.addProgressValue(10);
@@ -59,11 +59,11 @@ public class InventoryPage extends BrowserSettings {
 
         Assert.assertEquals(driver.findElement(firstProductSKULocator).getText(), productSku, "Found Product has not expected SKU");
 
-        totalResultMessage += "Select first found Product\n";
+        setTotalResultMessage(getTotalResultMessage() + "Select first found Product\n");
         driver.findElement(firstProductLocator).click();
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += "Click 'Add' button\n";
+        setTotalResultMessage(getTotalResultMessage() + "Click 'Add' button\n");
         driver.findElement(firstProductAddButtonLocator).click();
         final Wait<WebDriver> wait3 = new WebDriverWait(driver, timeoutVariable).withMessage("Inventory adding form was not loaded");
         wait3.until(ExpectedConditions.elementToBeClickable(lotNumberFieldLocator));
@@ -71,42 +71,42 @@ public class InventoryPage extends BrowserSettings {
     }
 
     public void addInventoryInfo() throws InterruptedException {
-        totalResultMessage += "Adding Inventory info:\n";
-        totalResultMessage += " - Add Lot number\n";
+        setTotalResultMessage(getTotalResultMessage() + "Adding Inventory info:\n");
+        setTotalResultMessage(getTotalResultMessage() + " - Add Lot number\n");
         driver.findElement(lotNumberFieldLocator).sendKeys(inventoryLotNumber);
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += " - Add unit cost\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Add unit cost\n");
         driver.findElement(unitCostFieldLocator).sendKeys(inventoryUnitCost);
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += " - Open 'Add Bin' form\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Open 'Add Bin' form\n");
         driver.findElement(binDropdownAddNewBinButtonLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Bin creating form was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(addBinNameFieldLocator));
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += "Adding Bin info:\n";
-        totalResultMessage += " - Add Bin name\n";
+        setTotalResultMessage(getTotalResultMessage() + "Adding Bin info:\n");
+        setTotalResultMessage(getTotalResultMessage() + " - Add Bin name\n");
         driver.findElement(addBinNameFieldLocator).sendKeys(createdBin = GetPropertyValues.binName + new GenerateRandomData().generateRandomNumber(randomValueLength));
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += " - Select Bin type\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Select Bin type\n");
         driver.findElement(addBinPickBinDropdownLocator).click();
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += " - Add Bin priority\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Add Bin priority\n");
         driver.findElement(addBinPriorityFieldLocator).sendKeys(binPriority);
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += " - Save Bin\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Save Bin\n");
         driver.findElement(saveBinButtonLocator).click();
         ProgressBar.addProgressValue(progressVariable);
         Thread.sleep(2000);
         final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Bin creating popup was not hidden");
         wait2.until(ExpectedConditions.elementToBeClickable(lotNumberFieldLocator));
 
-        totalResultMessage += " - Add qty value\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Add qty value\n");
         driver.findElement(addBinQuantityFieldLocator).click();
         ProgressBar.addProgressValue(progressVariable);
         Thread.sleep(2000);
@@ -117,14 +117,14 @@ public class InventoryPage extends BrowserSettings {
         String qtyValue = driver.findElement(addBinQuantityValueLocator).getText();
         Assert.assertEquals(qtyValue, inventoryQty + ".00", "Incorrect qty value is displayed");
 
-        totalResultMessage += " - Add Notes\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Add Notes\n");
         driver.findElement(addBinNotesFieldLocator).sendKeys(inventoryNotes);
         ProgressBar.addProgressValue(progressVariable);
     }
 
     public void saveInventory() {
-        totalResultMessage += "Saving inventory:\n";
-        totalResultMessage += " - Click 'Save and Close' button\n";
+        setTotalResultMessage(getTotalResultMessage() + "Saving inventory:\n");
+        setTotalResultMessage(getTotalResultMessage() + " - Click 'Save and Close' button\n");
         driver.findElement(saveAndCloseProductButtonLocator).click();
         ProgressBar.addProgressValue(progressVariable);
 

@@ -128,17 +128,25 @@ protected final String magentoLogin = "FSAWS_Admin";
     public static int timeoutVariable = 30;
     public static int progressVariable;
 
-    public static String totalResultMessage = "";
+    private static String totalResultMessage = "";
 
     //Corporate mail box access
     protected final String mailboxUrl = "gmail.com";
     public String mailboxLogin = "wildcard@dydacomp.biz";
     public String mailboxPassword = "Dydacomp2014!";
 
+    public static String getTotalResultMessage() {
+        return totalResultMessage;
+    }
+
+    public static void setTotalResultMessage(String totalResultMessage) {
+        BrowserSettings.totalResultMessage = totalResultMessage;
+    }
+
     @BeforeTest
     public void setUp(int envIndex, int browserIndex, WebDriver driver) {
         System.out.println("Run WebDriver");
-        totalResultMessage += "Run WebDriver\n";
+        setTotalResultMessage(getTotalResultMessage() + "Run WebDriver\n");
         ProgressBar.addProgressValue(progressVariable);
         driver.manage().window().setSize(new Dimension(1366, 900));
         magentoFSLink = fsEnvironment.get(envIndex);
@@ -149,7 +157,7 @@ protected final String magentoLogin = "FSAWS_Admin";
     @AfterTest
     public void tearDown(WebDriver driver) {
         System.out.println("Close WebDriver");
-        totalResultMessage += "Close WebDriver";
+        setTotalResultMessage(getTotalResultMessage() + "Close WebDriver");
         driver.quit();
     }
 

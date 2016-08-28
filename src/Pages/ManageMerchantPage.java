@@ -34,14 +34,14 @@ public class ManageMerchantPage extends BrowserSettings {
 
 
     public void openAddMerchantForm() {
-        totalResultMessage += "Open 'Add Merchant' form\n";
+        setTotalResultMessage(getTotalResultMessage() + "Open 'Add Merchant' form\n");
         driver.findElement(addMerchantButtonLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Add Merchant' form was not opened");
         wait.until(ExpectedConditions.visibilityOfElementLocated(merchantNameFieldLocator));
     }
 
     public void addMerchantData() {
-        totalResultMessage += "Add new Merchant data\n";
+        setTotalResultMessage(getTotalResultMessage() + "Add new Merchant data\n");
         driver.findElement(merchantNameFieldLocator).sendKeys("fsqa01+" + randomInt + "@dydacomp.biz");
 
         driver.findElement(merchantBusinessNameFieldLocator).sendKeys("NewMerchant" + randomInt);

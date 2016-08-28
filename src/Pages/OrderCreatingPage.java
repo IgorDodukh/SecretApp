@@ -36,7 +36,7 @@ public class OrderCreatingPage extends BrowserSettings {
 
 
     public void addOrderItems() throws InterruptedException {
-        totalResultMessage += "Add Order items\n";
+        setTotalResultMessage(getTotalResultMessage() + "Add Order items\n");
         Thread.sleep(2000);
         driver.findElement(quickAddFieldLocator).sendKeys(orderedItems);
         driver.findElement(addItemButtonLocator).click();
@@ -47,7 +47,7 @@ public class OrderCreatingPage extends BrowserSettings {
     }
 
     public void addCustomer() {
-        totalResultMessage += "Add Customer to the Order\n";
+        setTotalResultMessage(getTotalResultMessage() + "Add Customer to the Order\n");
         driver.findElement(customerNameFieldLocator).sendKeys(orderedCustomerName);
         driver.findElement(customerNameFieldLocator).sendKeys(Keys.ENTER);
         driver.findElement(customerLastNameFieldLocator).click();
@@ -64,7 +64,7 @@ public class OrderCreatingPage extends BrowserSettings {
     }
 
     public void selectShippingMethod() throws InterruptedException {
-        totalResultMessage += "Select Shipping Method\n";
+        setTotalResultMessage(getTotalResultMessage() + "Select Shipping Method\n");
         Thread.sleep(1000);
         driver.findElement(shippingMethodDropdownLocator).click();
         ProgressBar.addProgressValue(progressVariable);
@@ -85,7 +85,7 @@ public class OrderCreatingPage extends BrowserSettings {
     }
 
     public void placeOrder() {
-        totalResultMessage += "Wait Order Total value\n";
+        setTotalResultMessage(getTotalResultMessage() + "Wait Order Total value\n");
         while (true){
             String totalValue = driver.findElement(orderTotalValueLocator).getText();
             if(!Objects.equals(totalValue, "--")){
@@ -97,7 +97,7 @@ public class OrderCreatingPage extends BrowserSettings {
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Edit Order' page is not appear");
         wait.until(ExpectedConditions.visibilityOfElementLocated(orderSummaryTabLocator));
 
-        totalResultMessage += "Click 'Place Order' button\n";
+        setTotalResultMessage(getTotalResultMessage() + "Click 'Place Order' button\n");
         orderNumber = driver.findElement(orderNumberLocator).getText();
         ProgressBar.addProgressValue(progressVariable);
 

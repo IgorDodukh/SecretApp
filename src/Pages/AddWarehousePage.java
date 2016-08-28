@@ -51,42 +51,42 @@ public class AddWarehousePage extends BrowserSettings {
             String endTime,
             String addressLine1,
             String zip) {
-        totalResultMessage += "Adding Warehouse info:\n";
-        totalResultMessage +=" - Add Warehouse Name\n";
+        setTotalResultMessage(getTotalResultMessage() + "Adding Warehouse info:\n");
+        setTotalResultMessage(getTotalResultMessage() + " - Add Warehouse Name\n");
         driver.findElement(warehouseNameFieldLocator).sendKeys(warehouseName);
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += " - Add contact name\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Add contact name\n");
         driver.findElement(warehouseContactNameFieldLocator).sendKeys(contactName);
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += " - Add phone number\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Add phone number\n");
         driver.findElement(warehousePhoneFieldLocator).sendKeys(phone);
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += " - Add Earliest Pickup Time\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Add Earliest Pickup Time\n");
         driver.findElement(pickingReadyTimeFieldLocator).sendKeys(startTime);
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += " - Add Latest Pickup Time\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Add Latest Pickup Time\n");
         driver.findElement(pickingCutoffTimeFieldLocator).sendKeys(endTime);
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += " - Add address line\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Add address line\n");
         driver.findElement(addressFieldLocator).sendKeys(addressLine1);
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += " - Add zip code\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Add zip code\n");
         driver.findElement(zipFieldLocator).sendKeys(zip);
         driver.findElement(warehouseInfoTitleLocator).click();
         ProgressBar.addProgressValue(progressVariable);
     }
 
     public void addWarehouseBin (String binName) {
-        totalResultMessage += "Select Bins tab\n";
-        totalResultMessage += "Adding Bin:\n";
+        setTotalResultMessage(getTotalResultMessage() + "Select Bins tab\n");
+        setTotalResultMessage(getTotalResultMessage() + "Adding Bin:\n");
         driver.findElement(binsTabLocator).click();
-        totalResultMessage += " - Open 'Add Bin' popup\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Open 'Add Bin' popup\n");
         driver.findElement(addWarehouseBinButtonLocator).click();
         ProgressBar.addProgressValue(progressVariable);
 
@@ -95,29 +95,29 @@ public class AddWarehousePage extends BrowserSettings {
 
         Assert.assertEquals(element.isDisplayed(), true, "Popup for the 'Add Bin' form is not displayed");
 
-        totalResultMessage += " - Enter Bin name\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Enter Bin name\n");
         driver.findElement(newBinNameLocator).sendKeys(binName);
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += " - Select Bin type\n";
+        setTotalResultMessage(getTotalResultMessage() + " - Select Bin type\n");
         driver.findElement(pickBinTypeLocator).click();
         ProgressBar.addProgressValue(progressVariable);
 
-        totalResultMessage += "Save new Bin\n";
+        setTotalResultMessage(getTotalResultMessage() + "Save new Bin\n");
         driver.findElement(saveNewBinBtnLocator).click();
         ProgressBar.addProgressValue(progressVariable);
         Assert.assertEquals(driver.findElement(newBinNameInBinsGridLocator).getText(), binName, "Unexpected new created bin's name");
     }
 
     public void saveWarehouse() {
-        totalResultMessage += "Save Warehouse\n";
+        setTotalResultMessage(getTotalResultMessage() + "Save Warehouse\n");
         driver.findElement(saveContextualButton).click();
         ProgressBar.addProgressValue(progressVariable);
 
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(popupBoxMessageLocator));
 
-        totalResultMessage += "Confirm popup message\n";
+        setTotalResultMessage(getTotalResultMessage() + "Confirm popup message\n");
         String currentMessage = driver.findElement(popupBoxMessageLocator).getText();
         ProgressBar.addProgressValue(progressVariable);
         Assert.assertEquals(currentMessage, saveWarehousePopupMessage, "Unexpected popup message");

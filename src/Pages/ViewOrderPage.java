@@ -36,7 +36,7 @@ public class ViewOrderPage extends BrowserSettings {
     private final By shippingMethodLocator = By.xpath("//section[@class='columns shipping_details shipment ng-scope']//div/p[2]/span[1]");
 
     public void openViewOrderPage() throws InterruptedException {
-        totalResultMessage += "Open 'View Order' page\n";
+        setTotalResultMessage(getTotalResultMessage() + "Open 'View Order' page\n");
         Thread.sleep(2000);
         orderedCustomerName = driver.findElement(customerNameLocator).getText();
 
@@ -59,7 +59,7 @@ public class ViewOrderPage extends BrowserSettings {
     }
 
     public void getOrderItemsInfo() {
-        totalResultMessage += "Get Ordered Items Info\n";
+        setTotalResultMessage(getTotalResultMessage() + "Get Ordered Items Info\n");
         driver.findElement(shippingDetailsTabLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Shipping Details' tab is not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(orderSummaryTabLocator));
@@ -73,7 +73,7 @@ public class ViewOrderPage extends BrowserSettings {
     }
 
     public void backToOrdersGrid() {
-        totalResultMessage += "Back To Orders Grid\n";
+        setTotalResultMessage(getTotalResultMessage() + "Back To Orders Grid\n");
         driver.findElement(linkToOrdersGridLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Orders grid is not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(addOrderButtonLocator));
@@ -81,7 +81,7 @@ public class ViewOrderPage extends BrowserSettings {
     }
 
     public void openOrderCreatingForm () throws InterruptedException {
-        totalResultMessage += "Open Order creating form\n";
+        setTotalResultMessage(getTotalResultMessage() + "Open Order creating form\n");
         Thread.sleep(2000);
         driver.findElement(addOrderButtonLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Order creating form is not loaded");

@@ -19,15 +19,15 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="" cache="true" nodeOrientation="LEFT_TO_RIGHT" prefHeight="300.0" prefWidth="235.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXUI.Controller">
+<AnchorPane cache="true" nodeOrientation="LEFT_TO_RIGHT" prefHeight="300.0" prefWidth="235.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXUI.Controller">
    <children>
       <Pane layoutY="190.0" prefHeight="20.0" prefWidth="570.0" style="-fx-background-color: #234974;">
          <children>
             <ProgressBar fx:id="progressBar" layoutY="-1.0" prefHeight="23.0" prefWidth="570.0" style="-fx-border-width: 0;" visible="false" />
          </children></Pane>
-      <Pane prefHeight="31.0" prefWidth="570.0" style="-fx-background-color: #234974; -fx-text-fill: white;" styleClass="menuStyle.css">
+      <Pane prefHeight="31.0" prefWidth="570.0" style="-fx-background-color: #234974; -fx-text-fill: white;">
          <children>
-            <MenuBar id="menuBar" fx:id="myMenuBar" layoutY="-2.0" prefHeight="32.0" prefWidth="461.0" stylesheets="file:/C:/appFiles/styles/MainStyle.css">
+            <MenuBar id="menuBar" fx:id="myMenuBar" layoutY="-2.0" prefHeight="32.0" prefWidth="461.0">
               <menus>
                 <Menu mnemonicParsing="false" style="-fx-text-fill: white;" text="App  ">
                   <items>
@@ -56,7 +56,12 @@
                </font>
             </Label>
             <ImageView fx:id="waitingAnimation" fitHeight="40.0" fitWidth="37.0" layoutX="126.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" visible="false" />
-            <Label fx:id="progressLabel" layoutX="489.0" layoutY="13.0" prefHeight="32.0" prefWidth="68.0" textFill="WHITE">
+            <Label fx:id="progressLabel" layoutX="489.0" layoutY="13.0" prefHeight="32.0" prefWidth="66.0" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Label fx:id="validationLabel" layoutX="14.0" layoutY="14.0" prefHeight="32.0" prefWidth="66.0" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
@@ -92,11 +97,11 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></ComboBox>
-            <ComboBox fx:id="entityTypeComboBox" prefHeight="31.0" prefWidth="230.0" stylesheets="file:/C:/appFiles/styles/comboBoxes.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <ComboBox fx:id="entityTypeComboBox" prefHeight="31.0" prefWidth="230.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></ComboBox>
-            <ComboBox fx:id="environmentsComboBox" prefHeight="25.0" prefWidth="230.0" stylesheets="file:/C:/appFiles/styles/comboBoxes.css" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <ComboBox fx:id="environmentsComboBox" prefHeight="25.0" prefWidth="230.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></ComboBox>

@@ -107,7 +107,6 @@ public class ComboBoxesHandler{
             }
         } catch (Exception e1) {
             Controller.setExceptionStatus(true);
-//                    testStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
             Controller.setDriverExceptionMessage(Controller.getDriverExceptionMessage() + " WebDriver was not found or has been stopped unexpectedly");
             if(!stopButtonClicked)
                 failedPopupBox(Controller.getDriverWarning() + Controller.getDriverExceptionMessage());

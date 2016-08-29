@@ -34,8 +34,6 @@ public class GetPropertyValues {
 
     public void getPropValues() throws IOException {
 
-//        http://stackoverflow.com/questions/15337409/updating-property-value-in-properties-file-without-deleting-other-values
-
         try {
             Properties systemVarProp = new Properties();
             Properties credentialsProp = new Properties();

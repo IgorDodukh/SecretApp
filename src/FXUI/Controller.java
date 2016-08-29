@@ -4,6 +4,7 @@ import Settings.BrowserSettings;
 import Settings.ReadConfigMain;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -32,7 +33,7 @@ public class Controller extends Main {
     private static String resultMessage = "";
     public static int magentoIndex;
     public static String magentoIndexName = "";
-    private static int addProgressValue = 0;
+    private static int progressValue = 0;
     private static boolean exceptionStatus = false;
     private boolean stopButtonClicked = false;
 
@@ -70,14 +71,13 @@ public class Controller extends Main {
                     "Create Product",
                     "Create Supplier",
                     "Create Warehouse & Bin",
-                    "Reorder the last Order"
-//                    "Create User"
+                    "Reorder the last Order",
+                    "Create User"
             );
     private final ObservableList<String> environments =
             FXCollections.observableArrayList(
                     "QA01", "QA03", "QA05", "Production (for mad guys)"
             );
-
 
     public ComboBox<String> browsersComboBox;
     public ComboBox<String> entityTypeComboBox;
@@ -91,6 +91,7 @@ public class Controller extends Main {
 //    public ProgressBar progressBar;
     public Label waitingLabel;
     public Label progressLabel;
+    public Label validationLabel;
     public Label buildVersion;
     public ImageView waitingAnimation;
     public ImageView companyLogo;
@@ -132,18 +133,18 @@ public class Controller extends Main {
         Controller.driverExceptionMessage = driverExceptionMessage;
     }
 
-    public static int getAddProgressValue() {
-        return addProgressValue;
+    public static int getProgressValue() {
+        return progressValue;
     }
 
     public static void setProgressValue(int addProgressValue) {
-        Controller.addProgressValue = addProgressValue;
+        Controller.progressValue = addProgressValue;
     }
 
     @FXML
     private void initialize() throws IOException {
-        FieldsListener.multipleFieldsValidation(loginField, loginLabel, progressLabel, startButton);
-        FieldsListener.multipleFieldsValidation(passwordField, passwordLabel, progressLabel, startButton);
+        FieldsListener.multipleFieldsValidation(loginField, loginLabel, validationLabel, startButton);
+        FieldsListener.multipleFieldsValidation(passwordField, passwordLabel, validationLabel, startButton);
 
         //TODO: implement installation by installer
         ComboBoxesHandler.comboBoxSetItems(browsersComboBox, browsers, 0);
@@ -214,22 +215,14 @@ public class Controller extends Main {
             System.out.println("Popup canceled");}
         else if (confirmationResponse.get() == ButtonType.OK && internetExist) {
             startCounter();
-//                Runnable runnableProgress = () -> {
-//                    progressLabel.setVisible(true);
-//                    boolean i = true;
-//                    final String[] progress = {""};
-//                    while (i){
-//                        ChangeLabelValue.changeWaitingLabelValue(progressLabel, addProgressValue);
-//                        i = false;
-//                    }
-//                    progressLabel.textProperty().addListener((observable, oldValue, newValue) -> {
-//                        progress[0] = String.valueOf(addProgressValue) + "%";
-//                        if (!Objects.equals(newValue, "")) {
-//                            System.out.println("progr. val. = " + progress[0] + ", new = " + newValue);
-//                            ChangeLabelValue.changeWaitingLabelValue(progressLabel, addProgressValue);
-//                        }
-//                    });
-//                };
+
+            Task dynamicTimeTask = updateProgressLabel();
+
+            progressLabel.textProperty().bind(dynamicTimeTask.messageProperty());
+            Thread t2 = new Thread(dynamicTimeTask);
+            t2.setName("Test Time Updater");
+            t2.setDaemon(true);
+            t2.start();
 
             Runnable runnableTest = () -> {
                 comboBoxesHandler.webDriverDeterminer(browserComboBoxIndex, stopButtonClicked);
@@ -240,6 +233,7 @@ public class Controller extends Main {
                     try {
                         comboBoxesHandler.testTypeDeterminer(dropdownIndex, login, password, cardNumber, driver);
                     } catch (Exception e1) {
+                        testStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
                         exceptionValue = e1;
                         setExceptionStatus(true);
                         if (!Objects.equals(e1.getClass().getSimpleName(), "NoSuchWindowException"))
@@ -261,6 +255,8 @@ public class Controller extends Main {
             };
             Thread thread1 = new Thread(runnableTest);
             thread1.start();
+//            Thread thread2 = new Thread(runnableProgress);
+//            thread2.start();
 
             } else if(confirmationResponse.get() == ButtonType.OK && !internetExist)
                 failedPopupBox(getFailedContentText());
@@ -273,6 +269,23 @@ public class Controller extends Main {
             setDriverExceptionMessage("");
             setExceptionStatus(false);
 //        }
+    }
+
+    private Task updateProgressLabel() {
+        return new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        while (true) {
+                            updateMessage(String.valueOf(getProgressValue()) + "%");
+                            try {
+                                Thread.sleep(100);
+                            } catch (InterruptedException ex) {
+                                break;
+                            }
+                        }
+                        return null;
+                    }
+                };
     }
 
     public void clickStopButton() {

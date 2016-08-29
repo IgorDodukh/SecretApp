@@ -30,6 +30,5 @@ public class TestStatus {
         waitingAnimation.setVisible(false);
 //        progressBar.setVisible(false);
         Controller.setProgressValue(0);
-
     }
 }

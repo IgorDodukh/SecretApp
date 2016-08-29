@@ -1,6 +1,7 @@
 package FXUI;
 
 import Settings.GetSystemFiles;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 
 import java.io.*;
@@ -16,7 +17,44 @@ public class AppStyles extends GetSystemFiles {
 
     public static String mainPath = "C:\\appFiles";
 
-    public void setDialogCancelButtonStyle(Dialog dialog) {
+    private void getDialogStyleFile(Dialog dialog) throws IOException {
+        try {
+            File f = new File(AppStyles.mainPath + "\\styles\\DialogBoxes.css");
+            fileStream = new FileInputStream(f.toString());
+
+            if (fileStream != null) {
+                DialogPane dialogPane = dialog.getDialogPane();
+                dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
+            } else {
+                throw new FileNotFoundException("CSS file '" + f.toString() + "' not found in the classpath");
+            }
+        } catch (Exception e){
+            warningPopupBox(e.getMessage());
+        } finally {
+            assert fileStream != null;
+            fileStream.close();
+        }
+    }
+
+    private static void getUIStyleFile(Parent element, String fileName) throws IOException {
+        try {
+            File f = new File(mainPath + "\\styles\\" + fileName);
+            fileStream = new FileInputStream(f.toString());
+
+            if (fileStream != null) {
+                element.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
+            } else {
+                throw new FileNotFoundException("CSS file '" + f.toString() + "' not found in the classpath");
+            }
+        } catch (Exception e){
+            GeneratePopupBox.warningPopupBox(e.getMessage());
+        } finally {
+            assert fileStream != null;
+            fileStream.close();
+        }
+    }
+
+    private void setDialogCancelButtonStyle(Dialog dialog) {
         ButtonBar buttonBar = (ButtonBar)dialog.getDialogPane().lookup(".button-bar");
         buttonBar.getButtons().forEach(b -> {
             if(b.toString().contains("Cancel")) {
@@ -43,89 +81,20 @@ public class AppStyles extends GetSystemFiles {
     }
 
     public void setDialogStyle(Dialog dialog) throws IOException {
-
-//        GetSystemFiles.getSystemStyles(dialog, "DialogBoxes.css");
-
         setDialogCancelButtonStyle(dialog);
-        try {
-            File f = new File(AppStyles.mainPath + "\\styles\\DialogBoxes.css");
-            fileStream = new FileInputStream(f.toString());
-
-            if (fileStream != null) {
-                DialogPane dialogPane = dialog.getDialogPane();
-                dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
-            } else {
-                throw new FileNotFoundException("CSS file '" + f.toString() + "' not found in the classpath");
-            }
-        } catch (Exception e){
-            warningPopupBox(e.getMessage());
-        } finally {
-            assert fileStream != null;
-            fileStream.close();
-        }
+        getDialogStyleFile(dialog);
     }
 
     public static void setComboBoxStyle(ComboBox comboBox) throws IOException {
-
-//        GetSystemFiles.getSystemStyles(comboBox, "comboBoxes.css");
-
-        try {
-            File f = new File(mainPath + "\\styles\\comboBoxes.css");
-            fileStream = new FileInputStream(f.toString());
-
-            if (fileStream != null) {
-                comboBox.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
-            } else {
-                throw new FileNotFoundException("CSS file '" + f.toString() + "' not found in the classpath");
-            }
-        } catch (Exception e){
-            GeneratePopupBox.warningPopupBox(e.getMessage());
-        } finally {
-            assert fileStream != null;
-            fileStream.close();
-        }
+        getUIStyleFile(comboBox, "comboBoxes.css");
     }
 
     public static void setButtonsStyle(Button button) throws IOException {
-
-//        getSystemFiles.getSystemStyles(button, "buttons.css");
-
-
-        try {
-            File f = new File(mainPath + "\\styles\\buttons.css");
-            fileStream = new FileInputStream(f.toString());
-
-            if (fileStream != null) {
-                button.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
-            } else {
-                throw new FileNotFoundException("CSS file '" + f.toString() + "' not found in the classpath");
-            }
-        } catch (Exception e){
-            GeneratePopupBox.warningPopupBox(e.getMessage());
-        } finally {
-            assert fileStream != null;
-            fileStream.close();
-        }
+        getUIStyleFile(button, "buttons.css");
     }
 
     public static void setMenuBarStyle(MenuBar menuBar) throws IOException {
-//        getSystemFiles.getSystemStyles(menuBar, "MainStyle.css");
-
-        try {
-            File f = new File(mainPath + "\\styles\\MainStyle.css");
-            fileStream = new FileInputStream(f.toString());
-
-            if (fileStream != null) {
-                menuBar.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
-            } else {
-                throw new FileNotFoundException("CSS file '" + f.toString() + "' not found in the classpath");
-            }
-        } catch (Exception e){
-            GeneratePopupBox.warningPopupBox(e.getMessage());
-        } finally {
-            assert fileStream != null;
-            fileStream.close();
-        }
+        getUIStyleFile(menuBar, "MainStyle.css");
     }
 
     public void setDialogLogo(Dialog dialog, String logoName) {

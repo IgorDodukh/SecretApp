@@ -218,25 +218,25 @@ public class GeneratePopupBox {
 
         userTypesDialog.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if(Objects.equals(newValue, "Merchant")){
-                System.out.println(newValue);
+                System.out.println("--" + newValue);
             } else if(Objects.equals(newValue, "Merchant Admin")){
-                System.out.println(newValue);
+                System.out.println("--" + newValue);
             } else if(Objects.equals(newValue, "Merchandiser")){
-                System.out.println(newValue);
+                System.out.println("--" + newValue);
             } else if(Objects.equals(newValue, "Picker")){
-                System.out.println(newValue);
+                System.out.println("--" + newValue);
             } else if(Objects.equals(newValue, "Packer")){
-                System.out.println(newValue);
+                System.out.println("--" + newValue);
             } else if(Objects.equals(newValue, "Shipper")){
-                System.out.println(newValue);
+                System.out.println("--" + newValue);
             } else if(Objects.equals(newValue, "CSR")){
-                System.out.println(newValue);
+                System.out.println("--" + newValue);
             } else if(Objects.equals(newValue, "CSR Manager")){
-                System.out.println(newValue);
+                System.out.println("--" + newValue);
             } else if(Objects.equals(newValue, "Purchase Manager")){
-                System.out.println(newValue);
+                System.out.println("--" + newValue);
             } else if(Objects.equals(newValue, "Warehouse Manager")){
-                System.out.println(newValue);
+                System.out.println("--" + newValue);
             }
         });
 
@@ -538,12 +538,14 @@ public class GeneratePopupBox {
 
         String newChanges =
                 " - Login/Password validation logic changed\n" +
+                " - 'Cancel' buttons are colored in red on dialog boxes\n" +
                 " - Add progress value to the main window(it was existing feature)\n" +
                 " - FIXED BUG: validating fields on the 'Default Names' config dialog\n" +
+                " - NEW BUG: progress value sometimes starts not from 0 \n" +
                 " - Partial refactoring (may occur unexpected new bugs)\n\n" +
-                " - Updates from latest releases you can find in the 'Release Notes' file";
+                "Updates from the latest releases you can find in the 'Release Notes' file";
 
-        Label label = new Label("Last release: '#1.73 beta' includes the following new features:");
+        Label label = new Label("Last release: '#1.75 beta' includes the following new features:");
 
         TextArea textArea = new TextArea(newChanges);
         textArea.setEditable(false);

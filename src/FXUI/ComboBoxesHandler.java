@@ -5,6 +5,7 @@ import Settings.BrowserSettings;
 import Tests.*;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
+import org.openqa.selenium.NoSuchContextException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -72,8 +73,21 @@ public class ComboBoxesHandler{
         } else if (dropdownIndex == 7) {
             BrowserSettings.progressVariable = 4;
             if(Objects.equals(GeneratePopupBox.userTypeToCreate, "Merchant")) {
-                addUsers.addTenant(login, password);
-            }
+                System.out.println(GeneratePopupBox.userTypeToCreate);
+                addUsers.addMerchant(login, password, driver);
+            } else if(Objects.equals(GeneratePopupBox.userTypeToCreate, "Merchant Admin")) {
+                System.out.println(GeneratePopupBox.userTypeToCreate);
+                addUsers.addMerchantAdmin(login, password, driver);
+            } else if(Objects.equals(GeneratePopupBox.userTypeToCreate, "Merchandiser")) {
+                System.out.println(GeneratePopupBox.userTypeToCreate);
+                addUsers.addMerchantAdmin(login, password, driver);
+            } else if(Objects.equals(GeneratePopupBox.userTypeToCreate, "Picker")) {
+                System.out.println(GeneratePopupBox.userTypeToCreate);
+                addUsers.addMerchantAdmin(login, password, driver);
+            } else if(Objects.equals(GeneratePopupBox.userTypeToCreate, "Packer")) {
+                System.out.println(GeneratePopupBox.userTypeToCreate);
+                addUsers.addMerchantAdmin(login, password, driver);
+            } else throw new NoSuchContextException("No such test exception");
             Controller.setResultMessage(Controller.getResultMessage() + "New " + GeneratePopupBox.userTypeToCreate + " has been created");
         }
     }

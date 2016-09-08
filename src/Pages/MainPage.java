@@ -1,7 +1,7 @@
 package Pages;
 
-import Settings.BrowserSettings;
 import FXUI.ProgressBar;
+import Settings.BrowserSettings;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -57,6 +57,8 @@ public class MainPage extends BrowserSettings {
 
     private final By manageMerchantButtonLocator = By.xpath("//a[@href='/web/Merchant/SearchMerchant']");
     private final By addMerchantButtonLocator = By.xpath("//button[@id='createMerchant']");
+
+    private final By manageUsersButtonLocator = By.xpath("//a[@href='/web/UserPermissions/Search']");
 
 
     public void openAddCustomerPage() {
@@ -188,11 +190,17 @@ public class MainPage extends BrowserSettings {
         wait.until(ExpectedConditions.elementToBeClickable(siteLogoIconLocator));
     }
 
-    public void openUsersPage() {
+    public void openMerchantsPage() {
         setTotalResultMessage(getTotalResultMessage() + "Open 'Manage Merchant' page\n");
         driver.findElement(setupButtonLocator).click();
         driver.findElement(manageMerchantButtonLocator).click();
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Manage Merchant' page was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(addMerchantButtonLocator));
+    }
+
+    public void openUsersPermissionsPage() {
+        setTotalResultMessage(getTotalResultMessage() + "Open 'Manage Users' page\n");
+        driver.findElement(setupButtonLocator).click();
+        driver.findElement(manageUsersButtonLocator).click();
     }
 }

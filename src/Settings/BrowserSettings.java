@@ -131,7 +131,7 @@ protected final String magentoLogin = "FSAWS_Admin";
     private static String totalResultMessage = "";
 
     //Corporate mail box access
-    protected final String mailboxUrl = "gmail.com";
+    protected final String mailboxUrl = "https://gmail.com";
     public String mailboxLogin = "wildcard@dydacomp.biz";
     public String mailboxPassword = "Dydacomp2014!";
 

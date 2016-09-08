@@ -27,8 +27,6 @@ public class SettingsPage extends BrowserSettings {
     private final By saveSettingsSuccessPopupLocator = By.xpath("//*[@id='dydacomp_messagebox']");
     private final By confirmPopupButtonLocator = By.xpath("//div[1]/button[@class='primary-button']");
 
-
-
     public void setShipaheadSetting() throws InterruptedException {
         final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Basic Settings' page popup was not found");
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(orderProcessingTabLocator));

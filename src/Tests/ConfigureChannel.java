@@ -11,7 +11,6 @@ import org.testng.annotations.Test;
 public class ConfigureChannel extends BrowserSettings {
     @Test
     public void configureMagentoChannel(String email, String merchantPassword, WebDriver driver) throws InterruptedException {
-// TODO: re-count percent values for current test progress
         LoginPage loginPage = new LoginPage(driver);
         loginPage.loginMerchant(email, merchantPassword);
 

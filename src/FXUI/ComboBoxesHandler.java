@@ -5,13 +5,14 @@ import Settings.BrowserSettings;
 import Tests.*;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
-import org.openqa.selenium.NoSuchContextException;
+//import org.openqa.selenium.NoSuchContextException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 import static FXUI.GeneratePopupBox.*;
@@ -31,7 +32,7 @@ public class ComboBoxesHandler{
     private final AddUsers addUsers = new AddUsers();
 
     public void testTypeDeterminer(int dropdownIndex, String login, String password, String cardNumber, WebDriver driver)
-            throws InterruptedException {
+            throws InterruptedException, NoSuchAlgorithmException {
         Controller.setResultMessage(Controller.getResultMessage() + "Test has been finished.\n");
         if (dropdownIndex == 1) {
             BrowserSettings.progressVariable = 3;
@@ -87,7 +88,7 @@ public class ComboBoxesHandler{
             } else if(Objects.equals(GeneratePopupBox.userTypeToCreate, "Packer")) {
                 System.out.println(GeneratePopupBox.userTypeToCreate);
                 addUsers.addMerchantAdmin(login, password, driver);
-            } else throw new NoSuchContextException("No such test exception");
+            } else throw new NoSuchAlgorithmException("No such test exception");
             Controller.setResultMessage(Controller.getResultMessage() + "New " + GeneratePopupBox.userTypeToCreate + " has been created");
         }
     }
@@ -126,5 +127,4 @@ public class ComboBoxesHandler{
                 failedPopupBox(Controller.getDriverWarning() + Controller.getDriverExceptionMessage());
         }
     }
-
 }

@@ -251,7 +251,7 @@ public class Controller extends Main {
                         testStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
                         successPopupBox(getResultMessage());
                     }
-                }
+                } else testStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
             };
             Thread thread1 = new Thread(runnableTest);
             thread1.start();

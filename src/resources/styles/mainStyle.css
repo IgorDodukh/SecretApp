@@ -1,0 +1,27 @@
+.menu-bar {
+    -fx-background-color:  #234974;
+}
+.menu-bar .label  {
+	-fx-font-weight: bold;
+    -fx-font-size: 12px;
+	-fx-font-family: System;
+    -fx-text-fill: white;
+}
+.menu-item .label {
+	-fx-font-weight: bold;
+    -fx-font-size: 12px;
+	-fx-font-family: System;
+    -fx-text-fill: #234974;
+}
+.menu-item:focused {
+    -fx-background-color: 
+		linear-gradient(from 0% 83% to 0% 100%, #8BD3FF 0%, #3C9AE0 100%),
+        radial-gradient(center 50% 50%, radius 100%, #8BD3FF, #3C9AE0);
+}
+.menu-item:focused .label {
+    -fx-text-fill: #234974;
+}
+.context-menu {
+    -fx-background-color: white;
+	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 8, 0.0 , 0 , 5 );
+}

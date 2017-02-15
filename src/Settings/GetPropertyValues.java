@@ -40,10 +40,10 @@ public class GetPropertyValues {
             Properties userProp = new Properties();
             Properties namesProp = new Properties();
 
-            InputStream systemVariablesInput = new FileInputStream(AppStyles.mainPath + "\\properties\\systemVar.properties");
-            InputStream credentialsInput = new FileInputStream(AppStyles.mainPath + "\\properties\\credentials.properties");
-            InputStream userInput = new FileInputStream(AppStyles.mainPath + "\\properties\\user.properties");
-            InputStream namesInput = new FileInputStream(AppStyles.mainPath + "\\properties\\names.properties");
+            InputStream systemVariablesInput = new FileInputStream(AppStyles.propertiesResourcePath + "systemVar.properties");
+            InputStream credentialsInput = new FileInputStream(AppStyles.propertiesResourcePath + "credentials.properties");
+            InputStream userInput = new FileInputStream(AppStyles.propertiesResourcePath + "user.properties");
+            InputStream namesInput = new FileInputStream(AppStyles.propertiesResourcePath + "names.properties");
 
             systemVariablesInputStream = systemVariablesInput;
             credentialsInputStream = credentialsInput;

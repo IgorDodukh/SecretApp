@@ -15,13 +15,18 @@ import static FXUI.GeneratePopupBox.warningPopupBox;
 public class AppStyles extends GetSystemFiles {
     private static InputStream fileStream;
 
-    public static String mainPath = "C:\\appFiles";
+    public static String resourcesPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "resources" + File.separator;
+    public static String picturesResourcePath = resourcesPath + "pic" + File.separator;
+    public static String driversResourcePath = resourcesPath + "drivers" + File.separator;
+    public static String propertiesResourcePath = resourcesPath + "properties" + File.separator;
+    public static String stylesResourcePath = resourcesPath + "styles" + File.separator;
+    private static String dialogBoxStyle = stylesResourcePath + "dialogBoxes.css";
 
     private void getDialogStyleFile(Dialog dialog) throws IOException {
-        try {
-            File f = new File(AppStyles.mainPath + "\\styles\\DialogBoxes.css");
-            fileStream = new FileInputStream(f.toString());
 
+        try {
+            File f = new File(dialogBoxStyle);
+            fileStream = new FileInputStream(f.toString());
             if (fileStream != null) {
                 DialogPane dialogPane = dialog.getDialogPane();
                 dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
@@ -38,7 +43,7 @@ public class AppStyles extends GetSystemFiles {
 
     private static void getUIStyleFile(Parent element, String fileName) throws IOException {
         try {
-            File f = new File(mainPath + "\\styles\\" + fileName);
+            File f = new File(stylesResourcePath + fileName);
             fileStream = new FileInputStream(f.toString());
 
             if (fileStream != null) {
@@ -80,25 +85,25 @@ public class AppStyles extends GetSystemFiles {
         });
     }
 
-    public void setDialogStyle(Dialog dialog) throws IOException {
+    void setDialogStyle(Dialog dialog) throws IOException {
         setDialogCancelButtonStyle(dialog);
         getDialogStyleFile(dialog);
     }
 
-    public static void setComboBoxStyle(ComboBox comboBox) throws IOException {
+    static void setComboBoxStyle(ComboBox comboBox) throws IOException {
         getUIStyleFile(comboBox, "comboBoxes.css");
     }
 
-    public static void setButtonsStyle(Button button) throws IOException {
+    static void setButtonsStyle(Button button) throws IOException {
         getUIStyleFile(button, "buttons.css");
     }
 
-    public static void setMenuBarStyle(MenuBar menuBar) throws IOException {
-        getUIStyleFile(menuBar, "MainStyle.css");
+    static void setMenuBarStyle(MenuBar menuBar) throws IOException {
+        getUIStyleFile(menuBar, "mainStyle.css");
     }
 
-    public void setDialogLogo(Dialog dialog, String logoName) {
+    void setDialogLogo(Dialog dialog, String logoName) {
         dialog.getDialogPane().setStyle(
-                "-fx-graphic: url(\"file:/" + mainPath.replace("\\", "/") +  "/pic/" + logoName + "\")");
+                "-fx-graphic: url(\"file:/" + picturesResourcePath.replace("\\", "/") + logoName + "\")");
     }
 }

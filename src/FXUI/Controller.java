@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.openqa.selenium.WebDriver;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -155,8 +156,8 @@ public class Controller extends Main {
         AppStyles.setButtonsStyle(stopButton);
         AppStyles.setMenuBarStyle(myMenuBar);
 
-        companyLogo.setImage(new Image("file:///" + AppStyles.mainPath.replace("\\", "/") + "/pic/fslogo.png"));
-        waitingAnimation.setImage(new Image("file:///" + AppStyles.mainPath.replace("\\", "/") + "/pic/spinner.gif"));
+        companyLogo.setImage(new Image("file:///" + AppStyles.picturesResourcePath + "fslogo.png"));
+        waitingAnimation.setImage(new Image("file:///" + AppStyles.picturesResourcePath + "spinner.gif"));
 
         buildVersion.setText("Build Version: 1.75 beta");
 
@@ -257,9 +258,10 @@ public class Controller extends Main {
             thread1.start();
 //            Thread thread2 = new Thread(runnableProgress);
 //            thread2.start();
-
-            } else if(confirmationResponse.get() == ButtonType.OK && !internetExist)
+        } else if(confirmationResponse.get() == ButtonType.OK && !internetExist){
                 failedPopupBox(getFailedContentText());
+                testStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
+        }
             else if (confirmationResponse.get() == ButtonType.CANCEL || confirmationResponse.get() == ButtonType.CLOSE) {
                 startButton.setDisable(false);
                 System.out.println("No/Close button");

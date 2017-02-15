@@ -151,7 +151,6 @@ protected final String magentoLogin = "FSAWS_Admin";
         driver.manage().window().setSize(new Dimension(1366, 900));
         magentoFSLink = fsEnvironment.get(envIndex);
         driver.get(fsEnvironment.get(envIndex));
-        driver.manage().timeouts().implicitlyWait(timeoutVariable, TimeUnit.SECONDS);
     }
 
     @AfterTest

@@ -1,0 +1,118 @@
+#magento-dialog{
+	-fx-graphic: url("file:/C:/appFiles/pic/magento-logo.png");
+}
+#confirmation-dialog{
+	-fx-graphic: url("file:/C:/appFiles/pic/smile2.png");
+}
+#visa-credit-cards-dialog{
+	-fx-graphic: url("file:/C:/appFiles/pic/visa.png");
+}
+#mc-credit-cards-dialog{
+	-fx-graphic: url("file:/C:/appFiles/pic/mastercard.png");
+}
+#discover-credit-cards-dialog{
+	-fx-graphic: url("file:/C:/appFiles/pic/discover.png");
+}
+#ae-credit-cards-dialog{
+	-fx-graphic: url("file:/C:/appFiles/pic/American-Express.png");
+}
+#indentify-dialog{
+	-fx-graphic: url("file:/C:/appFiles/pic/hmm.png");
+}
+#success-dialog{
+	-fx-graphic: url("file:/C:/appFiles/pic/success.png");
+}
+#exception-dialog{
+	-fx-graphic: url("file:/C:/appFiles/pic/sad.png");
+}
+#config-dialog{
+	-fx-graphic: url("file:/C:/appFiles/pic/conf.png");
+}
+#about-dialog{
+	-fx-graphic: url("file:/C:/appFiles/pic/hi.png");
+}
+#users-dialog{
+	-fx-graphic: url("file:/C:/appFiles/pic/users_group.png");
+}
+
+.myDialog {
+	-fx-background-color: white;
+}
+.dialog-pane:header .header-panel .label {
+    -fx-font-size: 1.167em;
+    -fx-wrap-text: true;
+    -fx-text-fill: white;
+}
+.dialog-pane:header .header-panel {
+    -fx-background-color: 
+	linear-gradient(from 0% 83% to 0% 100%, #428bca 0%, #2d6ca2 100%),
+        radial-gradient(center 50% 50%, radius 100%, #428bca, #2d6ca2);
+	-fx-font-weight: bold;
+	-fx-font-size: 12px;
+}
+.combo-box {
+    -fx-padding: 0 0 0 0;
+	-fx-background-radius: 6;
+    -fx-background-color: 
+        linear-gradient(from 0% 83% to 0% 100%, #428bca 0%, #2d6ca2 100%),
+        radial-gradient(center 50% 50%, radius 100%, #428bca, #2d6ca2);
+	-fx-font-weight: bold;
+    -fx-font-size: 14px;
+	-fx-font-family: System;
+ }
+ 
+ .combo-box:hover {
+    -fx-cursor: hand;
+    -fx-background-color: 
+        linear-gradient(from 0% 83% to 0% 100%, #2d6ca2 0%, #2b669a 100%),
+        radial-gradient(center 50% 50%, radius 100%, #2d6ca2, #2b669a);
+ }
+ 
+ .combo-box:pressed {
+    -fx-background-color: 
+        linear-gradient(from 0% 83% to 0% 100%, #2b669a 0%, #265180 100%),
+        radial-gradient(center 50% 50%, radius 100%, #2b669a, #265180);
+ }
+  .combo-box .cell{
+    -fx-text-fill: white;
+ }
+.combo-box-popup .list-view .list-cell{
+    -fx-text-fill: #234974;
+}
+.combo-box-popup .list-view .list-cell:selected{
+	-fx-background-color: white;
+}
+
+.combo-box-popup .list-view .list-cell:hover{
+	-fx-background-color: 
+		linear-gradient(from 0% 83% to 0% 100%, #8BD3FF 0%, #3C9AE0 100%),
+        radial-gradient(center 50% 50%, radius 100%, #8BD3FF, #3C9AE0);
+}
+
+.combo-box-popup .list-view{
+	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 8, 0.0 , 0 , 5 );
+}
+
+.button{
+    -fx-padding: 2 2 2 2;
+    -fx-background-radius: 6;
+    -fx-background-color: 
+        linear-gradient(from 0% 83% to 0% 100%, #428bca 0%, #2d6ca2 100%),
+        radial-gradient(center 50% 50%, radius 100%, #428bca, #2d6ca2);
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+	-fx-text-fill: white;
+	-fx-font-family: System;
+}
+.button:hover {
+	-fx-cursor: hand;
+    	-fx-background-color: 
+        linear-gradient(from 0% 83% to 0% 100%, #2d6ca2 0%, #2b669a 100%),
+        radial-gradient(center 50% 50%, radius 100%, #2d6ca2, #2b669a);
+}
+.button:pressed {
+	-fx-background-color: 
+        linear-gradient(from 0% 83% to 0% 100%, #2b669a 0%, #2b669a 100%),
+        radial-gradient(center 50% 50%, radius 100%, #2b669a, #2b669a);
+    -fx-padding: 1 1 1 1;
+}

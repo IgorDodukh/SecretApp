@@ -13,6 +13,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import static FXUI.GeneratePopupBox.*;
@@ -33,6 +35,10 @@ public class ComboBoxesHandler{
 
     public void testTypeDeterminer(int dropdownIndex, String login, String password, String cardNumber, WebDriver driver)
             throws InterruptedException, NoSuchAlgorithmException {
+
+        List<String> entityCreatedMessage = new ArrayList<>();
+        entityCreatedMessage.add("New Customer has been created\n");
+
         Controller.setResultMessage(Controller.getResultMessage() + "Test has been finished.\n");
         if (dropdownIndex == 1) {
             BrowserSettings.progressVariable = 3;
@@ -112,7 +118,7 @@ public class ComboBoxesHandler{
         try {
             if (browserComboBoxIndex == 0) {
                 Controller.setDriverWarning(Controller.getDriverWarning() + "Chrome");
-                System.setProperty("webdriver.chrome.driver", AppStyles.mainPath + "\\drivers\\chromedriver.exe");
+                System.setProperty("webdriver.chrome.driver", AppStyles.driversResourcePath + "chromedriver.exe");
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("--disable-extensions");
                 Controller.driver = new ChromeDriver(options);

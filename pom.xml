@@ -54,8 +54,10 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.10</version>
                 <configuration>
+                </configuration>
+                <configuration>
                     <includes>
-                        <include>*/FXUI/Main.java</include>
+                        <include>${project.basedir}${file.separator}FXUI${file.separator}Main.java</include>
                     </includes>
                 </configuration>
             </plugin>

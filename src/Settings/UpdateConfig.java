@@ -16,12 +16,12 @@ public class UpdateConfig {
 
     public static void updateSystemVariables() throws IOException {
         try {
-            FileInputStream in = new FileInputStream(AppStyles.mainPath + "\\properties\\systemVar.properties");
+            FileInputStream in = new FileInputStream(AppStyles.propertiesResourcePath + "systemVar.properties");
             Properties props = new Properties();
             props.load(in);
             in.close();
 
-            FileOutputStream out = new FileOutputStream(AppStyles.mainPath + "\\properties\\systemVar.properties");
+            FileOutputStream out = new FileOutputStream(AppStyles.propertiesResourcePath + "systemVar.properties");
 
             props.setProperty("timeoutVariable", GeneratePopupBox.currentTimeout);
             props.setProperty("randomValue", GeneratePopupBox.currentRandomLength);
@@ -36,12 +36,12 @@ public class UpdateConfig {
 
     public static void updateCredentials() throws IOException {
         try {
-            FileInputStream in = new FileInputStream(AppStyles.mainPath + "\\properties\\credentials.properties");
+            FileInputStream in = new FileInputStream(AppStyles.propertiesResourcePath + "credentials.properties");
             Properties props = new Properties();
             props.load(in);
             in.close();
 
-            FileOutputStream out = new FileOutputStream(AppStyles.mainPath + "\\properties\\credentials.properties");
+            FileOutputStream out = new FileOutputStream(AppStyles.propertiesResourcePath + "credentials.properties");
             props.setProperty("lastEmail", Controller.login);
             props.setProperty("lastPassword", Controller.password);
 
@@ -54,12 +54,12 @@ public class UpdateConfig {
 
     public static void updateUser() throws IOException {
         try {
-            FileInputStream in = new FileInputStream(AppStyles.mainPath + "\\properties\\user.properties");
+            FileInputStream in = new FileInputStream(AppStyles.propertiesResourcePath + "user.properties");
             Properties props = new Properties();
             props.load(in);
             in.close();
 
-            FileOutputStream out = new FileOutputStream(AppStyles.mainPath + "\\properties\\user.properties");
+            FileOutputStream out = new FileOutputStream(AppStyles.propertiesResourcePath + "user.properties");
 
             props.setProperty("user", GeneratePopupBox.currentUser);
 
@@ -72,12 +72,12 @@ public class UpdateConfig {
 
     public static void updateNames() throws IOException {
         try {
-            FileInputStream in = new FileInputStream(AppStyles.mainPath + "\\properties\\names.properties");
+            FileInputStream in = new FileInputStream(AppStyles.propertiesResourcePath + "names.properties");
             Properties props = new Properties();
             props.load(in);
             in.close();
 
-            FileOutputStream out = new FileOutputStream(AppStyles.mainPath + "\\properties\\names.properties");
+            FileOutputStream out = new FileOutputStream(AppStyles.propertiesResourcePath + "names.properties");
 
             props.setProperty("customerFirstName", GeneratePopupBox.currentCustomerFirstName);
             props.setProperty("customerLastName", GeneratePopupBox.currentCustomerLastName);

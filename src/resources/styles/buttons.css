@@ -1,0 +1,42 @@
+#startButton{
+    -fx-padding: 2 2 2 2;
+    -fx-background-radius: 6;
+    -fx-background-color: 
+        linear-gradient(from 0% 83% to 0% 100%, #428bca 0%, #2d6ca2 100%),
+        radial-gradient(center 50% 50%, radius 100%, #428bca, #2d6ca2);
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+	-fx-font-family: System;
+}
+#startButton:hover {
+    -fx-background-color: 
+        linear-gradient(from 0% 83% to 0% 100%, #2d6ca2 0%, #2b669a 100%),
+        radial-gradient(center 50% 50%, radius 100%, #2d6ca2, #2b669a);
+}
+#startButton:pressed {
+	-fx-background-color: 
+        linear-gradient(from 0% 83% to 0% 100%, #2b669a 0%, #2b669a 100%),
+        radial-gradient(center 50% 50%, radius 100%, #2b669a, #2b669a);
+    -fx-padding: 1 1 1 1;
+}
+#stopButton {
+    -fx-padding: 2 2 2 2;
+    -fx-background-radius: 6;
+    -fx-background-color: 
+        linear-gradient(from 0% 83% to 0% 100%, #FF3021 0%, #c12e2a 100%),
+        radial-gradient(center 50% 50%, radius 100%, #FF3021, #c12e2a);
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+	-fx-font-family: System;
+}
+#stopButton:hover {
+    -fx-background-color: 
+        linear-gradient(from 0% 83% to 0% 100%, #FF3021 0%, #8B2220 100%),
+        radial-gradient(center 50% 50%, radius 100%, #FF3021, #8B2220);
+}
+#stopButton:pressed {
+	-fx-background-color: 
+        linear-gradient(from 0% 83% to 0% 100%, #D82D1F 0%, #8B2220 100%),
+        radial-gradient(center 50% 50%, radius 100%, #D82D1F, #8B2220);
+    -fx-padding: 1 1 1 1;
+}

@@ -26,7 +26,7 @@ public class GeneratePopupBox {
 
     public static Optional<ButtonType> exceptionResponse;
     public static Optional<ButtonType> confirmationResponse;
-    private static final String[] magentos = {
+    private static final String[] magentoAdminPanels = {
             "qatestlab01",
             "qatestlab02",
             "qatestlab03",
@@ -156,13 +156,25 @@ public class GeneratePopupBox {
     }
 
     public static void identifyPopupBox() throws IOException {
-        List<String> choices = new ArrayList<>();
-        choices.add("Igor");
-        choices.add("Vika");
-        choices.add("Oksanka");
-        choices.add("Natasha");
+        List<String> userNamesList = new ArrayList<>();
+        userNamesList.add("Igor");
+        userNamesList.add("Vika");
+        userNamesList.add("Oksanka");
+        userNamesList.add("Natasha");
 
-        ChoiceDialog<String> identifyDialog = new ChoiceDialog<>(GetPropertyValues.user, choices);
+        List<String> authApiLoginIDsList = new ArrayList<>();
+        authApiLoginIDsList.add("3y8Z2fk5Z3n");
+        authApiLoginIDsList.add("3Ud359XbX6");
+        authApiLoginIDsList.add("2L6UmL7rE");
+        authApiLoginIDsList.add("3z42Rqc3pMrX");
+
+        List<String> authTransactionKeysList = new ArrayList<>();
+        authTransactionKeysList.add("2s25qyDYe249uTRx");
+        authTransactionKeysList.add("67FK5537ng85nAPw");
+        authTransactionKeysList.add("36Sc34JmhE9m493t");
+        authTransactionKeysList.add("5gt38eVNu529t6ZP");
+
+        ChoiceDialog<String> identifyDialog = new ChoiceDialog<>(GetPropertyValues.user, userNamesList);
         appStyles.setDialogLogo(identifyDialog, "hmm.png");
         identifyDialog.setTitle("Person identification");
         identifyDialog.setHeaderText("Please select who are you\nto identify Authorize.NET credentials");
@@ -174,19 +186,9 @@ public class GeneratePopupBox {
 // Traditional way to get the response value.
         Optional<String> result = identifyDialog.showAndWait();
         if (result.isPresent()){
-            if(Objects.equals(result.get(), "Igor")){
-                currentAuthApiLoginId = "3y8Z2fk5Z3n";
-                currentAuthTransactionKey = "2s25qyDYe249uTRx";
-            } else if(Objects.equals(result.get(), "Vika")){
-                currentAuthApiLoginId = "3Ud359XbX6";
-                currentAuthTransactionKey = "67FK5537ng85nAPw";
-            } else if(Objects.equals(result.get(), "Oksanka")){
-                currentAuthApiLoginId = "2L6UmL7rE";
-                currentAuthTransactionKey = "36Sc34JmhE9m493t";
-            } else if(Objects.equals(result.get(), "Natasha")){
-                currentAuthApiLoginId = "3z42Rqc3pMrX";
-                currentAuthTransactionKey = "5gt38eVNu529t6ZP";
-            }
+            int userIndex = userNamesList.indexOf(result.get());
+            currentAuthApiLoginId = authApiLoginIDsList.get(userIndex);
+            currentAuthTransactionKey = authTransactionKeysList.get(userIndex);
             currentUser = result.get();
             try {
                 UpdateConfig.updateUser();
@@ -251,13 +253,19 @@ public class GeneratePopupBox {
     }
 
     public static void creditCardsPopupBox() throws IOException {
-        List<String> choices = new ArrayList<>();
-        choices.add("Visa");
-        choices.add("Master Card");
-        choices.add("Discover");
-        choices.add("American Express");
+        List<String> cardTypesList = new ArrayList<>();
+        cardTypesList.add("Visa");
+        cardTypesList.add("Master Card");
+        cardTypesList.add("Discover");
+        cardTypesList.add("American Express");
 
-        ChoiceDialog<String> creditCardsDialog = new ChoiceDialog<>("Visa", choices);
+        List<String> cardLogosList = new ArrayList<>();
+        cardLogosList.add("visa.png");
+        cardLogosList.add("mastercard.png");
+        cardLogosList.add("discover.png");
+        cardLogosList.add("American-Express.png");
+
+        ChoiceDialog<String> creditCardsDialog = new ChoiceDialog<>("Visa", cardTypesList);
         appStyles.setDialogLogo(creditCardsDialog, "visa.png");
         creditCardsDialog.setTitle("Select Credit Card type");
         creditCardsDialog.setHeaderText("Choose preferred Card type:");
@@ -265,15 +273,7 @@ public class GeneratePopupBox {
         creditCardsDialog.initStyle(StageStyle.UTILITY);
 
         creditCardsDialog.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-                if(Objects.equals(newValue, "Visa")){
-                    appStyles.setDialogLogo(creditCardsDialog, "visa.png");
-                } else if(Objects.equals(newValue, "Master Card")){
-                    appStyles.setDialogLogo(creditCardsDialog, "mastercard.png");
-                } else if(Objects.equals(newValue, "Discover")){
-                    appStyles.setDialogLogo(creditCardsDialog, "discover.png");
-                } else if(Objects.equals(newValue, "American Express")){
-                    appStyles.setDialogLogo(creditCardsDialog, "American-Express.png");
-                }
+                appStyles.setDialogLogo(creditCardsDialog, cardLogosList.get(cardTypesList.indexOf(newValue)));
         });
 
         appStyles.setDialogStyle(creditCardsDialog);
@@ -297,7 +297,7 @@ public class GeneratePopupBox {
 
     public static void magentoPopupBox() throws IOException {
         List<String> choices = new ArrayList<>();
-        Collections.addAll(choices, magentos);
+        Collections.addAll(choices, magentoAdminPanels);
 
         ChoiceDialog<String> magentoDialog = new ChoiceDialog<>("qatestlab01", choices);
         appStyles.setDialogLogo(magentoDialog, "magento-logo.png");
@@ -367,7 +367,7 @@ public class GeneratePopupBox {
         ComboBoxesHandler.comboBoxSetItems(randomValueComboBox, randomValue, selectedRandomLength);
 
         TextField appFilesPathField = new TextField();
-        appFilesPathField.setText(AppStyles.mainPath.replace("\\","/"));
+        appFilesPathField.setText(AppStyles.resourcesPath.replace("\\","/"));
         appFilesPathField.setDisable(true);
 
         GridPane configsGrid = new GridPane();
@@ -395,7 +395,7 @@ public class GeneratePopupBox {
 
         Optional<ButtonType> result = configDialog.showAndWait();
         if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE){
-            String oldPath = AppStyles.mainPath.replace("\\", "/");
+            String oldPath = AppStyles.resourcesPath.replace("\\", "/");
 
             currentTimeout = timeoutsComboBox.getSelectionModel().getSelectedItem();
             BrowserSettings.timeoutVariable = Integer.valueOf(currentTimeout);
@@ -405,7 +405,7 @@ public class GeneratePopupBox {
 
             currentMainPath = appFilesPathField.getText();
             try {
-                AppStyles.mainPath = currentMainPath;
+                AppStyles.resourcesPath = currentMainPath;
                 UpdateConfig.updateSystemVariables();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -579,7 +579,7 @@ public class GeneratePopupBox {
         warningDialog.setHeaderText("Whoops... Application files not found.");
         warningDialog.setContentText(fileName + "\n\n" +
                 "Make sure your 'appFiles' folder " +
-                "is placed here: " + AppStyles.mainPath);
+                "is placed here: " + AppStyles.resourcesPath);
         warningDialog.initStyle(StageStyle.UTILITY);
 
         warningDialog.showAndWait();
@@ -589,7 +589,7 @@ public class GeneratePopupBox {
         Alert relaunchDialog = new Alert(Alert.AlertType.WARNING);
         relaunchDialog.setTitle("Warning");
         relaunchDialog.setHeaderText("I see that you have changed path to 'appFiles' directory.");
-        relaunchDialog.setContentText("Your current path is: " + AppStyles.mainPath + "\n This app will be re-launched now to apply changes.");
+        relaunchDialog.setContentText("Your current path is: " + AppStyles.resourcesPath + "\n This app will be re-launched now to apply changes.");
         relaunchDialog.initStyle(StageStyle.UTILITY);
 
         confirmationResponse = relaunchDialog.showAndWait();

@@ -11,6 +11,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.Objects;
 
+import static FXUI.Controller.getMagentoIndex;
+
 /**
  * Created by Ihor on 7/20/2016. All rights reserved!
  */
@@ -40,10 +42,10 @@ public class MagentoAdminPanel extends BrowserSettings {
 
     public void adminPanelLogin() {
         setTotalResultMessage(getTotalResultMessage() + "Open Magento admin panel\n");
-        driver.get(magentoEnvironment.get(Controller.magentoIndex));
+        driver.get(magentoEnvironment.get(getMagentoIndex()));
         ProgressBar.addProgressValue(progressVariable);
 
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Login page was not loaded");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("Login page was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(magentoLoginFieldLocator));
 
         setTotalResultMessage(getTotalResultMessage() + "Fill Magento credentials\n");
@@ -129,7 +131,7 @@ public class MagentoAdminPanel extends BrowserSettings {
         }
         ProgressBar.addProgressValue(progressVariable);
 
-        final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Config page was not loaded");
+        final Wait<WebDriver> wait2 = new WebDriverWait(driver, getTimeoutVariable()).withMessage("Config page was not loaded");
         wait2.until(ExpectedConditions.elementToBeClickable(magentoConfigSaveButtonLocator));
         ProgressBar.addProgressValue(progressVariable);
     }
@@ -201,7 +203,7 @@ public class MagentoAdminPanel extends BrowserSettings {
 
         setTotalResultMessage(getTotalResultMessage() + "Save new Channel ID\n");
         driver.findElement(magentoConfigSaveButtonLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Save button was not found");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("Save button was not found");
         wait.until(ExpectedConditions.elementToBeClickable(magentoConfigSaveButtonLocator));
         ProgressBar.addProgressValue(progressVariable);
     }

@@ -48,7 +48,7 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
         driver.findElement(setUpButtonLocator).click();
         setTotalResultMessage(getTotalResultMessage() + " - Click '3rd Party Connections' button\n");
         driver.findElement(thirdPartyButtonLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Third Party' page was not loaded");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("'Third Party' page was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(authorizeLoginFieldLocator));
         ProgressBar.addProgressValue(progressVariable);
     }
@@ -86,7 +86,7 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
         }
         ProgressBar.addProgressValue(progressVariable);
 
-        final Wait<WebDriver> wait3 = new WebDriverWait(driver, timeoutVariable).withMessage("'UPS User Name' field was not found");
+        final Wait<WebDriver> wait3 = new WebDriverWait(driver, getTimeoutVariable()).withMessage("'UPS User Name' field was not found");
         WebElement element2 = wait3.until(ExpectedConditions.elementToBeClickable(upsUserNameFieldLocator));
         Assert.assertEquals(element2.isDisplayed(), true, "'UPS User Name' field was not loaded");
 
@@ -118,7 +118,7 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
     public void configureUSPSAccount(String accountId, String passPhrase) {
         setTotalResultMessage(getTotalResultMessage() + "Click USPS checkbox\n");
 
-        final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("USPS checkbox is not clickable");
+        final Wait<WebDriver> wait2 = new WebDriverWait(driver, getTimeoutVariable()).withMessage("USPS checkbox is not clickable");
         wait2.until(ExpectedConditions.elementToBeClickable(uspsConfigurationCheckboxLocator));
 
         setTotalResultMessage(getTotalResultMessage() + "Click USPS checkbox\n");
@@ -134,7 +134,7 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
         }
         ProgressBar.addProgressValue(progressVariable);
 
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'USPS Account ID' field was not found");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("'USPS Account ID' field was not found");
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(uspsAccountIdFieldLocator));
         Assert.assertEquals(element.isDisplayed(), true, "'USPS Account ID' field was not loaded");
 
@@ -154,7 +154,7 @@ public class ThirdPartyConnectionsPage extends BrowserSettings {
     public void saveThirdPartyConnectionSettings () {
         setTotalResultMessage(getTotalResultMessage() + "Click 'Save and Close' button\n");
         driver.findElement(saveAndCloseContextualButtonLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(popupOkBtnLocator));
         ProgressBar.addProgressValue(3);
 

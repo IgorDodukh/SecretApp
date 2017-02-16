@@ -1,6 +1,5 @@
 package FXUI;
 
-import Settings.GetSystemFiles;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 
@@ -12,20 +11,46 @@ import static FXUI.GeneratePopupBox.warningPopupBox;
  * Created by Igor on 8/20/2016. All rights reserved!
  */
 
-public class AppStyles extends GetSystemFiles {
+public class AppStyles {
     private static InputStream fileStream;
 
-    public static String resourcesPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "resources" + File.separator;
-    public static String picturesResourcePath = resourcesPath + "pic" + File.separator;
-    public static String driversResourcePath = resourcesPath + "drivers" + File.separator;
-    public static String propertiesResourcePath = resourcesPath + "properties" + File.separator;
-    public static String stylesResourcePath = resourcesPath + "styles" + File.separator;
-    private static String dialogBoxStyle = stylesResourcePath + "dialogBoxes.css";
+    static String resourcesPath = System.getProperty("user.dir") + File.separator + "resources" + File.separator;
+    private static String picturesResourcePath = getResourcesPath() + "pic" + File.separator;
+    private static String driversResourcePath = getResourcesPath() + "drivers" + File.separator;
+    private static String propertiesResourcePath = getResourcesPath() + "properties" + File.separator;
+    private static String stylesResourcePath = getResourcesPath() + "styles" + File.separator;
+    private static String dialogBoxStylePath = getStylesResourcePath() + "dialogBoxes.css";
+
+
+    static String getResourcesPath() {
+        return resourcesPath;
+    }
+
+    static String getPicturesResourcePath() {
+        return picturesResourcePath;
+    }
+
+    static String getDriversResourcePath() {
+        return driversResourcePath;
+    }
+
+    public static String getPropertiesResourcePath() {
+        return propertiesResourcePath;
+    }
+
+    private static String getStylesResourcePath() {
+        return stylesResourcePath;
+    }
+
+    private static String getDialogBoxStylePath() {
+        return dialogBoxStylePath;
+    }
+
 
     private void getDialogStyleFile(Dialog dialog) throws IOException {
 
         try {
-            File f = new File(dialogBoxStyle);
+            File f = new File(getDialogBoxStylePath());
             fileStream = new FileInputStream(f.toString());
             if (fileStream != null) {
                 DialogPane dialogPane = dialog.getDialogPane();
@@ -43,7 +68,7 @@ public class AppStyles extends GetSystemFiles {
 
     private static void getUIStyleFile(Parent element, String fileName) throws IOException {
         try {
-            File f = new File(stylesResourcePath + fileName);
+            File f = new File(getStylesResourcePath() + fileName);
             fileStream = new FileInputStream(f.toString());
 
             if (fileStream != null) {
@@ -104,6 +129,6 @@ public class AppStyles extends GetSystemFiles {
 
     void setDialogLogo(Dialog dialog, String logoName) {
         dialog.getDialogPane().setStyle(
-                "-fx-graphic: url(\"file:/" + picturesResourcePath.replace("\\", "/") + logoName + "\")");
+                "-fx-graphic: url(\"file:/" + getPicturesResourcePath().replace("\\", "/") + logoName + "\")");
     }
 }

@@ -53,7 +53,7 @@ public class LoginPage extends BrowserSettings{
             }
         ProgressBar.addProgressValue(progressVariable);
 
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("User was not loaded");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("User was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(siteLogoIconLocator));
         ProgressBar.addProgressValue(progressVariable);
     }

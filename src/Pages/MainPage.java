@@ -75,7 +75,7 @@ public class MainPage extends BrowserSettings {
         driver.findElement(headerMenuLocator).click();
         setTotalResultMessage(getTotalResultMessage() + " - Click 'Warehouse' menu item\n");
         driver.findElement(searchWarehouseButtonLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Add Warehouse' button is not clickable");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("'Add Warehouse' button is not clickable");
         wait.until(ExpectedConditions.elementToBeClickable(addWarehouseButtonLocator));
         setTotalResultMessage(getTotalResultMessage() + " - Click 'Add Warehouse' button\n");
         driver.findElement(addWarehouseButtonLocator).click();
@@ -97,7 +97,7 @@ public class MainPage extends BrowserSettings {
         setTotalResultMessage(getTotalResultMessage() + "Open 'Settings' page\n");
         driver.findElement(setupButtonLocator).click();
         driver.findElement(settingsButtonLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Basic Settings' page popup was not found");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("'Basic Settings' page popup was not found");
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(basicSettingTitleLocator));
         WebElement element2 = wait.until(ExpectedConditions.elementToBeClickable(orderProcessingTabLocator));
         Assert.assertEquals(element.isDisplayed(), true, "'Basic Settings' page title was not found");
@@ -108,7 +108,7 @@ public class MainPage extends BrowserSettings {
     public void openMainPage() {
         setTotalResultMessage(getTotalResultMessage() + "Navigate to Main Page\n");
         driver.findElement(siteLogoIconLocator).click();
-        final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Main Page is loaded for a long time");
+        final Wait<WebDriver> wait2 = new WebDriverWait(driver, getTimeoutVariable()).withMessage("Main Page is loaded for a long time");
         wait2.until(ExpectedConditions.elementToBeClickable(siteLogoIconLocator));
         ProgressBar.addProgressValue(progressVariable);
     }
@@ -120,7 +120,7 @@ public class MainPage extends BrowserSettings {
         ProgressBar.addProgressValue(progressVariable);
 
         Thread.sleep(2000);
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Shipping Methods' page popup was not loaded");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("'Shipping Methods' page popup was not loaded");
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(addShippingMethodButtonLocator));
         Assert.assertEquals(element.isDisplayed(), true, "'Shipping Methods' page title was not found");
     }
@@ -134,13 +134,13 @@ public class MainPage extends BrowserSettings {
 
     public void openAddSupplierPage() throws InterruptedException {
         setTotalResultMessage(getTotalResultMessage() + "Open 'Add Supplier' page\n");
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Suppliers grid was not loaded");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("Suppliers grid was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(addSupplierButtonLocator));
         Thread.sleep(1000);
         ProgressBar.addProgressValue(progressVariable);
         setTotalResultMessage(getTotalResultMessage() + " - Click 'Add Supplier' button\n");
         driver.findElement(addSupplierButtonLocator).click();
-        final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("'Add Supplier' page popup was not loaded");
+        final Wait<WebDriver> wait2 = new WebDriverWait(driver, getTimeoutVariable()).withMessage("'Add Supplier' page popup was not loaded");
         WebElement element = wait2.until(ExpectedConditions.elementToBeClickable(supplierAccountNumberFieldLocator));
         Assert.assertEquals(element.isDisplayed(), true, "'Shipping Methods' page title was not found");
         ProgressBar.addProgressValue(progressVariable);
@@ -170,14 +170,14 @@ public class MainPage extends BrowserSettings {
         setTotalResultMessage(getTotalResultMessage() + "Open 'Orders' grid\n");
         driver.findElement(ordersMenuButtonLocator).click();
         driver.findElement(viewAllOrdersMenuButtonLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Orders' grid was not loaded");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("'Orders' grid was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(siteLogoIconLocator));
         ProgressBar.addProgressValue(progressVariable);
 
         setTotalResultMessage(getTotalResultMessage() + "Select 'All' tab\n");
         Thread.sleep(2000);
         driver.findElement(allOrdersTabButtonLocator).click();
-        final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("'All Orders' grid was not loaded");
+        final Wait<WebDriver> wait2 = new WebDriverWait(driver, getTimeoutVariable()).withMessage("'All Orders' grid was not loaded");
         wait2.until(ExpectedConditions.elementToBeClickable(allOrdersTabButtonLocator));
         ProgressBar.addProgressValue(progressVariable);
     }
@@ -186,7 +186,7 @@ public class MainPage extends BrowserSettings {
         setTotalResultMessage(getTotalResultMessage() + "Open 'Sync' page\n");
         driver.findElement(syncButtonLocator).click();
 
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Sync' page was not loaded");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("'Sync' page was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(siteLogoIconLocator));
     }
 
@@ -194,7 +194,7 @@ public class MainPage extends BrowserSettings {
         setTotalResultMessage(getTotalResultMessage() + "Open 'Manage Merchant' page\n");
         driver.findElement(setupButtonLocator).click();
         driver.findElement(manageMerchantButtonLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Manage Merchant' page was not loaded");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("'Manage Merchant' page was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(addMerchantButtonLocator));
     }
 

@@ -25,8 +25,8 @@ public class AddNewCustomer extends BrowserSettings{
 
         AddCustomerPage addCustomerPage = new AddCustomerPage(driver);
         addCustomerPage.addCustomerInfo(
-                createdFirstName = GetPropertyValues.customerFirstName + "_" + new GenerateRandomData().generateRandomNumber(randomValueLength),
-                createdLastName = GetPropertyValues.customerLastName + "_" + new GenerateRandomData().generateRandomNumber(randomValueLength),
+                createdFirstName = GetPropertyValues.customerFirstName + "_" + new GenerateRandomData().generateRandomNumber(getRandomValueLength()),
+                createdLastName = GetPropertyValues.customerLastName + "_" + new GenerateRandomData().generateRandomNumber(getRandomValueLength()),
                 customerEmail, phone);
         addCustomerPage.addBillingAddress(addressFirstName, addressLastName, addressLine1, addressZip);
         addCustomerPage.addShippingAddress();

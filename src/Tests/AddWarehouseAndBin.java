@@ -26,9 +26,9 @@ public class AddWarehouseAndBin extends BrowserSettings {
 
         AddWarehousePage addWarehousePage = new AddWarehousePage(driver);
         addWarehousePage.addWarehouseInfo(
-                createdWarehouseName = GetPropertyValues.warehouseName + "_" + new GenerateRandomData().generateRandomNumber(randomValueLength),
+                createdWarehouseName = GetPropertyValues.warehouseName + "_" + new GenerateRandomData().generateRandomNumber(getRandomValueLength()),
                 warehouseContactName, phone, startPickupTime, endPickupTime, addressLine1, addressZip);
-        addWarehousePage.addWarehouseBin(createdBinName = GetPropertyValues.binName + "_" + new GenerateRandomData().generateRandomNumber(randomValueLength));
+        addWarehousePage.addWarehouseBin(createdBinName = GetPropertyValues.binName + "_" + new GenerateRandomData().generateRandomNumber(getRandomValueLength()));
         addWarehousePage.saveWarehouse();
     }
 }

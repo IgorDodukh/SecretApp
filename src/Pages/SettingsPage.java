@@ -28,7 +28,7 @@ public class SettingsPage extends BrowserSettings {
     private final By confirmPopupButtonLocator = By.xpath("//div[1]/button[@class='primary-button']");
 
     public void setShipaheadSetting() throws InterruptedException {
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Basic Settings' page popup was not found");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("'Basic Settings' page popup was not found");
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(orderProcessingTabLocator));
         Assert.assertEquals(element.isDisplayed(), true, "'Basic Settings' page was not loaded");
 
@@ -47,7 +47,7 @@ public class SettingsPage extends BrowserSettings {
         setTotalResultMessage(getTotalResultMessage() + "Click 'Save and Close' button\n");
         driver.findElement(saveAndCloseContextualButtonLocator).click();
 
-        final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
+        final Wait<WebDriver> wait2 = new WebDriverWait(driver, getTimeoutVariable()).withMessage("Confirmation popup was not found");
         wait2.until(ExpectedConditions.elementToBeClickable(confirmPopupButtonLocator));
         ProgressBar.addProgressValue(progressVariable);
 

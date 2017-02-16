@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
+import static FXUI.AppStyles.getPicturesResourcePath;
 import static FXUI.ComboBoxesHandler.additionalDialogDeterminer;
 import static FXUI.ExecutionTimeCounter.startCounter;
 import static FXUI.ExecutionTimeCounter.stopCounter;
@@ -32,11 +33,61 @@ public class Controller extends Main {
     static boolean passFilled = true;
 
     private static String resultMessage = "";
+
+    public static int getMagentoIndex() {
+        return magentoIndex;
+    }
+
+    public static void setMagentoIndex(int magentoIndex) {
+        Controller.magentoIndex = magentoIndex;
+    }
+
     public static int magentoIndex;
-    public static String magentoIndexName = "";
+
+    public static String getMagentoIndexName() {
+        return magentoIndexName;
+    }
+
+    public static void setMagentoIndexName(String magentoIndexName) {
+        Controller.magentoIndexName = magentoIndexName;
+    }
+
+    private static String magentoIndexName = "";
     private static int progressValue = 0;
     private static boolean exceptionStatus = false;
     private boolean stopButtonClicked = false;
+
+    public static String getCardNumber() {
+        return cardNumber;
+    }
+
+    public static void setCardNumber(String cardNumber) {
+        Controller.cardNumber = cardNumber;
+    }
+
+    public static String getBrowserComboBoxValue() {
+        return browserComboBoxValue;
+    }
+
+    public static void setBrowserComboBoxValue(String browserComboBoxValue) {
+        Controller.browserComboBoxValue = browserComboBoxValue;
+    }
+
+    public static String getEntityComboBoxValue() {
+        return entityComboBoxValue;
+    }
+
+    public static void setEntityComboBoxValue(String entityComboBoxValue) {
+        Controller.entityComboBoxValue = entityComboBoxValue;
+    }
+
+    public static String getEnvironmentComboBoxValue() {
+        return environmentComboBoxValue;
+    }
+
+    public static void setEnvironmentComboBoxValue(String environmentComboBoxValue) {
+        Controller.environmentComboBoxValue = environmentComboBoxValue;
+    }
 
     public static String cardNumber = "";
 
@@ -51,6 +102,22 @@ public class Controller extends Main {
 
     private static String driverWarning = "";
     private static String driverExceptionMessage = "";
+
+    public static String getLogin() {
+        return login;
+    }
+
+    public static void setLogin(String login) {
+        Controller.login = login;
+    }
+
+    public static String getPassword() {
+        return password;
+    }
+
+    public static void setPassword(String password) {
+        Controller.password = password;
+    }
 
     public static String login;
     public static String password;
@@ -102,43 +169,43 @@ public class Controller extends Main {
     public MenuItem aboutButton;
     public MenuItem namesConfigs;
 
-    public static String getResultMessage() {
+    static String getResultMessage() {
         return resultMessage;
     }
 
-    public static void setResultMessage(String resultMessage) {
+    static void setResultMessage(String resultMessage) {
         Controller.resultMessage = resultMessage;
     }
 
-    public static String getDriverWarning() {
+    static String getDriverWarning() {
         return driverWarning;
     }
 
-    public static void setDriverWarning(String driverWarning) {
+    static void setDriverWarning(String driverWarning) {
         Controller.driverWarning = driverWarning;
     }
 
-    public static boolean isExceptionStatus() {
+    private static boolean isExceptionStatus() {
         return exceptionStatus;
     }
 
-    public static void setExceptionStatus(boolean exceptionStatus) {
+    static void setExceptionStatus(boolean exceptionStatus) {
         Controller.exceptionStatus = exceptionStatus;
     }
 
-    public static String getDriverExceptionMessage() {
+    static String getDriverExceptionMessage() {
         return driverExceptionMessage;
     }
 
-    public static void setDriverExceptionMessage(String driverExceptionMessage) {
+    static void setDriverExceptionMessage(String driverExceptionMessage) {
         Controller.driverExceptionMessage = driverExceptionMessage;
     }
 
-    public static int getProgressValue() {
+    static int getProgressValue() {
         return progressValue;
     }
 
-    public static void setProgressValue(int addProgressValue) {
+    static void setProgressValue(int addProgressValue) {
         Controller.progressValue = addProgressValue;
     }
 
@@ -156,8 +223,8 @@ public class Controller extends Main {
         AppStyles.setButtonsStyle(stopButton);
         AppStyles.setMenuBarStyle(myMenuBar);
 
-        companyLogo.setImage(new Image("file:///" + AppStyles.picturesResourcePath + "fslogo.png"));
-        waitingAnimation.setImage(new Image("file:///" + AppStyles.picturesResourcePath + "spinner.gif"));
+        companyLogo.setImage(new Image("file:///" + getPicturesResourcePath() + "fslogo.png"));
+        waitingAnimation.setImage(new Image("file:///" + getPicturesResourcePath() + "spinner.gif"));
 
         buildVersion.setText("Build Version: 1.75 beta");
 
@@ -195,8 +262,9 @@ public class Controller extends Main {
 
         ReadConfigMain.main();
         stopButtonClicked = false;
-        login = loginField.getText();
-        password = String.valueOf(passwordField.getCharacters());
+
+        setLogin(loginField.getText());
+        setPassword(String.valueOf(passwordField.getCharacters()));
 
         browserComboBoxIndex = browsersComboBox.getSelectionModel().getSelectedIndex();
         environmentComboBoxIndex = environmentsComboBox.getSelectionModel().getSelectedIndex();
@@ -232,7 +300,7 @@ public class Controller extends Main {
                     System.out.println("Test Started");
                     browserSettings.setUp(environmentComboBoxIndex, browserComboBoxIndex, driver);
                     try {
-                        comboBoxesHandler.testTypeDeterminer(dropdownIndex, login, password, cardNumber, driver);
+                        comboBoxesHandler.testTypeDeterminer(dropdownIndex, getLogin(), getPassword(), getCardNumber(), driver);
                     } catch (Exception e1) {
                         testStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
                         exceptionValue = e1;

@@ -95,7 +95,7 @@ public class AddProductPage extends BrowserSettings{
         driver.findElement(salesChannelNameFieldLocator).sendKeys(channelName);
         ProgressBar.addProgressValue(progressVariable);
 
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Call Center' tooltip was not found");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("'Call Center' tooltip was not found");
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(salesChannelTooltipLocator));
         Assert.assertEquals(element.isDisplayed(), true, "'Call Center' tooltip is not displayed");
 
@@ -114,7 +114,7 @@ public class AddProductPage extends BrowserSettings{
         driver.findElement(productSuppliersTabLocator).click();
         ProgressBar.addProgressValue(progressVariable);
 
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Add Supplier tab was not loaded");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("Add Supplier tab was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(addSupplierButtonLocator));
 
         Thread.sleep(1000);
@@ -124,7 +124,7 @@ public class AddProductPage extends BrowserSettings{
         ProgressBar.addProgressValue(progressVariable);
         Thread.sleep(2000);
 
-        final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("'Add Supplier' popup was not found");
+        final Wait<WebDriver> wait2 = new WebDriverWait(driver, getTimeoutVariable()).withMessage("'Add Supplier' popup was not found");
         WebElement element2 = wait2.until(ExpectedConditions.elementToBeClickable(selectSupplierCheckboxLocator));
         Assert.assertEquals(element2.isDisplayed(), true, "Popup for the 'Add Supplier' form is not displayed");
 
@@ -158,7 +158,7 @@ public class AddProductPage extends BrowserSettings{
         driver.findElement(saveAndCloseProductButtonLocator).click();
         ProgressBar.addProgressValue(progressVariable);
 
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(productMessageBoxLocator));
 
         setTotalResultMessage(getTotalResultMessage() + " - Confirm success popup\n");
@@ -169,7 +169,7 @@ public class AddProductPage extends BrowserSettings{
     public void openInventoryPage() throws InterruptedException {
         setTotalResultMessage(getTotalResultMessage() + "Open 'Product Inventory' page\n");
         Thread.sleep(2000);
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Product grid was not opened");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("Product grid was not opened");
         wait.until(ExpectedConditions.elementToBeClickable(siteLogoIconLocator));
         driver.findElement(inventoryMenuItemLocator).click();
         ProgressBar.addProgressValue(progressVariable);

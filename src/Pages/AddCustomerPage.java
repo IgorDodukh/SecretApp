@@ -140,7 +140,7 @@ public class AddCustomerPage extends BrowserSettings {
 
         setTotalResultMessage(getTotalResultMessage() + " - Click 'Save Card' button\n");
         driver.findElement(saveCardLinkLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Waiting popup is not hidden for a long time");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("Waiting popup is not hidden for a long time");
         wait.until(ExpectedConditions.elementToBeClickable(editCardLinkLocator));
         ProgressBar.addProgressValue(progressVariable);
         Assert.assertEquals(driver.findElement(editCardLinkLocator).isDisplayed(), true, "Credit card is not saved");
@@ -152,7 +152,7 @@ public class AddCustomerPage extends BrowserSettings {
         driver.findElement(saveAndCloseContextualButtonLocator).click();
         ProgressBar.addProgressValue(progressVariable);
 
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(popupOkBtnLocator));
 
         setTotalResultMessage(getTotalResultMessage() + " - Confirm success popup\n");

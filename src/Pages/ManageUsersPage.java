@@ -12,6 +12,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.Objects;
 
+import static FXUI.GeneratePopupBox.getUserTypeToCreate;
+
 /**
  * Created by Ihor on 8/18/2016. All rights reserved!
  */
@@ -19,7 +21,7 @@ public class ManageUsersPage extends BrowserSettings {
     private final WebDriver driver;
 
     private final GenerateRandomData generateRandomData = new GenerateRandomData();
-    private final String randomInt = generateRandomData.generateRandomNumber(randomValueLength);
+    private final String randomInt = generateRandomData.generateRandomNumber(getRandomValueLength());
     public ManageUsersPage(WebDriver driver) {
         this.driver = driver;
     }
@@ -58,7 +60,7 @@ public class ManageUsersPage extends BrowserSettings {
     public void openAddMerchantForm() {
         setTotalResultMessage(getTotalResultMessage() + "Open 'Add Merchant' form\n");
         driver.findElement(addMerchantButtonLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Add Merchant' form was not opened");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("'Add Merchant' form was not opened");
         wait.until(ExpectedConditions.visibilityOfElementLocated(merchantNameFieldLocator));
     }
 
@@ -76,7 +78,7 @@ public class ManageUsersPage extends BrowserSettings {
         Thread.sleep(500);
         driver.findElement(merchantAddressFieldLocator).sendKeys("Some Address 555");
         driver.findElement(merchantSaveAndCloseButtonLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Saved Successfully' popup box was not found");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("'Saved Successfully' popup box was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(merchantSavePopupLocator));
 
         Thread.sleep(1000);
@@ -95,30 +97,30 @@ public class ManageUsersPage extends BrowserSettings {
         driver.findElement(groupsTabButtonLocator).click();
         driver.findElement(addGroupButtonLocator).click();
 
-        final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("'Manage Merchant' page was not loaded");
+        final Wait<WebDriver> wait2 = new WebDriverWait(driver, getTimeoutVariable()).withMessage("'Manage Merchant' page was not loaded");
         wait2.until(ExpectedConditions.elementToBeClickable(groupNameFieldLocator));
     }
 
     public void addNewGroupWithUser() {
-        String groupName = GeneratePopupBox.userTypeToCreate + "-" + new GenerateRandomData().generateRandomNumber(randomValueLength);
+        String groupName = getUserTypeToCreate() + "-" + new GenerateRandomData().generateRandomNumber(getRandomValueLength());
         driver.findElement(groupNameFieldLocator).sendKeys(groupName);
         driver.findElement(groupDescriptionFieldLocator).sendKeys(groupName);
 
-        if (Objects.equals(GeneratePopupBox.userTypeToCreate, "Merchandiser")) {
+        if (Objects.equals(getUserTypeToCreate(), "Merchandiser")) {
             driver.findElement(merchandiserGroupLocator).click();
-        } else if (Objects.equals(GeneratePopupBox.userTypeToCreate, "Picker")) {
+        } else if (Objects.equals(getUserTypeToCreate(), "Picker")) {
             driver.findElement(pickerGroupLocator).click();
-        } else if (Objects.equals(GeneratePopupBox.userTypeToCreate, "Packer")) {
+        } else if (Objects.equals(getUserTypeToCreate(), "Packer")) {
             driver.findElement(packerGroupLocator).click();
-        } else if (Objects.equals(GeneratePopupBox.userTypeToCreate, "Shipper")) {
+        } else if (Objects.equals(getUserTypeToCreate(), "Shipper")) {
             driver.findElement(shipperGroupLocator).click();
-        } else if (Objects.equals(GeneratePopupBox.userTypeToCreate, "CSR")) {
+        } else if (Objects.equals(getUserTypeToCreate(), "CSR")) {
             driver.findElement(csrGroupLocator).click();
-        } else if (Objects.equals(GeneratePopupBox.userTypeToCreate, "CSR Manager")) {
+        } else if (Objects.equals(getUserTypeToCreate(), "CSR Manager")) {
             driver.findElement(csrManagerGroupLocator).click();
-        } else if (Objects.equals(GeneratePopupBox.userTypeToCreate, "Purchase Manager")) {
+        } else if (Objects.equals(getUserTypeToCreate(), "Purchase Manager")) {
             driver.findElement(purchasingManagerGroupLocator).click();
-        } else if (Objects.equals(GeneratePopupBox.userTypeToCreate, "Warehouse Manager")) {
+        } else if (Objects.equals(getUserTypeToCreate(), "Warehouse Manager")) {
             driver.findElement(warehouseManagerGroupLocator).click();
         }
     }

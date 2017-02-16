@@ -24,8 +24,8 @@ public class AddProductWithInventory extends BrowserSettings{
 
         AddProductPage addProductPage = new AddProductPage(driver);
         addProductPage.addProductInfo(
-                createdProductSKU = GetPropertyValues.productSKU + new GenerateRandomData().generateRandomNumber(randomValueLength),
-                createdProductName = GetPropertyValues.productName + new GenerateRandomData().generateRandomNumber(randomValueLength),
+                createdProductSKU = GetPropertyValues.productSKU + new GenerateRandomData().generateRandomNumber(getRandomValueLength()),
+                createdProductName = GetPropertyValues.productName + new GenerateRandomData().generateRandomNumber(getRandomValueLength()),
                 productWeight, productDescription);
         addProductPage.addProductPrices(productRetailPrice);
         addProductPage.addProductSalesChannel(productSalesChannel);

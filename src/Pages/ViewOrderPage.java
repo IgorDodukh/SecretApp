@@ -49,7 +49,7 @@ public class ViewOrderPage extends BrowserSettings {
         ProgressBar.addProgressValue(progressVariable);
 
         driver.findElement(firstOrderFromTheListLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'View Order' page was not loaded");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("'View Order' page was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(orderSummaryTabLocator));
 
         shippingMethod = driver.findElement(shippingMethodLocator).getText();
@@ -61,7 +61,7 @@ public class ViewOrderPage extends BrowserSettings {
     public void getOrderItemsInfo() {
         setTotalResultMessage(getTotalResultMessage() + "Get Ordered Items Info\n");
         driver.findElement(shippingDetailsTabLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Shipping Details' tab is not loaded");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("'Shipping Details' tab is not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(orderSummaryTabLocator));
         orderedItems = driver.findElement(orderedSkuListLocator).getText();
 
@@ -75,7 +75,7 @@ public class ViewOrderPage extends BrowserSettings {
     public void backToOrdersGrid() {
         setTotalResultMessage(getTotalResultMessage() + "Back To Orders Grid\n");
         driver.findElement(linkToOrdersGridLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Orders grid is not loaded");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("Orders grid is not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(addOrderButtonLocator));
         ProgressBar.addProgressValue(progressVariable);
     }
@@ -84,7 +84,7 @@ public class ViewOrderPage extends BrowserSettings {
         setTotalResultMessage(getTotalResultMessage() + "Open Order creating form\n");
         Thread.sleep(2000);
         driver.findElement(addOrderButtonLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Order creating form is not loaded");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("Order creating form is not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(addItemButtonLocator));
         ProgressBar.addProgressValue(progressVariable);
     }

@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import static FXUI.AppStyles.getPropertiesResourcePath;
+
 /**
  * Created by Ihor on 8/14/2016. All rights reserved!
  */
@@ -40,10 +42,10 @@ public class GetPropertyValues {
             Properties userProp = new Properties();
             Properties namesProp = new Properties();
 
-            InputStream systemVariablesInput = new FileInputStream(AppStyles.propertiesResourcePath + "systemVar.properties");
-            InputStream credentialsInput = new FileInputStream(AppStyles.propertiesResourcePath + "credentials.properties");
-            InputStream userInput = new FileInputStream(AppStyles.propertiesResourcePath + "user.properties");
-            InputStream namesInput = new FileInputStream(AppStyles.propertiesResourcePath + "names.properties");
+            InputStream systemVariablesInput = new FileInputStream(getPropertiesResourcePath() + "systemVar.properties");
+            InputStream credentialsInput = new FileInputStream(getPropertiesResourcePath() + "credentials.properties");
+            InputStream userInput = new FileInputStream(getPropertiesResourcePath() + "user.properties");
+            InputStream namesInput = new FileInputStream(getPropertiesResourcePath() + "names.properties");
 
             systemVariablesInputStream = systemVariablesInput;
             credentialsInputStream = credentialsInput;

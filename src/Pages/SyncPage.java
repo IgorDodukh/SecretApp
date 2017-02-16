@@ -10,6 +10,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import static FXUI.Controller.getMagentoIndexName;
+
 /**
  * Created by Ihor on 7/20/2016. All rights reserved!
  */
@@ -29,12 +31,12 @@ public class SyncPage extends BrowserSettings{
     public void openChannel() throws InterruptedException {
         setTotalResultMessage(getTotalResultMessage() + "Search needed Channel\n");
 
-        String channelName = Controller.magentoIndexName.replace("qatestlab", "");
+        String channelName = getMagentoIndexName().replace("qatestlab", "");
         driver.findElement(syncFilterByFieldLocator).sendKeys(channelName);
         driver.findElement(syncFilterByFieldLocator).sendKeys(Keys.ENTER);
         ProgressBar.addProgressValue(progressVariable);
 
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Sync' page was not loaded");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("'Sync' page was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(syncFilterByFieldLocator));
 
         setTotalResultMessage(getTotalResultMessage() + "Open found Channel\n");
@@ -43,7 +45,7 @@ public class SyncPage extends BrowserSettings{
         driver.findElement(syncViewChannelButtonLocator).click();
         ProgressBar.addProgressValue(progressVariable);
 
-        final Wait<WebDriver> wait3 = new WebDriverWait(driver, timeoutVariable).withMessage("'View Channel' page was not loaded");
+        final Wait<WebDriver> wait3 = new WebDriverWait(driver, getTimeoutVariable()).withMessage("'View Channel' page was not loaded");
         wait3.until(ExpectedConditions.elementToBeClickable(channelOverviewTabLocator));
     }
 

@@ -24,8 +24,8 @@ public class GeneratePopupBox {
 
     private static final AppStyles appStyles = new AppStyles();
 
-    public static Optional<ButtonType> exceptionResponse;
-    public static Optional<ButtonType> confirmationResponse;
+    private static Optional<ButtonType> exceptionResponse;
+    static Optional<ButtonType> confirmationResponse;
     private static final String[] magentoAdminPanels = {
             "qatestlab01",
             "qatestlab02",

@@ -40,6 +40,14 @@ public class BrowserSettings {
                     "https://linux.mailordercentral.com/qatestlab10/index.php/admin/system_config/edit/section/freestyle_advancedexport/",
                     "https://linux.mailordercentral.com/hercules/index.php/admin/system_config/edit/section/freestyle_advancedexport/"));
 
+    public static int getRandomValueLength() {
+        return randomValueLength;
+    }
+
+    public static void setRandomValueLength(int randomValueLength) {
+        BrowserSettings.randomValueLength = randomValueLength;
+    }
+
     //    Customer data
     public static int randomValueLength = 4;
     protected static final String customerEmail = AddNewCustomer.createdFirstName + "@dydacomp.biz";
@@ -56,15 +64,11 @@ public class BrowserSettings {
     protected static final String paymentMethodsTitle = "Payment Method";
 
 //    CreditCard info
-    public static final String visaTestCardNumber = "4005550000000019";
-    public static final String masterCardTestCardNumber = "5424180279791765";
-    public static final String discoverTestCardNumber = "6011000993010978";
-    public static final String americanExpressTestCardNumber = "372700997251009";
     protected static final String saveSettingsPopupMessage = "Configuration has been saved successfully.";
 
     //    Warehouse data
     public static String warehouseNameValue = "Test Warehouse";
-    public static final String warehouseName = warehouseNameValue + "_" + generateRandomData.generateRandomNumber(randomValueLength);
+    public static final String warehouseName = warehouseNameValue + "_" + generateRandomData.generateRandomNumber(getRandomValueLength());
     protected static final String warehouseContactName = "Test Warehouse Contact Name";
     protected static final String startPickupTime = "08:00";
     protected static final String endPickupTime = "21:00";
@@ -76,7 +80,7 @@ public class BrowserSettings {
 //    Product data
     public static String productSKUStart = "ProductSKU";
     public static String productNameStart = "ProductName";
-    private static final String prodNum = generateRandomData.generateRandomNumber(randomValueLength);
+    private static final String prodNum = generateRandomData.generateRandomNumber(getRandomValueLength());
     public static final String productSku = productSKUStart + " " + prodNum;
     protected static final String productName = productNameStart + " " + prodNum;
     protected static final String productWeight = generateRandomData.generateRandomNumber(1);
@@ -85,7 +89,7 @@ public class BrowserSettings {
     protected static final String productSalesChannel = "Call Center";
 
 //    Supplier data
-    protected static String supplierAccountNumber = new GenerateRandomData().generateRandomNumber(randomValueLength);
+    protected static String supplierAccountNumber = new GenerateRandomData().generateRandomNumber(getRandomValueLength());
     protected static String supplierURL = generateRandomData.generateRandomNumber(5) + ".site.blabla";
     protected static String supplierAddress = "Lucky Street " + generateRandomData.generateRandomNumber(3);
 
@@ -124,6 +128,14 @@ protected final String magentoLogin = "FSAWS_Admin";
     protected final String magentoPassword = "#Dydacomp1";
     protected static String magentoChannelID;
     protected static String magentoFSLink;
+
+    public static int getTimeoutVariable() {
+        return timeoutVariable;
+    }
+
+    public static void setTimeoutVariable(int timeoutVariable) {
+        BrowserSettings.timeoutVariable = timeoutVariable;
+    }
 
     public static int timeoutVariable = 30;
     public static int progressVariable;

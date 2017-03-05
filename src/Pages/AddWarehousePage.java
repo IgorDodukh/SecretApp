@@ -90,7 +90,7 @@ public class AddWarehousePage extends BrowserSettings {
         driver.findElement(addWarehouseBinButtonLocator).click();
         ProgressBar.addProgressValue(progressVariable);
 
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Add Bin' popup was not found");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("'Add Bin' popup was not found");
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(addBinPopupTitleLocator));
 
         Assert.assertEquals(element.isDisplayed(), true, "Popup for the 'Add Bin' form is not displayed");
@@ -114,7 +114,7 @@ public class AddWarehousePage extends BrowserSettings {
         driver.findElement(saveContextualButton).click();
         ProgressBar.addProgressValue(progressVariable);
 
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(popupBoxMessageLocator));
 
         setTotalResultMessage(getTotalResultMessage() + "Confirm popup message\n");

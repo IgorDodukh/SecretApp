@@ -118,7 +118,7 @@ public class AddSupplierPage extends BrowserSettings {
         driver.findElement(saveAndCloseContextualButtonLocator).click();
         ProgressBar.addProgressValue(progressVariable);
 
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(popupBoxMessageLocator));
         ProgressBar.addProgressValue(progressVariable);
 

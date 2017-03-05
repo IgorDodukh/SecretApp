@@ -6,6 +6,9 @@ import Settings.BrowserSettings;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
+import static FXUI.GeneratePopupBox.getCurrentAuthApiLoginId;
+import static FXUI.GeneratePopupBox.getCurrentAuthTransactionKey;
+
 /**
  * Created by igor on 27.05.16. All rights reserved!
  */
@@ -24,7 +27,7 @@ public class ConfigureMerchant extends BrowserSettings {
 
         ThirdPartyConnectionsPage thirdPartyConnectionsPage = new ThirdPartyConnectionsPage(driver);
         thirdPartyConnectionsPage.openThirdPartyPage();
-        thirdPartyConnectionsPage.configureAuthorizeAccount(GeneratePopupBox.currentAuthApiLoginId, GeneratePopupBox.currentAuthTransactionKey);
+        thirdPartyConnectionsPage.configureAuthorizeAccount(getCurrentAuthApiLoginId(), getCurrentAuthTransactionKey());
         thirdPartyConnectionsPage.configureUPSAccount(upsUserName, upsPassword, upsLicenseNumber, upsShipperNumber);
         thirdPartyConnectionsPage.configureUSPSAccount(uspsAccountId, uspsPassPhrase);
         thirdPartyConnectionsPage.saveThirdPartyConnectionSettings();

@@ -17,6 +17,13 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.*;
 
+import static FXUI.AppStyles.getResourcesPath;
+import static FXUI.Controller.setCardNumber;
+import static FXUI.Controller.setMagentoIndex;
+import static FXUI.Controller.setMagentoIndexName;
+import static Settings.BrowserSettings.setRandomValueLength;
+import static Settings.BrowserSettings.setTimeoutVariable;
+
 /**
  * Created by Ihor on 7/15/2016. All rights reserved!
  */
@@ -53,20 +60,133 @@ public class GeneratePopupBox {
                     "3",
                     "4",
                     "5");
-    public static String currentTimeout = "";
-    public static String currentRandomLength = "";
-    public static String currentUser = "";
-    public static String userTypeToCreate = "";
-    public static String currentCustomerFirstName = "";
-    public static String currentCustomerLastName = "";
-    public static String currentProductSKU = "";
-    public static String currentProductName = "";
-    public static String currentWarehouseName = "";
-    public static String currentSupplierName = "";
-    public static String currentBinName = "";
-    public static String currentMainPath = "";
-    public static String currentAuthApiLoginId = "";
-    public static String currentAuthTransactionKey = "";
+
+    public static String getCurrentTimeout() {
+        return currentTimeout;
+    }
+
+    public static void setCurrentTimeout(String currentTimeout) {
+        GeneratePopupBox.currentTimeout = currentTimeout;
+    }
+
+    public static String getCurrentRandomLength() {
+        return currentRandomLength;
+    }
+
+    public static void setCurrentRandomLength(String currentRandomLength) {
+        GeneratePopupBox.currentRandomLength = currentRandomLength;
+    }
+
+    public static String getCurrentUser() {
+        return currentUser;
+    }
+
+    public static void setCurrentUser(String currentUser) {
+        GeneratePopupBox.currentUser = currentUser;
+    }
+
+    public static String getUserTypeToCreate() {
+        return userTypeToCreate;
+    }
+
+    public static void setUserTypeToCreate(String userTypeToCreate) {
+        GeneratePopupBox.userTypeToCreate = userTypeToCreate;
+    }
+
+    public static String getCurrentCustomerFirstName() {
+        return currentCustomerFirstName;
+    }
+
+    public static void setCurrentCustomerFirstName(String currentCustomerFirstName) {
+        GeneratePopupBox.currentCustomerFirstName = currentCustomerFirstName;
+    }
+
+    public static String getCurrentCustomerLastName() {
+        return currentCustomerLastName;
+    }
+
+    public static void setCurrentCustomerLastName(String currentCustomerLastName) {
+        GeneratePopupBox.currentCustomerLastName = currentCustomerLastName;
+    }
+
+    public static String getCurrentProductSKU() {
+        return currentProductSKU;
+    }
+
+    public static void setCurrentProductSKU(String currentProductSKU) {
+        GeneratePopupBox.currentProductSKU = currentProductSKU;
+    }
+
+    public static String getCurrentProductName() {
+        return currentProductName;
+    }
+
+    public static void setCurrentProductName(String currentProductName) {
+        GeneratePopupBox.currentProductName = currentProductName;
+    }
+
+    public static String getCurrentWarehouseName() {
+        return currentWarehouseName;
+    }
+
+    public static void setCurrentWarehouseName(String currentWarehouseName) {
+        GeneratePopupBox.currentWarehouseName = currentWarehouseName;
+    }
+
+    public static String getCurrentSupplierName() {
+        return currentSupplierName;
+    }
+
+    public static void setCurrentSupplierName(String currentSupplierName) {
+        GeneratePopupBox.currentSupplierName = currentSupplierName;
+    }
+
+    public static String getCurrentBinName() {
+        return currentBinName;
+    }
+
+    public static void setCurrentBinName(String currentBinName) {
+        GeneratePopupBox.currentBinName = currentBinName;
+    }
+
+    public static String getCurrentMainPath() {
+        return currentMainPath;
+    }
+
+    public static void setCurrentMainPath(String currentMainPath) {
+        GeneratePopupBox.currentMainPath = currentMainPath;
+    }
+
+    public static String getCurrentAuthApiLoginId() {
+        return currentAuthApiLoginId;
+    }
+
+    public static void setCurrentAuthApiLoginId(String currentAuthApiLoginId) {
+        GeneratePopupBox.currentAuthApiLoginId = currentAuthApiLoginId;
+    }
+
+    public static String getCurrentAuthTransactionKey() {
+        return currentAuthTransactionKey;
+    }
+
+    public static void setCurrentAuthTransactionKey(String currentAuthTransactionKey) {
+        GeneratePopupBox.currentAuthTransactionKey = currentAuthTransactionKey;
+    }
+
+    private static String currentTimeout = "";
+    private static String currentRandomLength = "";
+    private static String currentUser = "";
+    private static String userTypeToCreate = "";
+    private static String currentCustomerFirstName = "";
+    private static String currentCustomerLastName = "";
+    private static String currentProductSKU = "";
+    private static String currentProductName = "";
+    private static String currentWarehouseName = "";
+    private static String currentSupplierName = "";
+    private static String currentBinName = "";
+    private static String currentMainPath = "";
+    private static String currentAuthApiLoginId = "";
+    private static String currentAuthTransactionKey = "";
 
     public static void exceptionPopupBox(Exception exception) {
         String exceptionMessage = "";
@@ -187,9 +307,9 @@ public class GeneratePopupBox {
         Optional<String> result = identifyDialog.showAndWait();
         if (result.isPresent()){
             int userIndex = userNamesList.indexOf(result.get());
-            currentAuthApiLoginId = authApiLoginIDsList.get(userIndex);
-            currentAuthTransactionKey = authTransactionKeysList.get(userIndex);
-            currentUser = result.get();
+            setCurrentAuthApiLoginId(authApiLoginIDsList.get(userIndex));
+            setCurrentAuthTransactionKey(authTransactionKeysList.get(userIndex));
+            setCurrentUser(result.get());
             try {
                 UpdateConfig.updateUser();
             } catch (IOException e) {
@@ -247,7 +367,7 @@ public class GeneratePopupBox {
 // Traditional way to get the response value.
         Optional<String> result = userTypesDialog.showAndWait();
         if (result.isPresent()){
-            userTypeToCreate = result.get();
+            setUserTypeToCreate(result.get());
             GeneratePopupBox.confirmationPopupBox();
         } else System.out.println("User Type selecting cancelled");
     }
@@ -264,6 +384,12 @@ public class GeneratePopupBox {
         cardLogosList.add("mastercard.png");
         cardLogosList.add("discover.png");
         cardLogosList.add("American-Express.png");
+
+        List<String> cardNumbertsList = new ArrayList<>();
+        cardNumbertsList.add("4005550000000019");
+        cardNumbertsList.add("5424180279791765");
+        cardNumbertsList.add("6011000993010978");
+        cardNumbertsList.add("372700997251009");
 
         ChoiceDialog<String> creditCardsDialog = new ChoiceDialog<>("Visa", cardTypesList);
         appStyles.setDialogLogo(creditCardsDialog, "visa.png");
@@ -282,15 +408,7 @@ public class GeneratePopupBox {
         Optional<String> result = creditCardsDialog.showAndWait();
 
         if (result.isPresent()){
-            if(Objects.equals(result.get(), "Visa")){
-                Controller.cardNumber = BrowserSettings.visaTestCardNumber;
-            } else if(Objects.equals(result.get(), "Master Card")){
-                Controller.cardNumber = BrowserSettings.masterCardTestCardNumber;
-            } else if(Objects.equals(result.get(), "Discover")){
-                Controller.cardNumber = BrowserSettings.discoverTestCardNumber;
-            } else if(Objects.equals(result.get(), "American Express")){
-                Controller.cardNumber = BrowserSettings.americanExpressTestCardNumber;
-            }
+            setCardNumber(cardNumbertsList.get(cardTypesList.indexOf(result.get())));
             GeneratePopupBox.confirmationPopupBox();
         } else System.out.println("CC cancelled");
     }
@@ -312,8 +430,8 @@ public class GeneratePopupBox {
 // Traditional way to get the response value.
         Optional<String> result = magentoDialog.showAndWait();
         if (result.isPresent()){
-            Controller.magentoIndex = choices.indexOf(result.get());
-            Controller.magentoIndexName = result.get();
+            setMagentoIndex(choices.indexOf(result.get()));
+            setMagentoIndexName(result.get()) ;
             GeneratePopupBox.confirmationPopupBox();
         } else System.out.println("Select Magento cancelled");
     }
@@ -367,7 +485,7 @@ public class GeneratePopupBox {
         ComboBoxesHandler.comboBoxSetItems(randomValueComboBox, randomValue, selectedRandomLength);
 
         TextField appFilesPathField = new TextField();
-        appFilesPathField.setText(AppStyles.resourcesPath.replace("\\","/"));
+        appFilesPathField.setText(getResourcesPath().replace("\\","/"));
         appFilesPathField.setDisable(true);
 
         GridPane configsGrid = new GridPane();
@@ -395,23 +513,21 @@ public class GeneratePopupBox {
 
         Optional<ButtonType> result = configDialog.showAndWait();
         if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE){
-            String oldPath = AppStyles.resourcesPath.replace("\\", "/");
+            String oldPath = getResourcesPath().replace("\\", "/");
 
-            currentTimeout = timeoutsComboBox.getSelectionModel().getSelectedItem();
-            BrowserSettings.timeoutVariable = Integer.valueOf(currentTimeout);
+            setTimeoutVariable(Integer.valueOf(timeoutsComboBox.getSelectionModel().getSelectedItem()));
 
-            currentRandomLength = randomValueComboBox.getSelectionModel().getSelectedItem();
-            BrowserSettings.randomValueLength = Integer.valueOf(currentRandomLength);
+            setRandomValueLength(Integer.valueOf(randomValueComboBox.getSelectionModel().getSelectedItem()));
 
-            currentMainPath = appFilesPathField.getText();
+            setCurrentMainPath(appFilesPathField.getText());
             try {
-                AppStyles.resourcesPath = currentMainPath;
+                AppStyles.resourcesPath = getCurrentMainPath();
                 UpdateConfig.updateSystemVariables();
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            if (!Objects.equals(oldPath, currentMainPath)){
+            if (!Objects.equals(oldPath, getCurrentMainPath())){
                 GeneratePopupBox.relaunchPopupBox();
             }
         } else System.out.println("Configuration popup box cancelled");
@@ -511,13 +627,13 @@ public class GeneratePopupBox {
         Optional<ButtonType> result = configDialog.showAndWait() ;
 
         if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE){
-            currentCustomerFirstName = customerFirstNameField.getText();
-            currentCustomerLastName = customerLastNameField.getText();
-            currentProductSKU = productSKUField.getText();
-            currentProductName = productNameField.getText();
-            currentSupplierName = supplierNameField.getText();
-            currentWarehouseName = warehouseNameField.getText();
-            currentBinName = binNameField.getText();
+            setCurrentCustomerFirstName(customerFirstNameField.getText());
+            setCurrentCustomerLastName(customerLastNameField.getText());
+            setCurrentProductSKU(productSKUField.getText());
+            setCurrentProductName(productNameField.getText());
+            setCurrentSupplierName(supplierNameField.getText());
+            setCurrentWarehouseName(warehouseNameField.getText());
+            setCurrentBinName(binNameField.getText());
 
             try {
                 UpdateConfig.updateNames();
@@ -579,7 +695,7 @@ public class GeneratePopupBox {
         warningDialog.setHeaderText("Whoops... Application files not found.");
         warningDialog.setContentText(fileName + "\n\n" +
                 "Make sure your 'appFiles' folder " +
-                "is placed here: " + AppStyles.resourcesPath);
+                "is placed here: " + getResourcesPath());
         warningDialog.initStyle(StageStyle.UTILITY);
 
         warningDialog.showAndWait();
@@ -589,7 +705,7 @@ public class GeneratePopupBox {
         Alert relaunchDialog = new Alert(Alert.AlertType.WARNING);
         relaunchDialog.setTitle("Warning");
         relaunchDialog.setHeaderText("I see that you have changed path to 'appFiles' directory.");
-        relaunchDialog.setContentText("Your current path is: " + AppStyles.resourcesPath + "\n This app will be re-launched now to apply changes.");
+        relaunchDialog.setContentText("Your current path is: " + getResourcesPath() + "\n This app will be re-launched now to apply changes.");
         relaunchDialog.initStyle(StageStyle.UTILITY);
 
         confirmationResponse = relaunchDialog.showAndWait();

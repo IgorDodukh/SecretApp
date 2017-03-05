@@ -47,14 +47,14 @@ public class InventoryPage extends BrowserSettings {
 
     public void openAddInventoryForm(String productSku) {
         setTotalResultMessage(getTotalResultMessage() + "Search created Product\n");
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Product Inventory' page popup was not loaded");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("'Product Inventory' page popup was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(productInventoryFilterByFieldLocator));
         ProgressBar.addProgressValue(10);
         driver.findElement(productInventoryFilterByFieldLocator).sendKeys(productSku);
         driver.findElement(productInventoryFilterByFieldLocator).sendKeys(Keys.ENTER);
         ProgressBar.addProgressValue(progressVariable);
 
-        final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Product search was not finished");
+        final Wait<WebDriver> wait2 = new WebDriverWait(driver, getTimeoutVariable()).withMessage("Product search was not finished");
         wait2.until(ExpectedConditions.elementToBeClickable(firstProductSKULocator));
 
         Assert.assertEquals(driver.findElement(firstProductSKULocator).getText(), productSku, "Found Product has not expected SKU");
@@ -65,7 +65,7 @@ public class InventoryPage extends BrowserSettings {
 
         setTotalResultMessage(getTotalResultMessage() + "Click 'Add' button\n");
         driver.findElement(firstProductAddButtonLocator).click();
-        final Wait<WebDriver> wait3 = new WebDriverWait(driver, timeoutVariable).withMessage("Inventory adding form was not loaded");
+        final Wait<WebDriver> wait3 = new WebDriverWait(driver, getTimeoutVariable()).withMessage("Inventory adding form was not loaded");
         wait3.until(ExpectedConditions.elementToBeClickable(lotNumberFieldLocator));
         ProgressBar.addProgressValue(progressVariable);
     }
@@ -82,13 +82,13 @@ public class InventoryPage extends BrowserSettings {
 
         setTotalResultMessage(getTotalResultMessage() + " - Open 'Add Bin' form\n");
         driver.findElement(binDropdownAddNewBinButtonLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Bin creating form was not loaded");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("Bin creating form was not loaded");
         wait.until(ExpectedConditions.elementToBeClickable(addBinNameFieldLocator));
         ProgressBar.addProgressValue(progressVariable);
 
         setTotalResultMessage(getTotalResultMessage() + "Adding Bin info:\n");
         setTotalResultMessage(getTotalResultMessage() + " - Add Bin name\n");
-        driver.findElement(addBinNameFieldLocator).sendKeys(createdBin = GetPropertyValues.binName + new GenerateRandomData().generateRandomNumber(randomValueLength));
+        driver.findElement(addBinNameFieldLocator).sendKeys(createdBin = GetPropertyValues.binName + new GenerateRandomData().generateRandomNumber(getRandomValueLength()));
         ProgressBar.addProgressValue(progressVariable);
 
         setTotalResultMessage(getTotalResultMessage() + " - Select Bin type\n");
@@ -103,7 +103,7 @@ public class InventoryPage extends BrowserSettings {
         driver.findElement(saveBinButtonLocator).click();
         ProgressBar.addProgressValue(progressVariable);
         Thread.sleep(2000);
-        final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Bin creating popup was not hidden");
+        final Wait<WebDriver> wait2 = new WebDriverWait(driver, getTimeoutVariable()).withMessage("Bin creating popup was not hidden");
         wait2.until(ExpectedConditions.elementToBeClickable(lotNumberFieldLocator));
 
         setTotalResultMessage(getTotalResultMessage() + " - Add qty value\n");
@@ -128,7 +128,7 @@ public class InventoryPage extends BrowserSettings {
         driver.findElement(saveAndCloseProductButtonLocator).click();
         ProgressBar.addProgressValue(progressVariable);
 
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Confirmation popup was not found");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("Confirmation popup was not found");
         wait.until(ExpectedConditions.visibilityOfElementLocated(popupBoxMessageLocator));
 
         ProgressBar.addProgressValue(10);

@@ -36,7 +36,7 @@ public class CorporateMailBox extends BrowserSettings {
         setTotalResultMessage(getTotalResultMessage() + " Open mail box\n");
         setTotalResultMessage(getTotalResultMessage() + "  - Navigate to mail box\n");
         driver.get(mailboxUrl);
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("");
         wait.until(ExpectedConditions.elementToBeClickable(mailboxLoginFieldLocator));
 
 
@@ -45,13 +45,13 @@ public class CorporateMailBox extends BrowserSettings {
         driver.findElement(mailboxLoginFieldLocator).sendKeys(mailboxLogin);
         driver.findElement(mailboxLoginFieldLocator).sendKeys(Keys.ENTER);
 
-        final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("");
+        final Wait<WebDriver> wait2 = new WebDriverWait(driver, getTimeoutVariable()).withMessage("");
         wait2.until(ExpectedConditions.elementToBeClickable(mailboxPasswordFieldLocator));
 
         driver.findElement(mailboxPasswordFieldLocator).sendKeys(mailboxPassword);
         driver.findElement(mailboxPasswordFieldLocator).sendKeys(Keys.ENTER);
 
-        final Wait<WebDriver> wait3 = new WebDriverWait(driver, timeoutVariable).withMessage("");
+        final Wait<WebDriver> wait3 = new WebDriverWait(driver, getTimeoutVariable()).withMessage("");
         wait3.until(ExpectedConditions.elementToBeClickable(searchFieldLocator));
     }
 
@@ -64,7 +64,7 @@ public class CorporateMailBox extends BrowserSettings {
 
         setTotalResultMessage(getTotalResultMessage() + "  - Open invitation email\n");
         driver.findElement(firstFoundEmailLocator).click();
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("");
         wait.until(ExpectedConditions.elementToBeClickable(linkToFSFromEmailLocator));
 
         setTotalResultMessage(getTotalResultMessage() + "  - Navigate by confirmation link\n");

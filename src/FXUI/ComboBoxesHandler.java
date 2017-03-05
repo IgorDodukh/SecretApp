@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static FXUI.AppStyles.getDriversResourcePath;
+import static FXUI.Controller.getMagentoIndexName;
 import static FXUI.GeneratePopupBox.*;
 
 /**
@@ -33,11 +35,11 @@ public class ComboBoxesHandler{
     private final ConfigureChannel configureChannel = new ConfigureChannel();
     private final AddUsers addUsers = new AddUsers();
 
-    public void testTypeDeterminer(int dropdownIndex, String login, String password, String cardNumber, WebDriver driver)
-            throws InterruptedException, NoSuchAlgorithmException {
+    void testTypeDeterminer(int dropdownIndex, String login, String password, String cardNumber, WebDriver driver)
+            throws InterruptedException {
 
-        List<String> entityCreatedMessage = new ArrayList<>();
-        entityCreatedMessage.add("New Customer has been created\n");
+//        List<String> entityCreatedMessage = new ArrayList<>();
+//        entityCreatedMessage.add("New Customer has been created\n");
 
         Controller.setResultMessage(Controller.getResultMessage() + "Test has been finished.\n");
         if (dropdownIndex == 1) {
@@ -75,9 +77,9 @@ public class ComboBoxesHandler{
         } else if (dropdownIndex == 0) {
             BrowserSettings.progressVariable = 5;
             configureChannel.configureMagentoChannel(login, password, driver);
-            Controller.setResultMessage(Controller.getResultMessage() + "\nMagento "+ Controller.magentoIndexName);
+            Controller.setResultMessage(Controller.getResultMessage() + "\nMagento "+ getMagentoIndexName());
             Controller.setResultMessage(Controller.getResultMessage() + " has been synced with " + Controller.environmentComboBoxValue);
-        } else if (dropdownIndex == 7) {
+        } /*else if (dropdownIndex == 7) {
             BrowserSettings.progressVariable = 4;
             if(Objects.equals(GeneratePopupBox.userTypeToCreate, "Merchant")) {
                 System.out.println(GeneratePopupBox.userTypeToCreate);
@@ -96,29 +98,36 @@ public class ComboBoxesHandler{
                 addUsers.addMerchantAdmin(login, password, driver);
             } else throw new NoSuchAlgorithmException("No such test exception");
             Controller.setResultMessage(Controller.getResultMessage() + "New " + GeneratePopupBox.userTypeToCreate + " has been created");
+        }*/
+    }
+
+    static void additionalDialogDeterminer(int index) throws IOException {
+
+        switch (index) {
+            case 0: magentoPopupBox();
+                break;
+            case 1: identifyPopupBox();
+                break;
+            case 2: creditCardsPopupBox();
+                break;
+            case 7: userTypePopupBox();
+                break;
+            default: confirmationPopupBox();
+                break;
         }
     }
 
-    public static void additionalDialogDeterminer(int index) throws IOException {
-        if (index == 1) identifyPopupBox();
-        else if (index == 0) magentoPopupBox();
-        else if (index == 2) creditCardsPopupBox();
-        else if (index == 7) userTypePopupBox();
-        else confirmationPopupBox();
-    }
-
-    public static void comboBoxSetItems(ComboBox<String> comboBox, ObservableList<String> values, int selectedValue) throws IOException {
+    static void comboBoxSetItems(ComboBox<String> comboBox, ObservableList<String> values, int selectedValue) throws IOException {
         comboBox.setItems(values);
         comboBox.getSelectionModel().select(selectedValue);
         AppStyles.setComboBoxStyle(comboBox);
     }
 
-    public void webDriverDeterminer(int browserComboBoxIndex, boolean stopButtonClicked) {
-
+    void webDriverDeterminer(int browserComboBoxIndex, boolean stopButtonClicked) {
         try {
             if (browserComboBoxIndex == 0) {
                 Controller.setDriverWarning(Controller.getDriverWarning() + "Chrome");
-                System.setProperty("webdriver.chrome.driver", AppStyles.driversResourcePath + "chromedriver.exe");
+                System.setProperty("webdriver.chrome.driver", getDriversResourcePath() + "chromedriver.exe");
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("--disable-extensions");
                 Controller.driver = new ChromeDriver(options);

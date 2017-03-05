@@ -41,7 +41,7 @@ public class OrderCreatingPage extends BrowserSettings {
         driver.findElement(quickAddFieldLocator).sendKeys(orderedItems);
         driver.findElement(addItemButtonLocator).click();
 
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("Item was not added");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("Item was not added");
         wait.until(ExpectedConditions.visibilityOfElementLocated(addedItemSectionLocator));
         ProgressBar.addProgressValue(progressVariable);
     }
@@ -53,10 +53,10 @@ public class OrderCreatingPage extends BrowserSettings {
         driver.findElement(customerLastNameFieldLocator).click();
         ProgressBar.addProgressValue(progressVariable);
 
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Is Existing Customer' popup not appear");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("'Is Existing Customer' popup not appear");
         wait.until(ExpectedConditions.visibilityOfElementLocated(isExistingCustomerLocator));
 
-        final Wait<WebDriver> wait2 = new WebDriverWait(driver, timeoutVariable).withMessage("Existing Customer 'Select' link is not clickable");
+        final Wait<WebDriver> wait2 = new WebDriverWait(driver, getTimeoutVariable()).withMessage("Existing Customer 'Select' link is not clickable");
         wait2.until(ExpectedConditions.elementToBeClickable(selectCustomerButtonLocator));
 
         driver.findElement(selectCustomerButtonLocator).click();
@@ -94,7 +94,7 @@ public class OrderCreatingPage extends BrowserSettings {
             }
         }
         ProgressBar.addProgressValue(progressVariable);
-        final Wait<WebDriver> wait = new WebDriverWait(driver, timeoutVariable).withMessage("'Edit Order' page is not appear");
+        final Wait<WebDriver> wait = new WebDriverWait(driver, getTimeoutVariable()).withMessage("'Edit Order' page is not appear");
         wait.until(ExpectedConditions.visibilityOfElementLocated(orderSummaryTabLocator));
 
         setTotalResultMessage(getTotalResultMessage() + "Click 'Place Order' button\n");

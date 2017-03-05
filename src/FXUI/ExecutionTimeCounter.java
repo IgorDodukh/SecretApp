@@ -7,20 +7,20 @@ class ExecutionTimeCounter {
     private static long start = 0;
     static String executionTime = "";
 
-       public static void startCounter() {
+       static void startCounter() {
            start = System.currentTimeMillis();
         }
 
-       public static void stopCounter() {
+       static void stopCounter() {
            long stop = System.currentTimeMillis();
-           long diffMsec = stop -  start;
-           long diffSec = diffMsec / 1000;
+           long diffMs = stop -  start;
+           long diffSec = diffMs / 1000;
 
            if(diffSec<60){
                executionTime = String.valueOf(diffSec)  + " sec.";
            } else {
-               long diffMins = diffSec / 60;
-               executionTime = String.valueOf(diffMins) + " min. " + (diffSec - ((diffMins - 1)*60) - 60) + " sec.";
+               long diffMin = diffSec / 60;
+               executionTime = String.valueOf(diffMin) + " min. " + (diffSec - ((diffMin - 1)*60) - 60) + " sec.";
            }
         }
 }

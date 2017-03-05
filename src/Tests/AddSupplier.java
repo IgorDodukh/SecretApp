@@ -27,7 +27,7 @@ public class AddSupplier extends BrowserSettings {
         AddSupplierPage addSupplierPage = new AddSupplierPage(driver);
         addSupplierPage.addSupplierContactInfo(
                 supplierAccountNumber,
-                createdSupplierName = GetPropertyValues.supplierName + "_" + new GenerateRandomData().generateRandomNumber(randomValueLength),
+                createdSupplierName = GetPropertyValues.supplierName + "_" + new GenerateRandomData().generateRandomNumber(getRandomValueLength()),
                 supplierURL,
                 supplierAddress,
                 addressZip,

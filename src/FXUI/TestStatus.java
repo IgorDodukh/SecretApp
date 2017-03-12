@@ -8,9 +8,9 @@ import javafx.scene.image.ImageView;
 /**
  * Created by Ihor on 7/16/2016. All rights reserved!
  */
-public class TestStatus {
+class TestStatus {
 
-    public void startTest(Button startButton, Button stopButton, Label waitingLabel, Label progressLabel, ImageView waitingAnimation/*, ProgressBar progressBar*/) {
+    void startTest(Button startButton, Button stopButton, Label waitingLabel, Label progressLabel, ImageView waitingAnimation/*, ProgressBar progressBar*/) {
         startButton.setDisable(true);
         stopButton.setDisable(false);
         waitingLabel.setVisible(true);
@@ -22,7 +22,7 @@ public class TestStatus {
         BrowserSettings.setTotalResultMessage("");
     }
 
-    public void stopTest(Button startButton, Button stopButton, Label waitingLabel, Label progressLabel, ImageView waitingAnimation/*, ProgressBar progressBar*/) {
+    void stopTest(Button startButton, Button stopButton, Label waitingLabel, Label progressLabel, ImageView waitingAnimation/*, ProgressBar progressBar*/) {
         startButton.setDisable(false);
         stopButton.setDisable(true);
         waitingLabel.setVisible(false);

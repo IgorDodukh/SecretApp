@@ -18,6 +18,14 @@ public class GetPropertyValues {
     private InputStream userInputStream;
     private InputStream namesInputStream;
 
+    public static String getTimeoutProperty() {
+        return timeoutProperty;
+    }
+
+    public static void setTimeoutProperty(String timeoutProperty) {
+        GetPropertyValues.timeoutProperty = timeoutProperty;
+    }
+
     public static String timeoutProperty;
     public static String randomValueProperty;
     public static String defaultPathProperty;
@@ -73,7 +81,8 @@ public class GetPropertyValues {
             }
 
             // get the property value and print it out
-            timeoutProperty = systemVarProp.getProperty("timeoutVariable");
+            setTimeoutProperty(systemVarProp.getProperty("timeoutVariable"));
+//            timeoutProperty = systemVarProp.getProperty("timeoutVariable");
             randomValueProperty = systemVarProp.getProperty("randomValue");
             defaultPathProperty = systemVarProp.getProperty("defaultPath");
 

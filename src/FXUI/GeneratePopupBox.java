@@ -17,6 +17,8 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.*;
 
+import static Settings.GetPropertyValues.getTimeoutProperty;
+
 /**
  * Created by Ihor on 7/15/2016. All rights reserved!
  */
@@ -68,7 +70,7 @@ public class GeneratePopupBox {
     public static String currentAuthApiLoginId = "";
     public static String currentAuthTransactionKey = "";
 
-    public static void exceptionPopupBox(Exception exception) {
+    static void exceptionPopupBox(Exception exception) {
         String exceptionMessage = "";
         exceptionMessage += "Test has been stopped unexpectedly.\n" + "\n";
         exceptionMessage += "Reason:\n";
@@ -118,11 +120,11 @@ public class GeneratePopupBox {
         });
     }
 
-    public static void failedPopupBox(String contentText) {
+    static void failedPopupBox(String contentText) {
         Platform.runLater(() -> {
             Alert failedDialog = new Alert(Alert.AlertType.INFORMATION);
             appStyles.setDialogLogo(failedDialog, "sad.png");
-            failedDialog.setTitle("Running Test Failed");
+            failedDialog.setTitle("Warning");
             failedDialog.setHeaderText("Bad news for you...");
             failedDialog.setContentText(contentText);
             failedDialog.initStyle(StageStyle.UTILITY);
@@ -136,7 +138,7 @@ public class GeneratePopupBox {
         });
     }
 
-    public static void successPopupBox(String resultMessage) {
+    static void successPopupBox(String resultMessage) {
         Platform.runLater(() -> {
             Alert successDialog = new Alert(Alert.AlertType.INFORMATION);
             appStyles.setDialogLogo(successDialog, "success.png");
@@ -155,7 +157,7 @@ public class GeneratePopupBox {
         });
     }
 
-    public static void identifyPopupBox() throws IOException {
+    static void identifyPopupBox() throws IOException {
         List<String> userNamesList = new ArrayList<>();
         userNamesList.add("Igor");
         userNamesList.add("Vika");
@@ -199,7 +201,7 @@ public class GeneratePopupBox {
         } else System.out.println("Person select cancelled");
     }
 
-    public static void userTypePopupBox() throws IOException {
+    static void userTypePopupBox() throws IOException {
         List<String> choices = new ArrayList<>();
         choices.add("Merchant");
         choices.add("Merchant Admin");
@@ -252,7 +254,7 @@ public class GeneratePopupBox {
         } else System.out.println("User Type selecting cancelled");
     }
 
-    public static void creditCardsPopupBox() throws IOException {
+    static void creditCardsPopupBox() throws IOException {
         List<String> cardTypesList = new ArrayList<>();
         cardTypesList.add("Visa");
         cardTypesList.add("Master Card");
@@ -295,7 +297,7 @@ public class GeneratePopupBox {
         } else System.out.println("CC cancelled");
     }
 
-    public static void magentoPopupBox() throws IOException {
+    static void magentoPopupBox() throws IOException {
         List<String> choices = new ArrayList<>();
         Collections.addAll(choices, magentoAdminPanels);
 
@@ -318,7 +320,7 @@ public class GeneratePopupBox {
         } else System.out.println("Select Magento cancelled");
     }
 
-    public static void confirmationPopupBox () throws IOException {
+    static void confirmationPopupBox() throws IOException {
         String infoMessage = "";
         infoMessage += "Selected Browser: " + Controller.browserComboBoxValue + "\n";
         infoMessage += "Selected Test: " + Controller.entityComboBoxValue + "\n";
@@ -338,7 +340,7 @@ public class GeneratePopupBox {
         confirmationResponse = confirmationAlert.showAndWait();
     }
 
-    public static void configVariablesPopupBox() throws IOException {
+    static void configVariablesPopupBox() throws IOException {
         Alert configDialog = new Alert(Alert.AlertType.CONFIRMATION);
         appStyles.setDialogLogo(configDialog, "conf.png");
 
@@ -357,7 +359,7 @@ public class GeneratePopupBox {
         Label appFilesPathLabel = new Label("Default path to 'appFiles' folder: ");
         appFilesPathLabel.setTooltip(new Tooltip("Please use the following format:\nC:/Program Files/appFiles"));
 
-        int selectedTimeout = timeouts.indexOf(GetPropertyValues.timeoutProperty);
+        int selectedTimeout = timeouts.indexOf(getTimeoutProperty());
         int selectedRandomLength = randomValue.indexOf(GetPropertyValues.randomValueProperty);
 
         ComboBox<String> timeoutsComboBox = new ComboBox<>();
@@ -417,7 +419,7 @@ public class GeneratePopupBox {
         } else System.out.println("Configuration popup box cancelled");
     }
 
-    public static void configNamesPopupBox() {
+    static void configNamesPopupBox() {
 
         Dialog configDialog = new Dialog();
         appStyles.setDialogLogo(configDialog, "conf.png");
@@ -527,7 +529,7 @@ public class GeneratePopupBox {
         } else System.out.println("Configuration popup box cancelled");
     }
 
-    public static void aboutPopupBox() {
+    static void aboutPopupBox() {
         Alert aboutDialog = new Alert(Alert.AlertType.INFORMATION);
         appStyles.setDialogLogo(aboutDialog, "hi.png");
         aboutDialog.setTitle("About");
@@ -585,7 +587,7 @@ public class GeneratePopupBox {
         warningDialog.showAndWait();
     }
 
-    public static void relaunchPopupBox() {
+    private static void relaunchPopupBox() {
         Alert relaunchDialog = new Alert(Alert.AlertType.WARNING);
         relaunchDialog.setTitle("Warning");
         relaunchDialog.setHeaderText("I see that you have changed path to 'appFiles' directory.");

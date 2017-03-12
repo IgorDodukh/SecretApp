@@ -11,6 +11,7 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -19,15 +20,15 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane cache="true" nodeOrientation="LEFT_TO_RIGHT" prefHeight="300.0" prefWidth="235.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXUI.Controller">
+<AnchorPane cache="true" nodeOrientation="LEFT_TO_RIGHT" prefHeight="300.0" prefWidth="235.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXUI.Controller">
    <children>
-      <Pane layoutY="190.0" prefHeight="20.0" prefWidth="570.0" style="-fx-background-color: #234974;">
+      <Pane fx:id="windowMiddle" layoutY="190.0" prefHeight="20.0" prefWidth="570.0" style="-fx-background-color: #234974;">
          <children>
             <ProgressBar fx:id="progressBar" layoutY="-1.0" prefHeight="23.0" prefWidth="570.0" style="-fx-border-width: 0;" visible="false" />
          </children></Pane>
-      <Pane prefHeight="31.0" prefWidth="570.0" style="-fx-background-color: #234974; -fx-text-fill: white;">
+      <Pane fx:id="windowHeader" prefHeight="31.0" prefWidth="570.0" style="-fx-background-color: #234974; -fx-text-fill: white;">
          <children>
-            <MenuBar id="menuBar" fx:id="myMenuBar" layoutY="-2.0" prefHeight="32.0" prefWidth="461.0">
+            <MenuBar id="menuBar" fx:id="myMenuBar" layoutY="-2.0" prefHeight="32.0" prefWidth="183.0">
               <menus>
                 <Menu mnemonicParsing="false" style="-fx-text-fill: white;" text="App  ">
                   <items>
@@ -47,8 +48,13 @@
                   <Insets />
                </opaqueInsets>
             </MenuBar>
+            <ToggleButton fx:id="apiSwitcher" layoutX="234.0" layoutY="-1.0" mnemonicParsing="false" onAction="#clickApiSwitcher" prefHeight="31.0" prefWidth="138.0" text="API mode" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ToggleButton>
          </children></Pane>
-      <Pane layoutY="404.0" prefHeight="57.0" prefWidth="570.0" style="-fx-background-color: #234974;">
+      <Pane fx:id="windowFooter" layoutY="404.0" prefHeight="57.0" prefWidth="570.0" style="-fx-background-color: #234974;">
          <children>
             <Label fx:id="waitingLabel" layoutX="311.0" layoutY="13.0" prefHeight="32.0" prefWidth="173.0" text="Test is running..." textFill="WHITE" visible="false">
                <font>
@@ -78,17 +84,17 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label prefHeight="32.0" prefWidth="173.0" text="Select Browser" textFill="#2d6ca2">
+            <Label fx:id="browserTypeLabel" prefHeight="32.0" prefWidth="173.0" text="Select Browser" textFill="#2d6ca2">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Label text="Select Test Type" textFill="#2d6ca2" GridPane.rowIndex="1">
+            <Label fx:id="entityTypeLabel" text="Select Entity Type" textFill="#2d6ca2" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Label text="Select Environment" textFill="#2d6ca2" GridPane.rowIndex="2">
+            <Label fx:id="environmentLabel" text="Select Environment" textFill="#2d6ca2" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
@@ -105,6 +111,16 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></ComboBox>
+            <Label fx:id="requestTypeLabel" prefHeight="32.0" prefWidth="202.0" text="Select Request Type" textFill="#2d6ca2" visible="false">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="requestsComboBox" prefHeight="25.0" prefWidth="230.0" visible="false" GridPane.columnIndex="1">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ComboBox>
          </children>
       </GridPane>
       <GridPane layoutX="310.0" layoutY="216.0" prefHeight="180.0" prefWidth="245.0">
@@ -139,6 +155,14 @@
                </cursor>
             </Button>
             <Button fx:id="stopButton" disable="true" mnemonicParsing="false" onAction="#clickStopButton" prefHeight="25.0" prefWidth="105.0" style="-fx-text-fill: white;" text="Stop" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Segoe UI Bold" size="16.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="sendButton" mnemonicParsing="false" onAction="#clickSendButton" prefHeight="25.0" prefWidth="105.0" style="-fx-text-fill: white;" text="Send" visible="false" GridPane.rowIndex="4">
                <font>
                   <Font name="Segoe UI Bold" size="16.0" />
                </font>

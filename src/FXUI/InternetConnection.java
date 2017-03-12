@@ -6,27 +6,15 @@ import java.net.Socket;
 /**
  * Created by Ihor on 8/26/2016. All rights reserved!
  */
-public class InternetConnection {
+class InternetConnection {
     private static String failedHeaderText = "Test was not starter.";
-    private static String failedContentText = "Please check your internet connection.";
+    private static String failedContentText = "Please check your Internet connection.";
 
-    public static String getFailedHeaderText() {
-        return failedHeaderText;
-    }
-    
-    public static void setFailedHeaderText(String failedHeaderText) {
-        InternetConnection.failedHeaderText = failedHeaderText;
-    }
-
-    public static String getFailedContentText() {
+    static String getFailedContentText() {
         return failedContentText;
     }
 
-    public static void setFailedContentText(String failedContentText) {
-        InternetConnection.failedContentText = failedContentText;
-    }
-
-    public boolean checkInternetConnection(){
+    boolean checkInternetConnection(){
         boolean status = false;
         Socket sock = new Socket();
         InetSocketAddress address = new InetSocketAddress("www.google.com", 80);

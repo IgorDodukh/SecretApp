@@ -30,11 +30,14 @@
 }
 .combo-box-popup .list-view .list-cell:selected
 {
-	-fx-background-color: white;
+	/*-fx-background-color: white;*/
+    -fx-text-fill: white;
+	-fx-background-color: #3C9AE0;
 }
 
 .combo-box-popup .list-view .list-cell:hover
 {
+    -fx-text-fill: #234974;
 	-fx-background-color: 
 		linear-gradient(from 0% 83% to 0% 100%, #8BD3FF 0%, #3C9AE0 100%),
         radial-gradient(center 50% 50%, radius 100%, #8BD3FF, #3C9AE0);

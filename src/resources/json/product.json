@@ -1,0 +1,21 @@
+{
+  "ProductSku": "PRODPRODSKU-xxxxx",
+  "ProductName": "PRODPRODNAME-xxxxx",
+  "ShortDescription": "PRODPRODNAME ShortDescription",
+  "LongDescription": "PRODPRODNAME LongDescription",
+  "RetailPrice": "888.00",
+  "Weight": "0.15",
+  "WeightUnit": "oz",
+  "Length": "0.00",
+  "Width": "0.00",
+  "Height": "0.00",
+  "VolumeUnit": "in",
+  "Comments": "",
+  "ImageUrl": null,
+  "ImageThumbnailUrl": null,
+  "IsGiftMessageProduct": "False",
+  "AvailableQuantity": "11111.00",
+  "ProductTaxClass": null,
+  "CustomerId": null,
+  "SalesChannelId": null
+}

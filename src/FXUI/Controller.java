@@ -1,5 +1,9 @@
 package FXUI;
 
+import API.Settings.EnvSettings;
+import API.Settings.JsonReader;
+import API.Tests.AuthResource.AuthPOST;
+import API.Tests.ProductsResource.ProductsResource;
 import Settings.BrowserSettings;
 import Settings.ReadConfigMain;
 import javafx.collections.FXCollections;
@@ -9,10 +13,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Paint;
+import org.json.simple.parser.ParseException;
 import org.openqa.selenium.WebDriver;
 
-import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import static FXUI.ComboBoxesHandler.additionalDialogDeterminer;
@@ -48,6 +55,12 @@ public class Controller extends Main {
     private final BrowserSettings browserSettings = new BrowserSettings();
     private final ComboBoxesHandler comboBoxesHandler = new ComboBoxesHandler();
     private InternetConnection internetConnection = new InternetConnection();
+    private EnvSettings envSettings = new EnvSettings();
+    private AuthPOST authPOST = new AuthPOST();
+    private ProductsResource productsResource = new ProductsResource();
+    private JsonReader jsonReader = new JsonReader();
+
+
 
     private static String driverWarning = "";
     private static String driverExceptionMessage = "";
@@ -56,7 +69,16 @@ public class Controller extends Main {
     public static String password;
 
     private int browserComboBoxIndex;
-    private int environmentComboBoxIndex;
+
+//    public static int getEnvironmentComboBoxIndex() {
+//        return environmentComboBoxIndex;
+//    }
+//
+//    private void setEnvironmentComboBoxIndex(int environmentComboBoxIndex) {
+//        this.environmentComboBoxIndex = environmentComboBoxIndex;
+//    }
+
+    public static int environmentComboBoxIndex;
     private int dropdownIndex;
 
     private final ObservableList<String> browsers =
@@ -75,9 +97,15 @@ public class Controller extends Main {
                     "Reorder the last Order",
                     "Create User"
             );
+
     private final ObservableList<String> environments =
             FXCollections.observableArrayList(
                     "QA01", "QA03", "QA05", "Production (for mad guys)"
+            );
+
+    private final ObservableList<String> requestTypes =
+            FXCollections.observableArrayList(
+                    "GET", "POST", "PUT", "DELETE"
             );
 
     public ComboBox<String> browsersComboBox;
@@ -88,6 +116,7 @@ public class Controller extends Main {
     public TextField loginField;
     public PasswordField passwordField;
     public Button startButton;
+    public Button sendButton;
     public Button stopButton;
 //    public ProgressBar progressBar;
     public Label waitingLabel;
@@ -101,44 +130,50 @@ public class Controller extends Main {
     public MenuBar myMenuBar;
     public MenuItem aboutButton;
     public MenuItem namesConfigs;
+    public ToggleButton apiSwitcher;
+    public Label requestTypeLabel;
+    public Label browserTypeLabel;
+    public Label entityTypeLabel;
+    public Label environmentLabel;
+    public ComboBox requestsComboBox;
 
-    public static String getResultMessage() {
+    static String getResultMessage() {
         return resultMessage;
     }
 
-    public static void setResultMessage(String resultMessage) {
+    static void setResultMessage(String resultMessage) {
         Controller.resultMessage = resultMessage;
     }
 
-    public static String getDriverWarning() {
+    static String getDriverWarning() {
         return driverWarning;
     }
 
-    public static void setDriverWarning(String driverWarning) {
+    static void setDriverWarning(String driverWarning) {
         Controller.driverWarning = driverWarning;
     }
 
-    public static boolean isExceptionStatus() {
+    private static boolean isExceptionStatus() {
         return exceptionStatus;
     }
 
-    public static void setExceptionStatus(boolean exceptionStatus) {
+    static void setExceptionStatus(boolean exceptionStatus) {
         Controller.exceptionStatus = exceptionStatus;
     }
 
-    public static String getDriverExceptionMessage() {
+    static String getDriverExceptionMessage() {
         return driverExceptionMessage;
     }
 
-    public static void setDriverExceptionMessage(String driverExceptionMessage) {
+    static void setDriverExceptionMessage(String driverExceptionMessage) {
         Controller.driverExceptionMessage = driverExceptionMessage;
     }
 
-    public static int getProgressValue() {
+    static int getProgressValue() {
         return progressValue;
     }
 
-    public static void setProgressValue(int addProgressValue) {
+    static void setProgressValue(int addProgressValue) {
         Controller.progressValue = addProgressValue;
     }
 
@@ -151,15 +186,18 @@ public class Controller extends Main {
         ComboBoxesHandler.comboBoxSetItems(browsersComboBox, browsers, 0);
         ComboBoxesHandler.comboBoxSetItems(entityTypeComboBox, entityTypes, 0);
         ComboBoxesHandler.comboBoxSetItems(environmentsComboBox, environments, 0);
+        ComboBoxesHandler.comboBoxSetItems(requestsComboBox, requestTypes, 0);
 
         AppStyles.setButtonsStyle(startButton);
         AppStyles.setButtonsStyle(stopButton);
+        AppStyles.setButtonsStyle(sendButton);
         AppStyles.setMenuBarStyle(myMenuBar);
+        AppStyles.setToggleButtonStyle(apiSwitcher);
 
         companyLogo.setImage(new Image("file:///" + AppStyles.picturesResourcePath + "fslogo.png"));
         waitingAnimation.setImage(new Image("file:///" + AppStyles.picturesResourcePath + "spinner.gif"));
 
-        buildVersion.setText("Build Version: 1.75 beta");
+        buildVersion.setText("Build Version: 2.0 beta");
 
         ReadConfigMain.main();
         loginField.setText(loginProperty);
@@ -190,6 +228,52 @@ public class Controller extends Main {
         configNamesPopupBox();
     }
 
+    public void clickSendButton() throws ParseException {
+        if (entityComboBoxValue.contains("product")) {
+            productsResource.productsGet();
+        } else System.out.println("New Request");
+    }
+
+    private void updateApiModeView(Boolean value) {
+        browserTypeLabel.setVisible(!value);
+        browsersComboBox.setVisible(!value);
+        startButton.setVisible(!value);
+        requestsComboBox.setVisible(value);
+        requestTypeLabel.setVisible(value);
+        sendButton.setVisible(value);
+    }
+
+    public void clickApiSwitcher() throws IOException, ParseException {
+        List<String> authKeysList = new ArrayList<>();
+        authKeysList.add("username");
+        authKeysList.add("password");
+
+        List<String> credentialsList = new ArrayList<>();
+        credentialsList.add(loginField.getText());
+        credentialsList.add(passwordField.getText());
+
+        if (apiSwitcher.isSelected()) {
+            environmentComboBoxIndex = environmentsComboBox.getSelectionModel().getSelectedIndex();
+            envSettings.setupVariables();
+            if (internetConnection.checkInternetConnection()) {
+                apiSwitcher.textFillProperty().setValue(Paint.valueOf("#FFA500"));
+                updateApiModeView(true);
+                jsonReader.changeJsonFields(envSettings.getAuthJsonPath(), authKeysList, credentialsList);
+                authPOST.authorisationPOST();
+            } else {
+                failedPopupBox(getFailedContentText() + "\nAPI mode can't be used without Internet connection.");
+                apiSwitcher.setSelected(false);
+            }
+
+        } else if (!apiSwitcher.isSelected()){
+            updateApiModeView(false);
+            apiSwitcher.textFillProperty().setValue(Paint.valueOf("#fff"));
+        }
+
+//        setEnvironmentComboBoxIndex(environmentsComboBox.getSelectionModel().getSelectedIndex());
+
+    }
+
     public synchronized void clickStartButton() throws IOException {
         boolean internetExist = internetConnection.checkInternetConnection();
 
@@ -200,6 +284,7 @@ public class Controller extends Main {
 
         browserComboBoxIndex = browsersComboBox.getSelectionModel().getSelectedIndex();
         environmentComboBoxIndex = environmentsComboBox.getSelectionModel().getSelectedIndex();
+//        setEnvironmentComboBoxIndex(environmentsComboBox.getSelectionModel().getSelectedIndex());
         dropdownIndex = entityTypeComboBox.getSelectionModel().getSelectedIndex();
 
         startButton.setDisable(true);

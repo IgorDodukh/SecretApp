@@ -10,16 +10,16 @@ import javafx.scene.paint.Color;
  */
 class FieldsListener {
     static boolean isNameBlank = false;
-    static boolean firstNameBlank = false;
-    static boolean lastNameBlank = false;
-    static boolean skuBlank = false;
-    static boolean productNameBlank = false;
-    static boolean warehouseBlank = false;
-    static boolean binBlank = false;
-    static boolean supplierBlank = false;
-    public static boolean loginBlank = false;
-    public static boolean passwordBlank = false;
-    public static void multipleFieldsValidation(TextField textField, Label fieldLabel, Label warningLabel, Node button) {
+    private static boolean firstNameBlank = false;
+    private static boolean lastNameBlank = false;
+    private static boolean skuBlank = false;
+    private static boolean productNameBlank = false;
+    private static boolean warehouseBlank = false;
+    private static boolean binBlank = false;
+    private static boolean supplierBlank = false;
+    private static boolean loginBlank = false;
+    private static boolean passwordBlank = false;
+    static void multipleFieldsValidation(TextField textField, Label fieldLabel, Label warningLabel, Node button) {
 
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue.trim().isEmpty()){

@@ -1,8 +1,11 @@
 package Pages;
 
-import Settings.BrowserSettings;
 import FXUI.ProgressBar;
-import org.openqa.selenium.*;
+import Settings.BrowserSettings;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -25,6 +28,9 @@ public class LoginPage extends BrowserSettings{
     private final By siteLogoIconLocator = By.xpath("//img[@id='logoIcon']");
 
     public void loginMerchant(String email, String pass) throws InterruptedException {
+        log("Login user to FS:");
+        log(" - Enter Login");
+
         setTotalResultMessage(getTotalResultMessage() + "Login user to FS:\n");
         setTotalResultMessage(getTotalResultMessage() + " - Enter Login\n");
         WebElement login = driver.findElement(emailInputLocator);
@@ -32,11 +38,15 @@ public class LoginPage extends BrowserSettings{
         login.sendKeys(email);
         ProgressBar.addProgressValue(progressVariable);
 
+        log(" - Enter Password");
+
         setTotalResultMessage(getTotalResultMessage() + " - Enter Password\n");
         WebElement password = driver.findElement(passwordInputLocator);
         password.clear();
         password.sendKeys(pass);
         ProgressBar.addProgressValue(progressVariable);
+
+        log(" - Click 'Login' button");
 
         setTotalResultMessage(getTotalResultMessage() + " - Click 'Login' button\n");
         driver.findElement(loginButtonLocator).click();

@@ -22,6 +22,7 @@ public class AppStyles extends GetSystemFiles {
     public static String propertiesResourcePath = resourcesPath + "properties" + File.separator;
     public static String stylesResourcePath = resourcesPath + "styles" + File.separator;
     private static String dialogBoxStyle = stylesResourcePath + "dialogBoxes.css";
+    public static String jsonPath = resourcesPath + File.separator + "json" + File.separator;
 
     private void getDialogStyleFile(Dialog dialog) throws IOException {
         System.out.println(resourcesPath);
@@ -101,6 +102,10 @@ public class AppStyles extends GetSystemFiles {
 
     static void setMenuBarStyle(MenuBar menuBar) throws IOException {
         getUIStyleFile(menuBar, "mainStyle.css");
+    }
+
+    static void setToggleButtonStyle(ToggleButton toggleButton) throws IOException {
+        getUIStyleFile(toggleButton, "buttons.css");
     }
 
     void setDialogLogo(Dialog dialog, String logoName) {

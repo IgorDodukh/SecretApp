@@ -4,12 +4,12 @@ import FXUI.ProgressBar;
 import Tests.AddNewCustomer;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
+import org.testng.Reporter;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by igor on 17.04.16. All rights reserved!
@@ -141,6 +141,10 @@ protected final String magentoLogin = "FSAWS_Admin";
 
     public static void setTotalResultMessage(String totalResultMessage) {
         BrowserSettings.totalResultMessage = totalResultMessage;
+    }
+
+    public void log(String logMessage) {
+        Reporter.log(logMessage + "<br>");
     }
 
     @BeforeTest

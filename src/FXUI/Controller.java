@@ -34,59 +34,43 @@ import static Settings.UpdateConfig.updateCredentials;
 public class Controller extends Main {
     public static WebDriver driver;
 
-    private Exception exceptionValue;
-    static boolean loginFilled = true;
-    static boolean passFilled = true;
+    private String responseStatus;
+    private String responseBody;
 
-    private static String resultMessage = "";
+    public Controller(Label progressLabel, String responseStatus, String responseBody ) {
+        progressLabel.setText(responseStatus);
+        this.progressLabel = progressLabel;
+        this.responseStatus = responseStatus;
+        this.responseBody = responseBody;
+        System.out.println();
+    }
     public static int magentoIndex;
     public static String magentoIndexName = "";
-    private static int progressValue = 0;
-    private static boolean exceptionStatus = false;
-    private boolean stopButtonClicked = false;
-
     public static String cardNumber = "";
-
     public static String browserComboBoxValue = "";
     public static String entityComboBoxValue = "";
     public static String environmentComboBoxValue = "";
-
-    private final TestStatus testStatus = new TestStatus();
-    private final BrowserSettings browserSettings = new BrowserSettings();
-    private final ComboBoxesHandler comboBoxesHandler = new ComboBoxesHandler();
-    private InternetConnection internetConnection = new InternetConnection();
-    private EnvSettings envSettings = new EnvSettings();
-    private AuthPOST authPOST = new AuthPOST();
-    private ProductsResource productsResource = new ProductsResource();
-    private JsonReader jsonReader = new JsonReader();
-
-
-
+    public static String login;
+    public static String password;
+    public static int environmentComboBoxIndex;
+    static boolean loginFilled = true;
+    static boolean passFilled = true;
+    private static String resultMessage = "";
+    private static int progressValue = 0;
+    private static boolean exceptionStatus = false;
     private static String driverWarning = "";
     private static String driverExceptionMessage = "";
 
-    public static String login;
-    public static String password;
+    private final AppStatus appStatus = new AppStatus();
+    private final BrowserSettings browserSettings = new BrowserSettings();
+    private final ComboBoxesHandler comboBoxesHandler = new ComboBoxesHandler();
 
-    private int browserComboBoxIndex;
-
-//    public static int getEnvironmentComboBoxIndex() {
-//        return environmentComboBoxIndex;
-//    }
-//
-//    private void setEnvironmentComboBoxIndex(int environmentComboBoxIndex) {
-//        this.environmentComboBoxIndex = environmentComboBoxIndex;
-//    }
-
-    public static int environmentComboBoxIndex;
-    private int dropdownIndex;
-
-    private final ObservableList<String> browsers =
+    private final ObservableList<String> browsersList =
             FXCollections.observableArrayList(
                     "Google Chrome",
                     "Mozilla Firefox"
             );
-    private final ObservableList<String> entityTypes =
+    private final ObservableList<String> entityTypesList =
             FXCollections.observableArrayList(
                     "Sync Magento with FS",
                     "Configure Merchant",
@@ -98,44 +82,70 @@ public class Controller extends Main {
                     "Create User"
             );
 
-    private final ObservableList<String> environments =
+    private final ObservableList<String> apiResourcesList =
+            FXCollections.observableArrayList(
+                    "Orders",
+                    "Customers",
+                    "Products",
+                    "Suppliers",
+                    "Warehouses",
+                    "Bins"
+            );
+
+    private final ObservableList<String> environmentsList =
             FXCollections.observableArrayList(
                     "QA01", "QA03", "QA05", "Production (for mad guys)"
             );
-
-    private final ObservableList<String> requestTypes =
+    private final ObservableList<String> requestTypesList =
             FXCollections.observableArrayList(
                     "GET", "POST", "PUT", "DELETE"
             );
-
     public ComboBox<String> browsersComboBox;
     public ComboBox<String> entityTypeComboBox;
     public ComboBox<String> environmentsComboBox;
+    public ComboBox<String> requestsComboBox;
+    public ComboBox<String> apiEntityTypeComboBox;
+
     public Label loginLabel;
     public Label passwordLabel;
-    public TextField loginField;
-    public PasswordField passwordField;
-    public Button startButton;
-    public Button sendButton;
-    public Button stopButton;
-//    public ProgressBar progressBar;
     public Label waitingLabel;
     public Label progressLabel;
     public Label validationLabel;
     public Label buildVersion;
-    public ImageView waitingAnimation;
-    public ImageView companyLogo;
-    public MenuItem menuConfigs;
-    public MenuItem closeMenuButton;
-    public MenuBar myMenuBar;
-    public MenuItem aboutButton;
-    public MenuItem namesConfigs;
-    public ToggleButton apiSwitcher;
     public Label requestTypeLabel;
     public Label browserTypeLabel;
     public Label entityTypeLabel;
     public Label environmentLabel;
-    public ComboBox requestsComboBox;
+    public Label apiResourceLabel;
+
+    public TextField loginField;
+    public PasswordField passwordField;
+
+    public Button startButton;
+    public Button sendButton;
+    public Button stopButton;
+    //    public ProgressBar progressBar;
+
+    public ImageView waitingAnimation;
+    public ImageView companyLogo;
+
+    public MenuItem menuConfigs;
+    public MenuItem closeMenuButton;
+    public MenuItem aboutButton;
+    public MenuItem namesConfigs;
+
+    public MenuBar myMenuBar;
+    public ToggleButton apiSwitcher;
+
+    private Exception exceptionValue;
+    private boolean stopButtonClicked = false;
+    private InternetConnection internetConnection = new InternetConnection();
+    private EnvSettings envSettings = new EnvSettings();
+    private AuthPOST authPOST = new AuthPOST();
+    private ProductsResource productsResource = new ProductsResource();
+    private JsonReader jsonReader = new JsonReader();
+    private int browserComboBoxIndex;
+    private int dropdownIndex;
 
     static String getResultMessage() {
         return resultMessage;
@@ -183,10 +193,11 @@ public class Controller extends Main {
         FieldsListener.multipleFieldsValidation(passwordField, passwordLabel, validationLabel, startButton);
 
         //TODO: implement installation by installer
-        ComboBoxesHandler.comboBoxSetItems(browsersComboBox, browsers, 0);
-        ComboBoxesHandler.comboBoxSetItems(entityTypeComboBox, entityTypes, 0);
-        ComboBoxesHandler.comboBoxSetItems(environmentsComboBox, environments, 0);
-        ComboBoxesHandler.comboBoxSetItems(requestsComboBox, requestTypes, 0);
+        ComboBoxesHandler.comboBoxSetItems(browsersComboBox, browsersList, 0);
+        ComboBoxesHandler.comboBoxSetItems(entityTypeComboBox, entityTypesList, 0);
+        ComboBoxesHandler.comboBoxSetItems(apiEntityTypeComboBox, apiResourcesList, 0);
+        ComboBoxesHandler.comboBoxSetItems(environmentsComboBox, environmentsList, 0);
+        ComboBoxesHandler.comboBoxSetItems(requestsComboBox, requestTypesList, 0);
 
         AppStyles.setButtonsStyle(startButton);
         AppStyles.setButtonsStyle(stopButton);
@@ -203,7 +214,7 @@ public class Controller extends Main {
         loginField.setText(loginProperty);
         passwordField.setText(passProperty);
 
-        if(Objects.equals(loginField.getText(), "") || Objects.equals(passwordField.getText(), ""))
+        if (Objects.equals(loginField.getText(), "") || Objects.equals(passwordField.getText(), ""))
             startButton.setDisable(true);
 
         closeMenuButton.setOnAction(t -> System.exit(0));
@@ -229,18 +240,35 @@ public class Controller extends Main {
     }
 
     public void clickSendButton() throws ParseException {
-        if (entityComboBoxValue.contains("product")) {
+        String requestValue = apiEntityTypeComboBox.getValue();
+        System.out.println("Request type: " + requestsComboBox.getValue());
+        System.out.println("Resource type: " + requestValue);
+        System.out.println("compare: " + requestValue.equalsIgnoreCase("Products"));
+        System.out.println("Resource type: " + apiEntityTypeComboBox.getValue());
+        if (requestValue.equalsIgnoreCase("Products")) {
+            System.out.println("sending get products");
             productsResource.productsGet();
         } else System.out.println("New Request");
     }
 
     private void updateApiModeView(Boolean value) {
         browserTypeLabel.setVisible(!value);
+        entityTypeLabel.setVisible(!value);
         browsersComboBox.setVisible(!value);
+        entityTypeComboBox.setVisible(!value);
         startButton.setVisible(!value);
+
         requestsComboBox.setVisible(value);
+        apiEntityTypeComboBox.setVisible(value);
         requestTypeLabel.setVisible(value);
+        apiResourceLabel.setVisible(value);
         sendButton.setVisible(value);
+    }
+
+    public void requestResult() {
+        progressLabel.setVisible(true);
+        progressLabel.setText(responseStatus);
+        GeneratePopupBox.successPopupBox(responseBody);
     }
 
     public void clickApiSwitcher() throws IOException, ParseException {
@@ -256,22 +284,24 @@ public class Controller extends Main {
             environmentComboBoxIndex = environmentsComboBox.getSelectionModel().getSelectedIndex();
             envSettings.setupVariables();
             if (internetConnection.checkInternetConnection()) {
+                authPOST.authorisationPOST();
                 apiSwitcher.textFillProperty().setValue(Paint.valueOf("#FFA500"));
                 updateApiModeView(true);
+//                    appStatus.requestWaitingAnimation(sendButton, waitingAnimation, true);
                 jsonReader.changeJsonFields(envSettings.getAuthJsonPath(), authKeysList, credentialsList);
-                authPOST.authorisationPOST();
+
             } else {
                 failedPopupBox(getFailedContentText() + "\nAPI mode can't be used without Internet connection.");
                 apiSwitcher.setSelected(false);
             }
-
-        } else if (!apiSwitcher.isSelected()){
+        } else if (!apiSwitcher.isSelected()) {
             updateApiModeView(false);
             apiSwitcher.textFillProperty().setValue(Paint.valueOf("#fff"));
         }
 
-//        setEnvironmentComboBoxIndex(environmentsComboBox.getSelectionModel().getSelectedIndex());
+//        appStatus.requestWaitingAnimation(sendButton, waitingAnimation, false);
 
+//        setEnvironmentComboBoxIndex(environmentsComboBox.getSelectionModel().getSelectedIndex());
     }
 
     public synchronized void clickStartButton() throws IOException {
@@ -296,10 +326,10 @@ public class Controller extends Main {
 
         additionalDialogDeterminer(dropdownIndex);
 
-        if(confirmationResponse == null) {
+        if (confirmationResponse == null) {
             startButton.setDisable(false);
-            System.out.println("Popup canceled");}
-        else if (confirmationResponse.get() == ButtonType.OK && internetExist) {
+            System.out.println("Popup canceled");
+        } else if (confirmationResponse.get() == ButtonType.OK && internetExist) {
             startCounter();
 
             Task dynamicTimeTask = updateProgressLabel();
@@ -312,14 +342,14 @@ public class Controller extends Main {
 
             Runnable runnableTest = () -> {
                 comboBoxesHandler.webDriverDeterminer(browserComboBoxIndex, stopButtonClicked);
-                if(!isExceptionStatus()) {
-                    testStatus.startTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
+                if (!isExceptionStatus()) {
+                    appStatus.startTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
                     System.out.println("Test Started");
                     browserSettings.setUp(environmentComboBoxIndex, browserComboBoxIndex, driver);
                     try {
                         comboBoxesHandler.testTypeDeterminer(dropdownIndex, login, password, cardNumber, driver);
                     } catch (Exception e1) {
-                        testStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
+                        appStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
                         exceptionValue = e1;
                         setExceptionStatus(true);
                         if (!Objects.equals(e1.getClass().getSimpleName(), "NoSuchWindowException"))
@@ -328,55 +358,54 @@ public class Controller extends Main {
                     } finally {
                         stopCounter();
                         if (isExceptionStatus()) {
-                            testStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
+                            appStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
                             if (!stopButtonClicked) exceptionPopupBox(exceptionValue);
                         }
                     }
                     if (!isExceptionStatus()) {
                         browserSettings.tearDown(driver);
-                        testStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
+                        appStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
                         successPopupBox(getResultMessage());
                     }
-                } else testStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
+                } else appStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
             };
             Thread thread1 = new Thread(runnableTest);
             thread1.start();
 //            Thread thread2 = new Thread(runnableProgress);
 //            thread2.start();
-        } else if(confirmationResponse.get() == ButtonType.OK && !internetExist){
-                failedPopupBox(getFailedContentText());
-                testStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
+        } else if (confirmationResponse.get() == ButtonType.OK && !internetExist) {
+            failedPopupBox(getFailedContentText());
+            appStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
+        } else if (confirmationResponse.get() == ButtonType.CANCEL || confirmationResponse.get() == ButtonType.CLOSE) {
+            startButton.setDisable(false);
+            System.out.println("No/Close button");
         }
-            else if (confirmationResponse.get() == ButtonType.CANCEL || confirmationResponse.get() == ButtonType.CLOSE) {
-                startButton.setDisable(false);
-                System.out.println("No/Close button");
-            }
-            confirmationResponse = null;
-            setDriverWarning("");
-            setDriverExceptionMessage("");
-            setExceptionStatus(false);
+        confirmationResponse = null;
+        setDriverWarning("");
+        setDriverExceptionMessage("");
+        setExceptionStatus(false);
 //        }
     }
 
     private Task updateProgressLabel() {
         return new Task<Void>() {
-                    @Override
-                    protected Void call() throws Exception {
-                        while (true) {
-                            updateMessage(String.valueOf(getProgressValue()) + "%");
-                            try {
-                                Thread.sleep(100);
-                            } catch (InterruptedException ex) {
-                                break;
-                            }
-                        }
-                        return null;
+            @Override
+            protected Void call() throws Exception {
+                while (true) {
+                    updateMessage(String.valueOf(getProgressValue()) + "%");
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ex) {
+                        break;
                     }
-                };
+                }
+                return null;
+            }
+        };
     }
 
     public void clickStopButton() {
-        testStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
+        appStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
         stopButtonClicked = true;
         Runnable runnable2 = () -> {
             try {

@@ -120,7 +120,7 @@ public class GeneratePopupBox {
         });
     }
 
-    static void failedPopupBox(String contentText) {
+    public static void failedPopupBox(String contentText) {
         Platform.runLater(() -> {
             Alert failedDialog = new Alert(Alert.AlertType.INFORMATION);
             appStyles.setDialogLogo(failedDialog, "sad.png");

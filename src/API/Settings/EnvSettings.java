@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class EnvSettings {
 
-    protected List<String> resourcesPathList = new ArrayList<>();
+    protected static List<String> resourcesPathList = new ArrayList<>();
     List<String> environmentApiUrlList = new ArrayList<>();
 
     protected static String environmentUrl = null;

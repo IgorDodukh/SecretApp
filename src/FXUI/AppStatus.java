@@ -8,7 +8,7 @@ import javafx.scene.image.ImageView;
 /**
  * Created by Ihor on 7/16/2016. All rights reserved!
  */
-class TestStatus {
+class AppStatus {
 
     void startTest(Button startButton, Button stopButton, Label waitingLabel, Label progressLabel, ImageView waitingAnimation/*, ProgressBar progressBar*/) {
         startButton.setDisable(true);
@@ -31,4 +31,10 @@ class TestStatus {
 //        progressBar.setVisible(false);
         Controller.setProgressValue(0);
     }
+
+    void requestWaitingAnimation(Button sendButton, ImageView waitingAnimation, boolean status) {
+        sendButton.setDisable(!status);
+        waitingAnimation.setVisible(status);
+    }
+
 }

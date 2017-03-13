@@ -121,6 +121,16 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ComboBox>
+            <ComboBox fx:id="apiEntityTypeComboBox" prefHeight="31.0" prefWidth="230.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ComboBox>
+            <Label fx:id="apiResourceLabel" text="Select API Resource" textFill="#2d6ca2" visible="false" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
          </children>
       </GridPane>
       <GridPane layoutX="310.0" layoutY="216.0" prefHeight="180.0" prefWidth="245.0">

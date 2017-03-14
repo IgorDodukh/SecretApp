@@ -272,6 +272,7 @@ public class Controller extends Main {
 //    }
 
     public void clickApiSwitcher() throws IOException, ParseException {
+        appStatus.requestWaitingAnimation(sendButton, waitingAnimation, true);
         List<String> authKeysList = new ArrayList<>();
         authKeysList.add("username");
         authKeysList.add("password");
@@ -284,6 +285,8 @@ public class Controller extends Main {
             environmentComboBoxIndex = environmentsComboBox.getSelectionModel().getSelectedIndex();
             envSettings.setupVariables();
             if (internetConnection.checkInternetConnection()) {
+
+//                appStatus.startTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
 
                 Task dynamicTimeTask = updateProgressLabel();
 
@@ -311,6 +314,7 @@ public class Controller extends Main {
 //        appStatus.requestWaitingAnimation(sendButton, waitingAnimation, false);
 
 //        setEnvironmentComboBoxIndex(environmentsComboBox.getSelectionModel().getSelectedIndex());
+//        appStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
     }
 
     public synchronized void clickStartButton() throws IOException {

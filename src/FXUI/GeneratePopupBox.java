@@ -1,15 +1,21 @@
 package FXUI;
 
+import API.Settings.RequestsSender;
 import Settings.BrowserSettings;
 import Settings.GetPropertyValues;
 import Settings.UpdateConfig;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
@@ -138,7 +144,7 @@ public class GeneratePopupBox {
         });
     }
 
-    static void successPopupBox(String resultMessage) {
+    public static void successPopupBox(String resultMessage) {
         Platform.runLater(() -> {
             Alert successDialog = new Alert(Alert.AlertType.INFORMATION);
             appStyles.setDialogLogo(successDialog, "success.png");
@@ -254,6 +260,82 @@ public class GeneratePopupBox {
         } else System.out.println("User Type selecting cancelled");
     }
 
+    public static void listBox(ArrayList jArray) {
+        Platform.runLater(() -> {
+            Alert responseBody = new Alert(Alert.AlertType.INFORMATION);
+            appStyles.setDialogLogo(responseBody, "hi.png");
+            responseBody.setTitle("About");
+            responseBody.setHeaderText("Hi there! It's About of Secret App");
+            responseBody.setContentText("This application is developed to make QA life easier " +
+                    "while doing routine things...\n\n");
+            responseBody.initStyle(StageStyle.UTILITY);
+
+            Label label = new Label("Last release: '#1.75 beta' includes the following new features:");
+
+            ListView<String> listView = new ListView<>();
+            ObservableList<String> items = FXCollections.observableArrayList ();
+
+            int i = 0;
+            for(Object item: jArray){
+                items.add(i++, item.toString());
+                System.out.println("item: " + item);
+            }
+
+            listView.setItems(items);
+            listView.setMaxWidth(Double.MAX_VALUE);
+            listView.setMaxHeight(Double.MAX_VALUE);
+            GridPane.setVgrow(listView, Priority.ALWAYS);
+            GridPane.setHgrow(listView, Priority.ALWAYS);
+
+            GridPane expContent = new GridPane();
+            expContent.setMaxWidth(Double.MAX_VALUE);
+            expContent.add(label, 0, 0);
+            expContent.add(listView, 0, 1);
+
+// Set expandable Exception into the dialog pane.
+            responseBody.getDialogPane().setExpandableContent(expContent);
+
+            try {
+                appStyles.setDialogStyle(responseBody);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            responseBody.showAndWait();
+        });
+    }
+
+    static void responseResultsPopupBox(Stage stage) {
+        Scene scene = new Scene(new Group());
+        stage.setTitle("Table View Sample");
+        stage.setWidth(300);
+        stage.setHeight(500);
+
+        final Label label = new Label("Address Book");
+        label.setFont(new javafx.scene.text.Font("Arial", 20));
+
+        TableView table = new TableView();
+
+        RequestsSender.getResponseBody();
+
+        table.setEditable(true);
+
+        TableColumn firstNameCol = new TableColumn("First Name");
+        TableColumn lastNameCol = new TableColumn("Last Name");
+        TableColumn emailCol = new TableColumn("Email");
+
+        table.getColumns().addAll(firstNameCol, lastNameCol, emailCol);
+
+        final VBox vbox = new VBox();
+        vbox.setSpacing(5);
+        vbox.setPadding(new Insets(10, 0, 0, 10));
+        vbox.getChildren().addAll(label, table);
+
+        ((Group) scene.getRoot()).getChildren().addAll(vbox);
+
+        stage.setScene(scene);
+        stage.show();
+    }
     static void creditCardsPopupBox() throws IOException {
         List<String> cardTypesList = new ArrayList<>();
         cardTypesList.add("Visa");
@@ -422,7 +504,7 @@ public class GeneratePopupBox {
 
     static void configNamesPopupBox() {
 
-        Dialog configDialog = new Dialog();
+        Dialog<ButtonType> configDialog = new Dialog<>();
         appStyles.setDialogLogo(configDialog, "conf.png");
         configDialog.setTitle("Names Configurations");
         configDialog.setHeaderText("Set default names for creatable objects");

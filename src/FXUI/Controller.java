@@ -34,7 +34,6 @@ import static Settings.UpdateConfig.updateCredentials;
 public class Controller extends Main {
     public static WebDriver driver;
 
-    private String responseStatus;
     private String responseBody;
 //
 //    public Controller( String responseStatus, String responseBody ) {
@@ -44,6 +43,10 @@ public class Controller extends Main {
 //        this.responseBody = responseBody;
 //        System.out.println();
 //    }
+
+    public void enableSpinner(boolean enable) {
+        waitingAnimation.setVisible(enable);
+    }
 
     public static int magentoIndex;
     public static String magentoIndexName = "";
@@ -85,7 +88,7 @@ public class Controller extends Main {
 
     private final ObservableList<String> apiResourcesList =
             FXCollections.observableArrayList(
-                    "\\Orders resource",
+                    "Orders",
                     "Customers",
                     "Products",
                     "Suppliers",
@@ -148,6 +151,17 @@ public class Controller extends Main {
     private int browserComboBoxIndex;
     private int dropdownIndex;
 
+    public String getResponseStatus() {
+        return responseStatus;
+    }
+
+    public static void setResponseStatus(String responseStatus) {
+        Controller.responseStatus = responseStatus;
+    }
+
+    private static String responseStatus = "";
+
+
     static String getResultMessage() {
         return resultMessage;
     }
@@ -184,7 +198,7 @@ public class Controller extends Main {
         return progressValue;
     }
 
-    static void setProgressValue(int addProgressValue) {
+    public static void setProgressValue(int addProgressValue) {
         Controller.progressValue = addProgressValue;
     }
 
@@ -241,13 +255,23 @@ public class Controller extends Main {
     }
 
     public void clickSendButton() throws ParseException {
+        setResponseStatus("");
         String requestValue = apiEntityTypeComboBox.getValue();
         System.out.println("Request type: " + requestsComboBox.getValue());
         System.out.println("Resource type: " + requestValue);
-        if (requestValue.equalsIgnoreCase("Products")) {
-            System.out.println("sending get products");
-            productsResource.productsGet();
-        } else System.out.println("New Request");
+        Runnable runnableTest = () -> {
+            if (requestValue.equalsIgnoreCase("Products")) {
+                System.out.println("sending get products");
+                try {
+                    productsResource.productsGet();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            } else System.out.println("New Request");
+        };
+
+        Thread thread1 = new Thread(runnableTest);
+        thread1.start();
     }
 
     private void updateApiModeView(Boolean value) {
@@ -265,14 +289,17 @@ public class Controller extends Main {
         sendButton.setVisible(value);
     }
 
-//    public void requestResult() {
-//        progressLabel.setVisible(true);
+    public void requestProgressSpinner(boolean enable) {
+        this.waitingAnimation = waitingAnimation;
+//        progressLabel.setVisible(enable);
 //        progressLabel.setText(responseStatus);
 //        GeneratePopupBox.successPopupBox(responseBody);
-//    }
+        waitingAnimation.setVisible(enable);
+    }
 
     public void clickApiSwitcher() throws IOException, ParseException {
-        appStatus.requestWaitingAnimation(sendButton, waitingAnimation, true);
+//        appStatus.requestWaitingAnimation(sendButton, waitingAnimation, true);
+        setResponseStatus("");
         List<String> authKeysList = new ArrayList<>();
         authKeysList.add("username");
         authKeysList.add("password");
@@ -288,7 +315,7 @@ public class Controller extends Main {
 
 //                appStatus.startTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
 
-                Task dynamicTimeTask = updateProgressLabel();
+                Task dynamicTimeTask = updateResponseStatus();
 
                 progressLabel.textProperty().bind(dynamicTimeTask.messageProperty());
                 Thread t3 = new Thread(dynamicTimeTask);
@@ -307,6 +334,7 @@ public class Controller extends Main {
                 apiSwitcher.setSelected(false);
             }
         } else if (!apiSwitcher.isSelected()) {
+            setResponseStatus("");
             updateApiModeView(false);
             apiSwitcher.textFillProperty().setValue(Paint.valueOf("#fff"));
         }
@@ -406,6 +434,23 @@ public class Controller extends Main {
             protected Void call() throws Exception {
                 while (true) {
                     updateMessage(String.valueOf(getProgressValue()) + "%");
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ex) {
+                        break;
+                    }
+                }
+                return null;
+            }
+        };
+    }
+
+    private Task updateResponseStatus() {
+        return new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                while (true) {
+                    updateMessage(String.valueOf(getResponseStatus()));
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException ex) {

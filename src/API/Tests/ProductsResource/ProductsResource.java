@@ -12,7 +12,7 @@ public class ProductsResource extends EnvSettings {
 
 //    @Test
     public void productsGet() throws ParseException {
-        requestsSender.jerseyPOSTRequest(environmentUrl + resourcesPathList.get(0), jsonReader.getReceivedJsonString());
-        RequestsSender.getRequest(environmentUrl + resourcesPathList.get(1));
+//        requestsSender.jerseyPOSTRequest(environmentUrl + resourcesPathList.get(0), jsonReader.getReceivedJsonString());
+        requestsSender.getRequest(environmentUrl + resourcesPathList.get(1));
     }
 }

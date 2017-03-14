@@ -10,4 +10,8 @@ public class ProgressBar {
         currentProgress = Controller.getProgressValue() + i;
         Controller.setProgressValue(currentProgress);
     }
+
+//    public static void addResponseStatus(String status) {
+//        Controller.setResponseStatus(status);
+//    }
 }

@@ -3,6 +3,7 @@ package API.Settings;
 import FXUI.AppStyles;
 import FXUI.Controller;
 import FXUI.GeneratePopupBox;
+import FXUI.ProgressBar;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -62,6 +63,7 @@ public class RequestsSender extends EnvSettings {
             }
 
             System.out.println("POST Status: " + response.getStatus() + " " + response.getStatusInfo());
+            ProgressBar.addProgressValue(response.getStatus());
         };
         Thread thread = new Thread(runnable);
         thread.start();
@@ -78,7 +80,7 @@ public class RequestsSender extends EnvSettings {
 
         ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).header("x-freestyle-api-auth", getToken()).get(ClientResponse.class);
 
-        controller.requestResult(response.getStatus() + " " + response.getStatusInfo(), response.getEntity(String.class));
+//        controller.requestResult();
         System.out.println("GET Status: " + response.getStatus() + " " + response.getStatusInfo());
 
         System.out.println("GET response body: " + response.getEntity(String.class));

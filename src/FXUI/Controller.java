@@ -36,14 +36,15 @@ public class Controller extends Main {
 
     private String responseStatus;
     private String responseBody;
+//
+//    public Controller( String responseStatus, String responseBody ) {
+////        progressLabel.setText(responseStatus);
+////        this.progressLabel = progressLabel;
+//        this.responseStatus = responseStatus;
+//        this.responseBody = responseBody;
+//        System.out.println();
+//    }
 
-    public Controller(Label progressLabel, String responseStatus, String responseBody ) {
-        progressLabel.setText(responseStatus);
-        this.progressLabel = progressLabel;
-        this.responseStatus = responseStatus;
-        this.responseBody = responseBody;
-        System.out.println();
-    }
     public static int magentoIndex;
     public static String magentoIndexName = "";
     public static String cardNumber = "";
@@ -84,7 +85,7 @@ public class Controller extends Main {
 
     private final ObservableList<String> apiResourcesList =
             FXCollections.observableArrayList(
-                    "Orders",
+                    "\\Orders resource",
                     "Customers",
                     "Products",
                     "Suppliers",
@@ -243,8 +244,6 @@ public class Controller extends Main {
         String requestValue = apiEntityTypeComboBox.getValue();
         System.out.println("Request type: " + requestsComboBox.getValue());
         System.out.println("Resource type: " + requestValue);
-        System.out.println("compare: " + requestValue.equalsIgnoreCase("Products"));
-        System.out.println("Resource type: " + apiEntityTypeComboBox.getValue());
         if (requestValue.equalsIgnoreCase("Products")) {
             System.out.println("sending get products");
             productsResource.productsGet();
@@ -258,6 +257,7 @@ public class Controller extends Main {
         entityTypeComboBox.setVisible(!value);
         startButton.setVisible(!value);
 
+        progressLabel.setVisible(value);
         requestsComboBox.setVisible(value);
         apiEntityTypeComboBox.setVisible(value);
         requestTypeLabel.setVisible(value);
@@ -265,11 +265,11 @@ public class Controller extends Main {
         sendButton.setVisible(value);
     }
 
-    public void requestResult() {
-        progressLabel.setVisible(true);
-        progressLabel.setText(responseStatus);
-        GeneratePopupBox.successPopupBox(responseBody);
-    }
+//    public void requestResult() {
+//        progressLabel.setVisible(true);
+//        progressLabel.setText(responseStatus);
+//        GeneratePopupBox.successPopupBox(responseBody);
+//    }
 
     public void clickApiSwitcher() throws IOException, ParseException {
         List<String> authKeysList = new ArrayList<>();
@@ -284,6 +284,15 @@ public class Controller extends Main {
             environmentComboBoxIndex = environmentsComboBox.getSelectionModel().getSelectedIndex();
             envSettings.setupVariables();
             if (internetConnection.checkInternetConnection()) {
+
+                Task dynamicTimeTask = updateProgressLabel();
+
+                progressLabel.textProperty().bind(dynamicTimeTask.messageProperty());
+                Thread t3 = new Thread(dynamicTimeTask);
+                t3.setName("Test Time Updater");
+                t3.setDaemon(true);
+                t3.start();
+
                 authPOST.authorisationPOST();
                 apiSwitcher.textFillProperty().setValue(Paint.valueOf("#FFA500"));
                 updateApiModeView(true);

@@ -369,8 +369,9 @@ public class GeneratePopupBox {
         ComboBoxesHandler.comboBoxSetItems(randomValueComboBox, randomValue, selectedRandomLength);
 
         TextField appFilesPathField = new TextField();
-        appFilesPathField.setText(AppStyles.resourcesPath.replace("\\","/"));
-        appFilesPathField.setDisable(true);
+        appFilesPathField.setText(System.getProperty("user.dir"));
+        appFilesPathField.setTooltip(new Tooltip(System.getProperty("user.dir")));
+        appFilesPathField.setEditable(false);
 
         GridPane configsGrid = new GridPane();
         configsGrid.vgapProperty().setValue(15);

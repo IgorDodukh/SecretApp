@@ -2,6 +2,7 @@ package FXUI;
 
 import API.Settings.EnvSettings;
 import API.Settings.JsonReader;
+import API.Settings.RequestsBuilder;
 import API.Tests.AuthResource.AuthPOST;
 import API.Tests.ProductsResource.ProductsResource;
 import Settings.BrowserSettings;
@@ -149,6 +150,7 @@ public class Controller extends Main {
     private AuthPOST authPOST = new AuthPOST();
     private ProductsResource productsResource = new ProductsResource();
     private JsonReader jsonReader = new JsonReader();
+    private RequestsBuilder requestsBuilder = new RequestsBuilder();
     private int browserComboBoxIndex;
     private int dropdownIndex;
 
@@ -162,6 +164,16 @@ public class Controller extends Main {
 
     //TODO complete recognition the request type in analogy with resource type
     private static int selectedResourceIndex;
+
+    public static int getSelectedEnvironmentIndex() {
+        return selectedEnvironmentIndex;
+    }
+
+    public static void setSelectedEnvironmentIndex(int selectedEnvironmentIndex) {
+        Controller.selectedEnvironmentIndex = selectedEnvironmentIndex;
+    }
+
+    private static int selectedEnvironmentIndex;
 
     public static int getSelectedRequestTypeIndex() {
         return selectedRequestTypeIndex;
@@ -264,8 +276,6 @@ public class Controller extends Main {
         KeysListener.startButtonKeyListener(loginField, this);
         KeysListener.startButtonKeyListener(passwordField, this);
         KeysListener.startButtonKeyListener(startButton, this);
-
-
     }
 
     public void clickConfigsButton() throws IOException {
@@ -287,9 +297,14 @@ public class Controller extends Main {
             setSelectedResourceIndex(apiEntityTypeComboBox.getSelectionModel().getSelectedIndex());
             try {
                 if (getSelectedResourceIndex() == 2) {
-                    System.out.println("sending GET products");
-                    if()
-                    productsResource.sendGet();
+                    if(getSelectedRequestTypeIndex() == 0){
+                        requestsBuilder.getRequest(EnvSettings.getEnvironmentUrl() + Controller.getSelectedResourceIndex());
+                        productsResource.sendGet();
+                        System.out.println("Send GET");
+                    } else if (getSelectedRequestTypeIndex() == 1) {
+//                        productsResource.sendPost();
+                        System.out.println("Send POST");
+                    }
                 } else System.out.println("New Request");
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -301,6 +316,7 @@ public class Controller extends Main {
     }
 
     private void updateApiModeView(Boolean value) {
+        setSelectedEnvironmentIndex(environmentsComboBox.getSelectionModel().getSelectedIndex());
         browserTypeLabel.setVisible(!value);
         entityTypeLabel.setVisible(!value);
         browsersComboBox.setVisible(!value);

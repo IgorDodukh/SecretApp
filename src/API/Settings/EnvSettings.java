@@ -16,6 +16,14 @@ public class EnvSettings {
     protected static List<String> resourcesPathList = new ArrayList<>();
     List<String> environmentApiUrlList = new ArrayList<>();
 
+    public static String getEnvironmentUrl() {
+        return environmentUrl;
+    }
+
+    public static void setEnvironmentUrl(String environmentUrl) {
+        EnvSettings.environmentUrl = environmentUrl;
+    }
+
     protected static String environmentUrl = null;
 
     private static String token;
@@ -46,14 +54,15 @@ public class EnvSettings {
         resourcesPathList.add("products");
         resourcesPathList.add("customers");
 
-        environmentUrl = environmentApiUrlList.get(Controller.environmentComboBoxIndex);
-        System.out.println("ENV url :" + environmentUrl);
+//        environmentUrl = environmentApiUrlList.get(Controller.environmentComboBoxIndex);
+        setEnvironmentUrl(environmentApiUrlList.get(Controller.environmentComboBoxIndex));
+        System.out.println("ENV url :" + getEnvironmentUrl());
 
-        if(environmentUrl == null){
-            environmentUrl = environmentApiUrlList.get(0);
+        if(getEnvironmentUrl() == null){
+            setEnvironmentUrl(environmentApiUrlList.get(0));
         }
 
-        System.out.println("ENV url :" + environmentUrl);
+        System.out.println("ENV url :" + getEnvironmentUrl());
 
         System.out.println("--filepath is: " + authJsonPath);
         System.out.println("--api url: " + environmentApiUrlList.get(0) +

@@ -264,22 +264,28 @@ public class GeneratePopupBox {
         Platform.runLater(() -> {
             Alert responseBody = new Alert(Alert.AlertType.INFORMATION);
             appStyles.setDialogLogo(responseBody, "hi.png");
-            responseBody.setTitle("About");
-            responseBody.setHeaderText("Hi there! It's About of Secret App");
-            responseBody.setContentText("This application is developed to make QA life easier " +
-                    "while doing routine things...\n\n");
+            responseBody.setTitle("Response results");
+            responseBody.setHeaderText("Response body");
+            responseBody.setContentText("Returned entities list\n");
             responseBody.initStyle(StageStyle.UTILITY);
 
-            Label label = new Label("Last release: '#1.75 beta' includes the following new features:");
+            Label label = new Label("Here is a returned entities list:");
+
 
             ListView<String> listView = new ListView<>();
             ObservableList<String> items = FXCollections.observableArrayList ();
 
+
             int i = 0;
             for(Object item: jArray){
+
+//                String productSku = item.toString().substring(item.toString().indexOf("ProductSku\":\""), );
+                System.out.println("index prod SKU: " + (item.toString().indexOf("ProductSku\":\"") + "ProductSku\":\"".length()));
+                System.out.println("index prod name: " + item.toString().indexOf("ProductName\":\""));
                 items.add(i++, item.toString());
                 System.out.println("item: " + item);
             }
+
 
             listView.setItems(items);
             listView.setMaxWidth(Double.MAX_VALUE);
@@ -293,7 +299,7 @@ public class GeneratePopupBox {
             expContent.add(listView, 0, 1);
 
 // Set expandable Exception into the dialog pane.
-            responseBody.getDialogPane().setExpandableContent(expContent);
+            responseBody.getDialogPane().setContent(expContent);
 
             try {
                 appStyles.setDialogStyle(responseBody);

@@ -96,8 +96,10 @@ public class RequestsSender {
             ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).header("x-freestyle-api-auth", getToken()).get(ClientResponse.class);
 
 // Parse JSON response
+            ArrayList<String> responseList = new ArrayList<>();
 
-            String parsingKey = "ProductSku";
+            String productSku = "ProductSku";
+            String productName = "ProductName";
 
             JSONParser parser = new JSONParser();
             Object obj = null;
@@ -109,48 +111,12 @@ public class RequestsSender {
             JSONArray json = (JSONArray) obj;
             System.out.println("Json: " + json);
 
-//            json.toJSONString();
-//            JSONArray jsonarray = new JSONArray(jsonStr);
-//            for (int i = 0; i < jsonarray.length(); i++) {
-//                JSONObject jsonobject = jsonarray.getJSONObject(i);
-//                String name = jsonobject.getString("name");
-//                String url = jsonobject.getString("url");
-//            }
-
-            ArrayList<String> responseList = new ArrayList<>();
-
-
-            for(int i=0;i<json.size();i++){
-                responseList.add(i, json.get(i).toString());
-                System.out.println("array is " + json.get(i));
-
+            for (Object o : json) {
+                JSONObject jsonLineItem = (JSONObject) o;
+                String productSkuKey = jsonLineItem.get(productSku).toString();
+                String productNameKey = jsonLineItem.get(productName).toString();
+                responseList.add(productSkuKey + ", " + productNameKey);
             }
-
-//            for(int i=0;i<jsonArray.length();i++){
-//                System.out.println("array is " + jsonArray.get(i));
-//
-//            }
-//            for(Object o: data){
-//                responseList.add(o.toString());
-//                System.out.println(o);
-//            }
-
-            JSONArray array = new JSONArray();
-            array.add(obj);
-
-            System.out.println("Array: " + array.toString());
-//            JSONObject jsonObject = (JSONObject) obj;
-            Assert.assertNotEquals("Response body is null.", array, null);
-
-            System.out.println("GET Status: " + response.getStatus() + " " + response.getStatusInfo());
-            responseBody = array.toString();
-            ArrayList<String> responseArray = new ArrayList<>();
-
-            for(Object object: array){
-                responseArray.add(object.toString());
-            }
-//            System.out.println("GET response body: " + response.getEntity(String.class));
-//            GeneratePopupBox.successPopupBox(responseBody);
             GeneratePopupBox.listBox(responseList);
         };
         Thread thread = new Thread(runnable);

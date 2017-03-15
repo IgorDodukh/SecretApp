@@ -54,14 +54,13 @@ public class EnvSettings {
         resourcesPathList.add("products");
         resourcesPathList.add("customers");
 
-//        environmentUrl = environmentApiUrlList.get(Controller.environmentComboBoxIndex);
         setEnvironmentUrl(environmentApiUrlList.get(Controller.environmentComboBoxIndex));
         System.out.println("ENV url :" + getEnvironmentUrl());
 
-        if(getEnvironmentUrl() == null){
-            setEnvironmentUrl(environmentApiUrlList.get(0));
+/*        if(getEnvironmentUrl() == null){
+            setEnvironmentUrl(environmentApiUrlList.get(Controller.getSelectedEnvironmentIndex()));
         }
-
+*/
         System.out.println("ENV url :" + getEnvironmentUrl());
 
         System.out.println("--filepath is: " + authJsonPath);

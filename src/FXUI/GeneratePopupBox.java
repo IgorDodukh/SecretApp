@@ -1,21 +1,15 @@
 package FXUI;
 
-import API.Settings.RequestsSender;
 import Settings.BrowserSettings;
 import Settings.GetPropertyValues;
 import Settings.UpdateConfig;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
@@ -271,21 +265,13 @@ public class GeneratePopupBox {
 
             Label label = new Label("Here is a returned entities list:");
 
-
             ListView<String> listView = new ListView<>();
             ObservableList<String> items = FXCollections.observableArrayList ();
 
-
-            int i = 0;
+            /**Add items to the ObservableList*/
             for(Object item: jArray){
-
-//                String productSku = item.toString().substring(item.toString().indexOf("ProductSku\":\""), );
-                System.out.println("index prod SKU: " + (item.toString().indexOf("ProductSku\":\"") + "ProductSku\":\"".length()));
-                System.out.println("index prod name: " + item.toString().indexOf("ProductName\":\""));
-                items.add(i++, item.toString());
-                System.out.println("item: " + item);
+                items.add(item.toString());
             }
-
 
             listView.setItems(items);
             listView.setMaxWidth(Double.MAX_VALUE);
@@ -294,6 +280,7 @@ public class GeneratePopupBox {
             GridPane.setHgrow(listView, Priority.ALWAYS);
 
             GridPane expContent = new GridPane();
+            expContent.setMinWidth(500);
             expContent.setMaxWidth(Double.MAX_VALUE);
             expContent.add(label, 0, 0);
             expContent.add(listView, 0, 1);
@@ -311,37 +298,6 @@ public class GeneratePopupBox {
         });
     }
 
-    static void responseResultsPopupBox(Stage stage) {
-        Scene scene = new Scene(new Group());
-        stage.setTitle("Table View Sample");
-        stage.setWidth(300);
-        stage.setHeight(500);
-
-        final Label label = new Label("Address Book");
-        label.setFont(new javafx.scene.text.Font("Arial", 20));
-
-        TableView table = new TableView();
-
-        RequestsSender.getResponseBody();
-
-        table.setEditable(true);
-
-        TableColumn firstNameCol = new TableColumn("First Name");
-        TableColumn lastNameCol = new TableColumn("Last Name");
-        TableColumn emailCol = new TableColumn("Email");
-
-        table.getColumns().addAll(firstNameCol, lastNameCol, emailCol);
-
-        final VBox vbox = new VBox();
-        vbox.setSpacing(5);
-        vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(label, table);
-
-        ((Group) scene.getRoot()).getChildren().addAll(vbox);
-
-        stage.setScene(scene);
-        stage.show();
-    }
     static void creditCardsPopupBox() throws IOException {
         List<String> cardTypesList = new ArrayList<>();
         cardTypesList.add("Visa");

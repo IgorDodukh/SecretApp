@@ -86,7 +86,7 @@ public class Controller extends Main {
                     "Create User"
             );
 
-    private final ObservableList<String> apiResourcesList =
+    public final ObservableList<String> apiResourcesList =
             FXCollections.observableArrayList(
                     "Orders",
                     "Customers",
@@ -102,8 +102,9 @@ public class Controller extends Main {
             );
     private final ObservableList<String> requestTypesList =
             FXCollections.observableArrayList(
-                    "GET", "POST", "PUT", "DELETE"
+                    "GET", "POST"/*, "PUT", "DELETE"*/
             );
+
     public ComboBox<String> browsersComboBox;
     public ComboBox<String> entityTypeComboBox;
     public ComboBox<String> environmentsComboBox;
@@ -150,6 +151,27 @@ public class Controller extends Main {
     private JsonReader jsonReader = new JsonReader();
     private int browserComboBoxIndex;
     private int dropdownIndex;
+
+    public static int getSelectedResourceIndex() {
+        return selectedResourceIndex;
+    }
+
+    public void setSelectedResourceIndex(int selectedResourceIndex) {
+        Controller.selectedResourceIndex = selectedResourceIndex;
+    }
+
+    //TODO complete recognition the request type in analogy with resource type
+    private static int selectedResourceIndex;
+
+    public static int getSelectedRequestTypeIndex() {
+        return selectedRequestTypeIndex;
+    }
+
+    public static void setSelectedRequestTypeIndex(int selectedRequestTypeIndex) {
+        Controller.selectedRequestTypeIndex = selectedRequestTypeIndex;
+    }
+
+    private static int selectedRequestTypeIndex;
 
     public String getResponseStatus() {
         return responseStatus;
@@ -203,7 +225,7 @@ public class Controller extends Main {
     }
 
     @FXML
-    private void initialize() throws IOException {
+    private void initialize() throws IOException, ParseException {
         FieldsListener.multipleFieldsValidation(loginField, loginLabel, validationLabel, startButton);
         FieldsListener.multipleFieldsValidation(passwordField, passwordLabel, validationLabel, startButton);
 
@@ -242,6 +264,8 @@ public class Controller extends Main {
         KeysListener.startButtonKeyListener(loginField, this);
         KeysListener.startButtonKeyListener(passwordField, this);
         KeysListener.startButtonKeyListener(startButton, this);
+
+
     }
 
     public void clickConfigsButton() throws IOException {
@@ -260,14 +284,16 @@ public class Controller extends Main {
         System.out.println("Request type: " + requestsComboBox.getValue());
         System.out.println("Resource type: " + requestValue);
         Runnable runnableTest = () -> {
-            if (requestValue.equalsIgnoreCase("Products")) {
-                System.out.println("sending get products");
-                try {
-                    productsResource.productsGet();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            } else System.out.println("New Request");
+            setSelectedResourceIndex(apiEntityTypeComboBox.getSelectionModel().getSelectedIndex());
+            try {
+                if (getSelectedResourceIndex() == 2) {
+                    System.out.println("sending GET products");
+                    if()
+                    productsResource.sendGet();
+                } else System.out.println("New Request");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         };
 
         Thread thread1 = new Thread(runnableTest);
@@ -289,13 +315,13 @@ public class Controller extends Main {
         sendButton.setVisible(value);
     }
 
-    public void requestProgressSpinner(boolean enable) {
-        this.waitingAnimation = waitingAnimation;
-//        progressLabel.setVisible(enable);
-//        progressLabel.setText(responseStatus);
-//        GeneratePopupBox.successPopupBox(responseBody);
-        waitingAnimation.setVisible(enable);
-    }
+//    public void requestProgressSpinner(boolean enable) {
+//        this.waitingAnimation = waitingAnimation;
+////        progressLabel.setVisible(enable);
+////        progressLabel.setText(responseStatus);
+////        GeneratePopupBox.successPopupBox(responseBody);
+//        waitingAnimation.setVisible(enable);
+//    }
 
     public void clickApiSwitcher() throws IOException, ParseException {
 //        appStatus.requestWaitingAnimation(sendButton, waitingAnimation, true);

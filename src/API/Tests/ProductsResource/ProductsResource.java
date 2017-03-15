@@ -1,18 +1,16 @@
 package API.Tests.ProductsResource;
 
 import API.Settings.EnvSettings;
-import API.Settings.JsonReader;
-import API.Settings.RequestsSender;
+import API.Settings.RequestsBuilder;
+import FXUI.Controller;
 import org.json.simple.parser.ParseException;
 
 public class ProductsResource extends EnvSettings {
 
-    private RequestsSender requestsSender = new RequestsSender();
-    private JsonReader jsonReader = new JsonReader();
+    private RequestsBuilder requestsBuilder = new RequestsBuilder();
 
 //    @Test
-    public void productsGet() throws ParseException {
-//        requestsSender.jerseyPOSTRequest(environmentUrl + resourcesPathList.get(0), jsonReader.getReceivedJsonString());
-        requestsSender.getRequest(environmentUrl + resourcesPathList.get(1));
+    public void sendGet() throws ParseException {
+        requestsBuilder.getRequest(environmentUrl + Controller.getSelectedResourceIndex());
     }
 }

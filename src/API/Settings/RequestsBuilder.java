@@ -25,14 +25,14 @@ import static API.Settings.JsonReader.writeJsonFile;
 /**
  * Created by Ihor on 2/11/2017.
  */
-public class RequestsSender {
+public class RequestsBuilder {
 
     public static String getResponseBody() {
         return responseBody;
     }
 
     public void setResponseBody(String responseBody) {
-        RequestsSender.responseBody = responseBody;
+        RequestsBuilder.responseBody = responseBody;
     }
 
     private static String responseBody;
@@ -96,17 +96,17 @@ public class RequestsSender {
 
             ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).header("x-freestyle-api-auth", getToken()).get(ClientResponse.class);
 
-// Parse JSON response
+
 
             List<String> productKeysList = new ArrayList<>();
             productKeysList.add("ProductSku");
             productKeysList.add("ProductName");
-//            String productSku = "ProductSku";
-//            String productName = "ProductName";
-
 
             ArrayList<String> responseList = new ArrayList<>();
 
+            /**
+             * Parse JSON response
+             * */
             JSONParser parser = new JSONParser();
             Object obj = null;
             try {
@@ -115,9 +115,6 @@ public class RequestsSender {
                 e.printStackTrace();
             }
             JSONArray json = (JSONArray) obj;
-            System.out.println("Json: " + json);
-
-
             for (Object o : json) {
                 String value = "";
                 JSONObject jsonLineItem = (JSONObject) o;
@@ -125,8 +122,6 @@ public class RequestsSender {
                     value += jsonLineItem.get(productKeysList.get(i)).toString();
                     value += ", ";
                 }
-//                String productSkuKey = jsonLineItem.get(productSku).toString();
-//                String productNameKey = jsonLineItem.get(productName).toString();
                 responseList.add(value);
             }
             GeneratePopupBox.listBox(responseList);

@@ -37,7 +37,6 @@ public class EnvSettings {
 //    @BeforeClass
     public void setupVariables() throws IOException {
 
-
         environmentApiUrlList.add("https://apiqa01.freestylecommerce.info/V2/");
         environmentApiUrlList.add("https://apiqa03.freestylecommerce.info/V2/");
         environmentApiUrlList.add("https://apiqa05.freestylecommerce.info/V2/");

@@ -17,6 +17,7 @@ import org.junit.Assert;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 import java.util.ArrayList;
+import java.util.List;
 
 import static API.Settings.EnvSettings.*;
 import static API.Settings.JsonReader.writeJsonFile;
@@ -96,10 +97,15 @@ public class RequestsSender {
             ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).header("x-freestyle-api-auth", getToken()).get(ClientResponse.class);
 
 // Parse JSON response
-            ArrayList<String> responseList = new ArrayList<>();
 
-            String productSku = "ProductSku";
-            String productName = "ProductName";
+            List<String> productKeysList = new ArrayList<>();
+            productKeysList.add("ProductSku");
+            productKeysList.add("ProductName");
+//            String productSku = "ProductSku";
+//            String productName = "ProductName";
+
+
+            ArrayList<String> responseList = new ArrayList<>();
 
             JSONParser parser = new JSONParser();
             Object obj = null;
@@ -111,11 +117,17 @@ public class RequestsSender {
             JSONArray json = (JSONArray) obj;
             System.out.println("Json: " + json);
 
+
             for (Object o : json) {
+                String value = "";
                 JSONObject jsonLineItem = (JSONObject) o;
-                String productSkuKey = jsonLineItem.get(productSku).toString();
-                String productNameKey = jsonLineItem.get(productName).toString();
-                responseList.add(productSkuKey + ", " + productNameKey);
+                for (int i = productKeysList.size()-1; i >= 0; i--){
+                    value += jsonLineItem.get(productKeysList.get(i)).toString();
+                    value += ", ";
+                }
+//                String productSkuKey = jsonLineItem.get(productSku).toString();
+//                String productNameKey = jsonLineItem.get(productName).toString();
+                responseList.add(value);
             }
             GeneratePopupBox.listBox(responseList);
         };

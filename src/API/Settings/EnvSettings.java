@@ -57,17 +57,6 @@ public class EnvSettings {
         setEnvironmentUrl(environmentApiUrlList.get(Controller.environmentComboBoxIndex));
         System.out.println("ENV url :" + getEnvironmentUrl());
 
-/*        if(getEnvironmentUrl() == null){
-            setEnvironmentUrl(environmentApiUrlList.get(Controller.getSelectedEnvironmentIndex()));
-        }
-*/
-        System.out.println("ENV url :" + getEnvironmentUrl());
-
-        System.out.println("--filepath is: " + authJsonPath);
-        System.out.println("--api url: " + environmentApiUrlList.get(0) +
-                "\n" + environmentApiUrlList.get(1) +
-                "\n" + environmentApiUrlList.get(2));
-
         JsonReader.readJsonFile(authJsonPath);
     }
 

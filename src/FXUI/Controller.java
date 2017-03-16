@@ -299,14 +299,14 @@ public class Controller extends Main {
         configNamesPopupBox();
     }
 
-    public void clickSendButton() throws ParseException {
+    public void clickSendButton() {
         setResponseStatus("");
         setSelectedResourceValue(apiEntityTypeComboBox.getValue());
-//        selectedResourceValue = apiEntityTypeComboBox.getValue();
         System.out.println("Request type: " + requestsComboBox.getValue());
         System.out.println("Resource type: " + selectedResourceValue);
         Runnable runnableTest = () -> {
             setSelectedResourceIndex(apiEntityTypeComboBox.getSelectionModel().getSelectedIndex());
+            setSelectedRequestTypeIndex(requestsComboBox.getSelectionModel().getSelectedIndex());
             try {
                 if(getSelectedRequestTypeIndex() == 0){
                     requestsBuilder.getRequest(EnvSettings.getEnvironmentUrl() + getSelectedResourceValue().replace(" ", ""));

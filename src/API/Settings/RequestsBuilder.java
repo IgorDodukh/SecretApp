@@ -154,14 +154,14 @@ public class RequestsBuilder {
     private void jsonParametersParser(List<String> keysList, JSONArray obj) {
         ArrayList<String> responseList = new ArrayList<>();
         JSONArray json = obj;
-        System.out.println("Json: " + json);
 
         for (Object o : json) {
             String value = "";
             JSONObject jsonLineItem = (JSONObject) o;
             for (int i = keysList.size()-1; i >= 0; i--){
                 value += jsonLineItem.get(keysList.get(i)).toString();
-                value += ", ";
+                if(i > 0)
+                    value += ", ";
             }
             responseList.add(value);
         }

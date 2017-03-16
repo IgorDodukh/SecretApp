@@ -7,6 +7,7 @@ import API.Tests.AuthResource.AuthPOST;
 import API.Tests.ProductsResource.ProductsResource;
 import Settings.BrowserSettings;
 import Settings.ReadConfigMain;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static API.Settings.RequestsBuilder.htmlPOST;
 import static FXUI.ComboBoxesHandler.additionalDialogDeterminer;
 import static FXUI.ExecutionTimeCounter.startCounter;
 import static FXUI.ExecutionTimeCounter.stopCounter;
@@ -304,7 +306,9 @@ public class Controller extends Main {
         setSelectedResourceValue(apiEntityTypeComboBox.getValue());
         System.out.println("Request type: " + requestsComboBox.getValue());
         System.out.println("Resource type: " + selectedResourceValue);
-        Runnable runnableTest = () -> {
+        Platform.runLater(() -> {
+            JsonReader.readJsonFile(AppStyles.jsonPath + selectedResourceValue + ".json");
+
             setSelectedResourceIndex(apiEntityTypeComboBox.getSelectionModel().getSelectedIndex());
             setSelectedRequestTypeIndex(requestsComboBox.getSelectionModel().getSelectedIndex());
 
@@ -320,15 +324,25 @@ public class Controller extends Main {
                 if(getSelectedRequestTypeIndex() == 0){
                     requestsBuilder.getRequest(EnvSettings.getEnvironmentUrl() + getSelectedResourceValue().replace(" ", ""));
                 } else if (getSelectedRequestTypeIndex() == 1){
+                    System.out.println("***\n" +
+                            EnvSettings.getEnvironmentUrl() +
+                            getSelectedResourceValue().replace(" ", "") + "\n***\n" +
+                            jsonReader.getReceivedJsonString());
+
+//                    requestsBuilder.jerseyPOSTRequest(EnvSettings.getEnvironmentUrl() +
+//                            getSelectedResourceValue().replace(" ", ""),
+//                            jsonReader.getReceivedJsonString());
+
+                    htmlPOST(EnvSettings.getEnvironmentUrl() +
+                            getSelectedResourceValue().replace(" ", ""),
+                            jsonReader.getReceivedJsonString());
+
                     System.out.println("Send POST");
                 }
-            } catch (ParseException e) {
+            } catch (ParseException | IOException e) {
                 e.printStackTrace();
             }
-        };
-
-        Thread thread1 = new Thread(runnableTest);
-        thread1.start();
+        });
     }
 
     private void updateApiModeView(Boolean value) {
@@ -466,8 +480,6 @@ public class Controller extends Main {
             };
             Thread thread1 = new Thread(runnableTest);
             thread1.start();
-//            Thread thread2 = new Thread(runnableProgress);
-//            thread2.start();
         } else if (confirmationResponse.get() == ButtonType.OK && !internetExist) {
             failedPopupBox(getFailedContentText());
             appStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);

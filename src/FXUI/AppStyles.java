@@ -21,7 +21,7 @@ public class AppStyles extends GetSystemFiles {
     public static String propertiesResourcePath = resourcesPath + "properties" + File.separator;
     public static String stylesResourcePath = resourcesPath + "styles" + File.separator;
     private static String dialogBoxStyle = stylesResourcePath + "dialogBoxes.css";
-    public static String jsonPath = resourcesPath + File.separator + "json" + File.separator;
+    public static String jsonPath = resourcesPath + "json" + File.separator;
 
     private void getDialogStyleFile(Dialog dialog) throws IOException {
         System.out.println(resourcesPath);

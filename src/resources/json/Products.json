@@ -1,8 +1,8 @@
 {
-  "ProductSku": "PRODPRODSKU-xxxxx",
-  "ProductName": "PRODPRODNAME-xxxxx",
-  "ShortDescription": "PRODPRODNAME ShortDescription",
-  "LongDescription": "PRODPRODNAME LongDescription",
+  "ProductSku": "ProductSkuValue",
+  "ProductName": "ProductNameValue",
+  "ShortDescription": "ShortDescriptionValue",
+  "LongDescription": "LongDescriptionValue",
   "RetailPrice": "888.00",
   "Weight": "0.15",
   "WeightUnit": "oz",
@@ -14,7 +14,7 @@
   "ImageUrl": null,
   "ImageThumbnailUrl": null,
   "IsGiftMessageProduct": "False",
-  "AvailableQuantity": "11111.00",
+  "AvailableQuantity": "111.00",
   "ProductTaxClass": null,
   "CustomerId": null,
   "SalesChannelId": null

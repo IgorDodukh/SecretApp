@@ -8,6 +8,15 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -16,6 +25,7 @@ import org.junit.Assert;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,20 +48,14 @@ public class RequestsBuilder {
 
     private static int responseStatus;
 
-    List<String> productKeysList = new ArrayList<>(Arrays.asList("ProductName", "ProductSku"));
-
-    List<String> customerKeysList = new ArrayList<>(Arrays.asList("FirstName", "LastName", "CustomerNumber"));
-
-    List<String> ordersKeysList = new ArrayList<>(Arrays.asList("TotalAmount", "OrderNumber"));
-
-    List<String> suppliersKeysList = new ArrayList<>(Arrays.asList("Name"));
-
-    List<String> warehousesKeysList = new ArrayList<>(Arrays.asList("WarehouseName"));
-
-    List<String> binsKeysList = new ArrayList<>(Arrays.asList("BinName"));
+    private List<String> productKeysList = new ArrayList<>(Arrays.asList("ProductName", "ProductSku"));
+    private List<String> customerKeysList = new ArrayList<>(Arrays.asList("FirstName", "LastName", "CustomerNumber"));
+    private List<String> ordersKeysList = new ArrayList<>(Arrays.asList("TotalAmount", "OrderNumber"));
+    private List<String> suppliersKeysList = new ArrayList<>(Arrays.asList("Name"));
+    private List<String> warehousesKeysList = new ArrayList<>(Arrays.asList("WarehouseName"));
+    private List<String> binsKeysList = new ArrayList<>(Arrays.asList("BinName"));
 
     public void jerseyPOSTRequest(String targetUrl, String jsonEntity){
-//        enableSpinner(true);
         Runnable runnable = () -> {
             String tokenPath = AppStyles.jsonPath + "token.json";
             ClientConfig config = new DefaultClientConfig();
@@ -59,7 +63,6 @@ public class RequestsBuilder {
             Client client = Client.create(config);
 
             WebResource webResource = client.resource(UriBuilder.fromUri(targetUrl).build());
-
             if (getToken() != null) {
                 webResource.header("x-freestyle-api-auth", getToken());
             }
@@ -72,7 +75,8 @@ public class RequestsBuilder {
                 GeneratePopupBox.failedPopupBox("Unexpected response status: " +
                         String.valueOf(response.getStatus()) + " " +
                         response.getStatusInfo() +
-                        "\nPlease check your credentials and retry to enable API mode");
+                        "\n\nAPI token was not received." +
+                        "\nPlease check your credentials and enable 'API mode' button once more.");
             }
 
             JSONParser parser = new JSONParser();
@@ -81,33 +85,70 @@ public class RequestsBuilder {
                 obj = parser.parse(response.getEntity(String.class));
             } catch (ParseException e) {
                 e.printStackTrace();
+                Controller.setResponseStatus(response.getStatus() + " " + response.getStatusInfo());
             }
             JSONObject jsonObject = (JSONObject) obj;
             Assert.assertNotEquals("Response body is null.", jsonObject, null);
 
-            if (targetUrl.contains(resourcesPathList.get(0)) || getToken() != null) {
+            if (targetUrl.contains(resourcesPathList.get(0))) {
+                Controller.setResponseStatus("API mode ON");
                 setToken((String) jsonObject.get("token"));
                 writeJsonFile(tokenPath, jsonObject);
+            } else {
                 Controller.setResponseStatus(response.getStatus() + " " + response.getStatusInfo());
-            } else if (getToken() == null){
-                GeneratePopupBox.failedPopupBox("Unexpected response status: " +
-                        String.valueOf(response.getStatus()) + " " +
-                        response.getStatusInfo() +
-                        "\nToken was not received successfully");
-                Controller.setResponseStatus(response.getStatus() + " " + response.getStatusInfo());
+                GeneratePopupBox.successPopupBox(response.getStatus() + " " + response.getStatusInfo() +
+                "\nNew item has been created");
             }
-
-//            System.out.println("POST Status: " + response.getStatus() + " " + response.getStatusInfo());
-//
-//            Controller.setResponseStatus(response.getStatus() + " " + response.getStatusInfo());
         };
         Thread thread = new Thread(runnable);
         thread.start();
-//        enableSpinner(false);
+    }
+
+    public static void htmlPOST(String targetUrl, String jsonEntity) throws IOException {
+        String tokenPath = System.getProperty("token.json.path");
+
+        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+
+        try {
+            HttpPost request = new HttpPost(targetUrl);
+            StringEntity params = new StringEntity(jsonEntity);
+            params.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+            request.addHeader("x-freestyle-api-auth", getToken());
+            System.out.println("getToken: " + getToken());
+            request.setEntity(params);
+            System.out.println("StringEntity: " + jsonEntity);
+            httpClient.execute(request);
+
+            HttpResponse response = httpClient.execute(request);
+            System.out.println("HttpResponse: " + response.getStatusLine());
+
+            HttpEntity entity = response.getEntity();
+            String responseString = EntityUtils.toString(entity, "UTF-8");
+            System.out.println("HttpResponseBody: " + responseString);
+
+            JSONParser parser = new JSONParser();
+            Object obj = parser.parse(responseString);
+            JSONObject jsonObject;
+            try {
+                jsonObject = (JSONObject) obj;
+                org.testng.Assert.assertNotEquals("Response body is null.", jsonObject, null);
+
+                if (getToken() == null) {
+                    setToken((String) jsonObject.get("token"));
+                    writeJsonFile(tokenPath, jsonObject);
+                }
+            } catch (ClassCastException e) {
+                e.printStackTrace();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            // handle exception here
+        } finally {
+            httpClient.close();
+        }
     }
 
     public void getRequest(String targetUrl) throws ParseException {
-//        enableSpinner(true);
         Runnable runnable = () -> {
             ClientConfig config = new DefaultClientConfig();
 
@@ -119,9 +160,7 @@ public class RequestsBuilder {
 
             ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).header("x-freestyle-api-auth", getToken()).get(ClientResponse.class);
 
-            /**
-             * Parse JSON response
-             * */
+//  Parse JSON response
             JSONParser parser = new JSONParser();
             Object obj = null;
             try {
@@ -146,8 +185,6 @@ public class RequestsBuilder {
         };
         Thread thread = new Thread(runnable);
         thread.start();
-
-//        enableSpinner(false);
     }
 
     private void getJsonParameters(List<String> keysList, JSONArray obj) {

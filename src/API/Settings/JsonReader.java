@@ -19,7 +19,7 @@ public class JsonReader extends EnvSettings {
 
     public static String receivedJsonString;
 
-    static void readJsonFile(String jsonPath) {
+    public static void readJsonFile(String jsonPath) {
         JSONParser parser = new JSONParser();
 
         try {
@@ -28,12 +28,13 @@ public class JsonReader extends EnvSettings {
             JSONObject jsonObject = (JSONObject) obj;
             System.out.println(jsonObject.toJSONString());
             receivedJsonString = jsonObject.toJSONString();
+            System.out.println("Received JSON string: " +  receivedJsonString);
 
-            String username = (String) jsonObject.get("username");
-            System.out.println(username);
-
-            String password = (String) jsonObject.get("password");
-            System.out.println(password);
+//            String username = (String) jsonObject.get("username");
+//            System.out.println(username);
+//
+//            String password = (String) jsonObject.get("password");
+//            System.out.println(password);
 
         } catch (IOException | ParseException e) {
             e.printStackTrace();        

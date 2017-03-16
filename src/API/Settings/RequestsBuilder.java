@@ -97,13 +97,27 @@ public class RequestsBuilder {
 
             ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).header("x-freestyle-api-auth", getToken()).get(ClientResponse.class);
 
-
-
             List<String> productKeysList = new ArrayList<>();
-            productKeysList.add("ProductSku");
             productKeysList.add("ProductName");
+            productKeysList.add("ProductSku");
 
-            ArrayList<String> responseList = new ArrayList<>();
+            List<String> customerKeysList = new ArrayList<>();
+            customerKeysList.add("FirstName");
+            customerKeysList.add("LastName");
+            customerKeysList.add("CustomerNumber");
+
+            List<String> ordersKeysList = new ArrayList<>();
+            ordersKeysList.add("TotalAmount");
+            ordersKeysList.add("OrderNumber");
+
+            List<String> suppliersKeysList = new ArrayList<>();
+            suppliersKeysList.add("Name");
+
+            List<String> warehousesKeysList = new ArrayList<>();
+            warehousesKeysList.add("WarehouseName");
+
+            List<String> binsKeysList = new ArrayList<>();
+            binsKeysList.add("BinName");
 
             /**
              * Parse JSON response
@@ -115,23 +129,42 @@ public class RequestsBuilder {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            JSONArray json = (JSONArray) obj;
-            System.out.println("Json: " + json);
 
-            for (Object o : json) {
-                String value = "";
-                JSONObject jsonLineItem = (JSONObject) o;
-                for (int i = productKeysList.size()-1; i >= 0; i--){
-                    value += jsonLineItem.get(productKeysList.get(i)).toString();
-                    value += ", ";
-                }
-                responseList.add(value);
+            if(targetUrl.contains("Product")){
+                jsonParametersParser(productKeysList, (JSONArray) obj);
+            } else if (targetUrl.contains("Customer")) {
+                jsonParametersParser(customerKeysList, (JSONArray) obj);
+            } else if (targetUrl.contains("Order")){
+                jsonParametersParser(ordersKeysList, (JSONArray) obj);
+            } else if (targetUrl.contains("Suppliers")){
+                jsonParametersParser(suppliersKeysList, (JSONArray) obj);
+            } else if (targetUrl.contains("Bin")){
+                jsonParametersParser(binsKeysList, (JSONArray) obj);
+            } else if (targetUrl.contains("Warehouse")){
+                jsonParametersParser(warehousesKeysList, (JSONArray) obj);
             }
-            GeneratePopupBox.listBox(responseList);
+
         };
         Thread thread = new Thread(runnable);
         thread.start();
 
 //        enableSpinner(false);
+    }
+
+    private void jsonParametersParser(List<String> keysList, JSONArray obj) {
+        ArrayList<String> responseList = new ArrayList<>();
+        JSONArray json = obj;
+        System.out.println("Json: " + json);
+
+        for (Object o : json) {
+            String value = "";
+            JSONObject jsonLineItem = (JSONObject) o;
+            for (int i = keysList.size()-1; i >= 0; i--){
+                value += jsonLineItem.get(keysList.get(i)).toString();
+                value += ", ";
+            }
+            responseList.add(value);
+        }
+        GeneratePopupBox.listBox(responseList);
     }
 }

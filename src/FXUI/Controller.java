@@ -94,7 +94,7 @@ public class Controller extends Main {
                     "Products",
                     "Suppliers",
                     "Warehouses",
-                    "Bins"
+                    "Warehouse Bins"
             );
 
     private final ObservableList<String> environmentsList =
@@ -308,16 +308,11 @@ public class Controller extends Main {
         Runnable runnableTest = () -> {
             setSelectedResourceIndex(apiEntityTypeComboBox.getSelectionModel().getSelectedIndex());
             try {
-                if (getSelectedResourceIndex() == 2) {
-                    if(getSelectedRequestTypeIndex() == 0){
-                        requestsBuilder.getRequest(EnvSettings.getEnvironmentUrl() + getSelectedResourceValue());
-//                        productsResource.sendGet();
-                        System.out.println("Send GET");
-                    } else if (getSelectedRequestTypeIndex() == 1) {
-//                        productsResource.sendPost();
-                        System.out.println("Send POST");
-                    }
-                } else System.out.println("New Request");
+                if(getSelectedRequestTypeIndex() == 0){
+                    requestsBuilder.getRequest(EnvSettings.getEnvironmentUrl() + getSelectedResourceValue().replace(" ", ""));
+                } else if (getSelectedRequestTypeIndex() == 1){
+                    System.out.println("Send POST");
+                }
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -335,6 +330,7 @@ public class Controller extends Main {
         entityTypeComboBox.setVisible(!value);
         startButton.setVisible(!value);
 
+        environmentsComboBox.setDisable(value);
         progressLabel.setVisible(value);
         requestsComboBox.setVisible(value);
         apiEntityTypeComboBox.setVisible(value);

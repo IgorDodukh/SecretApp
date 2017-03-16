@@ -16,7 +16,6 @@ public class AppStyles extends GetSystemFiles {
     private static InputStream fileStream;
 
     public static String resourcesPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "resources" + File.separator;
-//    public static String resourcesPath = "C:\\Users\\Ihor\\IdeaProjects\\SecretApp\\src\\resources\\";
     public static String picturesResourcePath = resourcesPath + "pic" + File.separator;
     public static String driversResourcePath = resourcesPath + "drivers" + File.separator;
     public static String propertiesResourcePath = resourcesPath + "properties" + File.separator;

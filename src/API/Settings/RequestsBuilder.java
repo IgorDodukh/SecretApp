@@ -27,15 +27,15 @@ import static API.Settings.JsonReader.writeJsonFile;
  */
 public class RequestsBuilder {
 
-    public static String getResponseBody() {
-        return responseBody;
+    public static int getResponseStatus() {
+        return responseStatus;
     }
 
-    public void setResponseBody(String responseBody) {
-        RequestsBuilder.responseBody = responseBody;
+    public void setResponseStatus(int responseStatus) {
+        RequestsBuilder.responseStatus = responseStatus;
     }
 
-    private static String responseBody;
+    private static int responseStatus;
 
     public void jerseyPOSTRequest(String targetUrl, String jsonEntity){
 //        enableSpinner(true);
@@ -52,12 +52,14 @@ public class RequestsBuilder {
             }
 
             ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, jsonEntity);
+            setResponseStatus(response.getStatus());
             try {
                 Assert.assertEquals("Unexpected response status.", 200, response.getStatus());
             } catch (AssertionError error) {
                 GeneratePopupBox.failedPopupBox("Unexpected response status: " +
                         String.valueOf(response.getStatus()) + " " +
-                        response.getStatusInfo());
+                        response.getStatusInfo() +
+                        "\nPlease check your credentials and retry to enable API mode");
             }
 
             JSONParser parser = new JSONParser();
@@ -131,19 +133,18 @@ public class RequestsBuilder {
             }
 
             if(targetUrl.contains("Product")){
-                jsonParametersParser(productKeysList, (JSONArray) obj);
+                getJsonParameters(productKeysList, (JSONArray) obj);
             } else if (targetUrl.contains("Customer")) {
-                jsonParametersParser(customerKeysList, (JSONArray) obj);
+                getJsonParameters(customerKeysList, (JSONArray) obj);
             } else if (targetUrl.contains("Order")){
-                jsonParametersParser(ordersKeysList, (JSONArray) obj);
+                getJsonParameters(ordersKeysList, (JSONArray) obj);
             } else if (targetUrl.contains("Suppliers")){
-                jsonParametersParser(suppliersKeysList, (JSONArray) obj);
+                getJsonParameters(suppliersKeysList, (JSONArray) obj);
             } else if (targetUrl.contains("Bin")){
-                jsonParametersParser(binsKeysList, (JSONArray) obj);
+                getJsonParameters(binsKeysList, (JSONArray) obj);
             } else if (targetUrl.contains("Warehouse")){
-                jsonParametersParser(warehousesKeysList, (JSONArray) obj);
+                getJsonParameters(warehousesKeysList, (JSONArray) obj);
             }
-
         };
         Thread thread = new Thread(runnable);
         thread.start();
@@ -151,7 +152,7 @@ public class RequestsBuilder {
 //        enableSpinner(false);
     }
 
-    private void jsonParametersParser(List<String> keysList, JSONArray obj) {
+    private void getJsonParameters(List<String> keysList, JSONArray obj) {
         ArrayList<String> responseList = new ArrayList<>();
         JSONArray json = obj;
 

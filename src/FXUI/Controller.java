@@ -307,6 +307,15 @@ public class Controller extends Main {
         Runnable runnableTest = () -> {
             setSelectedResourceIndex(apiEntityTypeComboBox.getSelectionModel().getSelectedIndex());
             setSelectedRequestTypeIndex(requestsComboBox.getSelectionModel().getSelectedIndex());
+
+            Task updateResponseTask = updateResponseStatus();
+
+            progressLabel.textProperty().bind(updateResponseTask.messageProperty());
+            Thread t3 = new Thread(updateResponseTask);
+            t3.setName("Response status updater");
+            t3.setDaemon(true);
+            t3.start();
+
             try {
                 if(getSelectedRequestTypeIndex() == 0){
                     requestsBuilder.getRequest(EnvSettings.getEnvironmentUrl() + getSelectedResourceValue().replace(" ", ""));
@@ -337,6 +346,8 @@ public class Controller extends Main {
         requestTypeLabel.setVisible(value);
         apiResourceLabel.setVisible(value);
         sendButton.setVisible(value);
+        loginField.setDisable(value);
+        passwordField.setDisable(value);
     }
 
 //    public void requestProgressSpinner(boolean enable) {
@@ -363,21 +374,19 @@ public class Controller extends Main {
             envSettings.setupVariables();
             if (internetConnection.checkInternetConnection()) {
 
-//                appStatus.startTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
+                Task updateResponseTask = updateResponseStatus();
 
-                Task dynamicTimeTask = updateResponseStatus();
-
-                progressLabel.textProperty().bind(dynamicTimeTask.messageProperty());
-                Thread t3 = new Thread(dynamicTimeTask);
-                t3.setName("Test Time Updater");
+                progressLabel.textProperty().bind(updateResponseTask.messageProperty());
+                Thread t3 = new Thread(updateResponseTask);
+                t3.setName("Response status updater");
                 t3.setDaemon(true);
                 t3.start();
 
                 authPOST.authorisationPOST();
+                jsonReader.changeJsonFields(envSettings.getAuthJsonPath(), authKeysList, credentialsList);
+
                 apiSwitcher.textFillProperty().setValue(Paint.valueOf("#FFA500"));
                 updateApiModeView(true);
-//                    appStatus.requestWaitingAnimation(sendButton, waitingAnimation, true);
-                jsonReader.changeJsonFields(envSettings.getAuthJsonPath(), authKeysList, credentialsList);
 
             } else {
                 failedPopupBox(getFailedContentText() + "\nAPI mode can't be used without Internet connection.");
@@ -388,11 +397,6 @@ public class Controller extends Main {
             updateApiModeView(false);
             apiSwitcher.textFillProperty().setValue(Paint.valueOf("#fff"));
         }
-
-//        appStatus.requestWaitingAnimation(sendButton, waitingAnimation, false);
-
-//        setEnvironmentComboBoxIndex(environmentsComboBox.getSelectionModel().getSelectedIndex());
-//        appStatus.stopTest(startButton, stopButton, waitingLabel, progressLabel, waitingAnimation);
     }
 
     public synchronized void clickStartButton() throws IOException {

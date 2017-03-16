@@ -17,6 +17,7 @@ import org.junit.Assert;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static API.Settings.EnvSettings.*;
@@ -36,6 +37,18 @@ public class RequestsBuilder {
     }
 
     private static int responseStatus;
+
+    List<String> productKeysList = new ArrayList<>(Arrays.asList("ProductName", "ProductSku"));
+
+    List<String> customerKeysList = new ArrayList<>(Arrays.asList("FirstName", "LastName", "CustomerNumber"));
+
+    List<String> ordersKeysList = new ArrayList<>(Arrays.asList("TotalAmount", "OrderNumber"));
+
+    List<String> suppliersKeysList = new ArrayList<>(Arrays.asList("Name"));
+
+    List<String> warehousesKeysList = new ArrayList<>(Arrays.asList("WarehouseName"));
+
+    List<String> binsKeysList = new ArrayList<>(Arrays.asList("BinName"));
 
     public void jerseyPOSTRequest(String targetUrl, String jsonEntity){
 //        enableSpinner(true);
@@ -72,14 +85,21 @@ public class RequestsBuilder {
             JSONObject jsonObject = (JSONObject) obj;
             Assert.assertNotEquals("Response body is null.", jsonObject, null);
 
-            if (targetUrl.contains(resourcesPathList.get(0))) {
+            if (targetUrl.contains(resourcesPathList.get(0)) || getToken() != null) {
                 setToken((String) jsonObject.get("token"));
                 writeJsonFile(tokenPath, jsonObject);
+                Controller.setResponseStatus(response.getStatus() + " " + response.getStatusInfo());
+            } else if (getToken() == null){
+                GeneratePopupBox.failedPopupBox("Unexpected response status: " +
+                        String.valueOf(response.getStatus()) + " " +
+                        response.getStatusInfo() +
+                        "\nToken was not received successfully");
+                Controller.setResponseStatus(response.getStatus() + " " + response.getStatusInfo());
             }
 
-            System.out.println("POST Status: " + response.getStatus() + " " + response.getStatusInfo());
-
-            Controller.setResponseStatus(response.getStatus() + " " + response.getStatusInfo());
+//            System.out.println("POST Status: " + response.getStatus() + " " + response.getStatusInfo());
+//
+//            Controller.setResponseStatus(response.getStatus() + " " + response.getStatusInfo());
         };
         Thread thread = new Thread(runnable);
         thread.start();
@@ -98,28 +118,6 @@ public class RequestsBuilder {
             webResource.header("x-freestyle-api-auth", getToken());
 
             ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).header("x-freestyle-api-auth", getToken()).get(ClientResponse.class);
-
-            List<String> productKeysList = new ArrayList<>();
-            productKeysList.add("ProductName");
-            productKeysList.add("ProductSku");
-
-            List<String> customerKeysList = new ArrayList<>();
-            customerKeysList.add("FirstName");
-            customerKeysList.add("LastName");
-            customerKeysList.add("CustomerNumber");
-
-            List<String> ordersKeysList = new ArrayList<>();
-            ordersKeysList.add("TotalAmount");
-            ordersKeysList.add("OrderNumber");
-
-            List<String> suppliersKeysList = new ArrayList<>();
-            suppliersKeysList.add("Name");
-
-            List<String> warehousesKeysList = new ArrayList<>();
-            warehousesKeysList.add("WarehouseName");
-
-            List<String> binsKeysList = new ArrayList<>();
-            binsKeysList.add("BinName");
 
             /**
              * Parse JSON response

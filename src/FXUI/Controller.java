@@ -154,6 +154,17 @@ public class Controller extends Main {
     private int browserComboBoxIndex;
     private int dropdownIndex;
 
+    public static String getSelectedResourceValue() {
+        return selectedResourceValue;
+    }
+
+    public void setSelectedResourceValue(String selectedResourceValue) {
+        Controller.selectedResourceValue = selectedResourceValue;
+    }
+
+    private static String selectedResourceValue;
+
+
     public static int getSelectedResourceIndex() {
         return selectedResourceIndex;
     }
@@ -290,16 +301,17 @@ public class Controller extends Main {
 
     public void clickSendButton() throws ParseException {
         setResponseStatus("");
-        String requestValue = apiEntityTypeComboBox.getValue();
+        setSelectedResourceValue(apiEntityTypeComboBox.getValue());
+//        selectedResourceValue = apiEntityTypeComboBox.getValue();
         System.out.println("Request type: " + requestsComboBox.getValue());
-        System.out.println("Resource type: " + requestValue);
+        System.out.println("Resource type: " + selectedResourceValue);
         Runnable runnableTest = () -> {
             setSelectedResourceIndex(apiEntityTypeComboBox.getSelectionModel().getSelectedIndex());
             try {
                 if (getSelectedResourceIndex() == 2) {
                     if(getSelectedRequestTypeIndex() == 0){
-                        requestsBuilder.getRequest(EnvSettings.getEnvironmentUrl() + Controller.getSelectedResourceIndex());
-                        productsResource.sendGet();
+                        requestsBuilder.getRequest(EnvSettings.getEnvironmentUrl() + getSelectedResourceValue());
+//                        productsResource.sendGet();
                         System.out.println("Send GET");
                     } else if (getSelectedRequestTypeIndex() == 1) {
 //                        productsResource.sendPost();

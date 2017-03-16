@@ -91,6 +91,7 @@ public class RequestsBuilder {
 
             Client client = Client.create(config);
 
+            System.out.println("Target URL: " + targetUrl);
             WebResource webResource = client.resource(UriBuilder.fromUri(targetUrl).build());
             webResource.header("x-freestyle-api-auth", getToken());
 
@@ -115,6 +116,8 @@ public class RequestsBuilder {
                 e.printStackTrace();
             }
             JSONArray json = (JSONArray) obj;
+            System.out.println("Json: " + json);
+
             for (Object o : json) {
                 String value = "";
                 JSONObject jsonLineItem = (JSONObject) o;

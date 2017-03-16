@@ -11,6 +11,6 @@ public class ProductsResource extends EnvSettings {
 
 //    @Test
     public void sendGet() throws ParseException {
-        requestsBuilder.getRequest(environmentUrl + Controller.getSelectedResourceIndex());
+        requestsBuilder.getRequest(environmentUrl + Controller.getSelectedResourceValue());
     }
 }

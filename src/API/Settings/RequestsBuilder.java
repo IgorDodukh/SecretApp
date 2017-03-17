@@ -13,10 +13,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -48,6 +45,8 @@ public class RequestsBuilder {
     }
 
     private static int responseStatusCode;
+
+    ArrayList<String> responseList;
 
     private List<String> productKeysList = new ArrayList<>(Arrays.asList("ProductName", "ProductSku"));
     private List<String> customerKeysList = new ArrayList<>(Arrays.asList("FirstName", "LastName", "CustomerNumber"));
@@ -115,11 +114,8 @@ public class RequestsBuilder {
 
         StringEntity postingString = new StringEntity(jsonEntity);
         post.setEntity(postingString);
-        System.out.println("postingString: " + postingString);
         post.setHeader("Content-type", "application/json");
         HttpResponse response = httpClient.execute(post);
-        System.out.println("Response: " + response.getStatusLine());
-
         HttpEntity entity = response.getEntity();
         String responseString = EntityUtils.toString(entity, "UTF-8");
         System.out.println("HttpResponseBody: " + responseString);
@@ -129,7 +125,7 @@ public class RequestsBuilder {
         Controller.setResponseStatus(getResponseStatusCode() + " " +
                 response.getStatusLine().getReasonPhrase());
 
-        if(getResponseStatusCode() == 200){
+        if(getResponseStatusCode() == 200 || getResponseStatusCode() == 201){
             GeneratePopupBox.successPopupBox(response.getStatusLine().getStatusCode() + " " +
                     response.getStatusLine().getReasonPhrase() +
                     "\nNew " + Controller.getSelectedResourceValue() + " has been created successfully.");
@@ -137,53 +133,6 @@ public class RequestsBuilder {
             GeneratePopupBox.failedPopupBox(response.getStatusLine().getStatusCode() + " " +
                     response.getStatusLine().getReasonPhrase() +
                     "\nResponse body: " + responseString);
-        }
-
-    }
-
-    public static void htmlPOST(String targetUrl, String jsonEntity) throws IOException {
-        String tokenPath = System.getProperty("token.json.path");
-
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
-
-        try {
-            HttpPost request = new HttpPost(targetUrl);
-
-            StringEntity params = new StringEntity(jsonEntity);
-            params.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            request.addHeader("x-freestyle-api-auth", getToken());
-            System.out.println("getToken: " + getToken());
-            request.setEntity(params);
-            System.out.println("StringEntity: " + jsonEntity);
-            httpClient.execute(request);
-
-            HttpResponse response = httpClient.execute(request);
-            System.out.println("HttpResponse: " + response.getStatusLine());
-
-            HttpEntity entity = response.getEntity();
-            String responseString = EntityUtils.toString(entity, "UTF-8");
-            System.out.println("HttpResponseBody: " + responseString);
-
-            JSONParser parser = new JSONParser();
-            Object obj = parser.parse(responseString);
-            JSONObject jsonObject;
-            try {
-                jsonObject = (JSONObject) obj;
-                org.testng.Assert.assertNotEquals("Response body is null.", jsonObject, null);
-
-                if (getToken() == null) {
-                    setToken((String) jsonObject.get("token"));
-                    writeJsonFile(tokenPath, jsonObject);
-                }
-            } catch (ClassCastException e) {
-                e.printStackTrace();
-            }
-            Controller.setResponseStatus(response.getStatusLine().getStatusCode() + " " + response.getStatusLine().getReasonPhrase());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            // handle exception here
-        } finally {
-            httpClient.close();
         }
     }
 
@@ -222,14 +171,16 @@ public class RequestsBuilder {
                 getJsonParameters(warehousesKeysList, (JSONArray) obj);
             }
             Controller.setResponseStatus(response.getStatus() + " " + response.getStatusInfo());
+            GeneratePopupBox.listBox(responseList);
         };
         Thread thread = new Thread(runnable);
         thread.start();
 
     }
 
-    private void getJsonParameters(List<String> keysList, JSONArray obj) {
-        ArrayList<String> responseList = new ArrayList<>();
+    private ArrayList<String> getJsonParameters(List<String> keysList, JSONArray obj) {
+//        ArrayList<String> responseList = new ArrayList<>();
+        responseList = new ArrayList<>();
         JSONArray json = obj;
 
         for (Object o : json) {
@@ -242,6 +193,8 @@ public class RequestsBuilder {
             }
             responseList.add(value);
         }
-        GeneratePopupBox.listBox(responseList);
+
+        return responseList;
+//        GeneratePopupBox.listBox(responseList);
     }
 }

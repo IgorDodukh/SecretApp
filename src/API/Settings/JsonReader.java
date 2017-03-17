@@ -13,7 +13,7 @@ import java.util.List;
  * Created by Ihor on 2/11/2017.
  */
 public class JsonReader extends EnvSettings {
-    public String getReceivedJsonString() {
+    public static String getReceivedJsonString() {
         return receivedJsonString;
     }
 

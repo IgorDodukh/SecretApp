@@ -100,6 +100,8 @@ public class Controller extends Main {
                     "Warehouse Bins"
             );
 
+    //TODO add new resources: SalesChannels(GET), ShippingMethods(GET, POST), EventSubscriptions(GET), Promotions
+
     private final ObservableList<String> environmentsList =
             FXCollections.observableArrayList(
                     "QA01", "QA03", "QA05", "Production (for mad guys)"
@@ -329,14 +331,14 @@ public class Controller extends Main {
 
             try {
                 if(getSelectedRequestTypeIndex() == 0){
-                    requestsBuilder.getRequest(EnvSettings.getEnvironmentUrl() + getSelectedResourceValue().replace(" ", ""));
+                    requestsBuilder.jerseyGET(EnvSettings.getEnvironmentUrl() + getSelectedResourceValue().replace(" ", ""));
                 } else if (getSelectedRequestTypeIndex() == 1){
                     System.out.println("***\n" +
                             EnvSettings.getEnvironmentUrl() +
                             getSelectedResourceValue().replace(" ", "") + "\n***\n" +
                             jsonReader.getReceivedJsonString());
 
-//                    requestsBuilder.jerseyPOSTRequest(EnvSettings.getEnvironmentUrl() +
+//                    requestsBuilder.jerseyPOST(EnvSettings.getEnvironmentUrl() +
 //                            getSelectedResourceValue().replace(" ", ""),
 //                            jsonReader.getReceivedJsonString());
 

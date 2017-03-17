@@ -13,6 +13,6 @@ public class AuthPOST extends EnvSettings {
 
 //    @Test
     public void authorisationPOST() throws ParseException, IOException {
-        requestsBuilder.jerseyPOSTRequest(environmentUrl + resourcesPathList.get(0), jsonReader.getReceivedJsonString());
+        requestsBuilder.jerseyPOST(environmentUrl + resourcesPathList.get(0), jsonReader.getReceivedJsonString());
     }
 }

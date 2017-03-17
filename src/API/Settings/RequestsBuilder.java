@@ -55,7 +55,7 @@ public class RequestsBuilder {
     private List<String> warehousesKeysList = new ArrayList<>(Arrays.asList("WarehouseName"));
     private List<String> binsKeysList = new ArrayList<>(Arrays.asList("BinName"));
 
-    public void jerseyPOSTRequest(String targetUrl, String jsonEntity){
+    public void jerseyPOST(String targetUrl, String jsonEntity){
         Runnable runnable = () -> {
             String tokenPath = AppStyles.jsonPath + "token.json";
             ClientConfig config = new DefaultClientConfig();
@@ -111,6 +111,7 @@ public class RequestsBuilder {
 
         try {
             HttpPost request = new HttpPost(targetUrl);
+
             StringEntity params = new StringEntity(jsonEntity);
             params.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
             request.addHeader("x-freestyle-api-auth", getToken());
@@ -149,7 +150,7 @@ public class RequestsBuilder {
         }
     }
 
-    public void getRequest(String targetUrl) throws ParseException {
+    public void jerseyGET(String targetUrl) throws ParseException {
         Runnable runnable = () -> {
             ClientConfig config = new DefaultClientConfig();
 

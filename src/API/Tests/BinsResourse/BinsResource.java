@@ -10,6 +10,6 @@ public class BinsResource extends EnvSettings {
 
 //    @Test
     public void binsGet() throws ParseException {
-        requestsBuilder.getRequest(environmentUrl + resourcesPathList.get(1));
+        requestsBuilder.jerseyGET(environmentUrl + resourcesPathList.get(1));
     }
 }

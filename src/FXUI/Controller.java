@@ -20,6 +20,7 @@ import org.json.simple.parser.ParseException;
 import org.openqa.selenium.WebDriver;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -280,7 +281,13 @@ public class Controller extends Main {
             startButton.setDisable(true);
 
         closeMenuButton.setOnAction(t -> System.exit(0));
-        aboutButton.setOnAction(t -> aboutPopupBox());
+        aboutButton.setOnAction(t -> {
+            try {
+                aboutPopupBox();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        });
 
 //Add UI Elements listener
         KeysListener.startButtonKeyListener(browsersComboBox, this);

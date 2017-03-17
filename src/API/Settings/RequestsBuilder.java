@@ -140,6 +140,7 @@ public class RequestsBuilder {
             } catch (ClassCastException e) {
                 e.printStackTrace();
             }
+            Controller.setResponseStatus(response.getStatusLine().getStatusCode() + " " + response.getStatusLine().getReasonPhrase());
         } catch (Exception ex) {
             ex.printStackTrace();
             // handle exception here

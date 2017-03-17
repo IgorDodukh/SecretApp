@@ -5,6 +5,8 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import static FXUI.GeneratePopupBox.warningPopupBox;
 
@@ -30,7 +32,10 @@ public class AppStyles extends GetSystemFiles {
             fileStream = new FileInputStream(f.toString());
             if (fileStream != null) {
                 DialogPane dialogPane = dialog.getDialogPane();
-                dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
+//                dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
+//                dialogPane.getStylesheets().add(getClass().getResource(f.getAbsolutePath().replace("\\", "/")).toString());
+                URL url = f.toURI().toURL();
+                dialogPane.getStylesheets().add(url.toExternalForm());
             } else {
                 throw new FileNotFoundException("CSS file '" + f.toString() + "' not found in the classpath");
             }
@@ -48,7 +53,9 @@ public class AppStyles extends GetSystemFiles {
             fileStream = new FileInputStream(f.toString());
 
             if (fileStream != null) {
-                element.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
+//                element.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
+                URL url = f.toURI().toURL();
+                element.getStylesheets().add(url.toExternalForm());
             } else {
                 throw new FileNotFoundException("CSS file '" + f.toString() + "' not found in the classpath");
             }
@@ -107,8 +114,13 @@ public class AppStyles extends GetSystemFiles {
         getUIStyleFile(toggleButton, "buttons.css");
     }
 
-    void setDialogLogo(Dialog dialog, String logoName) {
+    void setDialogLogo(Dialog dialog, String logoName) throws MalformedURLException {
+        File f = new File(picturesResourcePath + logoName);
+        URL url = f.toURI().toURL();
+//        element.getStylesheets().add(url.toExternalForm());
+//        dialog.getDialogPane().setStyle(
+//                "-fx-graphic: url(\"file:/" + picturesResourcePath.replace("\\", "/") + logoName + "\")");
         dialog.getDialogPane().setStyle(
-                "-fx-graphic: url(\"file:/" + picturesResourcePath.replace("\\", "/") + logoName + "\")");
+                "-fx-graphic: url(" + url.toExternalForm() + ")");
     }
 }

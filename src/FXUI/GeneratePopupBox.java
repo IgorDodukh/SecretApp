@@ -15,6 +15,7 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.net.MalformedURLException;
 import java.util.*;
 
 import static Settings.GetPropertyValues.getTimeoutProperty;
@@ -79,7 +80,11 @@ public class GeneratePopupBox {
         final String finalExceptionMessage = exceptionMessage;
         Platform.runLater(() -> {
             Alert exceptionDialog = new Alert(Alert.AlertType.INFORMATION);
-            appStyles.setDialogLogo(exceptionDialog, "sad.png");
+            try {
+                appStyles.setDialogLogo(exceptionDialog, "sad.png");
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
             exceptionDialog.setTitle("Failed. " + ProgressBar.currentProgress + "%. Running time: " + ExecutionTimeCounter.executionTime);
             exceptionDialog.setHeaderText("You are not lucky enough today.");
             exceptionDialog.setContentText(finalExceptionMessage);
@@ -123,7 +128,11 @@ public class GeneratePopupBox {
     public static void failedPopupBox(String contentText) {
         Platform.runLater(() -> {
             Alert failedDialog = new Alert(Alert.AlertType.INFORMATION);
-            appStyles.setDialogLogo(failedDialog, "sad.png");
+            try {
+                appStyles.setDialogLogo(failedDialog, "sad.png");
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
             failedDialog.setTitle("Warning");
             failedDialog.setHeaderText("Bad news for you...");
             failedDialog.setContentText(contentText);
@@ -141,7 +150,11 @@ public class GeneratePopupBox {
     public static void successPopupBox(String resultMessage) {
         Platform.runLater(() -> {
             Alert successDialog = new Alert(Alert.AlertType.INFORMATION);
-            appStyles.setDialogLogo(successDialog, "success.png");
+            try {
+                appStyles.setDialogLogo(successDialog, "success.png");
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
             successDialog.setTitle("Complete." + ProgressBar.currentProgress + "%. Running time: " + ExecutionTimeCounter.executionTime);
             successDialog.setHeaderText("Oh boy, you are lucky.");
             successDialog.setContentText(resultMessage);
@@ -257,7 +270,11 @@ public class GeneratePopupBox {
     public static void listBox(ArrayList jArray) {
         Platform.runLater(() -> {
             Alert responseBody = new Alert(Alert.AlertType.INFORMATION);
-            appStyles.setDialogLogo(responseBody, "hi.png");
+            try {
+                appStyles.setDialogLogo(responseBody, "hi.png");
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
             responseBody.setTitle("Response results");
             responseBody.setHeaderText("Response body");
             responseBody.setContentText("Returned entities list\n");
@@ -319,7 +336,11 @@ public class GeneratePopupBox {
         creditCardsDialog.initStyle(StageStyle.UTILITY);
 
         creditCardsDialog.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            try {
                 appStyles.setDialogLogo(creditCardsDialog, cardLogosList.get(cardTypesList.indexOf(newValue)));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
         });
 
         appStyles.setDialogStyle(creditCardsDialog);
@@ -464,7 +485,7 @@ public class GeneratePopupBox {
         } else System.out.println("Configuration popup box cancelled");
     }
 
-    static void configNamesPopupBox() {
+    static void configNamesPopupBox() throws MalformedURLException {
 
         Dialog<ButtonType> configDialog = new Dialog<>();
         appStyles.setDialogLogo(configDialog, "conf.png");
@@ -574,7 +595,7 @@ public class GeneratePopupBox {
         } else System.out.println("Configuration popup box cancelled");
     }
 
-    static void aboutPopupBox() {
+    static void aboutPopupBox() throws MalformedURLException {
         Alert aboutDialog = new Alert(Alert.AlertType.INFORMATION);
         appStyles.setDialogLogo(aboutDialog, "hi.png");
         aboutDialog.setTitle("About");

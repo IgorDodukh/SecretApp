@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static API.Settings.RequestsBuilder.htmlPOST;
+import static API.Settings.RequestsBuilder.sendPost;
 import static FXUI.ComboBoxesHandler.additionalDialogDeterminer;
 import static FXUI.ExecutionTimeCounter.startCounter;
 import static FXUI.ExecutionTimeCounter.stopCounter;
@@ -316,8 +316,6 @@ public class Controller extends Main {
         System.out.println("Request type: " + requestsComboBox.getValue());
         System.out.println("Resource type: " + selectedResourceValue);
         Platform.runLater(() -> {
-            JsonReader.readJsonFile(AppStyles.jsonPath + selectedResourceValue + ".json");
-
             setSelectedResourceIndex(apiEntityTypeComboBox.getSelectionModel().getSelectedIndex());
             setSelectedRequestTypeIndex(requestsComboBox.getSelectionModel().getSelectedIndex());
 
@@ -333,6 +331,7 @@ public class Controller extends Main {
                 if(getSelectedRequestTypeIndex() == 0){
                     requestsBuilder.jerseyGET(EnvSettings.getEnvironmentUrl() + getSelectedResourceValue().replace(" ", ""));
                 } else if (getSelectedRequestTypeIndex() == 1){
+                    JsonReader.readJsonFile(AppStyles.jsonPath + selectedResourceValue + ".json");
                     System.out.println("***\n" +
                             EnvSettings.getEnvironmentUrl() +
                             getSelectedResourceValue().replace(" ", "") + "\n***\n" +
@@ -342,9 +341,12 @@ public class Controller extends Main {
 //                            getSelectedResourceValue().replace(" ", ""),
 //                            jsonReader.getReceivedJsonString());
 
-                    htmlPOST(EnvSettings.getEnvironmentUrl() +
+                    sendPost(EnvSettings.getEnvironmentUrl() +
                             getSelectedResourceValue().replace(" ", ""),
                             jsonReader.getReceivedJsonString());
+//                    htmlPOST(EnvSettings.getEnvironmentUrl() +
+//                            getSelectedResourceValue().replace(" ", ""),
+//                            jsonReader.getReceivedJsonString());
 
                     System.out.println("Send POST");
                 }

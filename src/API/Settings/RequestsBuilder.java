@@ -10,6 +10,7 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -38,15 +39,15 @@ import static API.Settings.JsonReader.writeJsonFile;
  */
 public class RequestsBuilder {
 
-    public static int getResponseStatus() {
-        return responseStatus;
+    public static int getResponseStatusCode() {
+        return responseStatusCode;
     }
 
-    public void setResponseStatus(int responseStatus) {
-        RequestsBuilder.responseStatus = responseStatus;
+    public static void setResponseStatusCode(int responseStatusCode) {
+        RequestsBuilder.responseStatusCode = responseStatusCode;
     }
 
-    private static int responseStatus;
+    private static int responseStatusCode;
 
     private List<String> productKeysList = new ArrayList<>(Arrays.asList("ProductName", "ProductSku"));
     private List<String> customerKeysList = new ArrayList<>(Arrays.asList("FirstName", "LastName", "CustomerNumber"));
@@ -68,7 +69,7 @@ public class RequestsBuilder {
             }
 
             ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, jsonEntity);
-            setResponseStatus(response.getStatus());
+            setResponseStatusCode(response.getStatus());
             try {
                 Assert.assertEquals("Unexpected response status.", 200, response.getStatus());
             } catch (AssertionError error) {
@@ -102,6 +103,42 @@ public class RequestsBuilder {
         };
         Thread thread = new Thread(runnable);
         thread.start();
+    }
+
+    public static void sendPost(String targetUrl, String jsonEntity) throws IOException {
+
+        HttpClient httpClient = HttpClientBuilder.create().build();
+        HttpPost post = new HttpPost(targetUrl);
+        post.addHeader("x-freestyle-api-auth", getToken());
+
+        System.out.println("Json: " + JsonReader.getReceivedJsonString());
+
+        StringEntity postingString = new StringEntity(jsonEntity);
+        post.setEntity(postingString);
+        System.out.println("postingString: " + postingString);
+        post.setHeader("Content-type", "application/json");
+        HttpResponse response = httpClient.execute(post);
+        System.out.println("Response: " + response.getStatusLine());
+
+        HttpEntity entity = response.getEntity();
+        String responseString = EntityUtils.toString(entity, "UTF-8");
+        System.out.println("HttpResponseBody: " + responseString);
+
+        setResponseStatusCode(response.getStatusLine().getStatusCode());
+
+        Controller.setResponseStatus(getResponseStatusCode() + " " +
+                response.getStatusLine().getReasonPhrase());
+
+        if(getResponseStatusCode() == 200){
+            GeneratePopupBox.successPopupBox(response.getStatusLine().getStatusCode() + " " +
+                    response.getStatusLine().getReasonPhrase() +
+                    "\nNew " + Controller.getSelectedResourceValue() + " has been created successfully.");
+        } else {
+            GeneratePopupBox.failedPopupBox(response.getStatusLine().getStatusCode() + " " +
+                    response.getStatusLine().getReasonPhrase() +
+                    "\nResponse body: " + responseString);
+        }
+
     }
 
     public static void htmlPOST(String targetUrl, String jsonEntity) throws IOException {

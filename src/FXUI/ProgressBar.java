@@ -12,6 +12,6 @@ public class ProgressBar {
     }
 
 //    public static void addResponseStatus(String status) {
-//        Controller.setResponseStatus(status);
+//        Controller.setResponseStatusCode(status);
 //    }
 }

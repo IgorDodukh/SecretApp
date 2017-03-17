@@ -183,9 +183,11 @@ public class RequestsBuilder {
             } else if (targetUrl.contains("Warehouse")){
                 getJsonParameters(warehousesKeysList, (JSONArray) obj);
             }
+            Controller.setResponseStatus(response.getStatus() + " " + response.getStatusInfo());
         };
         Thread thread = new Thread(runnable);
         thread.start();
+
     }
 
     private void getJsonParameters(List<String> keysList, JSONArray obj) {

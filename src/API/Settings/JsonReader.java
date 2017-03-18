@@ -29,13 +29,6 @@ public class JsonReader extends EnvSettings {
             System.out.println(jsonObject.toJSONString());
             receivedJsonString = jsonObject.toJSONString();
             System.out.println("Received JSON string: " +  receivedJsonString);
-
-//            String username = (String) jsonObject.get("username");
-//            System.out.println(username);
-//
-//            String password = (String) jsonObject.get("password");
-//            System.out.println(password);
-
         } catch (IOException | ParseException e) {
             e.printStackTrace();        
         }
@@ -51,7 +44,7 @@ public class JsonReader extends EnvSettings {
         }
     }
 
-    public void changeJsonFields(String jsonPath, List<String> keys, List<String> values) {
+    public static void changeJsonFields(String jsonPath, List<String> keys, List<String> values) {
         JSONParser parser = new JSONParser();
 
         try {

@@ -23,7 +23,7 @@ import static Settings.GetPropertyValues.getTimeoutProperty;
 /**
  * Created by Ihor on 7/15/2016. All rights reserved!
  */
-public class GeneratePopupBox {
+public class DialogBoxGenerator {
 
     private static final AppStyles appStyles = new AppStyles();
 
@@ -210,7 +210,7 @@ public class GeneratePopupBox {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            GeneratePopupBox.confirmationPopupBox();
+            DialogBoxGenerator.confirmationPopupBox();
         } else System.out.println("Person select cancelled");
     }
 
@@ -263,7 +263,7 @@ public class GeneratePopupBox {
         Optional<String> result = userTypesDialog.showAndWait();
         if (result.isPresent()){
             userTypeToCreate = result.get();
-            GeneratePopupBox.confirmationPopupBox();
+            DialogBoxGenerator.confirmationPopupBox();
         } else System.out.println("User Type selecting cancelled");
     }
 
@@ -358,7 +358,7 @@ public class GeneratePopupBox {
             } else if(Objects.equals(result.get(), "American Express")){
                 Controller.cardNumber = BrowserSettings.americanExpressTestCardNumber;
             }
-            GeneratePopupBox.confirmationPopupBox();
+            DialogBoxGenerator.confirmationPopupBox();
         } else System.out.println("CC cancelled");
     }
 
@@ -381,7 +381,7 @@ public class GeneratePopupBox {
         if (result.isPresent()){
             Controller.magentoIndex = choices.indexOf(result.get());
             Controller.magentoIndexName = result.get();
-            GeneratePopupBox.confirmationPopupBox();
+            DialogBoxGenerator.confirmationPopupBox();
         } else System.out.println("Select Magento cancelled");
     }
 
@@ -480,7 +480,7 @@ public class GeneratePopupBox {
             }
 
             if (!Objects.equals(oldPath, currentMainPath)){
-                GeneratePopupBox.relaunchPopupBox();
+                DialogBoxGenerator.relaunchPopupBox();
             }
         } else System.out.println("Configuration popup box cancelled");
     }
@@ -605,15 +605,15 @@ public class GeneratePopupBox {
         aboutDialog.initStyle(StageStyle.UTILITY);
 
         String newChanges =
-                " - Login/Password validation logic changed\n" +
-                " - 'Cancel' buttons are colored in red on dialog boxes\n" +
-                " - Add progress value to the main window(it was existing feature)\n" +
+                " - API mode is added:\n" +
+                "   - GET and POST requests are supported for now\n" +
+                "   - UI is slightly changed in API mode\n" +
                 " - FIXED BUG: validating fields on the 'Default Names' config dialog\n" +
                 " - NEW BUG: progress value sometimes starts not from 0 \n" +
                 " - Partial refactoring (may occur unexpected new bugs)\n\n" +
                 "Updates from the latest releases you can find in the 'Release Notes' file";
 
-        Label label = new Label("Last release: '#1.75 beta' includes the following new features:");
+        Label label = new Label("Latest release: '#2.0 beta' includes the following new features:");
 
         TextArea textArea = new TextArea(newChanges);
         textArea.setEditable(false);

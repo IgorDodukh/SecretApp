@@ -2,7 +2,7 @@ package Settings;
 
 import FXUI.AppStyles;
 import FXUI.Controller;
-import FXUI.GeneratePopupBox;
+import FXUI.DialogBoxGenerator;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -23,14 +23,14 @@ public class UpdateConfig {
 
             FileOutputStream out = new FileOutputStream(AppStyles.propertiesResourcePath + "systemVar.properties");
 
-            props.setProperty("timeoutVariable", GeneratePopupBox.currentTimeout);
-            props.setProperty("randomValue", GeneratePopupBox.currentRandomLength);
-            props.setProperty("defaultPath", GeneratePopupBox.currentMainPath);
+            props.setProperty("timeoutVariable", DialogBoxGenerator.currentTimeout);
+            props.setProperty("randomValue", DialogBoxGenerator.currentRandomLength);
+            props.setProperty("defaultPath", DialogBoxGenerator.currentMainPath);
 
             props.store(out, null);
             out.close();
         } catch (Exception e) {
-            GeneratePopupBox.warningPopupBox(e.getMessage());
+            DialogBoxGenerator.warningPopupBox(e.getMessage());
         }
     }
 
@@ -48,7 +48,7 @@ public class UpdateConfig {
             props.store(out, null);
             out.close();
         } catch (Exception e) {
-                GeneratePopupBox.warningPopupBox(e.getMessage());
+                DialogBoxGenerator.warningPopupBox(e.getMessage());
             }
     }
 
@@ -61,12 +61,12 @@ public class UpdateConfig {
 
             FileOutputStream out = new FileOutputStream(AppStyles.propertiesResourcePath + "user.properties");
 
-            props.setProperty("user", GeneratePopupBox.currentUser);
+            props.setProperty("user", DialogBoxGenerator.currentUser);
 
             props.store(out, null);
             out.close();
         } catch (Exception e) {
-        GeneratePopupBox.warningPopupBox(e.getMessage());
+        DialogBoxGenerator.warningPopupBox(e.getMessage());
     }
     }
 
@@ -79,20 +79,20 @@ public class UpdateConfig {
 
             FileOutputStream out = new FileOutputStream(AppStyles.propertiesResourcePath + "names.properties");
 
-            props.setProperty("customerFirstName", GeneratePopupBox.currentCustomerFirstName);
-            props.setProperty("customerLastName", GeneratePopupBox.currentCustomerLastName);
-            props.setProperty("productSKU", GeneratePopupBox.currentProductSKU);
-            props.setProperty("productName", GeneratePopupBox.currentProductName);
-            props.setProperty("supplierName", GeneratePopupBox.currentSupplierName);
-            props.setProperty("warehouseName", GeneratePopupBox.currentWarehouseName);
-            props.setProperty("binName", GeneratePopupBox.currentBinName);
+            props.setProperty("customerFirstName", DialogBoxGenerator.currentCustomerFirstName);
+            props.setProperty("customerLastName", DialogBoxGenerator.currentCustomerLastName);
+            props.setProperty("productSKU", DialogBoxGenerator.currentProductSKU);
+            props.setProperty("productName", DialogBoxGenerator.currentProductName);
+            props.setProperty("supplierName", DialogBoxGenerator.currentSupplierName);
+            props.setProperty("warehouseName", DialogBoxGenerator.currentWarehouseName);
+            props.setProperty("binName", DialogBoxGenerator.currentBinName);
 
             props.store(out, null);
             out.close();
 
             System.out.println("Names Property Successfully Updated..");
         } catch (Exception e) {
-        GeneratePopupBox.warningPopupBox(e.getMessage());
+        DialogBoxGenerator.warningPopupBox(e.getMessage());
         System.out.println("Exception: " + e);
     }
     }

@@ -2,7 +2,7 @@ package API.Settings;
 
 import FXUI.AppStyles;
 import FXUI.Controller;
-import FXUI.GeneratePopupBox;
+import FXUI.DialogBoxGenerator;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -46,14 +46,14 @@ public class RequestsBuilder {
 
     private static int responseStatusCode;
 
-    ArrayList<String> responseList;
+    private ArrayList<String> responseList;
 
-    private List<String> productKeysList = new ArrayList<>(Arrays.asList("ProductName", "ProductSku"));
-    private List<String> customerKeysList = new ArrayList<>(Arrays.asList("FirstName", "LastName", "CustomerNumber"));
-    private List<String> ordersKeysList = new ArrayList<>(Arrays.asList("TotalAmount", "OrderNumber"));
-    private List<String> suppliersKeysList = new ArrayList<>(Arrays.asList("Name"));
-    private List<String> warehousesKeysList = new ArrayList<>(Arrays.asList("WarehouseName"));
-    private List<String> binsKeysList = new ArrayList<>(Arrays.asList("BinName"));
+    public final List<String> productKeysList = new ArrayList<>(Arrays.asList("ProductName", "ProductSku"));
+    public final List<String> customerKeysList = new ArrayList<>(Arrays.asList("FirstName", "LastName", "CustomerNumber"));
+    public final List<String> ordersKeysList = new ArrayList<>(Arrays.asList("TotalAmount", "OrderNumber"));
+    public final List<String> suppliersKeysList = new ArrayList<>(Arrays.asList("Name"));
+    public final List<String> warehousesKeysList = new ArrayList<>(Arrays.asList("WarehouseName"));
+    public final List<String> binsKeysList = new ArrayList<>(Arrays.asList("BinName"));
 
     public void jerseyPOST(String targetUrl, String jsonEntity){
         Runnable runnable = () -> {
@@ -72,7 +72,7 @@ public class RequestsBuilder {
             try {
                 Assert.assertEquals("Unexpected response status.", 200, response.getStatus());
             } catch (AssertionError error) {
-                GeneratePopupBox.failedPopupBox("Unexpected response status: " +
+                DialogBoxGenerator.failedPopupBox("Unexpected response status: " +
                         String.valueOf(response.getStatus()) + " " +
                         response.getStatusInfo() +
                         "\n\nAPI token was not received." +
@@ -96,7 +96,7 @@ public class RequestsBuilder {
                 writeJsonFile(tokenPath, jsonObject);
             } else {
                 Controller.setResponseStatus(response.getStatus() + " " + response.getStatusInfo());
-                GeneratePopupBox.successPopupBox(response.getStatus() + " " + response.getStatusInfo() +
+                DialogBoxGenerator.successPopupBox(response.getStatus() + " " + response.getStatusInfo() +
                 "\nNew item has been created");
             }
         };
@@ -126,11 +126,11 @@ public class RequestsBuilder {
                 response.getStatusLine().getReasonPhrase());
 
         if(getResponseStatusCode() == 200 || getResponseStatusCode() == 201){
-            GeneratePopupBox.successPopupBox(response.getStatusLine().getStatusCode() + " " +
+            DialogBoxGenerator.successPopupBox(response.getStatusLine().getStatusCode() + " " +
                     response.getStatusLine().getReasonPhrase() +
                     "\nNew " + Controller.getSelectedResourceValue() + " has been created successfully.");
         } else {
-            GeneratePopupBox.failedPopupBox(response.getStatusLine().getStatusCode() + " " +
+            DialogBoxGenerator.failedPopupBox(response.getStatusLine().getStatusCode() + " " +
                     response.getStatusLine().getReasonPhrase() +
                     "\nResponse body: " + responseString);
         }
@@ -171,7 +171,7 @@ public class RequestsBuilder {
                 getJsonParameters(warehousesKeysList, (JSONArray) obj);
             }
             Controller.setResponseStatus(response.getStatus() + " " + response.getStatusInfo());
-            GeneratePopupBox.listBox(responseList);
+            DialogBoxGenerator.listBox(responseList);
         };
         Thread thread = new Thread(runnable);
         thread.start();
@@ -195,6 +195,6 @@ public class RequestsBuilder {
         }
 
         return responseList;
-//        GeneratePopupBox.listBox(responseList);
+//        DialogBoxGenerator.listBox(responseList);
     }
 }

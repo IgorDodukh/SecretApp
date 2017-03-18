@@ -1,7 +1,7 @@
 package Settings;
 
 import FXUI.AppStyles;
-import FXUI.GeneratePopupBox;
+import FXUI.DialogBoxGenerator;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -100,7 +100,7 @@ public class GetPropertyValues {
             binName = namesProp.getProperty("binName");
 
         } catch (Exception e) {
-            GeneratePopupBox.warningPopupBox(e.getMessage());
+            DialogBoxGenerator.warningPopupBox(e.getMessage());
         } finally {
             assert systemVariablesInputStream != null;
             systemVariablesInputStream.close();

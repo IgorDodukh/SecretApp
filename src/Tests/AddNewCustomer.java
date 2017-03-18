@@ -15,6 +15,7 @@ import org.testng.annotations.Test;
 public class AddNewCustomer extends BrowserSettings{
     public static String createdFirstName = "Some";
     public static String createdLastName = "Name";
+
     @Test
     public void addNewCustomer(String email, String password, String cardNumber, WebDriver driver) throws InterruptedException {
         LoginPage loginPage = new LoginPage(driver);
@@ -25,8 +26,8 @@ public class AddNewCustomer extends BrowserSettings{
 
         AddCustomerPage addCustomerPage = new AddCustomerPage(driver);
         addCustomerPage.addCustomerInfo(
-                createdFirstName = GetPropertyValues.customerFirstName + "_" + new GenerateRandomData().generateRandomNumber(randomValueLength),
-                createdLastName = GetPropertyValues.customerLastName + "_" + new GenerateRandomData().generateRandomNumber(randomValueLength),
+                createdFirstName = GetPropertyValues.customerFirstName + "-" + new GenerateRandomData().generateRandomNumber(randomValueLength),
+                createdLastName = GetPropertyValues.customerLastName + "-" + new GenerateRandomData().generateRandomNumber(randomValueLength),
                 customerEmail, phone);
         addCustomerPage.addBillingAddress(addressFirstName, addressLastName, addressLine1, addressZip);
         addCustomerPage.addShippingAddress();

@@ -6,6 +6,8 @@ import API.Settings.RequestsBuilder;
 import API.Tests.AuthResource.AuthPOST;
 import API.Tests.ProductsResource.ProductsResource;
 import Settings.BrowserSettings;
+import Settings.GenerateRandomData;
+import Settings.GetPropertyValues;
 import Settings.ReadConfigMain;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -27,10 +29,11 @@ import java.util.Objects;
 
 import static API.Settings.RequestsBuilder.sendPost;
 import static FXUI.ComboBoxesHandler.additionalDialogDeterminer;
+import static FXUI.DialogBoxGenerator.*;
 import static FXUI.ExecutionTimeCounter.startCounter;
 import static FXUI.ExecutionTimeCounter.stopCounter;
-import static FXUI.GeneratePopupBox.*;
 import static FXUI.InternetConnection.getFailedContentText;
+import static Settings.BrowserSettings.randomValueLength;
 import static Settings.GetPropertyValues.loginProperty;
 import static Settings.GetPropertyValues.passProperty;
 import static Settings.UpdateConfig.updateCredentials;
@@ -39,18 +42,6 @@ public class Controller extends Main {
     public static WebDriver driver;
 
     private String responseBody;
-//
-//    public Controller( String responseStatus, String responseBody ) {
-////        progressLabel.setText(responseStatus);
-////        this.progressLabel = progressLabel;
-//        this.responseStatus = responseStatus;
-//        this.responseBody = responseBody;
-//        System.out.println();
-//    }
-
-    public void enableSpinner(boolean enable) {
-        waitingAnimation.setVisible(enable);
-    }
 
     public static int magentoIndex;
     public static String magentoIndexName = "";
@@ -329,29 +320,30 @@ public class Controller extends Main {
 
             try {
                 if(getSelectedRequestTypeIndex() == 0){
+                    System.out.println("Send GET");
                     requestsBuilder.jerseyGET(EnvSettings.getEnvironmentUrl() + getSelectedResourceValue().replace(" ", ""));
                 } else if (getSelectedRequestTypeIndex() == 1){
-                    JsonReader.readJsonFile(AppStyles.jsonPath + selectedResourceValue + ".json");
-                    System.out.println("***\n" +
-                            EnvSettings.getEnvironmentUrl() +
-                            getSelectedResourceValue().replace(" ", "") + "\n***\n" +
-                            jsonReader.getReceivedJsonString());
+                    System.out.println("Send POST");
 
-//                    requestsBuilder.jerseyPOST(EnvSettings.getEnvironmentUrl() +
-//                            getSelectedResourceValue().replace(" ", ""),
-//                            jsonReader.getReceivedJsonString());
+                    String createdProductSKU = GetPropertyValues.productSKU + new GenerateRandomData().generateRandomNumber(randomValueLength);
+                    String createdProductName = GetPropertyValues.productName + new GenerateRandomData().generateRandomNumber(randomValueLength);
 
+                    List<String> values = new ArrayList<>();
+                    values.add(createdProductName);
+                    values.add(createdProductSKU);
+
+                    String jsonForPOST = AppStyles.jsonPath + selectedResourceValue + ".json";
+                    System.out.println("***" + jsonForPOST + "\n***" + requestsBuilder.productKeysList + "\n***" + values);
+                    JsonReader.changeJsonFields(jsonForPOST, requestsBuilder.productKeysList, values);
+
+                    JsonReader.readJsonFile(jsonForPOST);
                     sendPost(EnvSettings.getEnvironmentUrl() +
                             getSelectedResourceValue().replace(" ", ""),
-                            jsonReader.getReceivedJsonString());
-//                    htmlPOST(EnvSettings.getEnvironmentUrl() +
-//                            getSelectedResourceValue().replace(" ", ""),
-//                            jsonReader.getReceivedJsonString());
-
-                    System.out.println("Send POST");
+                            JsonReader.getReceivedJsonString());
                 }
             } catch (ParseException | IOException e) {
                 e.printStackTrace();
+                System.out.println("Sending request was failed.");
             }
         });
     }
@@ -375,16 +367,7 @@ public class Controller extends Main {
         passwordField.setDisable(value);
     }
 
-//    public void requestProgressSpinner(boolean enable) {
-//        this.waitingAnimation = waitingAnimation;
-////        progressLabel.setVisible(enable);
-////        progressLabel.setText(responseStatus);
-////        GeneratePopupBox.successPopupBox(responseBody);
-//        waitingAnimation.setVisible(enable);
-//    }
-
     public void clickApiSwitcher() throws IOException, ParseException {
-//        appStatus.requestWaitingAnimation(sendButton, waitingAnimation, true);
         setResponseStatus("");
         List<String> authKeysList = new ArrayList<>();
         authKeysList.add("username");

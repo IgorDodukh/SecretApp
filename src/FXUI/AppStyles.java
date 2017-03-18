@@ -1,6 +1,5 @@
 package FXUI;
 
-import Settings.GetSystemFiles;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 
@@ -8,13 +7,13 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static FXUI.GeneratePopupBox.warningPopupBox;
+import static FXUI.DialogBoxGenerator.warningPopupBox;
 
 /**
  * Created by Igor on 8/20/2016. All rights reserved!
  */
 
-public class AppStyles extends GetSystemFiles {
+public class AppStyles {
     private static InputStream fileStream;
 
     public static String resourcesPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "resources" + File.separator;
@@ -60,7 +59,7 @@ public class AppStyles extends GetSystemFiles {
                 throw new FileNotFoundException("CSS file '" + f.toString() + "' not found in the classpath");
             }
         } catch (Exception e){
-            GeneratePopupBox.warningPopupBox(e.getMessage());
+            DialogBoxGenerator.warningPopupBox(e.getMessage());
         } finally {
             assert fileStream != null;
             fileStream.close();

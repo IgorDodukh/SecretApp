@@ -1,7 +1,7 @@
 package Pages;
 
 import FXUI.Controller;
-import FXUI.GeneratePopupBox;
+import FXUI.DialogBoxGenerator;
 import Settings.BrowserSettings;
 import Settings.GenerateRandomData;
 import org.openqa.selenium.By;
@@ -100,25 +100,25 @@ public class ManageUsersPage extends BrowserSettings {
     }
 
     public void addNewGroupWithUser() {
-        String groupName = GeneratePopupBox.userTypeToCreate + "-" + new GenerateRandomData().generateRandomNumber(randomValueLength);
+        String groupName = DialogBoxGenerator.userTypeToCreate + "-" + new GenerateRandomData().generateRandomNumber(randomValueLength);
         driver.findElement(groupNameFieldLocator).sendKeys(groupName);
         driver.findElement(groupDescriptionFieldLocator).sendKeys(groupName);
 
-        if (Objects.equals(GeneratePopupBox.userTypeToCreate, "Merchandiser")) {
+        if (Objects.equals(DialogBoxGenerator.userTypeToCreate, "Merchandiser")) {
             driver.findElement(merchandiserGroupLocator).click();
-        } else if (Objects.equals(GeneratePopupBox.userTypeToCreate, "Picker")) {
+        } else if (Objects.equals(DialogBoxGenerator.userTypeToCreate, "Picker")) {
             driver.findElement(pickerGroupLocator).click();
-        } else if (Objects.equals(GeneratePopupBox.userTypeToCreate, "Packer")) {
+        } else if (Objects.equals(DialogBoxGenerator.userTypeToCreate, "Packer")) {
             driver.findElement(packerGroupLocator).click();
-        } else if (Objects.equals(GeneratePopupBox.userTypeToCreate, "Shipper")) {
+        } else if (Objects.equals(DialogBoxGenerator.userTypeToCreate, "Shipper")) {
             driver.findElement(shipperGroupLocator).click();
-        } else if (Objects.equals(GeneratePopupBox.userTypeToCreate, "CSR")) {
+        } else if (Objects.equals(DialogBoxGenerator.userTypeToCreate, "CSR")) {
             driver.findElement(csrGroupLocator).click();
-        } else if (Objects.equals(GeneratePopupBox.userTypeToCreate, "CSR Manager")) {
+        } else if (Objects.equals(DialogBoxGenerator.userTypeToCreate, "CSR Manager")) {
             driver.findElement(csrManagerGroupLocator).click();
-        } else if (Objects.equals(GeneratePopupBox.userTypeToCreate, "Purchase Manager")) {
+        } else if (Objects.equals(DialogBoxGenerator.userTypeToCreate, "Purchase Manager")) {
             driver.findElement(purchasingManagerGroupLocator).click();
-        } else if (Objects.equals(GeneratePopupBox.userTypeToCreate, "Warehouse Manager")) {
+        } else if (Objects.equals(DialogBoxGenerator.userTypeToCreate, "Warehouse Manager")) {
             driver.findElement(warehouseManagerGroupLocator).click();
         }
     }

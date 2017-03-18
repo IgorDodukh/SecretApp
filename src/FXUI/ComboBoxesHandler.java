@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static FXUI.GeneratePopupBox.*;
+import static FXUI.DialogBoxGenerator.*;
 
 /**
  * Created by Ihor on 7/16/2016. All rights reserved!
@@ -79,23 +79,23 @@ public class ComboBoxesHandler{
             Controller.setResultMessage(Controller.getResultMessage() + " has been synced with " + Controller.environmentComboBoxValue);
         } else if (dropdownIndex == 7) {
             BrowserSettings.progressVariable = 4;
-            if(Objects.equals(GeneratePopupBox.userTypeToCreate, "Merchant")) {
-                System.out.println(GeneratePopupBox.userTypeToCreate);
+            if(Objects.equals(DialogBoxGenerator.userTypeToCreate, "Merchant")) {
+                System.out.println(DialogBoxGenerator.userTypeToCreate);
                 addUsers.addMerchant(login, password, driver);
-            } else if(Objects.equals(GeneratePopupBox.userTypeToCreate, "Merchant Admin")) {
-                System.out.println(GeneratePopupBox.userTypeToCreate);
+            } else if(Objects.equals(DialogBoxGenerator.userTypeToCreate, "Merchant Admin")) {
+                System.out.println(DialogBoxGenerator.userTypeToCreate);
                 addUsers.addMerchantAdmin(login, password, driver);
-            } else if(Objects.equals(GeneratePopupBox.userTypeToCreate, "Merchandiser")) {
-                System.out.println(GeneratePopupBox.userTypeToCreate);
+            } else if(Objects.equals(DialogBoxGenerator.userTypeToCreate, "Merchandiser")) {
+                System.out.println(DialogBoxGenerator.userTypeToCreate);
                 addUsers.addMerchantAdmin(login, password, driver);
-            } else if(Objects.equals(GeneratePopupBox.userTypeToCreate, "Picker")) {
-                System.out.println(GeneratePopupBox.userTypeToCreate);
+            } else if(Objects.equals(DialogBoxGenerator.userTypeToCreate, "Picker")) {
+                System.out.println(DialogBoxGenerator.userTypeToCreate);
                 addUsers.addMerchantAdmin(login, password, driver);
-            } else if(Objects.equals(GeneratePopupBox.userTypeToCreate, "Packer")) {
-                System.out.println(GeneratePopupBox.userTypeToCreate);
+            } else if(Objects.equals(DialogBoxGenerator.userTypeToCreate, "Packer")) {
+                System.out.println(DialogBoxGenerator.userTypeToCreate);
                 addUsers.addMerchantAdmin(login, password, driver);
             } else throw new NoSuchAlgorithmException("No such test exception");
-            Controller.setResultMessage(Controller.getResultMessage() + "New " + GeneratePopupBox.userTypeToCreate + " has been created");
+            Controller.setResultMessage(Controller.getResultMessage() + "New " + DialogBoxGenerator.userTypeToCreate + " has been created");
         }
     }
 

@@ -271,7 +271,7 @@ public class DialogBoxGenerator {
         Platform.runLater(() -> {
             Alert responseBody = new Alert(Alert.AlertType.INFORMATION);
             try {
-                appStyles.setDialogLogo(responseBody, "hi.png");
+                appStyles.setDialogLogo(responseBody, "success.png");
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }

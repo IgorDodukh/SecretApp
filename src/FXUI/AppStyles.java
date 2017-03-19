@@ -26,13 +26,12 @@ public class AppStyles {
     public static String propertiesResourcePath = resourcesPath + "properties" + File.separator;
     public static String stylesResourcePath = resourcesPath + Controller.getStylesFolderName() + File.separator;
 
-    private static String dialogBoxStyle = stylesResourcePath + "dialogBoxes.css";
+//    private static String dialogBoxStyle = stylesResourcePath + "dialogBoxes.css";
     public static String jsonPath = resourcesPath + "json" + File.separator;
 
     private void getDialogStyleFile(Dialog dialog) throws IOException {
-        AppStyles.stylesResourcePath = AppStyles.resourcesPath + Controller.getStylesFolderName() + File.separator;
         try {
-            File f = new File(dialogBoxStyle);
+            File f = new File(AppStyles.resourcesPath + Controller.getStylesFolderName() + File.separator + "dialogBoxes.css");
             fileStream = new FileInputStream(f.toString());
             if (fileStream != null) {
                 DialogPane dialogPane = dialog.getDialogPane();

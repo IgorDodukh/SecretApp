@@ -287,11 +287,10 @@ public class DialogBoxGenerator {
                 e.printStackTrace();
             }
             responseBody.setTitle("Response results");
-            responseBody.setHeaderText("Response body");
+            responseBody.setHeaderText(Controller.getSelectedResourceValue() + " list was returned.\n" +
+                    jArray.size() + " items found.");
             responseBody.setContentText("Returned entities list\n");
             responseBody.initStyle(StageStyle.UTILITY);
-
-            Label label = new Label("Here is a returned entities list:");
 
             ListView<String> listView = new ListView<>();
             ObservableList<String> items = FXCollections.observableArrayList ();
@@ -310,7 +309,7 @@ public class DialogBoxGenerator {
             GridPane expContent = new GridPane();
             expContent.setMinWidth(500);
             expContent.setMaxWidth(Double.MAX_VALUE);
-            expContent.add(label, 0, 0);
+//            expContent.add(label, 0, 0);
             expContent.add(listView, 0, 1);
 
 // Set expandable Exception into the dialog pane.

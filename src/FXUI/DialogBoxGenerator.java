@@ -149,6 +149,17 @@ public class DialogBoxGenerator {
 
     public static void successPopupBox(String resultMessage) {
         Platform.runLater(() -> {
+
+            //TODO add link to open created item to the results dialog
+//            String resourceName = getSelectedResourceValue();
+//            final WebView browser = new WebView();
+//            final WebEngine webEngine = browser.getEngine();
+//            final Hyperlink hpl = new Hyperlink();
+//            if(getSelectedResourceValue() != null){
+//                hpl.setText("Open created " + resourceName.substring(0,resourceName.length()-1));
+//                hpl.setOnAction(e -> webEngine.load(hyperlinkUrl));
+//            }
+
             Alert successDialog = new Alert(Alert.AlertType.INFORMATION);
             try {
                 appStyles.setDialogLogo(successDialog, "success.png");
@@ -267,7 +278,7 @@ public class DialogBoxGenerator {
         } else System.out.println("User Type selecting cancelled");
     }
 
-    public static void listBox(ArrayList jArray) {
+    public static void resultsListBox(ArrayList jArray) {
         Platform.runLater(() -> {
             Alert responseBody = new Alert(Alert.AlertType.INFORMATION);
             try {
@@ -479,9 +490,10 @@ public class DialogBoxGenerator {
                 e.printStackTrace();
             }
 
-            if (!Objects.equals(oldPath, currentMainPath)){
-                DialogBoxGenerator.relaunchPopupBox();
-            }
+
+//            if (!Objects.equals(oldPath, currentMainPath)){
+//                DialogBoxGenerator.relaunchPopupBox();
+//            }
         } else System.out.println("Configuration popup box cancelled");
     }
 

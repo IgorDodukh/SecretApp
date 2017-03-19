@@ -4,10 +4,7 @@ import API.Settings.EnvSettings;
 import API.Settings.JsonReader;
 import API.Settings.RequestsBuilder;
 import API.Tests.AuthResource.AuthPOST;
-import API.Tests.ProductsResource.ProductsResource;
 import Settings.BrowserSettings;
-import Settings.GenerateRandomData;
-import Settings.GetPropertyValues;
 import Settings.ReadConfigMain;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -27,13 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static API.Settings.RequestsBuilder.sendPost;
 import static FXUI.ComboBoxesHandler.additionalDialogDeterminer;
 import static FXUI.DialogBoxGenerator.*;
 import static FXUI.ExecutionTimeCounter.startCounter;
 import static FXUI.ExecutionTimeCounter.stopCounter;
 import static FXUI.InternetConnection.getFailedContentText;
-import static Settings.BrowserSettings.randomValueLength;
 import static Settings.GetPropertyValues.loginProperty;
 import static Settings.GetPropertyValues.passProperty;
 import static Settings.UpdateConfig.updateCredentials;
@@ -144,7 +139,6 @@ public class Controller extends Main {
     private InternetConnection internetConnection = new InternetConnection();
     private EnvSettings envSettings = new EnvSettings();
     private AuthPOST authPOST = new AuthPOST();
-    private ProductsResource productsResource = new ProductsResource();
     private JsonReader jsonReader = new JsonReader();
     private RequestsBuilder requestsBuilder = new RequestsBuilder();
     private int browserComboBoxIndex;
@@ -301,7 +295,8 @@ public class Controller extends Main {
         configNamesPopupBox();
     }
 
-    public void clickSendButton() {
+    public void clickSendButton() throws IOException {
+        ReadConfigMain.main();
         setResponseStatus("");
         setSelectedResourceValue(apiEntityTypeComboBox.getValue());
         System.out.println("Request type: " + requestsComboBox.getValue());
@@ -324,20 +319,8 @@ public class Controller extends Main {
                     requestsBuilder.jerseyGET(EnvSettings.getEnvironmentUrl() + getSelectedResourceValue().replace(" ", ""));
                 } else if (getSelectedRequestTypeIndex() == 1){
                     System.out.println("Send POST");
-
-                    String createdProductSKU = GetPropertyValues.productSKU + new GenerateRandomData().generateRandomNumber(randomValueLength);
-                    String createdProductName = GetPropertyValues.productName + new GenerateRandomData().generateRandomNumber(randomValueLength);
-
-                    List<String> values = new ArrayList<>();
-                    values.add(createdProductName);
-                    values.add(createdProductSKU);
-
-                    String jsonForPOST = AppStyles.jsonPath + selectedResourceValue + ".json";
-                    System.out.println("***" + jsonForPOST + "\n***" + requestsBuilder.productKeysList + "\n***" + values);
-                    JsonReader.changeJsonFields(jsonForPOST, requestsBuilder.productKeysList, values);
-
-                    JsonReader.readJsonFile(jsonForPOST);
-                    sendPost(EnvSettings.getEnvironmentUrl() +
+                    jsonReader.updateJsonForPOST(selectedResourceValue);
+                    requestsBuilder.sendPost(EnvSettings.getEnvironmentUrl() +
                             getSelectedResourceValue().replace(" ", ""),
                             JsonReader.getReceivedJsonString());
                 }
@@ -347,6 +330,8 @@ public class Controller extends Main {
             }
         });
     }
+
+
 
     private void updateApiModeView(Boolean value) {
         setSelectedEnvironmentIndex(environmentsComboBox.getSelectionModel().getSelectedIndex());

@@ -44,6 +44,7 @@ public class RequestsBuilder {
         RequestsBuilder.responseStatusCode = responseStatusCode;
     }
 
+    static JsonReader jsonReader = new JsonReader();
     private static int responseStatusCode;
 
     private ArrayList<String> responseList;
@@ -104,7 +105,7 @@ public class RequestsBuilder {
         thread.start();
     }
 
-    public static void sendPost(String targetUrl, String jsonEntity) throws IOException {
+    public void sendPost(String targetUrl, String jsonEntity) throws IOException {
 
         HttpClient httpClient = HttpClientBuilder.create().build();
         HttpPost post = new HttpPost(targetUrl);
@@ -126,9 +127,11 @@ public class RequestsBuilder {
                 response.getStatusLine().getReasonPhrase());
 
         if(getResponseStatusCode() == 200 || getResponseStatusCode() == 201){
+            String resourceName = Controller.getSelectedResourceValue();
             DialogBoxGenerator.successPopupBox(response.getStatusLine().getStatusCode() + " " +
                     response.getStatusLine().getReasonPhrase() +
-                    "\nNew " + Controller.getSelectedResourceValue() + " has been created successfully.");
+                    "\nNew " + resourceName.substring(0,resourceName.length()-1) + " has been created successfully.\n" +
+                    jsonReader.getCreatedItemFullName());
         } else {
             DialogBoxGenerator.failedPopupBox(response.getStatusLine().getStatusCode() + " " +
                     response.getStatusLine().getReasonPhrase() +
@@ -158,27 +161,27 @@ public class RequestsBuilder {
             }
 
             if(targetUrl.contains("Product")){
-                getJsonParameters(productKeysList, (JSONArray) obj);
+                getJsonArrayParameters(productKeysList, (JSONArray) obj);
             } else if (targetUrl.contains("Customer")) {
-                getJsonParameters(customerKeysList, (JSONArray) obj);
+                getJsonArrayParameters(customerKeysList, (JSONArray) obj);
             } else if (targetUrl.contains("Order")){
-                getJsonParameters(ordersKeysList, (JSONArray) obj);
+                getJsonArrayParameters(ordersKeysList, (JSONArray) obj);
             } else if (targetUrl.contains("Suppliers")){
-                getJsonParameters(suppliersKeysList, (JSONArray) obj);
+                getJsonArrayParameters(suppliersKeysList, (JSONArray) obj);
             } else if (targetUrl.contains("Bin")){
-                getJsonParameters(binsKeysList, (JSONArray) obj);
+                getJsonArrayParameters(binsKeysList, (JSONArray) obj);
             } else if (targetUrl.contains("Warehouse")){
-                getJsonParameters(warehousesKeysList, (JSONArray) obj);
+                getJsonArrayParameters(warehousesKeysList, (JSONArray) obj);
             }
             Controller.setResponseStatus(response.getStatus() + " " + response.getStatusInfo());
-            DialogBoxGenerator.listBox(responseList);
+            DialogBoxGenerator.resultsListBox(responseList);
         };
         Thread thread = new Thread(runnable);
         thread.start();
 
     }
 
-    private ArrayList<String> getJsonParameters(List<String> keysList, JSONArray obj) {
+    private ArrayList<String> getJsonArrayParameters(List<String> keysList, JSONArray obj) {
 //        ArrayList<String> responseList = new ArrayList<>();
         responseList = new ArrayList<>();
         JSONArray json = obj;
@@ -195,6 +198,6 @@ public class RequestsBuilder {
         }
 
         return responseList;
-//        DialogBoxGenerator.listBox(responseList);
+//        DialogBoxGenerator.resultsListBox(responseList);
     }
 }

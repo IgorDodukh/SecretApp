@@ -16,11 +16,14 @@ import static FXUI.DialogBoxGenerator.warningPopupBox;
 public class AppStyles {
     private static InputStream fileStream;
 
+    public static String apiStyles = "styles";
+
     public static String resourcesPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "resources" + File.separator;
     public static String picturesResourcePath = resourcesPath + "pic" + File.separator;
     public static String driversResourcePath = resourcesPath + "drivers" + File.separator;
     public static String propertiesResourcePath = resourcesPath + "properties" + File.separator;
-    public static String stylesResourcePath = resourcesPath + "styles" + File.separator;
+    public static String stylesResourcePath = resourcesPath + apiStyles + File.separator;
+
     private static String dialogBoxStyle = stylesResourcePath + "dialogBoxes.css";
     public static String jsonPath = resourcesPath + "json" + File.separator;
 
@@ -31,8 +34,6 @@ public class AppStyles {
             fileStream = new FileInputStream(f.toString());
             if (fileStream != null) {
                 DialogPane dialogPane = dialog.getDialogPane();
-//                dialogPane.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
-//                dialogPane.getStylesheets().add(getClass().getResource(f.getAbsolutePath().replace("\\", "/")).toString());
                 URL url = f.toURI().toURL();
                 dialogPane.getStylesheets().add(url.toExternalForm());
             } else {
@@ -52,7 +53,6 @@ public class AppStyles {
             fileStream = new FileInputStream(f.toString());
 
             if (fileStream != null) {
-//                element.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
                 URL url = f.toURI().toURL();
                 element.getStylesheets().add(url.toExternalForm());
             } else {
@@ -116,9 +116,6 @@ public class AppStyles {
     void setDialogLogo(Dialog dialog, String logoName) throws MalformedURLException {
         File f = new File(picturesResourcePath + logoName);
         URL url = f.toURI().toURL();
-//        element.getStylesheets().add(url.toExternalForm());
-//        dialog.getDialogPane().setStyle(
-//                "-fx-graphic: url(\"file:/" + picturesResourcePath.replace("\\", "/") + logoName + "\")");
         dialog.getDialogPane().setStyle(
                 "-fx-graphic: url(" + url.toExternalForm() + ")");
     }

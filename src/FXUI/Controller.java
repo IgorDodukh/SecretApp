@@ -36,13 +36,11 @@ import static Settings.UpdateConfig.updateCredentials;
 public class Controller extends Main {
     public static WebDriver driver;
 
-    private String responseBody;
-
     public static int magentoIndex;
     public static String magentoIndexName = "";
-    public static String cardNumber = "";
-    public static String browserComboBoxValue = "";
-    public static String entityComboBoxValue = "";
+    static String cardNumber = "";
+    static String browserComboBoxValue = "";
+    static String entityComboBoxValue = "";
     public static String environmentComboBoxValue = "";
     public static String login;
     public static String password;
@@ -76,7 +74,7 @@ public class Controller extends Main {
                     "Create User"
             );
 
-    public final ObservableList<String> apiResourcesList =
+    private final ObservableList<String> apiResourcesList =
             FXCollections.observableArrayList(
                     "Orders",
                     "Customers",
@@ -114,6 +112,8 @@ public class Controller extends Main {
     public Label entityTypeLabel;
     public Label environmentLabel;
     public Label apiResourceLabel;
+    public Label responseStatusLabel;
+    public Label notSupportedLabel;
 
     public TextField loginField;
     public PasswordField passwordField;
@@ -148,7 +148,7 @@ public class Controller extends Main {
         return selectedResourceValue;
     }
 
-    public void setSelectedResourceValue(String selectedResourceValue) {
+    private void setSelectedResourceValue(String selectedResourceValue) {
         Controller.selectedResourceValue = selectedResourceValue;
     }
 
@@ -159,7 +159,7 @@ public class Controller extends Main {
         return selectedResourceIndex;
     }
 
-    public void setSelectedResourceIndex(int selectedResourceIndex) {
+    private void setSelectedResourceIndex(int selectedResourceIndex) {
         Controller.selectedResourceIndex = selectedResourceIndex;
     }
 
@@ -170,7 +170,7 @@ public class Controller extends Main {
         return selectedEnvironmentIndex;
     }
 
-    public static void setSelectedEnvironmentIndex(int selectedEnvironmentIndex) {
+    private static void setSelectedEnvironmentIndex(int selectedEnvironmentIndex) {
         Controller.selectedEnvironmentIndex = selectedEnvironmentIndex;
     }
 
@@ -180,13 +180,13 @@ public class Controller extends Main {
         return selectedRequestTypeIndex;
     }
 
-    public static void setSelectedRequestTypeIndex(int selectedRequestTypeIndex) {
+    private static void setSelectedRequestTypeIndex(int selectedRequestTypeIndex) {
         Controller.selectedRequestTypeIndex = selectedRequestTypeIndex;
     }
 
     private static int selectedRequestTypeIndex;
 
-    public String getResponseStatus() {
+    private String getResponseStatus() {
         return responseStatus;
     }
 
@@ -233,7 +233,7 @@ public class Controller extends Main {
         return progressValue;
     }
 
-    public static void setProgressValue(int addProgressValue) {
+    static void setProgressValue(int addProgressValue) {
         Controller.progressValue = addProgressValue;
     }
 
@@ -275,8 +275,10 @@ public class Controller extends Main {
                 e.printStackTrace();
             }
         });
+        KeysListener.spinnerEnabler(responseStatusLabel, waitingAnimation, sendButton);
+        KeysListener.notSupportedResource(this, apiEntityTypeComboBox, requestsComboBox);
 
-//Add UI Elements listener
+//Add UI Elements listener for Start button
         KeysListener.startButtonKeyListener(browsersComboBox, this);
         KeysListener.startButtonKeyListener(entityTypeComboBox, this);
         KeysListener.startButtonKeyListener(environmentsComboBox, this);
@@ -295,19 +297,30 @@ public class Controller extends Main {
         configNamesPopupBox();
     }
 
+    void notSupportedRequest(boolean value) {
+        sendButton.setDisable(value);
+        notSupportedLabel.setVisible(value);
+    }
+
+    public void enableWaitingSpinner(boolean value) {
+        waitingAnimation.setVisible(value);
+        sendButton.setDisable(value);
+    }
+
     public void clickSendButton() throws IOException {
         ReadConfigMain.main();
-        setResponseStatus("");
+
         setSelectedResourceValue(apiEntityTypeComboBox.getValue());
         System.out.println("Request type: " + requestsComboBox.getValue());
         System.out.println("Resource type: " + selectedResourceValue);
         Platform.runLater(() -> {
+            setResponseStatus("");
             setSelectedResourceIndex(apiEntityTypeComboBox.getSelectionModel().getSelectedIndex());
             setSelectedRequestTypeIndex(requestsComboBox.getSelectionModel().getSelectedIndex());
 
             Task updateResponseTask = updateResponseStatus();
 
-            progressLabel.textProperty().bind(updateResponseTask.messageProperty());
+            responseStatusLabel.textProperty().bind(updateResponseTask.messageProperty());
             Thread t3 = new Thread(updateResponseTask);
             t3.setName("Response status updater");
             t3.setDaemon(true);
@@ -329,9 +342,8 @@ public class Controller extends Main {
                 System.out.println("Sending request was failed.");
             }
         });
+
     }
-
-
 
     private void updateApiModeView(Boolean value) {
         setSelectedEnvironmentIndex(environmentsComboBox.getSelectionModel().getSelectedIndex());
@@ -342,7 +354,7 @@ public class Controller extends Main {
         startButton.setVisible(!value);
 
         environmentsComboBox.setDisable(value);
-        progressLabel.setVisible(value);
+        responseStatusLabel.setVisible(value);
         requestsComboBox.setVisible(value);
         apiEntityTypeComboBox.setVisible(value);
         requestTypeLabel.setVisible(value);
@@ -353,7 +365,6 @@ public class Controller extends Main {
     }
 
     public void clickApiSwitcher() throws IOException, ParseException {
-        setResponseStatus("");
         List<String> authKeysList = new ArrayList<>();
         authKeysList.add("username");
         authKeysList.add("password");
@@ -363,20 +374,22 @@ public class Controller extends Main {
         credentialsList.add(passwordField.getText());
 
         if (apiSwitcher.isSelected()) {
+            AppStyles.apiStyles = "apiStyles";
+            setResponseStatus("");
             environmentComboBoxIndex = environmentsComboBox.getSelectionModel().getSelectedIndex();
             envSettings.setupVariables();
             if (internetConnection.checkInternetConnection()) {
 
                 Task updateResponseTask = updateResponseStatus();
 
-                progressLabel.textProperty().bind(updateResponseTask.messageProperty());
+                responseStatusLabel.textProperty().bind(updateResponseTask.messageProperty());
                 Thread t3 = new Thread(updateResponseTask);
                 t3.setName("Response status updater");
                 t3.setDaemon(true);
                 t3.start();
 
                 authPOST.authorisationPOST();
-                jsonReader.changeJsonFields(envSettings.getAuthJsonPath(), authKeysList, credentialsList);
+                JsonReader.changeJsonFields(envSettings.getAuthJsonPath(), authKeysList, credentialsList);
 
                 apiSwitcher.textFillProperty().setValue(Paint.valueOf("#FFA500"));
                 updateApiModeView(true);
@@ -386,7 +399,8 @@ public class Controller extends Main {
                 apiSwitcher.setSelected(false);
             }
         } else if (!apiSwitcher.isSelected()) {
-            setResponseStatus("");
+            AppStyles.apiStyles = "styles";
+            notSupportedRequest(false);
             updateApiModeView(false);
             apiSwitcher.textFillProperty().setValue(Paint.valueOf("#fff"));
         }
@@ -402,7 +416,6 @@ public class Controller extends Main {
 
         browserComboBoxIndex = browsersComboBox.getSelectionModel().getSelectedIndex();
         environmentComboBoxIndex = environmentsComboBox.getSelectionModel().getSelectedIndex();
-//        setEnvironmentComboBoxIndex(environmentsComboBox.getSelectionModel().getSelectedIndex());
         dropdownIndex = entityTypeComboBox.getSelectionModel().getSelectedIndex();
 
         startButton.setDisable(true);
@@ -495,6 +508,7 @@ public class Controller extends Main {
             @Override
             protected Void call() throws Exception {
                 while (true) {
+
                     updateMessage(String.valueOf(getResponseStatus()));
                     try {
                         Thread.sleep(100);

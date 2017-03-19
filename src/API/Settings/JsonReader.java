@@ -77,15 +77,17 @@ public class JsonReader extends EnvSettings {
 
     public void updateJsonForPOST(String selectedResourceValue) {
         int randomIntLength = Integer.parseInt(GetPropertyValues.randomValueProperty);
-        String createdProductSKU = GetPropertyValues.productSKU + new GenerateRandomData().generateRandomNumber(randomIntLength);
-        String createdProductName = GetPropertyValues.productName + new GenerateRandomData().generateRandomNumber(randomIntLength);
+        String randomString = new GenerateRandomData().generateRandomNumber(randomIntLength);
 
-        String createdCustomerFirstName = GetPropertyValues.customerFirstName + new GenerateRandomData().generateRandomNumber(randomIntLength);
-        String createdCustomerLastName = GetPropertyValues.customerLastName + new GenerateRandomData().generateRandomNumber(randomIntLength);
+        String createdProductSKU = GetPropertyValues.productSKU + "-" + randomString;
+        String createdProductName = GetPropertyValues.productName + "-" + randomString;
 
-        String createdSupplierName = GetPropertyValues.supplierName + new GenerateRandomData().generateRandomNumber(randomIntLength);
-        String createdBinName = GetPropertyValues.binName + new GenerateRandomData().generateRandomNumber(randomIntLength);
-        String createdWarehouseName = GetPropertyValues.warehouseName + new GenerateRandomData().generateRandomNumber(randomIntLength);
+        String createdCustomerFirstName = GetPropertyValues.customerFirstName + "-" + randomString;
+        String createdCustomerLastName = GetPropertyValues.customerLastName + "-" + randomString;
+
+        String createdSupplierName = GetPropertyValues.supplierName + "-" + randomString;
+        String createdBinName = GetPropertyValues.binName + "-" + randomString;
+        String createdWarehouseName = GetPropertyValues.warehouseName + "-" + randomString;
 
         List<String> productValues = new ArrayList<>();
         productValues.add(createdProductName);
@@ -131,26 +133,17 @@ public class JsonReader extends EnvSettings {
             System.out.println("***" + jsonForPOST + "\n***" + requestsBuilder.warehousesKeysList + "\n***" + warehouseValues);
             JsonReader.changeJsonFields(jsonForPOST, requestsBuilder.warehousesKeysList, warehouseValues);
         }
-//        createdItemNameCreator(productValues);
-
-
-//        System.out.println("***" + jsonForPOST + "\n***" + requestsBuilder.productKeysList + "\n***" + productValues);
-//        JsonReader.changeJsonFields(jsonForPOST, requestsBuilder.productKeysList, productValues);
-
         JsonReader.readJsonFile(jsonForPOST);
     }
 
     private void createdItemNameCreator(List<String> itemValues) {
         createdItemFullName = "";
         for (String value : itemValues) {
-            createdItemFullName += value;
-            if(itemValues.size()-1 > itemValues.indexOf(value))
-                createdItemFullName += " ";
+            if(value != null){
+                createdItemFullName += value;
+                if(itemValues.size()-1 > itemValues.indexOf(value))
+                    createdItemFullName += " ";
+            }
         }
-//        String jsonForPOST = AppStyles.jsonPath + selectedResourceValue + ".json";
-//        System.out.println("***" + jsonForPOST + "\n***" + requestsBuilder.productKeysList + "\n***" + itemValues);
-//        JsonReader.changeJsonFields(jsonForPOST, requestsBuilder.productKeysList, itemValues);
-
-//        JsonReader.readJsonFile(jsonForPOST);
     }
 }

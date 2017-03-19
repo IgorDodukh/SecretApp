@@ -2,6 +2,8 @@ package FXUI;
 
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 import java.io.*;
 import java.net.MalformedURLException;
@@ -16,19 +18,19 @@ import static FXUI.DialogBoxGenerator.warningPopupBox;
 public class AppStyles {
     private static InputStream fileStream;
 
-    public static String apiStyles = "styles";
+
 
     public static String resourcesPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "resources" + File.separator;
     public static String picturesResourcePath = resourcesPath + "pic" + File.separator;
     public static String driversResourcePath = resourcesPath + "drivers" + File.separator;
     public static String propertiesResourcePath = resourcesPath + "properties" + File.separator;
-    public static String stylesResourcePath = resourcesPath + apiStyles + File.separator;
+    public static String stylesResourcePath = resourcesPath + Controller.getStylesFolderName() + File.separator;
 
     private static String dialogBoxStyle = stylesResourcePath + "dialogBoxes.css";
     public static String jsonPath = resourcesPath + "json" + File.separator;
 
     private void getDialogStyleFile(Dialog dialog) throws IOException {
-        System.out.println(resourcesPath);
+        AppStyles.stylesResourcePath = AppStyles.resourcesPath + Controller.getStylesFolderName() + File.separator;
         try {
             File f = new File(dialogBoxStyle);
             fileStream = new FileInputStream(f.toString());
@@ -107,6 +109,14 @@ public class AppStyles {
 
     static void setMenuBarStyle(MenuBar menuBar) throws IOException {
         getUIStyleFile(menuBar, "mainStyle.css");
+    }
+
+    static void setMainViewStyle(Pane pane) throws IOException {
+        getUIStyleFile(pane, "mainStyle.css");
+    }
+
+    static void setMainBackgroundStyle(AnchorPane anchorPane) throws IOException {
+        getUIStyleFile(anchorPane, "mainStyle.css");
     }
 
     static void setToggleButtonStyle(ToggleButton toggleButton) throws IOException {

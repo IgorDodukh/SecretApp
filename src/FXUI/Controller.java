@@ -14,10 +14,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import org.json.simple.parser.ParseException;
 import org.openqa.selenium.WebDriver;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -134,6 +137,12 @@ public class Controller extends Main {
     public MenuBar myMenuBar;
     public ToggleButton apiSwitcher;
 
+    public Pane windowHeader;
+    public Pane windowMiddle;
+    public Pane windowFooter;
+
+    public AnchorPane appBackground;
+
     private Exception exceptionValue;
     private boolean stopButtonClicked = false;
     private InternetConnection internetConnection = new InternetConnection();
@@ -237,8 +246,21 @@ public class Controller extends Main {
         Controller.progressValue = addProgressValue;
     }
 
+    public static String getStylesFolderName() {
+        return stylesFolderName;
+    }
+
+    public static void setStylesFolderName(String stylesFolderName) {
+        Controller.stylesFolderName = stylesFolderName;
+    }
+
+    private static String stylesFolderName;
+
     @FXML
     private void initialize() throws IOException, ParseException {
+        Controller.setStylesFolderName("styles");
+        AppStyles.stylesResourcePath = AppStyles.resourcesPath + Controller.getStylesFolderName() + File.separator;
+
         FieldsListener.multipleFieldsValidation(loginField, loginLabel, validationLabel, startButton);
         FieldsListener.multipleFieldsValidation(passwordField, passwordLabel, validationLabel, startButton);
 
@@ -249,11 +271,7 @@ public class Controller extends Main {
         ComboBoxesHandler.comboBoxSetItems(environmentsComboBox, environmentsList, 0);
         ComboBoxesHandler.comboBoxSetItems(requestsComboBox, requestTypesList, 0);
 
-        AppStyles.setButtonsStyle(startButton);
-        AppStyles.setButtonsStyle(stopButton);
-        AppStyles.setButtonsStyle(sendButton);
-        AppStyles.setMenuBarStyle(myMenuBar);
-        AppStyles.setToggleButtonStyle(apiSwitcher);
+        setApplicationStyle();
 
         companyLogo.setImage(new Image("file:///" + AppStyles.picturesResourcePath + "fslogo.png"));
         waitingAnimation.setImage(new Image("file:///" + AppStyles.picturesResourcePath + "spinner.gif"));
@@ -287,6 +305,24 @@ public class Controller extends Main {
         KeysListener.startButtonKeyListener(startButton, this);
     }
 
+    private void setApplicationStyle() throws IOException {
+        AppStyles.setComboBoxStyle(browsersComboBox);
+        AppStyles.setComboBoxStyle(entityTypeComboBox);
+        AppStyles.setComboBoxStyle(environmentsComboBox);
+        AppStyles.setComboBoxStyle(apiEntityTypeComboBox);
+        AppStyles.setComboBoxStyle(requestsComboBox);
+
+        AppStyles.setButtonsStyle(startButton);
+        AppStyles.setButtonsStyle(stopButton);
+        AppStyles.setButtonsStyle(sendButton);
+        AppStyles.setMenuBarStyle(myMenuBar);
+        AppStyles.setMainViewStyle(windowHeader);
+        AppStyles.setMainViewStyle(windowMiddle);
+        AppStyles.setMainViewStyle(windowFooter);
+        AppStyles.setToggleButtonStyle(apiSwitcher);
+        AppStyles.setMainBackgroundStyle(appBackground);
+    }
+
     public void clickConfigsButton() throws IOException {
         ReadConfigMain.main();
         configVariablesPopupBox();
@@ -300,11 +336,6 @@ public class Controller extends Main {
     void notSupportedRequest(boolean value) {
         sendButton.setDisable(value);
         notSupportedLabel.setVisible(value);
-    }
-
-    public void enableWaitingSpinner(boolean value) {
-        waitingAnimation.setVisible(value);
-        sendButton.setDisable(value);
     }
 
     public void clickSendButton() throws IOException {
@@ -374,14 +405,16 @@ public class Controller extends Main {
         credentialsList.add(passwordField.getText());
 
         if (apiSwitcher.isSelected()) {
-            AppStyles.apiStyles = "apiStyles";
+            companyLogo.setImage(new Image("file:///" + AppStyles.picturesResourcePath + "image.png"));
+            Controller.setStylesFolderName("apiStyles");
+            AppStyles.stylesResourcePath = AppStyles.resourcesPath + Controller.getStylesFolderName() + File.separator;
+            System.out.println("AppStyles.stylesResourcePath: " + AppStyles.stylesResourcePath);
+            setApplicationStyle();
             setResponseStatus("");
             environmentComboBoxIndex = environmentsComboBox.getSelectionModel().getSelectedIndex();
             envSettings.setupVariables();
             if (internetConnection.checkInternetConnection()) {
-
                 Task updateResponseTask = updateResponseStatus();
-
                 responseStatusLabel.textProperty().bind(updateResponseTask.messageProperty());
                 Thread t3 = new Thread(updateResponseTask);
                 t3.setName("Response status updater");
@@ -399,7 +432,11 @@ public class Controller extends Main {
                 apiSwitcher.setSelected(false);
             }
         } else if (!apiSwitcher.isSelected()) {
-            AppStyles.apiStyles = "styles";
+            companyLogo.setImage(new Image("file:///" + AppStyles.picturesResourcePath + "fslogo.png"));
+            Controller.setStylesFolderName("styles");
+            AppStyles.stylesResourcePath = AppStyles.resourcesPath + Controller.getStylesFolderName() + File.separator;
+            System.out.println("AppStyles.stylesResourcePath: " + AppStyles.stylesResourcePath);
+            setApplicationStyle();
             notSupportedRequest(false);
             updateApiModeView(false);
             apiSwitcher.textFillProperty().setValue(Paint.valueOf("#fff"));

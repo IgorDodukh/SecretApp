@@ -1,6 +1,19 @@
 .menu-bar {
     -fx-background-color:  #234974;
 }
+
+#windowHeader, #windowMiddle, #windowFooter{
+    -fx-background-color:  #234974;
+}
+
+#appBackground{
+    -fx-background-color: white;
+}
+
+#loginLabel, #apiResourceLabel, #requestTypeLabel, #passwordLabel, #environmentLabel{
+    -fx-text-fill: #2d6ca2;
+}
+
 .menu-bar .label  {
 	-fx-font-weight: bold;
     -fx-font-size: 12px;

@@ -2,31 +2,39 @@
     -fx-background-color:  #313335;
 }
 
-#windowHeader #windowMiddle #windowFooter{
+#windowHeader, #windowMiddle, #windowFooter{
     -fx-background-color:  #313335;
 }
+
+#appBackground{
+    -fx-background-color: #404244;
+}
+
+#loginLabel, #apiResourceLabel, #requestTypeLabel, #passwordLabel, #environmentLabel{
+     -fx-text-fill: #e97e00;
+ }
 
 .menu-bar .label  {
 	-fx-font-weight: bold;
     -fx-font-size: 12px;
 	-fx-font-family: System;
-    -fx-text-fill: white;
+    -fx-text-fill: #e97e00;
 }
 .menu-item .label {
 	-fx-font-weight: bold;
     -fx-font-size: 12px;
 	-fx-font-family: System;
-    -fx-text-fill: #234974;
+    -fx-text-fill: #e97e00;
 }
 .menu-item:focused {
-    -fx-background-color: 
-		linear-gradient(from 0% 83% to 0% 100%, #8BD3FF 0%, #3C9AE0 100%),
-        radial-gradient(center 50% 50%, radius 100%, #8BD3FF, #3C9AE0);
+    -fx-background-color:
+            linear-gradient(from 0% 83% to 0% 100%, #ffca58 0%, #e97e00 100%),
+            radial-gradient(center 50% 50%, radius 100%, #ffca58, #e97e00);
 }
 .menu-item:focused .label {
-    -fx-text-fill: #234974;
+    -fx-text-fill: #313335;
 }
 .context-menu {
-    -fx-background-color: white;
+    -fx-background-color: #313335;
 	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 8, 0.0 , 0 , 5 );
 }

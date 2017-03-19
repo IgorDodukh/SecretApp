@@ -110,7 +110,6 @@ public class ComboBoxesHandler{
     public static void comboBoxSetItems(ComboBox<String> comboBox, ObservableList<String> values, int selectedValue) throws IOException {
         comboBox.setItems(values);
         comboBox.getSelectionModel().select(selectedValue);
-        AppStyles.setComboBoxStyle(comboBox);
     }
 
     public void webDriverDeterminer(int browserComboBoxIndex, boolean stopButtonClicked) {

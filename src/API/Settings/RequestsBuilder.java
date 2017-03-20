@@ -174,6 +174,7 @@ public class RequestsBuilder {
                 getJsonArrayParameters(warehousesKeysList, (JSONArray) obj);
             }
             Controller.setResponseStatus(response.getStatus() + " " + response.getStatusInfo());
+//            DialogBoxGenerator.resultsListBox(responseList);
             DialogBoxGenerator.resultsListBox(responseList);
         };
         Thread thread = new Thread(runnable);

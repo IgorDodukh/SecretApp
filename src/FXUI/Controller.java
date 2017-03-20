@@ -405,7 +405,7 @@ public class Controller extends Main {
         credentialsList.add(passwordField.getText());
 
         if (apiSwitcher.isSelected()) {
-            companyLogo.setImage(new Image("file:///" + AppStyles.picturesResourcePath + "image.png"));
+            companyLogo.setImage(new Image("file:///" + AppStyles.picturesResourcePath + "fsapi.png"));
             Controller.setStylesFolderName("apiStyles");
             AppStyles.stylesResourcePath = AppStyles.resourcesPath + Controller.getStylesFolderName() + File.separator;
             System.out.println("AppStyles.stylesResourcePath: " + AppStyles.stylesResourcePath);
@@ -431,6 +431,7 @@ public class Controller extends Main {
                 failedPopupBox(getFailedContentText() + "\nAPI mode can't be used without Internet connection.");
                 apiSwitcher.setSelected(false);
             }
+
         } else if (!apiSwitcher.isSelected()) {
             companyLogo.setImage(new Image("file:///" + AppStyles.picturesResourcePath + "fslogo.png"));
             Controller.setStylesFolderName("styles");

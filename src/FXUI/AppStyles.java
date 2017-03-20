@@ -26,7 +26,6 @@ public class AppStyles {
     public static String propertiesResourcePath = resourcesPath + "properties" + File.separator;
     public static String stylesResourcePath = resourcesPath + Controller.getStylesFolderName() + File.separator;
 
-//    private static String dialogBoxStyle = stylesResourcePath + "dialogBoxes.css";
     public static String jsonPath = resourcesPath + "json" + File.separator;
 
     private void getDialogStyleFile(Dialog dialog) throws IOException {
@@ -50,7 +49,7 @@ public class AppStyles {
 
     private static void getUIStyleFile(Parent element, String fileName) throws IOException {
         try {
-            File f = new File(stylesResourcePath + fileName);
+            File f = new File(resourcesPath + Controller.getStylesFolderName() + File.separator + fileName);
             fileStream = new FileInputStream(f.toString());
 
             if (fileStream != null) {

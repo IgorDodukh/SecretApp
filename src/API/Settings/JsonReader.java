@@ -112,25 +112,20 @@ public class JsonReader extends EnvSettings {
 
         if(selectedResourceValue.contains("Product")){
             createdItemNameCreator(productValues);
-            System.out.println("***" + jsonForPOST + "\n***" + requestsBuilder.productKeysList + "\n***" + productValues);
             JsonReader.changeJsonFields(jsonForPOST, requestsBuilder.productKeysList, productValues);
         } else if (selectedResourceValue.contains("Customer")) {
             createdItemNameCreator(customerValues);
-            System.out.println("***" + jsonForPOST + "\n***" + requestsBuilder.customerKeysList + "\n***" + customerValues);
             JsonReader.changeJsonFields(jsonForPOST, requestsBuilder.customerKeysList.subList(0, requestsBuilder.customerKeysList.size() - 1), customerValues);
         } /*else if (selectedResourceValue.contains("Order")){
             createdItemNameCreator(productValues);
         } */else if (selectedResourceValue.contains("Suppliers")){
             createdItemNameCreator(supplierValues);
-            System.out.println("***" + jsonForPOST + "\n***" + requestsBuilder.suppliersKeysList + "\n***" + supplierValues);
             JsonReader.changeJsonFields(jsonForPOST, requestsBuilder.suppliersKeysList, supplierValues);
         } else if (selectedResourceValue.contains("Bin")){
             createdItemNameCreator(binValues);
-            System.out.println("***" + jsonForPOST + "\n***" + requestsBuilder.binsKeysList + "\n***" + binValues);
             JsonReader.changeJsonFields(jsonForPOST, requestsBuilder.binsKeysList, binValues);
         } else if (selectedResourceValue.contains("Warehouse")){
             createdItemNameCreator(warehouseValues);
-            System.out.println("***" + jsonForPOST + "\n***" + requestsBuilder.warehousesKeysList + "\n***" + warehouseValues);
             JsonReader.changeJsonFields(jsonForPOST, requestsBuilder.warehousesKeysList, warehouseValues);
         }
         JsonReader.readJsonFile(jsonForPOST);

@@ -34,17 +34,22 @@ class KeysListener {
     }
 
     static void notSupportedResource(Controller controller, ComboBox<String> resourceComboBox, ComboBox<String> requestComboBox) {
+        //Handle Not Supported label for Resources combobox
         requestComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             int selectedResourceIndex = resourceComboBox.getSelectionModel().getSelectedIndex();
-            if(selectedResourceIndex == 0 || selectedResourceIndex == 3 || selectedResourceIndex == 5){
+            if(selectedResourceIndex == 0 || selectedResourceIndex == 3 || selectedResourceIndex == 5 ||
+                    selectedResourceIndex == 6 || selectedResourceIndex == 7){
                 if(requestComboBox.getSelectionModel().getSelectedIndex() == 1){
                     controller.notSupportedRequest(true);
                 } else controller.notSupportedRequest(false);
             }
         });
+
+        //Handle Not Supported label for Request Type combobox
         resourceComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if(requestComboBox.getSelectionModel().getSelectedIndex() == 1){
-                if(newValue.contains("Order") || newValue.contains("Supplier") || newValue.contains("Bin")){
+                if(newValue.contains("Order") || newValue.contains("Supplier") || newValue.contains("Bin") ||
+                        newValue.contains("Channels") || newValue.contains("Methods")){
                     controller.notSupportedRequest(true);
                 } else controller.notSupportedRequest(false);
             }

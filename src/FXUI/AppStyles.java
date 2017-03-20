@@ -18,8 +18,6 @@ import static FXUI.DialogBoxGenerator.warningPopupBox;
 public class AppStyles {
     private static InputStream fileStream;
 
-
-
     public static String resourcesPath = System.getProperty("user.dir") + File.separator + "src" + File.separator + "resources" + File.separator;
     public static String picturesResourcePath = resourcesPath + "pic" + File.separator;
     public static String driversResourcePath = resourcesPath + "drivers" + File.separator;

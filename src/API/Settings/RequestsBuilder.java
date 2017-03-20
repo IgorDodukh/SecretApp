@@ -51,14 +51,14 @@ public class RequestsBuilder {
     private ArrayList<String> responseList;
     public static ArrayList<String> guidList;
 
-    public final List<String> productKeysList = new ArrayList<>(Arrays.asList("ProductName", "ProductSku"));
-    public final List<String> customerKeysList = new ArrayList<>(Arrays.asList("FirstName", "LastName", "CustomerNumber"));
-    public final List<String> ordersKeysList = new ArrayList<>(Arrays.asList("TotalAmount", "OrderNumber"));
-    public final List<String> suppliersKeysList = new ArrayList<>(Arrays.asList("Name"));
-    public final List<String> warehousesKeysList = new ArrayList<>(Arrays.asList("WarehouseName"));
-    public final List<String> binsKeysList = new ArrayList<>(Arrays.asList("BinName"));
-
-    public final List<String> guidKeyList = new ArrayList<>(Arrays.asList("Id"));
+    final List<String> productKeysList = new ArrayList<>(Arrays.asList("ProductName", "ProductSku"));
+    final List<String> customerKeysList = new ArrayList<>(Arrays.asList("LastName", "FirstName", "CustomerNumber"));
+    final List<String> ordersKeysList = new ArrayList<>(Arrays.asList("OrderNumber"));
+    final List<String> suppliersKeysList = new ArrayList<>(Arrays.asList("Name"));
+    final List<String> warehousesKeysList = new ArrayList<>(Arrays.asList("WarehouseName"));
+    final List<String> binsKeysList = new ArrayList<>(Arrays.asList("BinName"));
+    final List<String> salesChannelsKeysList = new ArrayList<>(Arrays.asList("UniqueName", "ChannelType"));
+    final List<String> shippingMethodsKeysList = new ArrayList<>(Arrays.asList("Name", "ServiceDescription"));
 
     public void jerseyPOST(String targetUrl, String jsonEntity){
         Runnable runnable = () -> {
@@ -138,8 +138,11 @@ public class RequestsBuilder {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            System.out.println("finalResult: " );
             System.out.println("HttpResponseBody: " + responseString);
 
+//            getJsonGuidParameters((JSONArray) json);
             setResponseStatusCode(response.getStatusLine().getStatusCode());
 
             Controller.setResponseStatus(getResponseStatusCode() + " " +
@@ -194,6 +197,10 @@ public class RequestsBuilder {
                 getJsonArrayParameters(binsKeysList, (JSONArray) obj);
             } else if (targetUrl.contains("Warehouse")){
                 getJsonArrayParameters(warehousesKeysList, (JSONArray) obj);
+            } else if (targetUrl.contains("Channels")){
+                getJsonArrayParameters(salesChannelsKeysList, (JSONArray) obj);
+            } else if (targetUrl.contains("Methods")){
+                getJsonArrayParameters(shippingMethodsKeysList, (JSONArray) obj);
             }
             Controller.setResponseStatus(response.getStatus() + " " + response.getStatusInfo());
 
@@ -203,7 +210,6 @@ public class RequestsBuilder {
         };
         Thread thread = new Thread(runnable);
         thread.start();
-
     }
 
     private ArrayList<String> getJsonArrayParameters(List<String> keysList, JSONArray obj) {
@@ -227,10 +233,20 @@ public class RequestsBuilder {
         guidList = new ArrayList<>();
         JSONArray json = obj;
 
+
         for (Object o : json) {
             String value = "";
             JSONObject jsonLineItem = (JSONObject) o;
-            value += jsonLineItem.get("Id").toString();
+            if (jsonLineItem.get("Id") != null) {
+                value += jsonLineItem.get("Id").toString();
+            } else if (jsonLineItem.get("SupplierId") != null) {
+                value += jsonLineItem.get("SupplierId").toString();
+            } else if (jsonLineItem.get("ChannelId") != null) {
+                value += jsonLineItem.get("ChannelId").toString();
+            } else if (jsonLineItem.get("OrderNumber") != null) {
+                value += jsonLineItem.get("OrderNumber").toString();
+            } else value = jsonLineItem.get("id").toString();
+
             guidList.add(value);
         }
         return guidList;

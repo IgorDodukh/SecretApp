@@ -12,18 +12,27 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.StageStyle;
 
+import java.awt.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.*;
+import java.util.List;
 
+import static FXUI.Controller.getSelectedResourceValue;
 import static Settings.GetPropertyValues.getTimeoutProperty;
 
 /**
@@ -157,7 +166,7 @@ public class DialogBoxGenerator {
         Platform.runLater(() -> {
 
             //TODO add link to open created item to the results dialog
-//            String resourceName = getSelectedResourceValue();
+            String resourceName = getSelectedResourceValue();
 //            final WebView browser = new WebView();
 //            final WebEngine webEngine = browser.getEngine();
 //            final Hyperlink hpl = new Hyperlink();
@@ -172,11 +181,32 @@ public class DialogBoxGenerator {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
-            successDialog.setTitle("Complete." + ProgressBar.currentProgress + "%. Running time: " + ExecutionTimeCounter.executionTime);
+
+            Hyperlink link = new Hyperlink();
+            link.setText("Open created " + resourceName.substring(0, resourceName.length() - 1));
+            link.paddingProperty().setValue(new Insets(20, 0, 0, 0));
+
+            successDialog.setTitle("Creating completed. Running time: " + ExecutionTimeCounter.executionTime);
             successDialog.setHeaderText("Oh boy, you are lucky.");
             successDialog.setContentText(resultMessage);
             successDialog.initStyle(StageStyle.UTILITY);
 
+            GridPane expContent = new GridPane();
+            expContent.setMinWidth(500);
+            expContent.setMaxWidth(Double.MAX_VALUE);
+            expContent.add(link, 0, 0);
+
+            link.setOnAction(t -> {
+                String linkToItem = RequestsBuilder.guidList.get(0);
+                String resourceUrl = Controller.viewResourceUrl.get(Controller.getSelectedResourceIndex());
+                String environmentUrl = BrowserSettings.fsEnvironment.get(Controller.getSelectedEnvironmentIndex());
+
+                try {
+                    Desktop.getDesktop().browse(new URI(environmentUrl + resourceUrl.replace("GUID", linkToItem)));
+                } catch (IOException | URISyntaxException e) {
+                    e.printStackTrace();
+                }
+            });
             try {
                 appStyles.setDialogStyle(successDialog);
             } catch (IOException e) {
@@ -288,7 +318,7 @@ public class DialogBoxGenerator {
         Platform.runLater(() -> {
             Alert responseBody = new Alert(Alert.AlertType.INFORMATION);
             responseBody.setTitle("Response results");
-            responseBody.setHeaderText(Controller.getSelectedResourceValue() + " list was returned.\n" +
+            responseBody.setHeaderText(getSelectedResourceValue() + " list was returned.\n" +
                     jArray.size() + " items found.");
             responseBody.setContentText("Returned entities list\n");
             responseBody.initStyle(StageStyle.UTILITY);
@@ -369,16 +399,18 @@ public class DialogBoxGenerator {
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
+
+            String selectedResource = getSelectedResourceValue();
+
             responseBody.setTitle("Response results");
-            responseBody.setHeaderText(Controller.getSelectedResourceValue() + " list was returned.\n" +
+            responseBody.setHeaderText(selectedResource + " list was returned.\n" +
                     jArray.size() + " items found.");
             responseBody.setContentText("Returned entities list\n");
             responseBody.initStyle(StageStyle.UTILITY);
 
-            ButtonType saveButtonType = new ButtonType("Open selected", ButtonBar.ButtonData.APPLY);
-            responseBody.getDialogPane().getButtonTypes().add(0, saveButtonType);
-//            ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.APPLY);
-//            responseBody.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.OK);
+            Hyperlink link = new Hyperlink();
+            link.setText("Open selected " + selectedResource.substring(0, selectedResource.length() - 1));
+            link.paddingProperty().setValue(new Insets(20, 0, 0, 0));
 
             ListView<String> listView = new ListView<>();
             ObservableList<String> items = FXCollections.observableArrayList ();
@@ -394,12 +426,13 @@ public class DialogBoxGenerator {
             listView.setMaxHeight(Double.MAX_VALUE);
             GridPane.setVgrow(listView, Priority.ALWAYS);
             GridPane.setHgrow(listView, Priority.ALWAYS);
+            GridPane.setHgrow(listView, Priority.ALWAYS);
 
             GridPane expContent = new GridPane();
             expContent.setMinWidth(500);
             expContent.setMaxWidth(Double.MAX_VALUE);
-//            expContent.add(label, 0, 0);
-            expContent.add(listView, 0, 1);
+            expContent.add(listView, 0, 0);
+            expContent.add(link, 0, 1);
 
 // Set expandable Exception into the dialog pane.
             responseBody.getDialogPane().setContent(expContent);
@@ -410,20 +443,22 @@ public class DialogBoxGenerator {
                 e.printStackTrace();
             }
 
+            link.setOnAction(t -> {
+                String linkToItem = RequestsBuilder.guidList.get(listView.getSelectionModel().getSelectedIndex());
+                String resourceUrl = Controller.viewResourceUrl.get(Controller.getSelectedResourceIndex());
+                String environmentUrl = BrowserSettings.fsEnvironment.get(Controller.getSelectedEnvironmentIndex());
+
+                try {
+                    Desktop.getDesktop().browse(new URI(environmentUrl + resourceUrl.replace("GUID", linkToItem)));
+                } catch (IOException | URISyntaxException e) {
+                    e.printStackTrace();
+                }
+            });
 
             Optional<ButtonType> result = responseBody.showAndWait();
-            if (result.isPresent()){
-                if (result.get().getButtonData() == ButtonBar.ButtonData.APPLY) {
-                    String linkToItem = RequestsBuilder.guidList.get(listView.getSelectionModel().getSelectedIndex());
-                    String resourceUrl = Controller.viewResourceUrl.get(Controller.getSelectedResourceIndex());
-                    String environmentUrl = BrowserSettings.fsEnvironment.get(Controller.getSelectedEnvironmentIndex());
 
-                    System.out.println("linkToItem: " + environmentUrl + resourceUrl.replace("GUID", linkToItem));
-                    System.out.println("listView selected item: " + listView.getSelectionModel().getSelectedItem());
-                } else {
-                    responseBody.close();
-                    System.out.println("Popup closed");
-                }
+            if (result.isPresent()){
+                System.out.println("Popup closed");
             } else System.out.println("Popup closed");
         });
     }
@@ -585,12 +620,12 @@ public class DialogBoxGenerator {
             BrowserSettings.randomValueLength = Integer.valueOf(currentRandomLength);
 
 //            currentMainPath = appFilesPathField.getText();
-//            try {
+            try {
 //                AppStyles.resourcesPath = currentMainPath;
-//                UpdateConfig.updateSystemVariables();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
+                UpdateConfig.updateSystemVariables();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
 
 //            if (!Objects.equals(oldPath, currentMainPath)){

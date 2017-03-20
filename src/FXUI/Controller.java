@@ -83,16 +83,23 @@ public class Controller extends Main {
             "Products",
             "Suppliers",
             "Warehouses",
-            "Warehouse Bins"
+            "Warehouse Bins",
+            "Sales Channels",
+            "Shipping Methods"
+//            "Event Subscriptions",
+//            "Promotions"
             );
 
     public static final ObservableList<String> viewResourceUrl = FXCollections.observableArrayList(
-            "/Customer/EditCustomerView?customerId=[\"GUID\"]",
-            "/Customer/ViewCustomerView?customerId=[\"GUID\"]",
-            "/Product/ProductView?productId=[{\"ProductId\":\"GUID\"}]",
+            "/Order/OrderViewing/GUID",
+            "/Customer/ViewCustomerView?customerId=%5B%22GUID%22%5D",
+            "/Product/ProductView?productId=%5B%7B%22ProductId%22:%22GUID%22%7D%5D",
             "/Product/SupplierViewing?supplierId=GUID",
             "/Inventory/WarehouseEditing?pageMode=View&warehouseId=GUID",
-            "/Inventory/WarehouseBinEditing?pageMode=View&warehouseBinId=GUID"
+            "/Inventory/WarehouseBinEditing?pageMode=View&warehouseBinId=GUID",
+            "/Configuration/ViewSalesChannel?channelIds=%5B%22GUID%22%5D",
+            "/Configuration/ShippingMethodView?shippingMethodIds=%5B%22GUID%22%5D"
+
     );
 
     //TODO add new resources: SalesChannels(GET), ShippingMethods(GET, POST), EventSubscriptions(GET), Promotions
@@ -148,6 +155,10 @@ public class Controller extends Main {
     public Pane windowHeader;
     public Pane windowMiddle;
     public Pane windowFooter;
+
+    public Pane apiHeader;
+    public Pane apiMiddle;
+    public Pane apiFooter;
 
     public AnchorPane appBackground;
 
@@ -393,6 +404,14 @@ public class Controller extends Main {
         browsersComboBox.setVisible(!value);
         entityTypeComboBox.setVisible(!value);
         startButton.setVisible(!value);
+
+//        windowFooter.setVisible(!value);
+//        windowHeader.setVisible(!value);
+//        windowMiddle.setVisible(!value);
+//
+//        apiFooter.setVisible(value);
+//        apiHeader.setVisible(value);
+//        apiMiddle.setVisible(value);
 
         environmentsComboBox.setDisable(value);
         responseStatusLabel.setVisible(value);

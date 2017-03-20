@@ -17,7 +17,7 @@ class ExecutionTimeCounter {
            long diffSec = diffMsec / 1000;
 
 
-           executionTime = String.valueOf(diffMsec) + " msec.";
+           executionTime = String.valueOf(diffMsec) + " ms.";
 //           if(diffSec<60){
 //               executionTime = String.valueOf(diffSec)  + " sec.";
 //           } else {

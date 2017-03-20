@@ -139,10 +139,18 @@ public class RequestsBuilder {
                 e.printStackTrace();
             }
 
-            System.out.println("finalResult: " );
+            JSONParser parser = new JSONParser();
+            JSONObject json = null;
+            try {
+                json = (JSONObject) parser.parse(responseString);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            System.out.println("finalResult: " + json);
             System.out.println("HttpResponseBody: " + responseString);
 
-//            getJsonGuidParameters((JSONArray) json);
+            getJsonGuidParameter(json);
             setResponseStatusCode(response.getStatusLine().getStatusCode());
 
             Controller.setResponseStatus(getResponseStatusCode() + " " +
@@ -229,6 +237,24 @@ public class RequestsBuilder {
         return responseList;
     }
 
+    private ArrayList<String> getJsonGuidParameter(JSONObject object) {
+        guidList = new ArrayList<>();
+        String value = "";
+        if (object.get("Id") != null) {
+            value = object.get("Id").toString();
+        } else if (object.get("SupplierId") != null) {
+            value = object.get("SupplierId").toString();
+        } else if (object.get("ChannelId") != null) {
+            value = object.get("ChannelId").toString();
+        } else if (object.get("OrderNumber") != null) {
+            value = object.get("OrderNumber").toString();
+        } else {
+            value = object.get("id").toString();
+        }
+
+        guidList.add(value);
+        return guidList;
+    }
     private ArrayList<String> getJsonGuidParameters(JSONArray obj) {
         guidList = new ArrayList<>();
         JSONArray json = obj;

@@ -434,6 +434,7 @@ public class Controller extends Main {
         credentialsList.add(passwordField.getText());
 
         if (apiSwitcher.isSelected()) {
+            apiSwitcher.setDisable(true);
             companyLogo.setImage(new Image("file:///" + AppStyles.picturesResourcePath + "fsapi.png"));
             Controller.setStylesFolderName("apiStyles");
             AppStyles.stylesResourcePath = AppStyles.resourcesPath + Controller.getStylesFolderName() + File.separator;

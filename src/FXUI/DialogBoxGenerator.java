@@ -164,37 +164,30 @@ public class DialogBoxGenerator {
 
     public static void successPopupBox(String resultMessage) {
         Platform.runLater(() -> {
-
-            //TODO add link to open created item to the results dialog
-            String resourceName = getSelectedResourceValue();
-//            final WebView browser = new WebView();
-//            final WebEngine webEngine = browser.getEngine();
-//            final Hyperlink hpl = new Hyperlink();
-//            if(getSelectedResourceValue() != null){
-//                hpl.setText("Open created " + resourceName.substring(0,resourceName.length()-1));
-//                hpl.setOnAction(e -> webEngine.load(hyperlinkUrl));
-//            }
-
             Alert successDialog = new Alert(Alert.AlertType.INFORMATION);
             try {
                 appStyles.setDialogLogo(successDialog, "success.png");
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
+            String resourceName = getSelectedResourceValue();
 
             Hyperlink link = new Hyperlink();
             link.setText("Open created " + resourceName.substring(0, resourceName.length() - 1));
-            link.paddingProperty().setValue(new Insets(20, 0, 0, 0));
 
             successDialog.setTitle("Creating completed. Running time: " + ExecutionTimeCounter.executionTime);
             successDialog.setHeaderText("Oh boy, you are lucky.");
-            successDialog.setContentText(resultMessage);
+//            successDialog.setContentText(resultMessage);
             successDialog.initStyle(StageStyle.UTILITY);
 
+            Label contentLabel = new Label();
+            contentLabel.setText(resultMessage);
+
             GridPane expContent = new GridPane();
-            expContent.setMinWidth(500);
-            expContent.setMaxWidth(Double.MAX_VALUE);
-            expContent.add(link, 0, 0);
+            expContent.add(contentLabel, 0, 0);
+            expContent.add(link, 0, 1);
+
+            successDialog.getDialogPane().setContent(expContent);
 
             link.setOnAction(t -> {
                 String linkToItem = RequestsBuilder.guidList.get(0);

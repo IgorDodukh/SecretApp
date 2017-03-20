@@ -24,6 +24,7 @@ import org.junit.Assert;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -98,7 +99,7 @@ public class RequestsBuilder {
             } else {
                 Controller.setResponseStatus(response.getStatus() + " " + response.getStatusInfo());
                 DialogBoxGenerator.successPopupBox(response.getStatus() + " " + response.getStatusInfo() +
-                "\nNew item has been created");
+                        "\nNew item has been created");
             }
         };
         Thread thread = new Thread(runnable);
@@ -106,37 +107,55 @@ public class RequestsBuilder {
     }
 
     public void sendPost(String targetUrl, String jsonEntity) throws IOException {
+        Runnable runnable = () -> {
+            HttpClient httpClient = HttpClientBuilder.create().build();
+            HttpPost post = new HttpPost(targetUrl);
+            post.addHeader("x-freestyle-api-auth", getToken());
 
-        HttpClient httpClient = HttpClientBuilder.create().build();
-        HttpPost post = new HttpPost(targetUrl);
-        post.addHeader("x-freestyle-api-auth", getToken());
+            System.out.println("Json: " + JsonReader.getReceivedJsonString());
 
-        System.out.println("Json: " + JsonReader.getReceivedJsonString());
+            StringEntity postingString = null;
+            try {
+                postingString = new StringEntity(jsonEntity);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            post.setEntity(postingString);
+            post.setHeader("Content-type", "application/json");
+            HttpResponse response = null;
+            try {
+                response = httpClient.execute(post);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            HttpEntity entity = response.getEntity();
+            String responseString = null;
+            try {
+                responseString = EntityUtils.toString(entity, "UTF-8");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println("HttpResponseBody: " + responseString);
 
-        StringEntity postingString = new StringEntity(jsonEntity);
-        post.setEntity(postingString);
-        post.setHeader("Content-type", "application/json");
-        HttpResponse response = httpClient.execute(post);
-        HttpEntity entity = response.getEntity();
-        String responseString = EntityUtils.toString(entity, "UTF-8");
-        System.out.println("HttpResponseBody: " + responseString);
+            setResponseStatusCode(response.getStatusLine().getStatusCode());
 
-        setResponseStatusCode(response.getStatusLine().getStatusCode());
+            Controller.setResponseStatus(getResponseStatusCode() + " " +
+                    response.getStatusLine().getReasonPhrase());
 
-        Controller.setResponseStatus(getResponseStatusCode() + " " +
-                response.getStatusLine().getReasonPhrase());
-
-        if(getResponseStatusCode() == 200 || getResponseStatusCode() == 201){
-            String resourceName = Controller.getSelectedResourceValue();
-            DialogBoxGenerator.successPopupBox(response.getStatusLine().getStatusCode() + " " +
-                    response.getStatusLine().getReasonPhrase() +
-                    "\nNew " + resourceName.substring(0,resourceName.length()-1) + " has been created successfully.\n" +
-                    jsonReader.getCreatedItemFullName());
-        } else {
-            DialogBoxGenerator.failedPopupBox(response.getStatusLine().getStatusCode() + " " +
-                    response.getStatusLine().getReasonPhrase() +
-                    "\nResponse body: " + responseString);
-        }
+            if(getResponseStatusCode() == 200 || getResponseStatusCode() == 201){
+                String resourceName = Controller.getSelectedResourceValue();
+                DialogBoxGenerator.successPopupBox(response.getStatusLine().getStatusCode() + " " +
+                        response.getStatusLine().getReasonPhrase() +
+                        "\nNew " + resourceName.substring(0,resourceName.length()-1) + " has been created successfully.\n" +
+                        jsonReader.getCreatedItemFullName());
+            } else {
+                DialogBoxGenerator.failedPopupBox(response.getStatusLine().getStatusCode() + " " +
+                        response.getStatusLine().getReasonPhrase() +
+                        "\nResponse body: " + responseString);
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
     }
 
     public void jerseyGET(String targetUrl) throws ParseException {

@@ -568,13 +568,13 @@ public class DialogBoxGenerator {
             currentRandomLength = randomValueComboBox.getSelectionModel().getSelectedItem();
             BrowserSettings.randomValueLength = Integer.valueOf(currentRandomLength);
 
-            currentMainPath = appFilesPathField.getText();
-            try {
-                AppStyles.resourcesPath = currentMainPath;
-                UpdateConfig.updateSystemVariables();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+//            currentMainPath = appFilesPathField.getText();
+//            try {
+//                AppStyles.resourcesPath = currentMainPath;
+//                UpdateConfig.updateSystemVariables();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
 
 
 //            if (!Objects.equals(oldPath, currentMainPath)){

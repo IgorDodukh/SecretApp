@@ -353,6 +353,7 @@ public class Controller extends Main {
         System.out.println("Request type: " + requestsComboBox.getValue());
         System.out.println("Resource type: " + selectedResourceValue);
         Platform.runLater(() -> {
+            startCounter();
             setResponseStatus("");
             setSelectedResourceIndex(apiEntityTypeComboBox.getSelectionModel().getSelectedIndex());
             setSelectedRequestTypeIndex(requestsComboBox.getSelectionModel().getSelectedIndex());
@@ -380,6 +381,7 @@ public class Controller extends Main {
                 e.printStackTrace();
                 System.out.println("Sending request was failed.");
             }
+            stopCounter();
         });
 
     }
@@ -422,6 +424,7 @@ public class Controller extends Main {
             environmentComboBoxIndex = environmentsComboBox.getSelectionModel().getSelectedIndex();
             envSettings.setupVariables();
             if (internetConnection.checkInternetConnection()) {
+
                 Task updateResponseTask = updateResponseStatus();
                 responseStatusLabel.textProperty().bind(updateResponseTask.messageProperty());
                 Thread t3 = new Thread(updateResponseTask);

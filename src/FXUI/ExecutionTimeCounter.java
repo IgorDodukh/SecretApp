@@ -16,11 +16,14 @@ class ExecutionTimeCounter {
            long diffMsec = stop -  start;
            long diffSec = diffMsec / 1000;
 
-           if(diffSec<60){
-               executionTime = String.valueOf(diffSec)  + " sec.";
-           } else {
-               long diffMins = diffSec / 60;
-               executionTime = String.valueOf(diffMins) + " min. " + (diffSec - ((diffMins - 1)*60) - 60) + " sec.";
-           }
+
+           executionTime = String.valueOf(diffMsec) + " msec.";
+//           if(diffSec<60){
+//               executionTime = String.valueOf(diffSec)  + " sec.";
+//           } else {
+//               long diffMins = diffSec / 60;
+//               executionTime = String.valueOf(diffMins) + " min. " + (diffSec - ((diffMins - 1)*60) - 60) + " sec.";
+//           }
+
         }
 }

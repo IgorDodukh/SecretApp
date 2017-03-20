@@ -21,7 +21,7 @@ public class BrowserSettings {
     private static final GenerateRandomData generateRandomData = new GenerateRandomData();
 
     //    List of Environments
-    private static final ArrayList<String> fsEnvironment = new ArrayList<>(
+    public static final ArrayList<String> fsEnvironment = new ArrayList<>(
             Arrays.asList("https://qa01.freestylecommerce.info/web",
                     "https://qa03.freestylecommerce.info/web",
                     "https://qa05.freestylecommerce.info/web",

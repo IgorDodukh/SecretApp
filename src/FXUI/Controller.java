@@ -77,15 +77,23 @@ public class Controller extends Main {
                     "Create User"
             );
 
-    private final ObservableList<String> apiResourcesList =
-            FXCollections.observableArrayList(
-                    "Orders",
-                    "Customers",
-                    "Products",
-                    "Suppliers",
-                    "Warehouses",
-                    "Warehouse Bins"
+    private final ObservableList<String> apiResourcesList = FXCollections.observableArrayList(
+            "Orders",
+            "Customers",
+            "Products",
+            "Suppliers",
+            "Warehouses",
+            "Warehouse Bins"
             );
+
+    private final ObservableList<String> viewResourceUrl = FXCollections.observableArrayList(
+            "/Order/OrderViewing/orderNumber",
+            "/Customer/ViewCustomerView?customerId=[\"GUID\"]",
+            "/Product/ProductView?productId=[{\"ProductId\":\"GUID\"}]",
+            "/Product/SupplierViewing?supplierId=GUID",
+            "/Inventory/WarehouseEditing?pageMode=View&warehouseId=GUID",
+            "/Inventory/WarehouseBinEditing?pageMode=View&warehouseBinId=GUID"
+    );
 
     //TODO add new resources: SalesChannels(GET), ShippingMethods(GET, POST), EventSubscriptions(GET), Promotions
 

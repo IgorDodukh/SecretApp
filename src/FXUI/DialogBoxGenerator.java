@@ -374,6 +374,8 @@ public class DialogBoxGenerator {
             responseBody.setContentText("Returned entities list\n");
             responseBody.initStyle(StageStyle.UTILITY);
 
+            ButtonType saveButtonType = new ButtonType("Open selected", ButtonBar.ButtonData.APPLY);
+            responseBody.getDialogPane().getButtonTypes().add(2, saveButtonType);
 //            ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.APPLY);
 //            responseBody.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.OK);
 
@@ -408,7 +410,16 @@ public class DialogBoxGenerator {
             }
 
 
-            responseBody.showAndWait();
+            Optional<ButtonType> result = responseBody.showAndWait();
+            if (result.isPresent()){
+                if (result.get().getButtonData() == ButtonBar.ButtonData.APPLY) {
+                    System.out.println("ButtonData: " + result.get().getButtonData());
+                    System.out.println("listView selected item: " + listView.getSelectionModel().getSelectedItem());
+                } else {
+                    responseBody.close();
+                    System.out.println("Popup closed");
+                }
+            } else System.out.println("Popup closed");
         });
     }
 

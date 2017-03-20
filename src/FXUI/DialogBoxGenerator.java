@@ -1,5 +1,6 @@
 package FXUI;
 
+import API.Settings.RequestsBuilder;
 import Settings.BrowserSettings;
 import Settings.GetPropertyValues;
 import Settings.UpdateConfig;
@@ -375,7 +376,7 @@ public class DialogBoxGenerator {
             responseBody.initStyle(StageStyle.UTILITY);
 
             ButtonType saveButtonType = new ButtonType("Open selected", ButtonBar.ButtonData.APPLY);
-            responseBody.getDialogPane().getButtonTypes().add(2, saveButtonType);
+            responseBody.getDialogPane().getButtonTypes().add(0, saveButtonType);
 //            ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.APPLY);
 //            responseBody.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.OK);
 
@@ -413,7 +414,11 @@ public class DialogBoxGenerator {
             Optional<ButtonType> result = responseBody.showAndWait();
             if (result.isPresent()){
                 if (result.get().getButtonData() == ButtonBar.ButtonData.APPLY) {
-                    System.out.println("ButtonData: " + result.get().getButtonData());
+                    String linkToItem = RequestsBuilder.guidList.get(listView.getSelectionModel().getSelectedIndex());
+                    String resourceUrl = Controller.viewResourceUrl.get(Controller.getSelectedResourceIndex());
+                    String environmentUrl = BrowserSettings.fsEnvironment.get(Controller.getSelectedEnvironmentIndex());
+
+                    System.out.println("linkToItem: " + environmentUrl + resourceUrl.replace("GUID", linkToItem));
                     System.out.println("listView selected item: " + listView.getSelectionModel().getSelectedItem());
                 } else {
                     responseBody.close();

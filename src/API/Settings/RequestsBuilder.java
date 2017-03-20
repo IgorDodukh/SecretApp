@@ -49,6 +49,7 @@ public class RequestsBuilder {
     private static int responseStatusCode;
 
     private ArrayList<String> responseList;
+    public static ArrayList<String> guidList;
 
     public final List<String> productKeysList = new ArrayList<>(Arrays.asList("ProductName", "ProductSku"));
     public final List<String> customerKeysList = new ArrayList<>(Arrays.asList("FirstName", "LastName", "CustomerNumber"));
@@ -56,6 +57,8 @@ public class RequestsBuilder {
     public final List<String> suppliersKeysList = new ArrayList<>(Arrays.asList("Name"));
     public final List<String> warehousesKeysList = new ArrayList<>(Arrays.asList("WarehouseName"));
     public final List<String> binsKeysList = new ArrayList<>(Arrays.asList("BinName"));
+
+    public final List<String> guidKeyList = new ArrayList<>(Arrays.asList("Id"));
 
     public void jerseyPOST(String targetUrl, String jsonEntity){
         Runnable runnable = () -> {
@@ -193,7 +196,9 @@ public class RequestsBuilder {
                 getJsonArrayParameters(warehousesKeysList, (JSONArray) obj);
             }
             Controller.setResponseStatus(response.getStatus() + " " + response.getStatusInfo());
-//            DialogBoxGenerator.resultsListBox(responseList);
+
+            getJsonGuidParameters((JSONArray) obj);
+
             DialogBoxGenerator.resultsListBox(responseList);
         };
         Thread thread = new Thread(runnable);
@@ -202,7 +207,6 @@ public class RequestsBuilder {
     }
 
     private ArrayList<String> getJsonArrayParameters(List<String> keysList, JSONArray obj) {
-//        ArrayList<String> responseList = new ArrayList<>();
         responseList = new ArrayList<>();
         JSONArray json = obj;
 
@@ -216,8 +220,19 @@ public class RequestsBuilder {
             }
             responseList.add(value);
         }
-
         return responseList;
-//        DialogBoxGenerator.resultsListBox(responseList);
+    }
+
+    private ArrayList<String> getJsonGuidParameters(JSONArray obj) {
+        guidList = new ArrayList<>();
+        JSONArray json = obj;
+
+        for (Object o : json) {
+            String value = "";
+            JSONObject jsonLineItem = (JSONObject) o;
+            value += jsonLineItem.get("Id").toString();
+            guidList.add(value);
+        }
+        return guidList;
     }
 }

@@ -86,8 +86,8 @@ public class Controller extends Main {
             "Warehouse Bins"
             );
 
-    private final ObservableList<String> viewResourceUrl = FXCollections.observableArrayList(
-            "/Order/OrderViewing/orderNumber",
+    public static final ObservableList<String> viewResourceUrl = FXCollections.observableArrayList(
+            "/Customer/EditCustomerView?customerId=[\"GUID\"]",
             "/Customer/ViewCustomerView?customerId=[\"GUID\"]",
             "/Product/ProductView?productId=[{\"ProductId\":\"GUID\"}]",
             "/Product/SupplierViewing?supplierId=GUID",

@@ -182,7 +182,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="sendButton" mnemonicParsing="false" onAction="#clickSendButton" prefHeight="25.0" prefWidth="105.0" style="-fx-text-fill: white;" text="Send" visible="false" GridPane.rowIndex="4">
+            <Button fx:id="sendButton" mnemonicParsing="false" onAction="#clickSendButton" prefHeight="25.0" prefWidth="105.0" text="Send" visible="false" GridPane.rowIndex="4">
                <font>
                   <Font name="Segoe UI Bold" size="16.0" />
                </font>

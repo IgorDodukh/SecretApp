@@ -425,6 +425,8 @@ public class Controller extends Main {
     }
 
     public void clickApiSwitcher() throws IOException, ParseException {
+        //TODO resove issue with authorization
+        ReadConfigMain.main();
         List<String> authKeysList = new ArrayList<>();
         authKeysList.add("username");
         authKeysList.add("password");
@@ -434,7 +436,7 @@ public class Controller extends Main {
         credentialsList.add(passwordField.getText());
 
         if (apiSwitcher.isSelected()) {
-            apiSwitcher.setDisable(true);
+//            apiSwitcher.setDisable(true);
             companyLogo.setImage(new Image("file:///" + AppStyles.picturesResourcePath + "fsapi.png"));
             Controller.setStylesFolderName("apiStyles");
             AppStyles.stylesResourcePath = AppStyles.resourcesPath + Controller.getStylesFolderName() + File.separator;
@@ -452,9 +454,8 @@ public class Controller extends Main {
                 t3.setDaemon(true);
                 t3.start();
 
-                authPOST.authorisationPOST();
                 JsonReader.changeJsonFields(envSettings.getAuthJsonPath(), authKeysList, credentialsList);
-
+                authPOST.authorisationPOST();
                 apiSwitcher.textFillProperty().setValue(Paint.valueOf("#FFA500"));
                 updateApiModeView(true);
 

@@ -134,6 +134,13 @@ public class Controller extends Main {
     public Label notSupportedLabel;
     public Label apiEnvironment;
 
+    public Label apiLimitsLabel;
+    public Label apiLimitsQtyLabel;
+    public Label apiLimitsPageLabel;
+
+    public TextField limitsQtyField;
+    public TextField limitsPageField;
+
     public TextField loginField;
     public PasswordField passwordField;
 
@@ -415,6 +422,12 @@ public class Controller extends Main {
         apiMiddle.setVisible(value);
 //        apiHeader.setVisible(value);
 
+        apiLimitsLabel.setVisible(value);
+        apiLimitsQtyLabel.setVisible(value);
+        apiLimitsPageLabel.setVisible(value);
+
+        limitsQtyField.setVisible(value);
+        limitsPageField.setVisible(value);
 
         environmentLabel.setVisible(!value);
         environmentsComboBox.setVisible(!value);

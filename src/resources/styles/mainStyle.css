@@ -6,25 +6,13 @@
     -fx-background-color:  #234974;
 }
 
-#appBackground{
-    -fx-background-color: white;
+#apiHeader, #apiMiddle, #apiFooter{
+    -fx-background-color:  #313335;
 }
-
-/*#apiHeader, #apiMiddle, #apiFooter{*/
-    /*-fx-background-color:  #313335;*/
-/*}*/
-
-/*#apiBackground{*/
-    /*-fx-background-color: #404244;*/
-/*}*/
 
 #loginLabel, #passwordLabel, #environmentLabel{
     -fx-text-fill: #2d6ca2;
 }
-
-/*#apiResourceLabel, #requestTypeLabel{*/
-    /*-fx-text-fill: #e97e00;*/
-/*}*/
 
 .menu-bar .label  {
 	-fx-font-weight: bold;
@@ -32,13 +20,6 @@
 	-fx-font-family: System;
     -fx-text-fill: white;
 }
-
-/*#apiHeader > .menu-bar .label  {*/
-    /*-fx-font-weight: bold;*/
-    /*-fx-font-size: 12px;*/
-    /*-fx-font-family: System;*/
-    /*-fx-text-fill: #e97e00;*/
-/*}*/
 
 .menu-item .label {
 	-fx-font-weight: bold;

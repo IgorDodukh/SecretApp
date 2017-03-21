@@ -132,6 +132,7 @@ public class Controller extends Main {
     public Label apiResourceLabel;
     public Label responseStatusLabel;
     public Label notSupportedLabel;
+    public Label apiEnvironment;
 
     public TextField loginField;
     public PasswordField passwordField;
@@ -142,6 +143,7 @@ public class Controller extends Main {
     //    public ProgressBar progressBar;
 
     public ImageView waitingAnimation;
+    public ImageView apiWaitingAnimation;
     public ImageView companyLogo;
 
     public MenuItem menuConfigs;
@@ -159,6 +161,7 @@ public class Controller extends Main {
     public Pane apiHeader;
     public Pane apiMiddle;
     public Pane apiFooter;
+    public Pane apiBackground;
 
     public AnchorPane appBackground;
 
@@ -223,7 +226,6 @@ public class Controller extends Main {
     }
 
     private static String responseStatus = "";
-
 
     static String getResultMessage() {
         return resultMessage;
@@ -294,6 +296,7 @@ public class Controller extends Main {
 
         companyLogo.setImage(new Image("file:///" + AppStyles.picturesResourcePath + "fslogo.png"));
         waitingAnimation.setImage(new Image("file:///" + AppStyles.picturesResourcePath + "spinner.gif"));
+        apiWaitingAnimation.setImage(new Image("file:///" + AppStyles.picturesResourcePath + "spinner.gif"));
 
         buildVersion.setText("Build Version: 2.0 beta");
 
@@ -312,7 +315,7 @@ public class Controller extends Main {
                 e.printStackTrace();
             }
         });
-        KeysListener.spinnerEnabler(responseStatusLabel, waitingAnimation, sendButton);
+        KeysListener.spinnerEnabler(responseStatusLabel, apiWaitingAnimation, sendButton);
         KeysListener.notSupportedResource(this, apiEntityTypeComboBox, requestsComboBox);
 
 //Add UI Elements listener for Start button
@@ -370,7 +373,6 @@ public class Controller extends Main {
             setSelectedRequestTypeIndex(requestsComboBox.getSelectionModel().getSelectedIndex());
 
             Task updateResponseTask = updateResponseStatus();
-
             responseStatusLabel.textProperty().bind(updateResponseTask.messageProperty());
             Thread t3 = new Thread(updateResponseTask);
             t3.setName("Response status updater");
@@ -405,13 +407,24 @@ public class Controller extends Main {
         entityTypeComboBox.setVisible(!value);
         startButton.setVisible(!value);
 
-//        windowFooter.setVisible(!value);
 //        windowHeader.setVisible(!value);
-//        windowMiddle.setVisible(!value);
+        windowFooter.setVisible(!value);
+        windowMiddle.setVisible(!value);
 //
-//        apiFooter.setVisible(value);
+        apiFooter.setVisible(value);
+        apiMiddle.setVisible(value);
 //        apiHeader.setVisible(value);
-//        apiMiddle.setVisible(value);
+
+
+        environmentLabel.setVisible(!value);
+        environmentsComboBox.setVisible(!value);
+        loginLabel.setVisible(!value);
+        loginField.setVisible(!value);
+        passwordLabel.setVisible(!value);
+        passwordField.setVisible(!value);
+
+        apiBackground.setVisible(value);
+        apiEnvironment.setVisible(value);
 
         environmentsComboBox.setDisable(value);
         responseStatusLabel.setVisible(value);
@@ -425,7 +438,7 @@ public class Controller extends Main {
     }
 
     public void clickApiSwitcher() throws IOException, ParseException {
-        //TODO resove issue with authorization
+        //TODO resolve issue with authorization
         ReadConfigMain.main();
         List<String> authKeysList = new ArrayList<>();
         authKeysList.add("username");
@@ -436,7 +449,21 @@ public class Controller extends Main {
         credentialsList.add(passwordField.getText());
 
         if (apiSwitcher.isSelected()) {
-//            apiSwitcher.setDisable(true);
+            environmentComboBoxValue = environmentsComboBox.getSelectionModel().getSelectedItem();
+
+            Task updateEnvironmentTask = updateEnvironmentStatus();
+            apiEnvironment.textProperty().bind(updateEnvironmentTask.messageProperty());
+            Thread t = new Thread(updateEnvironmentTask);
+            t.setName("Response status updater");
+            t.setDaemon(true);
+            t.start();
+
+//            apiEnvironment.textProperty().setValue(environmentComboBoxValue);
+            login = loginField.getText();
+            password = String.valueOf(passwordField.getCharacters());
+            updateCredentials();
+
+            updateApiModeView(true);
             companyLogo.setImage(new Image("file:///" + AppStyles.picturesResourcePath + "fsapi.png"));
             Controller.setStylesFolderName("apiStyles");
             AppStyles.stylesResourcePath = AppStyles.resourcesPath + Controller.getStylesFolderName() + File.separator;
@@ -444,6 +471,7 @@ public class Controller extends Main {
             setApplicationStyle();
             setResponseStatus("");
             environmentComboBoxIndex = environmentsComboBox.getSelectionModel().getSelectedIndex();
+            JsonReader.changeJsonFields(envSettings.getAuthJsonPath(), authKeysList, credentialsList);
             envSettings.setupVariables();
             if (internetConnection.checkInternetConnection()) {
 
@@ -454,10 +482,10 @@ public class Controller extends Main {
                 t3.setDaemon(true);
                 t3.start();
 
-                JsonReader.changeJsonFields(envSettings.getAuthJsonPath(), authKeysList, credentialsList);
+
                 authPOST.authorisationPOST();
                 apiSwitcher.textFillProperty().setValue(Paint.valueOf("#FFA500"));
-                updateApiModeView(true);
+
 
             } else {
                 failedPopupBox(getFailedContentText() + "\nAPI mode can't be used without Internet connection.");
@@ -465,13 +493,14 @@ public class Controller extends Main {
             }
 
         } else if (!apiSwitcher.isSelected()) {
+            updateApiModeView(false);
             companyLogo.setImage(new Image("file:///" + AppStyles.picturesResourcePath + "fslogo.png"));
             Controller.setStylesFolderName("styles");
             AppStyles.stylesResourcePath = AppStyles.resourcesPath + Controller.getStylesFolderName() + File.separator;
             System.out.println("AppStyles.stylesResourcePath: " + AppStyles.stylesResourcePath);
             setApplicationStyle();
             notSupportedRequest(false);
-            updateApiModeView(false);
+
             apiSwitcher.textFillProperty().setValue(Paint.valueOf("#fff"));
         }
     }
@@ -578,8 +607,24 @@ public class Controller extends Main {
             @Override
             protected Void call() throws Exception {
                 while (true) {
-
                     updateMessage(String.valueOf(getResponseStatus()));
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ex) {
+                        break;
+                    }
+                }
+                return null;
+            }
+        };
+    }
+
+    private Task updateEnvironmentStatus() {
+        return new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                while (true) {
+                    updateMessage(String.valueOf(environmentComboBoxValue));
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException ex) {

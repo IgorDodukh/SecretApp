@@ -2,15 +2,11 @@
     -fx-background-color:  #313335;
 }
 
-#windowHeader, #windowMiddle, #windowFooter{
+#windowHeader{
     -fx-background-color:  #313335;
 }
 
-#appBackground{
-    -fx-background-color: #404244;
-}
-
-#loginLabel, #apiResourceLabel, #requestTypeLabel, #passwordLabel, #environmentLabel{
+#apiResourceLabel, #requestTypeLabel{
      -fx-text-fill: #e97e00;
  }
 

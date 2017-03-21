@@ -18,22 +18,22 @@
     -fx-padding: 2 2 2 2;
     -fx-background-radius: 6;
     -fx-background-color:
-            linear-gradient(from 0% 83% to 0% 100%, #373737 0%, #313335 100%),
-            radial-gradient(center 50% 50%, radius 100%, #373737, #313335);
+            linear-gradient(from 0% 83% to 0% 100%, #0ec815 0%, #0e9713 100%),
+            radial-gradient(center 50% 50%, radius 100%, #0ec815, #0e9713);
     -fx-font-weight: bold;
     -fx-font-size: 16px;
-	-fx-text-fill: #e97e00;
+	-fx-text-fill: white;
 	-fx-font-family: System;
 }
 .button:hover {
 	-fx-cursor: hand;
     	-fx-background-color:
-                linear-gradient(from 0% 83% to 0% 100%, #2e2e2e 0%, #26282a 100%),
-                radial-gradient(center 50% 50%, radius 100%, #2e2e2e, #26282a);
+                linear-gradient(from 0% 83% to 0% 100%, #0eb715 0%, #0e7011 100%),
+                radial-gradient(center 50% 50%, radius 100%, #0eb715, #0e7011);
 }
 .button:pressed {
 	-fx-background-color:
-            linear-gradient(from 0% 83% to 0% 100%, #2e2e2e 0%, #1d1f21 100%),
-            radial-gradient(center 50% 50%, radius 100%, #2e2e2e, #1d1f21);
+            linear-gradient(from 0% 83% to 0% 100%, #0eb715 0%, #0b500e 100%),
+            radial-gradient(center 50% 50%, radius 100%, #0eb715, #0b500e);
     -fx-padding: 1 1 1 1;
 }

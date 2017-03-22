@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="appBackground" cache="true" nodeOrientation="LEFT_TO_RIGHT" prefHeight="300.0" prefWidth="235.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXUI.Controller">
+<AnchorPane fx:id="appBackground" cache="true" nodeOrientation="LEFT_TO_RIGHT" prefHeight="300.0" prefWidth="235.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXUI.Controller">
    <children>
       <Pane fx:id="apiBackground" prefHeight="461.0" prefWidth="580.0" style="-fx-background-color: #404244;" visible="false" />
       <Pane fx:id="windowMiddle" layoutY="186.0" prefHeight="30.0" prefWidth="590.0">
@@ -233,12 +233,12 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <TextField fx:id="limitsQtyField" disable="true" layoutX="443.0" layoutY="259.0" prefHeight="25.0" prefWidth="82.0" text="250">
+      <TextField fx:id="limitsQtyField" disable="true" layoutX="443.0" layoutY="259.0" prefHeight="25.0" prefWidth="82.0" text="250" visible="false">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <TextField fx:id="limitsPageField" disable="true" layoutX="443.0" layoutY="306.0" prefHeight="31.0" prefWidth="82.0" text="1">
+      <TextField fx:id="limitsPageField" disable="true" layoutX="443.0" layoutY="306.0" prefHeight="31.0" prefWidth="82.0" text="1" visible="false">
          <cursor>
             <Cursor fx:constant="TEXT" />
          </cursor>

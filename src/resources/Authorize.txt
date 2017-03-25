@@ -1,15 +1,15 @@
 Natasha:
-API Login ID: 3z42Rqc3pMrX
+AppMain.API Login ID: 3z42Rqc3pMrX
 Transaction Key: 5gt38eVNu529t6ZP
 
 Oksana:
-API Login ID: 2L6UmL7rE
+AppMain.API Login ID: 2L6UmL7rE
 Transaction Key: 36Sc34JmhE9m493t
 
 Vika:
-API Login ID: 3Ud359XbX6
+AppMain.API Login ID: 3Ud359XbX6
 Transaction Key: 67FK5537ng85nAPw
 
 Igor:
-API Login ID: 3y8Z2fk5Z3n
+AppMain.API Login ID: 3y8Z2fk5Z3n
 Transaction Key: 2s25qyDYe249uTRx

@@ -52,6 +52,4 @@ public class SyncPage extends BrowserSettings{
         magentoChannelID = driver.findElement(channelIDLocator).getAttribute("value");
         ProgressBar.addProgressValue(progressVariable);
     }
-
-
 }

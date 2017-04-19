@@ -131,10 +131,12 @@ public class AddProductPage extends BrowserSettings{
         setTotalResultMessage(getTotalResultMessage() + " - Select Supplier from the list\n");
         driver.findElement(selectSupplierCheckboxLocator).click();
         ProgressBar.addProgressValue(progressVariable);
+
         setTotalResultMessage(getTotalResultMessage() + " - Add selected Supplier\n");
         driver.findElement(addSelectedSupplierButtonLocator).click();
         driver.findElement(selectAddedSupplierLocator).click();
         ProgressBar.addProgressValue(progressVariable);
+
         setTotalResultMessage(getTotalResultMessage() + " - Open Supplier in edit mode\n");
         driver.findElement(openAddedSupplierToEditButtonLocator).click();
         driver.findElement(warehouseTabLocator).click();

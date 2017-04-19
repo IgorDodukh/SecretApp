@@ -5,7 +5,6 @@ import AppMain.Selenium.Settings.BrowserSettings;
 import AppMain.Selenium.Tests.*;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
-//import org.openqa.selenium.NoSuchContextException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -15,9 +14,10 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static AppMain.FXUI.DialogBoxGenerator.*;
+
+//import org.openqa.selenium.NoSuchContextException;
 
 /**
  * Created by Ihor on 7/16/2016. All rights reserved!
@@ -56,54 +56,58 @@ public class ComboBoxesHandler{
             Controller.setResultMessage(Controller.getResultMessage() + "\nProduct SKU is: " + AddProductWithInventory.createdProductSKU);
             Controller.setResultMessage(Controller.getResultMessage() + "\nProduct Bin name is: " + InventoryPage.createdBin);
             Controller.setResultMessage(Controller.getResultMessage() + "\nProduct qty is: " + BrowserSettings.inventoryQty);
-        } else if (dropdownIndex == 5) {
-            BrowserSettings.progressVariable = 5;
-            addWarehouseAndBin.addWarehouseAndBin(login, password, driver);
-            Controller.setResultMessage(Controller.getResultMessage() + "New Warehouse and Bin have been created\n");
-            Controller.setResultMessage(Controller.getResultMessage() + "\nWarehouse name is: " + AddWarehouseAndBin.createdWarehouseName);
-            Controller.setResultMessage(Controller.getResultMessage() + "\nBin name is: " + AddWarehouseAndBin.createdBinName);
-        } else if (dropdownIndex == 4) {
-            BrowserSettings.progressVariable = 4;
-            addSupplier.addSupplier(login, password, driver);
-            Controller.setResultMessage(Controller.getResultMessage() + "New Supplier has been created\n");
-            Controller.setResultMessage(Controller.getResultMessage() + "\nSupplier name is: " + AddSupplier.createdSupplierName);
-        } else if (dropdownIndex == 6) {
-            BrowserSettings.progressVariable = 5;
-            makeReorder.makeReorder(login, password, driver);
-            Controller.setResultMessage(Controller.getResultMessage() + "New Order has been created\n");
-            Controller.setResultMessage(Controller.getResultMessage() + "\nOrder Number is: " + BrowserSettings.orderNumber);
-        } else if (dropdownIndex == 0) {
+        }
+//          else if (dropdownIndex == 5) {
+//            BrowserSettings.progressVariable = 5;
+//            addWarehouseAndBin.addWarehouseAndBin(login, password, driver);
+//            Controller.setResultMessage(Controller.getResultMessage() + "New Warehouse and Bin have been created\n");
+//            Controller.setResultMessage(Controller.getResultMessage() + "\nWarehouse name is: " + AddWarehouseAndBin.createdWarehouseName);
+//            Controller.setResultMessage(Controller.getResultMessage() + "\nBin name is: " + AddWarehouseAndBin.createdBinName);
+//        }
+//        else if (dropdownIndex == 4) {
+//            BrowserSettings.progressVariable = 4;
+//            addSupplier.addSupplier(login, password, driver);
+//            Controller.setResultMessage(Controller.getResultMessage() + "New Supplier has been created\n");
+//            Controller.setResultMessage(Controller.getResultMessage() + "\nSupplier name is: " + AddSupplier.createdSupplierName);
+//        } else if (dropdownIndex == 6) {
+//            BrowserSettings.progressVariable = 5;
+//            makeReorder.makeReorder(login, password, driver);
+//            Controller.setResultMessage(Controller.getResultMessage() + "New Order has been created\n");
+//            Controller.setResultMessage(Controller.getResultMessage() + "\nOrder Number is: " + BrowserSettings.orderNumber);
+//        }
+        else if (dropdownIndex == 0) {
             BrowserSettings.progressVariable = 5;
             configureChannel.configureMagentoChannel(login, password, driver);
             Controller.setResultMessage(Controller.getResultMessage() + "\nMagento "+ Controller.magentoIndexName);
             Controller.setResultMessage(Controller.getResultMessage() + " has been synced with " + Controller.environmentComboBoxValue);
-        } else if (dropdownIndex == 7) {
-            BrowserSettings.progressVariable = 4;
-            if(Objects.equals(DialogBoxGenerator.userTypeToCreate, "Merchant")) {
-                System.out.println(DialogBoxGenerator.userTypeToCreate);
-                addUsers.addMerchant(login, password, driver);
-            } else if(Objects.equals(DialogBoxGenerator.userTypeToCreate, "Merchant Admin")) {
-                System.out.println(DialogBoxGenerator.userTypeToCreate);
-                addUsers.addMerchantAdmin(login, password, driver);
-            } else if(Objects.equals(DialogBoxGenerator.userTypeToCreate, "Merchandiser")) {
-                System.out.println(DialogBoxGenerator.userTypeToCreate);
-                addUsers.addMerchantAdmin(login, password, driver);
-            } else if(Objects.equals(DialogBoxGenerator.userTypeToCreate, "Picker")) {
-                System.out.println(DialogBoxGenerator.userTypeToCreate);
-                addUsers.addMerchantAdmin(login, password, driver);
-            } else if(Objects.equals(DialogBoxGenerator.userTypeToCreate, "Packer")) {
-                System.out.println(DialogBoxGenerator.userTypeToCreate);
-                addUsers.addMerchantAdmin(login, password, driver);
-            } else throw new NoSuchAlgorithmException("No such test exception");
-            Controller.setResultMessage(Controller.getResultMessage() + "New " + DialogBoxGenerator.userTypeToCreate + " has been created");
         }
+//        else if (dropdownIndex == 7) {
+//            BrowserSettings.progressVariable = 4;
+//            if(Objects.equals(DialogBoxGenerator.userTypeToCreate, "Merchant")) {
+//                System.out.println(DialogBoxGenerator.userTypeToCreate);
+//                addUsers.addMerchant(login, password, driver);
+//            } else if(Objects.equals(DialogBoxGenerator.userTypeToCreate, "Merchant Admin")) {
+//                System.out.println(DialogBoxGenerator.userTypeToCreate);
+//                addUsers.addMerchantAdmin(login, password, driver);
+//            } else if(Objects.equals(DialogBoxGenerator.userTypeToCreate, "Merchandiser")) {
+//                System.out.println(DialogBoxGenerator.userTypeToCreate);
+//                addUsers.addMerchantAdmin(login, password, driver);
+//            } else if(Objects.equals(DialogBoxGenerator.userTypeToCreate, "Picker")) {
+//                System.out.println(DialogBoxGenerator.userTypeToCreate);
+//                addUsers.addMerchantAdmin(login, password, driver);
+//            } else if(Objects.equals(DialogBoxGenerator.userTypeToCreate, "Packer")) {
+//                System.out.println(DialogBoxGenerator.userTypeToCreate);
+//                addUsers.addMerchantAdmin(login, password, driver);
+//            } else throw new NoSuchAlgorithmException("No such test exception");
+//            Controller.setResultMessage(Controller.getResultMessage() + "New " + DialogBoxGenerator.userTypeToCreate + " has been created");
+//        }
     }
 
     public static void additionalDialogDeterminer(int index) throws IOException {
         if (index == 1) identifyPopupBox();
         else if (index == 0) magentoPopupBox();
         else if (index == 2) creditCardsPopupBox();
-        else if (index == 7) userTypePopupBox();
+//        else if (index == 7) userTypePopupBox();
         else confirmationPopupBox();
     }
 

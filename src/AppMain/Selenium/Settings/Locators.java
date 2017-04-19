@@ -14,7 +14,7 @@ public class Locators {
     public final By customerPhoneFieldLocator = By.xpath("//input[@id='customer_phone']");
 
     public final By customerBillingAddressTabLocator = By.xpath("//*[@id='tabBillingAddresses']");
-    public final By getBillingAddressBtnLocator = By.xpath("//a[@id='addNewBillingAddressBtn']");
+        public final By getBillingAddressBtnLocator = By.xpath("//a[@id='addNewBillingAddressBtn']");
     public final By newBillingAddressSectionLocator = By.xpath("//div[@id='new_billing_address_section_basic']");
     public final By billingAddressFirstNameLocator = By.xpath("//input[@id='first_name_basic']");
     public final By billingAddressLastNameLocator = By.xpath("//input[@id='last_name_basic']");

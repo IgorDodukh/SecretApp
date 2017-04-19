@@ -70,11 +70,11 @@ public class Controller extends Main {
                     "Sync Magento with FS",
                     "Configure Merchant",
                     "Create Customer",
-                    "Create Product",
-                    "Create Supplier",
-                    "Create Warehouse & Bin",
-                    "Reorder the last Order",
-                    "Create User"
+                    "Create Product"
+//                    "Create Supplier",
+//                    "Create Warehouse & Bin",
+//                    "Reorder the last Order",
+//                    "Create User"
             );
 
     private final ObservableList<String> apiResourcesList = FXCollections.observableArrayList(

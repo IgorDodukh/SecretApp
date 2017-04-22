@@ -85,10 +85,13 @@ public class JsonReader extends EnvSettings {
 
         String createdCustomerFirstName = GetPropertyValues.customerFirstName + "-" + randomString;
         String createdCustomerLastName = GetPropertyValues.customerLastName + "-" + randomString;
+        String createdCustomerZip = GetPropertyValues.zipCodeProperty;
 
         String createdSupplierName = GetPropertyValues.supplierName + "-" + randomString;
         String createdBinName = GetPropertyValues.binName + "-" + randomString;
+
         String createdWarehouseName = GetPropertyValues.warehouseName + "-" + randomString;
+        String createdWarehouseZip = GetPropertyValues.zipCodeProperty;
 
         List<String> productValues = new ArrayList<>();
         productValues.add(createdProductName);
@@ -98,7 +101,8 @@ public class JsonReader extends EnvSettings {
         List<String> customerValues = new ArrayList<>();
         customerValues.add(createdCustomerFirstName);
         customerValues.add(createdCustomerLastName);
-        customerValues.add(null);
+        customerValues.add("8888");
+        customerValues.add(createdCustomerZip);
 
         List<String> supplierValues = new ArrayList<>();
         supplierValues.add(createdSupplierName);
@@ -108,6 +112,7 @@ public class JsonReader extends EnvSettings {
 
         List<String> warehouseValues = new ArrayList<>();
         warehouseValues.add(createdWarehouseName);
+        warehouseValues.add(createdWarehouseZip);
 
         String jsonForPOST = AppStyles.jsonPath + selectedResourceValue + ".json";
         System.out.println("ENV url: " + EnvSettings.getEnvironmentUrl());

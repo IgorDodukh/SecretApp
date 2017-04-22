@@ -37,15 +37,15 @@ import static application.api.settings.JsonReader.writeJsonFile;
  */
 public class RequestsBuilder {
 
-    public static int getResponseStatusCode() {
+    private static int getResponseStatusCode() {
         return responseStatusCode;
     }
 
-    public static void setResponseStatusCode(int responseStatusCode) {
+    private static void setResponseStatusCode(int responseStatusCode) {
         RequestsBuilder.responseStatusCode = responseStatusCode;
     }
 
-    static JsonReader jsonReader = new JsonReader();
+    private static JsonReader jsonReader = new JsonReader();
     private static int responseStatusCode;
 
     private ArrayList<String> responseList;
@@ -54,13 +54,13 @@ public class RequestsBuilder {
     final List<String> productKeysList = new ArrayList<>(
             Arrays.asList("ProductName", "ProductSku", "AvailableQuantity"));
     final List<String> customerKeysList = new ArrayList<>(
-            Arrays.asList("LastName", "FirstName", "CustomerNumber"));
+            Arrays.asList("LastName", "FirstName", "CustomerNumber", "Postcode"));
     final List<String> ordersKeysList = new ArrayList<>(
             Arrays.asList("OrderNumber"));
     final List<String> suppliersKeysList = new ArrayList<>(
             Arrays.asList("Name"));
     final List<String> warehousesKeysList = new ArrayList<>(
-            Arrays.asList("WarehouseName"));
+            Arrays.asList("WarehouseName", "ZipCode"));
     final List<String> binsKeysList = new ArrayList<>(
             Arrays.asList("BinName"));
     final List<String> salesChannelsKeysList = new ArrayList<>(

@@ -486,6 +486,9 @@ public class DialogBoxGenerator {
         Label productQtyLabel = new Label("Default product quantity: ");
         productQtyLabel.setTooltip(new Tooltip("New product will be created with this inventory value."));
 
+        Label defaultZipCodeLabel = new Label("Default Zip code: ");
+        defaultZipCodeLabel.setTooltip(new Tooltip("New items will be created with this Zip code value."));
+
         Label appFilesPathLabel = new Label("Default path to 'appFiles' folder: ");
         appFilesPathLabel.setTooltip(new Tooltip("Please use the following format:\nC:/Program Files/appFiles"));
 
@@ -497,6 +500,10 @@ public class DialogBoxGenerator {
 
         TextField productQtyField = new TextField();
         productQtyField.setText(GetPropertyValues.productQtyProperty);
+
+        TextField defaultZipCodeField = new TextField();
+        defaultZipCodeField.setText("10113");
+//        productQtyField.setText(GetPropertyValues.zipCodeProperty);
 
         ComboBox<String> randomValueComboBox = new ComboBox<>();
         ComboBoxesHandler.comboBoxSetItems(randomValueComboBox, randomValue, selectedRandomLength);
@@ -525,10 +532,12 @@ public class DialogBoxGenerator {
         });
 
         productQtyField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.matches("\\d*")) {
-                int value = Integer.parseInt(newValue);
-            } else {
-                productQtyField.setText(oldValue);
+            if (newValue.length() > 0) {
+                if (newValue.matches("\\d*")) {
+                    int value = Integer.parseInt(newValue);
+                } else {
+                    productQtyField.setText(oldValue);
+                }
             }
         });
 
@@ -545,10 +554,14 @@ public class DialogBoxGenerator {
         configsGrid.add(productQtyLabel, 0, 2);
         configsGrid.add(productQtyField, 1, 2);
 
-        configsGrid.add(appFilesPathLabel, 0, 3);
-        configsGrid.add(appFilesPathField, 1, 3);
+        configsGrid.add(defaultZipCodeLabel, 0, 3);
+        configsGrid.add(defaultZipCodeField, 1, 3);
 
-//        configDialog.getButtonTypes().set(0, saveButtonType);
+        configsGrid.add(appFilesPathLabel, 0, 4);
+        configsGrid.add(appFilesPathField, 1, 4);
+
+        validationLabel.setText("validation...");
+        configsGrid.add(validationLabel, 0, 5);
 
         configDialog.getDialogPane().setContent(configsGrid);
         try {
@@ -558,6 +571,7 @@ public class DialogBoxGenerator {
         }
 
         FieldsListener.multipleFieldsValidation(productQtyField, productQtyLabel, validationLabel, saveButton);
+        FieldsListener.multipleFieldsValidation(defaultZipCodeField, defaultZipCodeLabel, validationLabel, saveButton);
 
         Optional<ButtonType> result = configDialog.showAndWait();
 

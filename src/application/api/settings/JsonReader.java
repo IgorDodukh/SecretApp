@@ -81,6 +81,7 @@ public class JsonReader extends EnvSettings {
 
         String createdProductSKU = GetPropertyValues.productSKU + "-" + randomString;
         String createdProductName = GetPropertyValues.productName + "-" + randomString;
+        String createdProductQty = GetPropertyValues.productQtyProperty;
 
         String createdCustomerFirstName = GetPropertyValues.customerFirstName + "-" + randomString;
         String createdCustomerLastName = GetPropertyValues.customerLastName + "-" + randomString;
@@ -92,6 +93,7 @@ public class JsonReader extends EnvSettings {
         List<String> productValues = new ArrayList<>();
         productValues.add(createdProductName);
         productValues.add(createdProductSKU);
+        productValues.add(createdProductQty);
 
         List<String> customerValues = new ArrayList<>();
         customerValues.add(createdCustomerFirstName);

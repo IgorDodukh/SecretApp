@@ -88,7 +88,7 @@ public class Controller extends Main {
             "Shipping Methods"
 //            "Event Subscriptions",
 //            "Promotions"
-            );
+    );
 
     public static final ObservableList<String> viewResourceUrl = FXCollections.observableArrayList(
             "/Order/OrderViewing/GUID",
@@ -290,6 +290,7 @@ public class Controller extends Main {
         AppStyles.stylesResourcePath = AppStyles.resourcesPath + Controller.getStylesFolderName() + File.separator;
 
         FieldsListener.multipleFieldsValidation(loginField, loginLabel, validationLabel, startButton);
+        FieldsListener.multipleFieldsValidation(loginField, loginLabel, validationLabel, apiSwitcher);
         FieldsListener.multipleFieldsValidation(passwordField, passwordLabel, validationLabel, startButton);
 
         //TODO: implement installation by installer
@@ -305,7 +306,7 @@ public class Controller extends Main {
         waitingAnimation.setImage(new Image("file:///" + AppStyles.picturesResourcePath + "spinner.gif"));
         apiWaitingAnimation.setImage(new Image("file:///" + AppStyles.picturesResourcePath + "spinner.gif"));
 
-        buildVersion.setText("Build Version: 2.0 beta");
+        buildVersion.setText("Build Version: 2.1");
 
         ReadConfigMain.main();
         loginField.setText(loginProperty);
@@ -332,6 +333,12 @@ public class Controller extends Main {
         KeysListener.startButtonKeyListener(loginField, this);
         KeysListener.startButtonKeyListener(passwordField, this);
         KeysListener.startButtonKeyListener(startButton, this);
+        KeysListener.startButtonKeyListener(apiSwitcher, this);
+
+        KeysListener.sendButtonKeyListener(requestsComboBox, this);
+        KeysListener.sendButtonKeyListener(apiEntityTypeComboBox, this);
+        KeysListener.sendButtonKeyListener(sendButton, this);
+        KeysListener.sendButtonKeyListener(apiSwitcher, this);
     }
 
     private void setApplicationStyle() throws IOException {
@@ -387,14 +394,19 @@ public class Controller extends Main {
             t3.start();
 
             try {
+                String targetUrl = EnvSettings.getEnvironmentUrl() + getSelectedResourceValue().replace(" ", "");
+                String limitValue = limitsQtyField.getText();
+                String pageValue = limitsPageField.getText();
+                String pageLimitFilter = "?limit=" + limitValue + "&page=" + pageValue;
+                targetUrl = targetUrl + pageLimitFilter;
+
                 if(getSelectedRequestTypeIndex() == 0){
                     System.out.println("Send GET");
-                    requestsBuilder.jerseyGET(EnvSettings.getEnvironmentUrl() + getSelectedResourceValue().replace(" ", ""));
+                    requestsBuilder.jerseyGET(targetUrl);
                 } else if (getSelectedRequestTypeIndex() == 1){
                     System.out.println("Send POST");
                     jsonReader.updateJsonForPOST(selectedResourceValue);
-                    requestsBuilder.sendPost(EnvSettings.getEnvironmentUrl() +
-                            getSelectedResourceValue().replace(" ", ""),
+                    requestsBuilder.sendPost(targetUrl,
                             JsonReader.getReceivedJsonString());
                 }
             } catch (ParseException | IOException e) {
@@ -414,20 +426,8 @@ public class Controller extends Main {
         entityTypeComboBox.setVisible(!value);
         startButton.setVisible(!value);
 
-//        windowHeader.setVisible(!value);
         windowFooter.setVisible(!value);
         windowMiddle.setVisible(!value);
-//
-        apiFooter.setVisible(value);
-        apiMiddle.setVisible(value);
-//        apiHeader.setVisible(value);
-
-        apiLimitsLabel.setVisible(value);
-        apiLimitsQtyLabel.setVisible(value);
-        apiLimitsPageLabel.setVisible(value);
-
-        limitsQtyField.setVisible(value);
-        limitsPageField.setVisible(value);
 
         environmentLabel.setVisible(!value);
         environmentsComboBox.setVisible(!value);
@@ -445,9 +445,20 @@ public class Controller extends Main {
         apiEntityTypeComboBox.setVisible(value);
         requestTypeLabel.setVisible(value);
         apiResourceLabel.setVisible(value);
+
         sendButton.setVisible(value);
         loginField.setDisable(value);
         passwordField.setDisable(value);
+
+        apiFooter.setVisible(value);
+        apiMiddle.setVisible(value);
+
+        apiLimitsLabel.setVisible(value);
+        apiLimitsQtyLabel.setVisible(value);
+        apiLimitsPageLabel.setVisible(value);
+
+        limitsQtyField.setVisible(value);
+        limitsPageField.setVisible(value);
     }
 
     public void clickApiSwitcher() throws IOException, ParseException {

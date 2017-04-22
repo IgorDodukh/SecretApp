@@ -8,18 +8,14 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import javafx.stage.StageStyle;
 
 import java.awt.*;
@@ -41,6 +37,7 @@ import static application.selenium.settings.GetPropertyValues.getTimeoutProperty
 public class DialogBoxGenerator {
 
     private static final AppStyles appStyles = new AppStyles();
+    private static int maxFieldLength = 10;
 
     public static Optional<ButtonType> exceptionResponse;
     public static Optional<ButtonType> confirmationResponse;
@@ -73,6 +70,7 @@ public class DialogBoxGenerator {
                     "5");
     public static String currentTimeout = "";
     public static String currentRandomLength = "";
+    public static String currentProductQty = "";
     public static String currentUser = "";
     public static String userTypeToCreate = "";
     public static String currentCustomerFirstName = "";
@@ -307,83 +305,6 @@ public class DialogBoxGenerator {
         } else System.out.println("User Type selecting cancelled");
     }
 
-    public static void resultsListTableBox(ArrayList jArray) {
-        Platform.runLater(() -> {
-            Alert responseBody = new Alert(Alert.AlertType.INFORMATION);
-            responseBody.setTitle("Response results");
-            responseBody.setHeaderText(getSelectedResourceValue() + " list was returned.\n" +
-                    jArray.size() + " items found.");
-            responseBody.setContentText("Returned entities list\n");
-            responseBody.initStyle(StageStyle.UTILITY);
-
-            TableView table = new TableView();
-            Scene scene = new Scene(new Group());
-
-            final Label label = new Label("Address Book");
-
-            table.setEditable(true);
-
-            ObservableList<String> items = FXCollections.observableArrayList ();
-
-            /**Add items to the ObservableList*/
-            for(Object item: jArray){
-                items.add(item.toString());
-            }
-
-            TableColumn firstNameCol = new TableColumn("First Name");
-            firstNameCol.setMinWidth(100);
-            firstNameCol.setCellValueFactory(
-                    new PropertyValueFactory<String, String>("firstName"));
-
-            TableColumn lastNameCol = new TableColumn("Last Name");
-            lastNameCol.setMinWidth(100);
-            lastNameCol.setCellValueFactory(
-                    new PropertyValueFactory<String, String>("lastName"));
-
-            TableColumn emailCol = new TableColumn("Email");
-            emailCol.setMinWidth(200);
-            emailCol.setCellValueFactory(
-                    new PropertyValueFactory<String, String>("email"));
-
-            table.setItems(items);
-            table.getColumns().addAll(firstNameCol, lastNameCol, emailCol);
-
-            table.getColumns().addAll(firstNameCol, lastNameCol, emailCol);
-
-
-
-
-            final VBox vbox = new VBox();
-            vbox.setSpacing(5);
-            vbox.setPadding(new Insets(10, 0, 0, 10));
-            vbox.getChildren().addAll(label, table);
-
-            ((Group) scene.getRoot()).getChildren().addAll(vbox);
-
-//            table.setItems(items);
-            table.setMaxWidth(Double.MAX_VALUE);
-            table.setMaxHeight(Double.MAX_VALUE);
-            GridPane.setVgrow(table, Priority.ALWAYS);
-            GridPane.setHgrow(table, Priority.ALWAYS);
-
-            GridPane expContent = new GridPane();
-            expContent.setMinWidth(500);
-            expContent.setMaxWidth(Double.MAX_VALUE);
-            expContent.add(label, 0, 0);
-            expContent.add(table, 0, 1);
-
-// Set expandable Exception into the dialog pane.
-            responseBody.getDialogPane().setContent(expContent);
-
-            try {
-                appStyles.setDialogStyle(responseBody);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            responseBody.showAndWait();
-        });
-    }
-
     public static void resultsListBox(ArrayList jArray) {
         Platform.runLater(() -> {
             Alert responseBody = new Alert(Alert.AlertType.INFORMATION);
@@ -547,7 +468,7 @@ public class DialogBoxGenerator {
     }
 
     static void configVariablesPopupBox() throws IOException {
-        Alert configDialog = new Alert(Alert.AlertType.CONFIRMATION);
+        Dialog<ButtonType> configDialog = new Dialog<>();
         appStyles.setDialogLogo(configDialog, "conf.png");
 
         configDialog.setTitle("Variables Configurations");
@@ -562,6 +483,9 @@ public class DialogBoxGenerator {
         randomValueLabel.setTooltip(new Tooltip("This random value is added to the end of the name for each\n" +
                 "creatable object (Product name, Customer name, etc.) "));
 
+        Label productQtyLabel = new Label("Default product quantity: ");
+        productQtyLabel.setTooltip(new Tooltip("New product will be created with this inventory value."));
+
         Label appFilesPathLabel = new Label("Default path to 'appFiles' folder: ");
         appFilesPathLabel.setTooltip(new Tooltip("Please use the following format:\nC:/Program Files/appFiles"));
 
@@ -571,6 +495,9 @@ public class DialogBoxGenerator {
         ComboBox<String> timeoutsComboBox = new ComboBox<>();
         ComboBoxesHandler.comboBoxSetItems(timeoutsComboBox, timeouts, selectedTimeout);
 
+        TextField productQtyField = new TextField();
+        productQtyField.setText(GetPropertyValues.productQtyProperty);
+
         ComboBox<String> randomValueComboBox = new ComboBox<>();
         ComboBoxesHandler.comboBoxSetItems(randomValueComboBox, randomValue, selectedRandomLength);
 
@@ -578,6 +505,32 @@ public class DialogBoxGenerator {
         appFilesPathField.setText(System.getProperty("user.dir"));
         appFilesPathField.setTooltip(new Tooltip(System.getProperty("user.dir")));
         appFilesPathField.setEditable(false);
+
+        Label validationLabel = new Label();
+        validationLabel.setVisible(false);
+
+        ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
+        configDialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
+
+        Node saveButton = configDialog.getDialogPane().lookupButton(saveButtonType);
+        saveButton.setDisable(false);
+
+        productQtyField.setOnKeyTyped(event -> {
+            String string = productQtyField.getText();
+
+            if (string.length() > maxFieldLength) {
+                productQtyField.setText(string.substring(0, maxFieldLength));
+                productQtyField.positionCaret(string.length());
+            }
+        });
+
+        productQtyField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.matches("\\d*")) {
+                int value = Integer.parseInt(newValue);
+            } else {
+                productQtyField.setText(oldValue);
+            }
+        });
 
         GridPane configsGrid = new GridPane();
         configsGrid.vgapProperty().setValue(15);
@@ -589,11 +542,13 @@ public class DialogBoxGenerator {
         configsGrid.add(randomValueLabel, 0, 1);
         configsGrid.add(randomValueComboBox, 1, 1);
 
-        configsGrid.add(appFilesPathLabel, 0, 2);
-        configsGrid.add(appFilesPathField, 1, 2);
+        configsGrid.add(productQtyLabel, 0, 2);
+        configsGrid.add(productQtyField, 1, 2);
 
-        ButtonType saveButton = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
-        configDialog.getButtonTypes().set(0, saveButton);
+        configsGrid.add(appFilesPathLabel, 0, 3);
+        configsGrid.add(appFilesPathField, 1, 3);
+
+//        configDialog.getButtonTypes().set(0, saveButtonType);
 
         configDialog.getDialogPane().setContent(configsGrid);
         try {
@@ -602,28 +557,26 @@ public class DialogBoxGenerator {
             e.printStackTrace();
         }
 
+        FieldsListener.multipleFieldsValidation(productQtyField, productQtyLabel, validationLabel, saveButton);
+
         Optional<ButtonType> result = configDialog.showAndWait();
+
         if (result.get().getButtonData() == ButtonBar.ButtonData.OK_DONE){
-            String oldPath = AppStyles.resourcesPath.replace("\\", "/");
 
             currentTimeout = timeoutsComboBox.getSelectionModel().getSelectedItem();
             BrowserSettings.timeoutVariable = Integer.valueOf(currentTimeout);
 
+            currentProductQty = productQtyField.getText();
+
             currentRandomLength = randomValueComboBox.getSelectionModel().getSelectedItem();
             BrowserSettings.randomValueLength = Integer.valueOf(currentRandomLength);
 
-//            currentMainPath = appFilesPathField.getText();
             try {
-//                AppStyles.resourcesPath = currentMainPath;
                 UpdateConfig.updateSystemVariables();
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-
-//            if (!Objects.equals(oldPath, currentMainPath)){
-//                DialogBoxGenerator.relaunchPopupBox();
-//            }
         } else System.out.println("Configuration popup box cancelled");
     }
 
@@ -747,11 +700,12 @@ public class DialogBoxGenerator {
         aboutDialog.initStyle(StageStyle.UTILITY);
 
         String newChanges =
-                " - application.api mode is added:\n" +
+                " - API mode is added:\n" +
                 "   - GET and POST requests are supported for now\n" +
                 "   - UI is slightly changed in application.api mode\n" +
                 " - FIXED BUG: validating fields on the 'Default Names' config dialog\n" +
                 " - NEW BUG: progress value sometimes starts not from 0 \n" +
+                " - Add parameter for Product qty\n" +
                 " - Partial refactoring (may occur unexpected new bugs)\n\n" +
                 "Updates from the latest releases you can find in the 'Release Notes' file";
 

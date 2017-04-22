@@ -74,8 +74,12 @@ class FieldsListener {
                 }
             }
             isNameBlank = firstNameBlank || lastNameBlank || skuBlank || productNameBlank || warehouseBlank ||
-            supplierBlank || binBlank || loginBlank || passwordBlank;
+                    supplierBlank || binBlank || loginBlank || passwordBlank;
 
+/**
+ * This additional conditions allow to avoid enabling the button for multiple fields validation
+ * Make the button disabled when try to fill one of blank fields
+ * */
             if(warningLabel.isVisible()){
                 if(!isNameBlank){
                     warningLabel.setVisible(newValue.trim().isEmpty());

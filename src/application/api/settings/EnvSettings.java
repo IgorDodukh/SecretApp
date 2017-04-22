@@ -42,7 +42,6 @@ public class EnvSettings {
         EnvSettings.token = token;
     }
 
-//    @BeforeClass
     public void setupVariables() throws IOException {
 
         environmentApiUrlList.add("https://apiqa01.freestylecommerce.info/V2/");

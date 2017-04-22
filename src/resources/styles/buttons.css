@@ -46,30 +46,45 @@
     -fx-padding: 2 2 2 2;
     -fx-background-radius: 6;
     -fx-background-color:
-            linear-gradient(from 0% 83% to 0% 100%, #428bca 0%, #2d6ca2 100%),
-            radial-gradient(center 50% 50%, radius 100%, #428bca, #2d6ca2);
+            linear-gradient(from 0% 83% to 0% 100%, #000000 0%, #000000 100%),
+            radial-gradient(center 50% 50%, radius 100%, #000000, #000000);
+    -fx-text-fill: #fff;
     -fx-font-weight: bold;
-    -fx-font-size: 16px;
+    -fx-font-size: 15px;
     -fx-font-family: System;
 }
 
 #apiSwitcher:hover {
     -fx-background-color:
-            linear-gradient(from 0% 83% to 0% 100%, #2d6ca2 0%, #2b669a 100%),
-            radial-gradient(center 50% 50%, radius 100%, #2d6ca2, #2b669a);
+            linear-gradient(from 0% 83% to 0% 100%, #3c3c3c 0%, #000000 100%),
+            radial-gradient(center 50% 50%, radius 100%, #7c7c7c, #000000);
+}
+
+#apiSwitcher:pressed {
+    -fx-background-color:
+            linear-gradient(from 0% 83% to 0% 100%, #525252 0%, #000000 100%),
+            radial-gradient(center 50% 50%, radius 100%, #525252, #000000);
+    /*-fx-font-size: 17px;*/
 }
 
 #apiSwitcher:selected {
     -fx-background-color:
-            linear-gradient(from 0% 83% to 0% 100%, #2b669a 0%, #2b4c80 100%),
-            radial-gradient(center 50% 50%, radius 100%, #2b669a, #2b4c80);
+            linear-gradient(from 0% 83% to 0% 100%, #3c3c3c 0%, #000000 100%),
+            radial-gradient(center 50% 50%, radius 100%, #3c3c3c, #000000);
+    -fx-padding: 1 1 1 1;
+}
+
+#apiSwitcher:pressed:selected {
+    -fx-background-color:
+            linear-gradient(from 0% 83% to 0% 100%, #525252 0%, #000000 100%),
+            radial-gradient(center 50% 50%, radius 100%, #525252, #000000);
     -fx-padding: 1 1 1 1;
 }
 
 #apiSwitcher:selected:hover {
     -fx-background-color:
-            linear-gradient(from 0% 83% to 0% 100%, #2d6ca2 0%, #2b669a 100%),
-            radial-gradient(center 50% 50%, radius 100%, #2d6ca2, #2b669a);
+            linear-gradient(from 0% 83% to 0% 100%, #7c7c7c 0%, #000000 100%),
+            radial-gradient(center 50% 50%, radius 100%, #7c7c7c, #000000);
 }
 
 #stopButton {

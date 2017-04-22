@@ -20,12 +20,26 @@ class KeysListener {
         element.setOnKeyPressed(key -> clickStartButton(key, controller));
     }
 
-    private static void clickStartButton(KeyEvent key, Controller controller) {
+    static void sendButtonKeyListener(Node element, Controller controller) {
+        element.setOnKeyPressed(key -> clickSendButton(key, controller));
+    }
 
+    private static void clickStartButton(KeyEvent key, Controller controller) {
         if(!FieldsListener.isNameBlank) {
             if (Objects.equals(key.getCode().toString(), "ENTER")) {
                 try {
                     controller.clickStartButton();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    private static void clickSendButton(KeyEvent key, Controller controller) {
+        if(!FieldsListener.isNameBlank) {
+            if (Objects.equals(key.getCode().toString(), "ENTER")) {
+                try {
+                    controller.clickSendButton();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

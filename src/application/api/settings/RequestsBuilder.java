@@ -51,7 +51,7 @@ public class RequestsBuilder {
     private ArrayList<String> responseList;
     public static ArrayList<String> guidList;
 
-    final List<String> productKeysList = new ArrayList<>(Arrays.asList("ProductName", "ProductSku"));
+    final List<String> productKeysList = new ArrayList<>(Arrays.asList("ProductName", "ProductSku", "AvailableQuantity"));
     final List<String> customerKeysList = new ArrayList<>(Arrays.asList("LastName", "FirstName", "CustomerNumber"));
     final List<String> ordersKeysList = new ArrayList<>(Arrays.asList("OrderNumber"));
     final List<String> suppliersKeysList = new ArrayList<>(Arrays.asList("Name"));
@@ -96,7 +96,7 @@ public class RequestsBuilder {
             Assert.assertNotEquals("Response body is null.", jsonObject, null);
 
             if (targetUrl.contains(resourcesPathList.get(0))) {
-                Controller.setResponseStatus("application.api mode ON");
+                Controller.setResponseStatus("API mode ON");
                 setToken((String) jsonObject.get("token"));
                 writeJsonFile(tokenPath, jsonObject);
             } else {

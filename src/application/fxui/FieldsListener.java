@@ -9,7 +9,7 @@ import javafx.scene.paint.Color;
  * Created by Ihor on 8/20/2016. All rights reserved!
  */
 class FieldsListener {
-    private static boolean isNameBlank;
+    public static boolean isNameBlank;
     private static boolean isVariableBlank;
 
     private static boolean firstNameBlank;
@@ -59,11 +59,7 @@ class FieldsListener {
 
 
             isVariableBlank = productQtyBlank || zipCodeBlank;
-/**
- * This additional condition allows to avoid enabling
- * the confirmation button for multiple fields validation.
- * Makes the button disabled when try to fill one of multiple blank fields.
- * */
+
             enableButtonValidation(isNameBlank || isVariableBlank, warningLabel, newValue, button);
 
             if(isNewValueBlank){
@@ -81,6 +77,10 @@ class FieldsListener {
     }
 
     private static void enableButtonValidation(boolean validationParameter, Label warningLabel, String newValue, Node button) {
+        /**
+         * This method allows to avoid enabling the confirmation button for multiple fields validation.
+         * Makes the button disabled when try to fill one of multiple blank fields.
+         * */
         if(warningLabel.isVisible()){
             if(!validationParameter){
                 warningLabel.setVisible(newValue.trim().isEmpty());

@@ -51,14 +51,22 @@ public class RequestsBuilder {
     private ArrayList<String> responseList;
     public static ArrayList<String> guidList;
 
-    final List<String> productKeysList = new ArrayList<>(Arrays.asList("ProductName", "ProductSku", "AvailableQuantity"));
-    final List<String> customerKeysList = new ArrayList<>(Arrays.asList("LastName", "FirstName", "CustomerNumber"));
-    final List<String> ordersKeysList = new ArrayList<>(Arrays.asList("OrderNumber"));
-    final List<String> suppliersKeysList = new ArrayList<>(Arrays.asList("Name"));
-    final List<String> warehousesKeysList = new ArrayList<>(Arrays.asList("WarehouseName"));
-    final List<String> binsKeysList = new ArrayList<>(Arrays.asList("BinName"));
-    final List<String> salesChannelsKeysList = new ArrayList<>(Arrays.asList("UniqueName", "ChannelType"));
-    final List<String> shippingMethodsKeysList = new ArrayList<>(Arrays.asList("Name", "ServiceDescription"));
+    final List<String> productKeysList = new ArrayList<>(
+            Arrays.asList("ProductName", "ProductSku", "AvailableQuantity"));
+    final List<String> customerKeysList = new ArrayList<>(
+            Arrays.asList("LastName", "FirstName", "CustomerNumber"));
+    final List<String> ordersKeysList = new ArrayList<>(
+            Arrays.asList("OrderNumber"));
+    final List<String> suppliersKeysList = new ArrayList<>(
+            Arrays.asList("Name"));
+    final List<String> warehousesKeysList = new ArrayList<>(
+            Arrays.asList("WarehouseName"));
+    final List<String> binsKeysList = new ArrayList<>(
+            Arrays.asList("BinName"));
+    final List<String> salesChannelsKeysList = new ArrayList<>(
+            Arrays.asList("UniqueName", "ChannelType"));
+    final List<String> shippingMethodsKeysList = new ArrayList<>(
+            Arrays.asList("Name", "ServiceDescription"));
 
     public void jerseyPOST(String targetUrl, String jsonEntity){
         Runnable runnable = () -> {
@@ -228,9 +236,17 @@ public class RequestsBuilder {
             String value = "";
             JSONObject jsonLineItem = (JSONObject) o;
             for (int i = keysList.size()-1; i >= 0; i--){
-                value += jsonLineItem.get(keysList.get(i)).toString();
-                if(i > 0)
-                    value += ", ";
+                /**
+                 * Avoid catching null pointer when parameter was not found in the response
+                 */
+                try {
+                    value += jsonLineItem.get(keysList.get(i)).toString();
+                    if (i > 0)
+                        value += ", ";
+                } catch (NullPointerException e) {
+                    DialogBoxGenerator.failedPopupBox(String.valueOf(e.getCause()));
+                }
+
             }
             responseList.add(value);
         }

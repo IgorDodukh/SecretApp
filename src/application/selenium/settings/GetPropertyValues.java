@@ -30,8 +30,11 @@ public class GetPropertyValues {
     public static String randomValueProperty;
     public static String productQtyProperty;
     public static String defaultPathProperty;
+    public static String zipCodeProperty;
+
     public static String loginProperty;
     public static String passProperty;
+
     public static String user;
     public static String customerFirstName;
     public static String customerLastName;
@@ -84,6 +87,7 @@ public class GetPropertyValues {
             // get the property value and print it out
             setTimeoutProperty(systemVarProp.getProperty("timeoutVariable"));
             productQtyProperty = systemVarProp.getProperty("productQuantity");
+            zipCodeProperty = systemVarProp.getProperty("zipCode");
             randomValueProperty = systemVarProp.getProperty("randomValue");
             defaultPathProperty = systemVarProp.getProperty("defaultPath");
 

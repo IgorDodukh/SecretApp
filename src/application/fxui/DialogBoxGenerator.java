@@ -71,6 +71,7 @@ public class DialogBoxGenerator {
     public static String currentTimeout = "";
     public static String currentRandomLength = "";
     public static String currentProductQty = "";
+    public static String currentZipCode = "";
     public static String currentUser = "";
     public static String userTypeToCreate = "";
     public static String currentCustomerFirstName = "";
@@ -502,7 +503,7 @@ public class DialogBoxGenerator {
         productQtyField.setText(GetPropertyValues.productQtyProperty);
 
         TextField defaultZipCodeField = new TextField();
-        defaultZipCodeField.setText("10113");
+        defaultZipCodeField.setText(GetPropertyValues.zipCodeProperty);
 //        productQtyField.setText(GetPropertyValues.zipCodeProperty);
 
         ComboBox<String> randomValueComboBox = new ComboBox<>();
@@ -581,6 +582,7 @@ public class DialogBoxGenerator {
             BrowserSettings.timeoutVariable = Integer.valueOf(currentTimeout);
 
             currentProductQty = productQtyField.getText();
+            currentZipCode = defaultZipCodeField.getText();
 
             currentRandomLength = randomValueComboBox.getSelectionModel().getSelectedItem();
             BrowserSettings.randomValueLength = Integer.valueOf(currentRandomLength);

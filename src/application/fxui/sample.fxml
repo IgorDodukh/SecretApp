@@ -224,7 +224,7 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="apiLimitsQtyLabel" layoutX="322.0" layoutY="255.0" prefHeight="34.0" prefWidth="133.0" text="Max items qty:" textFill="#e97e00" visible="false">
+      <Label fx:id="apiLimitsQtyLabel" layoutX="322.0" layoutY="255.0" prefHeight="34.0" prefWidth="133.0" text="Items per page:" textFill="#e97e00" visible="false">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>

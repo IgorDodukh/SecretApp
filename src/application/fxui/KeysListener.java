@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 
@@ -47,8 +48,21 @@ class KeysListener {
         }
     }
 
+    static void fieldsDisabler(ComboBox<String> resourceComboBox, TextField textField) {
+        resourceComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->{
+            int selectedResourceIndex = resourceComboBox.getSelectionModel().getSelectedIndex();
+            if (selectedResourceIndex == 0) {
+                textField.setDisable(false);
+            } else if (selectedResourceIndex == 1) {
+                textField.setDisable(true);
+            }
+        });
+    }
+
     static void notSupportedResource(Controller controller, ComboBox<String> resourceComboBox, ComboBox<String> requestComboBox) {
-        //Handle Not Supported label for Resources combobox
+        /**
+         * Handle Not Supported label for Resources combobox
+         * */
         requestComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             int selectedResourceIndex = resourceComboBox.getSelectionModel().getSelectedIndex();
             if(selectedResourceIndex == 0 || selectedResourceIndex == 3 || selectedResourceIndex == 5 ||
@@ -59,7 +73,9 @@ class KeysListener {
             }
         });
 
-        //Handle Not Supported label for Request Type combobox
+        /**
+         * Handle Not Supported label for Request Type combobox
+         * */
         resourceComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if(requestComboBox.getSelectionModel().getSelectedIndex() == 1){
                 if(newValue.contains("Order") || newValue.contains("Supplier") || newValue.contains("Bin") ||

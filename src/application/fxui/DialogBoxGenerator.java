@@ -359,14 +359,18 @@ public class DialogBoxGenerator {
             }
 
             link.setOnAction(t -> {
-                String linkToItem = RequestsBuilder.guidList.get(listView.getSelectionModel().getSelectedIndex());
-                String resourceUrl = Controller.viewResourceUrl.get(Controller.getSelectedResourceIndex());
-                String environmentUrl = BrowserSettings.fsEnvironment.get(Controller.getSelectedEnvironmentIndex());
+                int listItemIndex = listView.getSelectionModel().getSelectedIndex();
+                String linkToItem;
+                if (listItemIndex >= 0){
+                    linkToItem = RequestsBuilder.guidList.get(listItemIndex);
+                    String resourceUrl = Controller.viewResourceUrl.get(Controller.getSelectedResourceIndex());
+                    String environmentUrl = BrowserSettings.fsEnvironment.get(Controller.getSelectedEnvironmentIndex());
 
-                try {
-                    Desktop.getDesktop().browse(new URI(environmentUrl + resourceUrl.replace("GUID", linkToItem)));
-                } catch (IOException | URISyntaxException e) {
-                    e.printStackTrace();
+                    try {
+                        Desktop.getDesktop().browse(new URI(environmentUrl + resourceUrl.replace("GUID", linkToItem)));
+                    } catch (IOException | URISyntaxException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
 
@@ -712,18 +716,18 @@ public class DialogBoxGenerator {
         aboutDialog.setTitle("About");
         aboutDialog.setHeaderText("Hi there! It's About of Secret App");
         aboutDialog.setContentText("This application is developed to make QA life easier " +
-                    "while doing routine things...\n\n");
+                "while doing routine things...\n\n");
         aboutDialog.initStyle(StageStyle.UTILITY);
 
         String newChanges =
                 " - API mode is added:\n" +
-                "   - GET and POST requests are supported for now\n" +
-                "   - UI is slightly changed in application.api mode\n" +
-                " - FIXED BUG: validating fields on the 'Default Names' config dialog\n" +
-                " - NEW BUG: progress value sometimes starts not from 0 \n" +
-                " - Add parameter for Product qty\n" +
-                " - Partial refactoring (may occur unexpected new bugs)\n\n" +
-                "Updates from the latest releases you can find in the 'Release Notes' file";
+                        "   - GET and POST requests are supported for now\n" +
+                        "   - UI is slightly changed in application.api mode\n" +
+                        " - FIXED BUG: validating fields on the 'Default Names' config dialog\n" +
+                        " - NEW BUG: progress value sometimes starts not from 0 \n" +
+                        " - Add parameter for Product qty\n" +
+                        " - Partial refactoring (may occur unexpected new bugs)\n\n" +
+                        "Updates from the latest releases you can find in the 'Release Notes' file";
 
         Label label = new Label("Latest release: '#2.0 beta' includes the following new features:");
 

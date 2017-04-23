@@ -326,6 +326,9 @@ public class Controller extends Main {
         KeysListener.spinnerEnabler(responseStatusLabel, apiWaitingAnimation, sendButton);
         KeysListener.notSupportedResource(this, apiEntityTypeComboBox, requestsComboBox);
 
+        KeysListener.fieldsDisabler(requestsComboBox, limitsPageField);
+        KeysListener.fieldsDisabler(requestsComboBox, limitsQtyField);
+        
 //Add UI Elements listener for Start button
         KeysListener.startButtonKeyListener(browsersComboBox, this);
         KeysListener.startButtonKeyListener(entityTypeComboBox, this);

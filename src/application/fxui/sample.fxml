@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="appBackground" cache="true" nodeOrientation="LEFT_TO_RIGHT" prefHeight="300.0" prefWidth="235.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.fxui.Controller">
+<AnchorPane fx:id="appBackground" cache="true" nodeOrientation="LEFT_TO_RIGHT" prefHeight="300.0" prefWidth="235.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.fxui.Controller">
    <children>
       <Pane fx:id="apiBackground" prefHeight="461.0" prefWidth="580.0" style="-fx-background-color: #404244;" visible="false" />
       <Pane fx:id="windowMiddle" layoutY="186.0" prefHeight="30.0" prefWidth="590.0">
@@ -147,7 +147,22 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </ComboBox>
-            <Label fx:id="apiResourceLabel" text="Select API Resource" textFill="#2d6ca2" visible="false" GridPane.rowIndex="1">
+            <ComboBox fx:id="itemsQtyComboBox" maxWidth="120.0" prefHeight="31.0" prefWidth="230.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ComboBox>
+            <Label fx:id="apiResourceLabel" text="Select API Resource" textFill="#e97e00" visible="false" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="batchItemsLabel" prefHeight="34.0" prefWidth="180.0" text="Items to create in batch:" textFill="#e97e00" visible="false" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="itemsQtyLabel" text="Items quantity to create" textFill="#e97e00" visible="false" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>

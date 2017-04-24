@@ -1,4 +1,4 @@
-#requestsComboBox, #apiEntityTypeComboBox {
+#requestsComboBox, #apiEntityTypeComboBox, #itemsQtyComboBox {
     -fx-padding: 0 0 0 0;
 	-fx-background-radius: 6;
     -fx-background-color:
@@ -9,36 +9,39 @@
 	-fx-font-family: System;
  }
 
-#requestsComboBox:hover, #apiEntityTypeComboBox:hover {
+#requestsComboBox:hover, #apiEntityTypeComboBox:hover, #itemsQtyComboBox:hover {
     -fx-background-color:
             linear-gradient(from 0% 83% to 0% 100%, #2e2e2e 0%, #26282a 100%),
             radial-gradient(center 50% 50%, radius 100%, #2e2e2e, #26282a);
  }
 
-#requestsComboBox:pressed, #apiEntityTypeComboBox:pressed {
+#requestsComboBox:pressed, #apiEntityTypeComboBox:pressed, #itemsQtyComboBox:pressed {
     -fx-background-color:
             linear-gradient(from 0% 83% to 0% 100%, #2e2e2e 0%, #1d1f21 100%),
             radial-gradient(center 50% 50%, radius 100%, #2e2e2e, #1d1f21);
  }
 
-#requestsComboBox .cell, #apiEntityTypeComboBox .cell{
+#requestsComboBox .cell, #apiEntityTypeComboBox .cell, #itemsQtyComboBox .cell{
     -fx-text-fill: #e97e00;
  }
 #requestsComboBox .combo-box-popup .list-view .list-cell,
-#apiEntityTypeComboBox .combo-box-popup .list-view .list-cell
+#apiEntityTypeComboBox .combo-box-popup .list-view .list-cell,
+#itemsQtyComboBox .combo-box-popup .list-view .list-cell
 {
     -fx-text-fill: #e97e00;
     -fx-background-color: #313335;
 }
 #requestsComboBox .combo-box-popup .list-view .list-cell:selected,
-#apiEntityTypeComboBox .combo-box-popup .list-view .list-cell:selected
+#apiEntityTypeComboBox .combo-box-popup .list-view .list-cell:selected,
+#itemsQtyComboBox .combo-box-popup .list-view .list-cell:selected
 {
     -fx-text-fill: #313335;
 	-fx-background-color: #e97e00;
 }
 
 #requestsComboBox .combo-box-popup .list-view .list-cell:hover,
-#apiEntityTypeComboBox .combo-box-popup .list-view .list-cell:hover
+#apiEntityTypeComboBox .combo-box-popup .list-view .list-cell:hover,
+#itemsQtyComboBox .combo-box-popup .list-view .list-cell:hover
 {
     -fx-text-fill: #313335;
     -fx-background-color:
@@ -46,6 +49,9 @@
             radial-gradient(center 50% 50%, radius 100%, #ffca58, #e97e00);
 }
 
-#requestsComboBox .combo-box-popup .list-view, #apiEntityTypeComboBox .combo-box-popup .list-view{
+#requestsComboBox .combo-box-popup .list-view,
+#apiEntityTypeComboBox .combo-box-popup .list-view,
+#itemsQtyComboBox .combo-box-popup .list-view
+{
 	-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 8, 0.0 , 0 , 5 );
 }

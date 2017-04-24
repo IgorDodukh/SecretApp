@@ -48,8 +48,6 @@ public class Controller extends Main {
     public static String login;
     public static String password;
     public static int environmentComboBoxIndex;
-    static boolean loginFilled = true;
-    static boolean passFilled = true;
     private static String resultMessage = "";
     private static int progressValue = 0;
     private static boolean exceptionStatus = false;
@@ -108,6 +106,11 @@ public class Controller extends Main {
             FXCollections.observableArrayList(
                     "QA01", "QA03", "QA05", "Production (for mad guys)"
             );
+
+    private final ObservableList<String> itemsQtyList =
+            FXCollections.observableArrayList(
+            );
+
     private final ObservableList<String> requestTypesList =
             FXCollections.observableArrayList(
                     "GET", "POST"/*, "PUT", "DELETE"*/
@@ -118,6 +121,8 @@ public class Controller extends Main {
     public ComboBox<String> environmentsComboBox;
     public ComboBox<String> requestsComboBox;
     public ComboBox<String> apiEntityTypeComboBox;
+    public ComboBox<String> itemsQtyComboBox;
+
 
     public Label loginLabel;
     public Label passwordLabel;
@@ -133,6 +138,7 @@ public class Controller extends Main {
     public Label responseStatusLabel;
     public Label notSupportedLabel;
     public Label apiEnvironment;
+    public Label batchItemsLabel;
 
     public Label apiLimitsLabel;
     public Label apiLimitsQtyLabel;
@@ -140,6 +146,8 @@ public class Controller extends Main {
 
     public TextField limitsQtyField;
     public TextField limitsPageField;
+
+    public Label itemsQtyLabel;
 
     public TextField loginField;
     public PasswordField passwordField;
@@ -165,7 +173,6 @@ public class Controller extends Main {
     public Pane windowMiddle;
     public Pane windowFooter;
 
-    public Pane apiHeader;
     public Pane apiMiddle;
     public Pane apiFooter;
     public Pane apiBackground;
@@ -191,7 +198,6 @@ public class Controller extends Main {
     }
 
     private static String selectedResourceValue;
-
 
     public static int getSelectedResourceIndex() {
         return selectedResourceIndex;
@@ -299,6 +305,8 @@ public class Controller extends Main {
         ComboBoxesHandler.comboBoxSetItems(apiEntityTypeComboBox, apiResourcesList, 0);
         ComboBoxesHandler.comboBoxSetItems(environmentsComboBox, environmentsList, 0);
         ComboBoxesHandler.comboBoxSetItems(requestsComboBox, requestTypesList, 0);
+        generateItemsQtyList(100);
+        ComboBoxesHandler.comboBoxSetItems(itemsQtyComboBox, itemsQtyList, 0);
 
         setApplicationStyle();
 
@@ -328,7 +336,7 @@ public class Controller extends Main {
 
         KeysListener.fieldsDisabler(requestsComboBox, limitsPageField);
         KeysListener.fieldsDisabler(requestsComboBox, limitsQtyField);
-        
+
 //Add UI Elements listener for Start button
         KeysListener.startButtonKeyListener(browsersComboBox, this);
         KeysListener.startButtonKeyListener(entityTypeComboBox, this);
@@ -344,12 +352,20 @@ public class Controller extends Main {
         KeysListener.sendButtonKeyListener(apiSwitcher, this);
     }
 
+    private void generateItemsQtyList(int maxItemsQty) {
+        for (int i = 0; i < maxItemsQty; i++){
+            itemsQtyList.add(i, String.valueOf(i + 1));
+            System.out.println("itemsQtyList.get(" + i + "): " + itemsQtyList.get(i));
+        }
+    }
+
     private void setApplicationStyle() throws IOException {
         AppStyles.setComboBoxStyle(browsersComboBox);
         AppStyles.setComboBoxStyle(entityTypeComboBox);
         AppStyles.setComboBoxStyle(environmentsComboBox);
         AppStyles.setComboBoxStyle(apiEntityTypeComboBox);
         AppStyles.setComboBoxStyle(requestsComboBox);
+        AppStyles.setComboBoxStyle(itemsQtyComboBox);
 
         AppStyles.setButtonsStyle(startButton);
         AppStyles.setButtonsStyle(stopButton);
@@ -462,6 +478,9 @@ public class Controller extends Main {
 
         limitsQtyField.setVisible(value);
         limitsPageField.setVisible(value);
+
+        itemsQtyLabel.setVisible(value);
+        itemsQtyComboBox.setVisible(value);
     }
 
     public void clickApiSwitcher() throws IOException, ParseException {

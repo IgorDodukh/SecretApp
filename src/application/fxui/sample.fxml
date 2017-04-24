@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="appBackground" cache="true" nodeOrientation="LEFT_TO_RIGHT" prefHeight="300.0" prefWidth="235.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.fxui.Controller">
+<AnchorPane fx:id="appBackground" cache="true" nodeOrientation="LEFT_TO_RIGHT" prefHeight="300.0" prefWidth="235.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.fxui.Controller">
    <children>
       <Pane fx:id="apiBackground" prefHeight="461.0" prefWidth="580.0" style="-fx-background-color: #404244;" visible="false" />
       <Pane fx:id="windowMiddle" layoutY="186.0" prefHeight="30.0" prefWidth="590.0">
@@ -48,7 +48,7 @@
       </Pane>
       <Pane fx:id="windowHeader" prefHeight="31.0" prefWidth="590.0" style="-fx-text-fill: white; -fx-background-color: black;">
          <children>
-            <MenuBar id="menuBar" fx:id="myMenuBar" layoutY="-2.0" prefHeight="32.0" prefWidth="183.0" style="-fx-background-color: black;">
+            <MenuBar id="menuBar" fx:id="myMenuBar" layoutY="-2.0" prefWidth="183.0" style="-fx-background-color: black;">
               <menus>
                 <Menu mnemonicParsing="false" style="-fx-text-fill: white;" text="App  ">
                   <items>

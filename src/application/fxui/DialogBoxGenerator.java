@@ -527,6 +527,9 @@ public class DialogBoxGenerator {
         Node saveButton = configDialog.getDialogPane().lookupButton(saveButtonType);
         saveButton.setDisable(false);
 
+        //TODO move validations into FieldsValidations class
+
+
         productQtyField.setOnKeyTyped(event -> {
             String string = productQtyField.getText();
 
@@ -565,7 +568,7 @@ public class DialogBoxGenerator {
         configsGrid.add(appFilesPathLabel, 0, 4);
         configsGrid.add(appFilesPathField, 1, 4);
 
-        validationLabel.setText("validation...");
+        validationLabel.setText("");
         configsGrid.add(validationLabel, 0, 5);
 
         configDialog.getDialogPane().setContent(configsGrid);

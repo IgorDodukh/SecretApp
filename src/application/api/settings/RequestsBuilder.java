@@ -46,7 +46,7 @@ public class RequestsBuilder {
     }
 
     private static JsonReader jsonReader = new JsonReader();
-    private static int responseStatusCode;
+    public static int responseStatusCode;
 
     private ArrayList<String> responseList;
     public static ArrayList<String> guidList;
@@ -123,8 +123,6 @@ public class RequestsBuilder {
             HttpPost post = new HttpPost(targetUrl);
             post.addHeader("x-freestyle-api-auth", getToken());
 
-            System.out.println("Json: " + JsonReader.getReceivedJsonString());
-
             StringEntity postingString = null;
             try {
                 postingString = new StringEntity(jsonEntity);
@@ -155,24 +153,22 @@ public class RequestsBuilder {
                 e.printStackTrace();
             }
 
-            System.out.println("finalResult: " + json);
             System.out.println("HttpResponseBody: " + responseString);
 
             getJsonGuidParameter(json);
-            setResponseStatusCode(response.getStatusLine().getStatusCode());
+            String responseStatusReason = response.getStatusLine().getReasonPhrase();
 
-            Controller.setResponseStatus(getResponseStatusCode() + " " +
-                    response.getStatusLine().getReasonPhrase());
+            responseStatusCode = response.getStatusLine().getStatusCode();
 
-            if(getResponseStatusCode() == 200 || getResponseStatusCode() == 201){
+            Controller.setResponseStatus(responseStatusCode + " " + responseStatusReason);
+
+            if(responseStatusCode == 200 || responseStatusCode == 201){
                 String resourceName = Controller.getSelectedResourceValue();
-                DialogBoxGenerator.successPopupBox(response.getStatusLine().getStatusCode() + " " +
-                        response.getStatusLine().getReasonPhrase() +
-                        "\nNew " + resourceName.substring(0,resourceName.length()-1) + " has been created successfully.\n" +
-                        jsonReader.getCreatedItemFullName());
+                DialogBoxGenerator.successPopupBox(responseStatusCode + " " + responseStatusReason +
+                        "\nNew " + resourceName.substring(0,resourceName.length()-1) +
+                        " has been created successfully.\n" + jsonReader.getCreatedItemFullName());
             } else {
-                DialogBoxGenerator.failedPopupBox(response.getStatusLine().getStatusCode() + " " +
-                        response.getStatusLine().getReasonPhrase() +
+                DialogBoxGenerator.failedPopupBox(responseStatusCode + " " + responseStatusReason +
                         "\nResponse body: " + responseString);
             }
         };

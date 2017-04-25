@@ -54,8 +54,6 @@ public class EnvSettings {
         resourcesPathList.add("customers");
 
         setEnvironmentUrl(environmentApiUrlList.get(Controller.environmentComboBoxIndex));
-        System.out.println("ENV url :" + getEnvironmentUrl());
-
         JsonReader.readJsonFile(authJsonPath);
     }
 

@@ -31,10 +31,4 @@ class AppStatus {
 //        progressBar.setVisible(false);
         Controller.setProgressValue(0);
     }
-
-    void requestWaitingAnimation(Button sendButton, ImageView waitingAnimation, boolean status) {
-        sendButton.setDisable(!status);
-        waitingAnimation.setVisible(status);
-    }
-
 }

@@ -412,6 +412,7 @@ public class Controller extends Main {
             setSelectedRequestTypeIndex(requestsComboBox.getSelectionModel().getSelectedIndex());
 
             Task updateResponseTask = updateResponseStatus();
+
             responseStatusLabel.textProperty().bind(updateResponseTask.messageProperty());
             Thread t3 = new Thread(updateResponseTask);
             t3.setName("Response status updater");
@@ -430,9 +431,20 @@ public class Controller extends Main {
                     requestsBuilder.jerseyGET(targetUrl);
                 } else if (getSelectedRequestTypeIndex() == 1){
                     System.out.println("Send POST");
-                    jsonReader.updateJsonForPOST(selectedResourceValue);
-                    requestsBuilder.sendPost(targetUrl,
-                            JsonReader.getReceivedJsonString());
+                    for (int i=0; i < Integer.valueOf(itemsQtyComboBox.getSelectionModel().getSelectedItem()); i++ ) {
+                        System.out.println("--Creating item: " + (i+1));
+                        jsonReader.updateJsonForPOST(selectedResourceValue);
+                        requestsBuilder.sendPost(targetUrl,
+                                JsonReader.getReceivedJsonString());
+                    }
+
+                    if(RequestsBuilder.responseStatusCode == 200 || RequestsBuilder.responseStatusCode == 201){
+                        System.out.println("SUCCESS POPUP");
+                    } else System.out.println("FAILED POPUP");
+
+//                    jsonReader.updateJsonForPOST(selectedResourceValue);
+//                    requestsBuilder.sendPost(targetUrl,
+//                            JsonReader.getReceivedJsonString());
                 }
             } catch (ParseException | IOException e) {
                 e.printStackTrace();
@@ -529,6 +541,7 @@ public class Controller extends Main {
             if (internetConnection.checkInternetConnection()) {
 
                 Task updateResponseTask = updateResponseStatus();
+
                 responseStatusLabel.textProperty().bind(updateResponseTask.messageProperty());
                 Thread t3 = new Thread(updateResponseTask);
                 t3.setName("Response status updater");

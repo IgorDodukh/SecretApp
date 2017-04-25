@@ -40,7 +40,7 @@ public class JsonReader extends EnvSettings {
             JSONObject jsonObject = (JSONObject) obj;
             System.out.println(jsonObject.toJSONString());
             receivedJsonString = jsonObject.toJSONString();
-            System.out.println("Received JSON string: " +  receivedJsonString);
+            System.out.println("readJsonFile() Received JSON string: " +  receivedJsonString);
         } catch (IOException | ParseException e) {
             e.printStackTrace();        
         }
@@ -49,8 +49,7 @@ public class JsonReader extends EnvSettings {
     static void writeJsonFile(String jsonPath, JSONObject jsonObject) {
         try (FileWriter file = new FileWriter(jsonPath)) {
             file.write(jsonObject.toJSONString());
-            System.out.println("Successfully Copied JSON Object to File...");
-            System.out.println("\nJSON Object: " + jsonObject);
+            System.out.println("Successfully Copied JSON Object to File...\n" + jsonObject + "\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -65,8 +64,8 @@ public class JsonReader extends EnvSettings {
             JSONObject jsonObject = (JSONObject) obj;
             for (String value : keys) {
                 jsonObject.put(value, values.get(keys.indexOf(value)));
-                System.out.println("Fields from array: " + value);
-                System.out.println("Parameters: " + values.get(keys.indexOf(value)));
+                System.out.println("Field from array: " + value);
+                System.out.println("Parameter: " + values.get(keys.indexOf(value)) + "\n");
             }
 
             writeJsonFile(jsonPath, jsonObject);
@@ -115,7 +114,6 @@ public class JsonReader extends EnvSettings {
         warehouseValues.add(createdWarehouseZip);
 
         String jsonForPOST = AppStyles.jsonPath + selectedResourceValue + ".json";
-        System.out.println("ENV url: " + EnvSettings.getEnvironmentUrl());
 
         if(selectedResourceValue.contains("Product")){
             createdItemNameCreator(productValues);

@@ -72,6 +72,8 @@ public class DialogBoxGenerator {
     public static String currentRandomLength = "";
     public static String currentProductQty = "";
     public static String currentZipCode = "";
+    public static String currentMaxItemsQty = "";
+
     public static String currentUser = "";
     public static String userTypeToCreate = "";
     public static String currentCustomerFirstName = "";
@@ -494,6 +496,9 @@ public class DialogBoxGenerator {
         Label defaultZipCodeLabel = new Label("Default Zip code: ");
         defaultZipCodeLabel.setTooltip(new Tooltip("New items will be created with this Zip code value."));
 
+        Label defaultMaxItemsQtyLabel = new Label("Max items to be created(relaunch needed): ");
+        defaultMaxItemsQtyLabel.setTooltip(new Tooltip("Max number of items to be created in one request."));
+
         Label appFilesPathLabel = new Label("Default path to 'appFiles' folder: ");
         appFilesPathLabel.setTooltip(new Tooltip("Please use the following format:\nC:/Program Files/appFiles"));
 
@@ -508,7 +513,9 @@ public class DialogBoxGenerator {
 
         TextField defaultZipCodeField = new TextField();
         defaultZipCodeField.setText(GetPropertyValues.zipCodeProperty);
-//        productQtyField.setText(GetPropertyValues.zipCodeProperty);
+
+        TextField defaultMaxItemsQtyField = new TextField();
+        defaultMaxItemsQtyField.setText(String.valueOf(GetPropertyValues.maxItemsQtyProperty));
 
         ComboBox<String> randomValueComboBox = new ComboBox<>();
         ComboBoxesHandler.comboBoxSetItems(randomValueComboBox, randomValue, selectedRandomLength);
@@ -565,8 +572,11 @@ public class DialogBoxGenerator {
         configsGrid.add(defaultZipCodeLabel, 0, 3);
         configsGrid.add(defaultZipCodeField, 1, 3);
 
-        configsGrid.add(appFilesPathLabel, 0, 4);
-        configsGrid.add(appFilesPathField, 1, 4);
+        configsGrid.add(defaultMaxItemsQtyLabel, 0, 4);
+        configsGrid.add(defaultMaxItemsQtyField, 1, 4);
+
+        configsGrid.add(appFilesPathLabel, 0, 5);
+        configsGrid.add(appFilesPathField, 1, 5);
 
         validationLabel.setText("");
         configsGrid.add(validationLabel, 0, 5);
@@ -580,6 +590,7 @@ public class DialogBoxGenerator {
 
         FieldsListener.multipleFieldsValidation(productQtyField, productQtyLabel, validationLabel, saveButton);
         FieldsListener.multipleFieldsValidation(defaultZipCodeField, defaultZipCodeLabel, validationLabel, saveButton);
+        FieldsListener.multipleFieldsValidation(defaultMaxItemsQtyField, defaultMaxItemsQtyLabel, validationLabel, saveButton);
 
         Optional<ButtonType> result = configDialog.showAndWait();
 
@@ -590,6 +601,7 @@ public class DialogBoxGenerator {
 
             currentProductQty = productQtyField.getText();
             currentZipCode = defaultZipCodeField.getText();
+            currentMaxItemsQty = defaultMaxItemsQtyField.getText();
 
             currentRandomLength = randomValueComboBox.getSelectionModel().getSelectedItem();
             BrowserSettings.randomValueLength = Integer.valueOf(currentRandomLength);

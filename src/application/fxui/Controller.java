@@ -5,6 +5,7 @@ import application.api.settings.JsonReader;
 import application.api.settings.RequestsBuilder;
 import application.api.test.post.AuthPOST;
 import application.selenium.settings.BrowserSettings;
+import application.selenium.settings.GetPropertyValues;
 import application.selenium.settings.ReadConfigMain;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -299,14 +300,20 @@ public class Controller extends Main {
         FieldsListener.multipleFieldsValidation(loginField, loginLabel, validationLabel, apiSwitcher);
         FieldsListener.multipleFieldsValidation(passwordField, passwordLabel, validationLabel, startButton);
 
+
+
         //TODO: implement installation by installer
         ComboBoxesHandler.comboBoxSetItems(browsersComboBox, browsersList, 0);
         ComboBoxesHandler.comboBoxSetItems(entityTypeComboBox, entityTypesList, 0);
         ComboBoxesHandler.comboBoxSetItems(apiEntityTypeComboBox, apiResourcesList, 0);
         ComboBoxesHandler.comboBoxSetItems(environmentsComboBox, environmentsList, 0);
         ComboBoxesHandler.comboBoxSetItems(requestsComboBox, requestTypesList, 0);
-        generateItemsQtyList(100);
+
+
+        ReadConfigMain.main();
+        generateItemsQtyList(Integer.valueOf(GetPropertyValues.maxItemsQtyProperty));
         ComboBoxesHandler.comboBoxSetItems(itemsQtyComboBox, itemsQtyList, 0);
+        currentMaxItemsQty = (itemsQtyList.get(itemsQtyList.size()-1));
 
         setApplicationStyle();
 
@@ -316,7 +323,7 @@ public class Controller extends Main {
 
         buildVersion.setText("Build Version: 2.1");
 
-        ReadConfigMain.main();
+
         loginField.setText(loginProperty);
         passwordField.setText(passProperty);
 
@@ -439,6 +446,7 @@ public class Controller extends Main {
 
     private void updateApiModeView(Boolean value) {
         setSelectedEnvironmentIndex(environmentsComboBox.getSelectionModel().getSelectedIndex());
+
         browserTypeLabel.setVisible(!value);
         entityTypeLabel.setVisible(!value);
         browsersComboBox.setVisible(!value);

@@ -31,6 +31,7 @@ public class GetPropertyValues {
     public static String productQtyProperty;
     public static String defaultPathProperty;
     public static String zipCodeProperty;
+    public static String maxItemsQtyProperty;
 
     public static String loginProperty;
     public static String passProperty;
@@ -89,6 +90,7 @@ public class GetPropertyValues {
             productQtyProperty = systemVarProp.getProperty("productQuantity");
             zipCodeProperty = systemVarProp.getProperty("zipCode");
             randomValueProperty = systemVarProp.getProperty("randomValue");
+            maxItemsQtyProperty = systemVarProp.getProperty("maxItemsQty");
             defaultPathProperty = systemVarProp.getProperty("defaultPath");
 
             user = userProp.getProperty("user");

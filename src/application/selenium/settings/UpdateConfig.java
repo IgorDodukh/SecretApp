@@ -27,6 +27,7 @@ public class UpdateConfig {
             props.setProperty("randomValue", DialogBoxGenerator.currentRandomLength);
             props.setProperty("productQuantity", DialogBoxGenerator.currentProductQty);
             props.setProperty("zipCode", DialogBoxGenerator.currentZipCode);
+            props.setProperty("maxItemsQty", DialogBoxGenerator.currentMaxItemsQty);
             props.setProperty("defaultPath", DialogBoxGenerator.currentMainPath);
 
             props.store(out, null);

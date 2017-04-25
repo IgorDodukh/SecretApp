@@ -97,7 +97,7 @@ public class BrowserSettings {
     //    Inventory Data
     protected static final String inventoryLotNumber = generateRandomData.generateRandomNumber(5);
     protected static final String inventoryUnitCost = generateRandomData.generateRandomNumber(2);
-    public static final String inventoryQty = generateRandomData.generateRandomNumberAllovedDigits(6, "");
+    public static final String inventoryQty = generateRandomData.generateRandomNumberAllowedDigits(6, "");
     protected static final String inventoryNotes = "My Notes " + generateRandomData.generateRandomString(10);
 
     //    UPS credentials

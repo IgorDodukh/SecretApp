@@ -5,8 +5,8 @@ import application.api.settings.JsonReader;
 import application.api.settings.RequestsBuilder;
 import application.api.test.post.AuthPOST;
 import application.selenium.settings.BrowserSettings;
-import application.selenium.settings.GetPropertyValues;
-import application.selenium.settings.ReadConfigMain;
+import application.configs.GetPropertyValues;
+import application.configs.ReadConfigMain;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,9 +33,9 @@ import static application.fxui.DialogBoxGenerator.*;
 import static application.fxui.ExecutionTimeCounter.startCounter;
 import static application.fxui.ExecutionTimeCounter.stopCounter;
 import static application.fxui.InternetConnection.getFailedContentText;
-import static application.selenium.settings.GetPropertyValues.loginProperty;
-import static application.selenium.settings.GetPropertyValues.passProperty;
-import static application.selenium.settings.UpdateConfig.updateCredentials;
+import static application.configs.GetPropertyValues.loginProperty;
+import static application.configs.GetPropertyValues.passProperty;
+import static application.configs.UpdateConfig.updateCredentials;
 
 public class Controller extends Main {
     public static WebDriver driver;
@@ -362,7 +362,6 @@ public class Controller extends Main {
     private void generateItemsQtyList(int maxItemsQty) {
         for (int i = 0; i < maxItemsQty; i++){
             itemsQtyList.add(i, String.valueOf(i + 1));
-            System.out.println("itemsQtyList.get(" + i + "): " + itemsQtyList.get(i));
         }
     }
 

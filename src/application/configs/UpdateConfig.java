@@ -1,4 +1,4 @@
-package application.selenium.settings;
+package application.configs;
 
 import application.fxui.AppStyles;
 import application.fxui.Controller;

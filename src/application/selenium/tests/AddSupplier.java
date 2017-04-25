@@ -5,7 +5,7 @@ import application.selenium.pages.LoginPage;
 import application.selenium.pages.MainPage;
 import application.selenium.settings.BrowserSettings;
 import application.selenium.settings.GenerateRandomData;
-import application.selenium.settings.GetPropertyValues;
+import application.configs.GetPropertyValues;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 

@@ -2,8 +2,8 @@ package application.fxui;
 
 import application.api.settings.RequestsBuilder;
 import application.selenium.settings.BrowserSettings;
-import application.selenium.settings.GetPropertyValues;
-import application.selenium.settings.UpdateConfig;
+import application.configs.GetPropertyValues;
+import application.configs.UpdateConfig;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,7 +29,7 @@ import java.util.*;
 import java.util.List;
 
 import static application.fxui.Controller.getSelectedResourceValue;
-import static application.selenium.settings.GetPropertyValues.getTimeoutProperty;
+import static application.configs.GetPropertyValues.getTimeoutProperty;
 
 /**
  * Created by Ihor on 7/15/2016. All rights reserved!

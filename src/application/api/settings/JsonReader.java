@@ -2,7 +2,7 @@ package application.api.settings;
 
 import application.fxui.AppStyles;
 import application.selenium.settings.GenerateRandomData;
-import application.selenium.settings.GetPropertyValues;
+import application.configs.GetPropertyValues;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;

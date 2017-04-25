@@ -1,4 +1,4 @@
-package application.selenium.settings;
+package application.configs;
 
 import java.io.IOException;
 

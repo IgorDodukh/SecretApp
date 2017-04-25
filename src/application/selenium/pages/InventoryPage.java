@@ -3,7 +3,7 @@ package application.selenium.pages;
 import application.selenium.settings.BrowserSettings;
 import application.fxui.ProgressBar;
 import application.selenium.settings.GenerateRandomData;
-import application.selenium.settings.GetPropertyValues;
+import application.configs.GetPropertyValues;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;

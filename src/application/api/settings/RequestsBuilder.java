@@ -22,11 +22,16 @@ import java.util.List;
 
 import static application.api.settings.EnvSettings.*;
 import static application.api.settings.JsonReader.writeJsonFile;
+import static application.fxui.Controller.getSelectedResourceValue;
+import static application.fxui.Controller.itemsCreatingQty;
 
 /**
  * Created by Ihor on 2/11/2017.
  */
 public class RequestsBuilder {
+
+    public static int postIndex;
+    private boolean successPopupGenerated = false;
 
     private static int getResponseStatusCode() {
         return responseStatusCode;
@@ -36,7 +41,6 @@ public class RequestsBuilder {
         RequestsBuilder.responseStatusCode = responseStatusCode;
     }
 
-    private static JsonReader jsonReader = new JsonReader();
     public static int responseStatusCode;
     public static String responseStatusInfo;
 
@@ -104,8 +108,6 @@ public class RequestsBuilder {
 
             Object obj = parseJson(response);
 
-//            getParametersFromObject(targetUrl, obj);
-
             JSONObject jsonObject = (JSONObject) obj;
             Assert.assertNotEquals("Response body is null.", jsonObject, null);
 
@@ -116,6 +118,8 @@ public class RequestsBuilder {
             } else {
 
                 System.out.println("HttpResponseBody: " + jsonObject.toJSONString());
+                System.out.println("Counter(postIndex): " + postIndex);
+
 
                 getJsonGuidParameter(jsonObject);
                 String responseStatusReason = " " + response.getStatusInfo();
@@ -127,18 +131,18 @@ public class RequestsBuilder {
                 Controller.setResponseStatus(responseStatusInfo);
 
                 if(responseStatusCode == 200 || responseStatusCode == 201){
-//                    String resourceName = Controller.getSelectedResourceValue();
                     getParametersFromObject(targetUrl, jsonObject);
-
-//                    DialogBoxGenerator.successPopupBox(responseStatusCode + " " + responseStatusReason +
-//                            "\nNew " + resourceName.substring(0,resourceName.length()-1) +
-//                            "(s) have been created successfully.\n" + jsonReader.getCreatedItemFullName());
                 } else {
                     DialogBoxGenerator.failedPopupBox(responseStatusCode + " " + responseStatusReason +
                             "\nResponse body: " + jsonObject.toJSONString());
                 }
-
                 Controller.setResponseStatus(response.getStatus() + " " + response.getStatusInfo());
+                if ((postIndex+1) == itemsCreatingQty) {
+                    DialogBoxGenerator.successPopupBox(itemsCreatingQty + " " +
+                            getSelectedResourceValue().substring(0,getSelectedResourceValue().length()-1) +
+                            "(s) have been created successfully.");
+                }
+                postIndex++;
             }
         };
         Thread thread = new Thread(runnable);

@@ -164,7 +164,7 @@ public class DialogBoxGenerator {
         });
     }
 
-    static void successPopupBox(String resultMessage) {
+    public static void successPopupBox(String resultMessage) {
         Platform.runLater(() -> {
             Alert successDialog = new Alert(Alert.AlertType.INFORMATION);
             try {

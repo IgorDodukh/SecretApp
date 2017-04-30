@@ -4,9 +4,9 @@ import application.api.settings.EnvSettings;
 import application.api.settings.JsonReader;
 import application.api.settings.RequestsBuilder;
 import application.api.test.post.AuthPOST;
-import application.selenium.settings.BrowserSettings;
 import application.configs.GetPropertyValues;
 import application.configs.ReadConfigMain;
+import application.selenium.settings.BrowserSettings;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,17 +28,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static application.api.settings.RequestsBuilder.responseList;
 import static application.api.settings.RequestsBuilder.guidList;
-import static application.api.settings.RequestsBuilder.responseStatusInfo;
+import static application.api.settings.RequestsBuilder.postIndex;
+import static application.api.settings.RequestsBuilder.responseList;
+import static application.configs.GetPropertyValues.loginProperty;
+import static application.configs.GetPropertyValues.passProperty;
+import static application.configs.UpdateConfig.updateCredentials;
 import static application.fxui.ComboBoxesHandler.additionalDialogDeterminer;
 import static application.fxui.DialogBoxGenerator.*;
 import static application.fxui.ExecutionTimeCounter.startCounter;
 import static application.fxui.ExecutionTimeCounter.stopCounter;
 import static application.fxui.InternetConnection.getFailedContentText;
-import static application.configs.GetPropertyValues.loginProperty;
-import static application.configs.GetPropertyValues.passProperty;
-import static application.configs.UpdateConfig.updateCredentials;
 
 public class Controller extends Main {
     public static WebDriver driver;
@@ -58,6 +58,7 @@ public class Controller extends Main {
     private static String driverWarning = "";
     private static String driverExceptionMessage = "";
     public static int itemsCreatingQty = 0;
+
 
     private final AppStatus appStatus = new AppStatus();
     private final BrowserSettings browserSettings = new BrowserSettings();
@@ -415,13 +416,6 @@ public class Controller extends Main {
             setSelectedResourceIndex(apiEntityTypeComboBox.getSelectionModel().getSelectedIndex());
             setSelectedRequestTypeIndex(requestsComboBox.getSelectionModel().getSelectedIndex());
 
-            Task updateResponseTask = updateResponseStatus();
-
-            responseStatusLabel.textProperty().bind(updateResponseTask.messageProperty());
-            Thread t3 = new Thread(updateResponseTask);
-            t3.setName("Response status updater");
-            t3.setDaemon(true);
-            t3.start();
 
             try {
                 String targetUrl = EnvSettings.getEnvironmentUrl() + getSelectedResourceValue().replace(" ", "");
@@ -437,6 +431,8 @@ public class Controller extends Main {
                     System.out.println("Send POST");
                     responseList = new ArrayList<>();
                     guidList = new ArrayList<>();
+                    postIndex = 0;
+
                     itemsCreatingQty = Integer.valueOf(itemsQtyComboBox.getSelectionModel().getSelectedItem());
                     for (int i=0; i < itemsCreatingQty; i++ ) {
                         System.out.println("--Creating item: " + (i+1));
@@ -444,18 +440,25 @@ public class Controller extends Main {
                         requestsBuilder.jerseyPOST(targetUrl, JsonReader.getReceivedJsonString());
                     }
 
+
+
                     if(RequestsBuilder.responseStatusCode == 200 || RequestsBuilder.responseStatusCode == 201){
                         System.out.println("SUCCESS POPUP");
-                        DialogBoxGenerator.successPopupBox(responseStatusInfo +
-                                "\nNew " + getSelectedResourceValue().substring(0,getSelectedResourceValue().length()-1) +
-                                "(s) have been created successfully.");
-//                        DialogBoxGenerator.resultsListBox(responseList);
                     } else System.out.println("FAILED POPUP");
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
                 System.out.println("Sending request was failed.");
             }
+
+            Task updateResponseTask = updateResponseStatus();
+
+            responseStatusLabel.textProperty().bind(updateResponseTask.messageProperty());
+            Thread t3 = new Thread(updateResponseTask);
+            t3.setName("Response status updater");
+            t3.setDaemon(true);
+            t3.start();
+
             stopCounter();
         });
     }

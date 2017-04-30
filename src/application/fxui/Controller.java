@@ -28,6 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static application.api.settings.RequestsBuilder.responseList;
+import static application.api.settings.RequestsBuilder.guidList;
+import static application.api.settings.RequestsBuilder.responseStatusInfo;
 import static application.fxui.ComboBoxesHandler.additionalDialogDeterminer;
 import static application.fxui.DialogBoxGenerator.*;
 import static application.fxui.ExecutionTimeCounter.startCounter;
@@ -54,6 +57,7 @@ public class Controller extends Main {
     private static boolean exceptionStatus = false;
     private static String driverWarning = "";
     private static String driverExceptionMessage = "";
+    public static int itemsCreatingQty = 0;
 
     private final AppStatus appStatus = new AppStatus();
     private final BrowserSettings browserSettings = new BrowserSettings();
@@ -89,7 +93,7 @@ public class Controller extends Main {
 //            "Promotions"
     );
 
-    public static final ObservableList<String> viewResourceUrl = FXCollections.observableArrayList(
+    static final ObservableList<String> viewResourceUrl = FXCollections.observableArrayList(
             "/Order/OrderViewing/GUID",
             "/Customer/ViewCustomerView?customerId=%5B%22GUID%22%5D",
             "/Product/ProductView?productId=%5B%7B%22ProductId%22:%22GUID%22%7D%5D",
@@ -200,7 +204,7 @@ public class Controller extends Main {
 
     private static String selectedResourceValue;
 
-    public static int getSelectedResourceIndex() {
+    static int getSelectedResourceIndex() {
         return selectedResourceIndex;
     }
 
@@ -211,7 +215,7 @@ public class Controller extends Main {
     //TODO complete recognition the request type in analogy with resource type
     private static int selectedResourceIndex;
 
-    public static int getSelectedEnvironmentIndex() {
+    static int getSelectedEnvironmentIndex() {
         return selectedEnvironmentIndex;
     }
 
@@ -281,11 +285,11 @@ public class Controller extends Main {
         Controller.progressValue = addProgressValue;
     }
 
-    public static String getStylesFolderName() {
+    static String getStylesFolderName() {
         return stylesFolderName;
     }
 
-    public static void setStylesFolderName(String stylesFolderName) {
+    private static void setStylesFolderName(String stylesFolderName) {
         Controller.stylesFolderName = stylesFolderName;
     }
 
@@ -424,35 +428,36 @@ public class Controller extends Main {
                 String limitValue = limitsQtyField.getText();
                 String pageValue = limitsPageField.getText();
                 String pageLimitFilter = "?limit=" + limitValue + "&page=" + pageValue;
-                targetUrl = targetUrl + pageLimitFilter;
 
                 if(getSelectedRequestTypeIndex() == 0){
                     System.out.println("Send GET");
+                    targetUrl = targetUrl + pageLimitFilter;
                     requestsBuilder.jerseyGET(targetUrl);
                 } else if (getSelectedRequestTypeIndex() == 1){
                     System.out.println("Send POST");
-                    for (int i=0; i < Integer.valueOf(itemsQtyComboBox.getSelectionModel().getSelectedItem()); i++ ) {
+                    responseList = new ArrayList<>();
+                    guidList = new ArrayList<>();
+                    itemsCreatingQty = Integer.valueOf(itemsQtyComboBox.getSelectionModel().getSelectedItem());
+                    for (int i=0; i < itemsCreatingQty; i++ ) {
                         System.out.println("--Creating item: " + (i+1));
                         jsonReader.updateJsonForPOST(selectedResourceValue);
-                        requestsBuilder.sendPost(targetUrl,
-                                JsonReader.getReceivedJsonString());
+                        requestsBuilder.jerseyPOST(targetUrl, JsonReader.getReceivedJsonString());
                     }
 
                     if(RequestsBuilder.responseStatusCode == 200 || RequestsBuilder.responseStatusCode == 201){
                         System.out.println("SUCCESS POPUP");
+                        DialogBoxGenerator.successPopupBox(responseStatusInfo +
+                                "\nNew " + getSelectedResourceValue().substring(0,getSelectedResourceValue().length()-1) +
+                                "(s) have been created successfully.");
+//                        DialogBoxGenerator.resultsListBox(responseList);
                     } else System.out.println("FAILED POPUP");
-
-//                    jsonReader.updateJsonForPOST(selectedResourceValue);
-//                    requestsBuilder.sendPost(targetUrl,
-//                            JsonReader.getReceivedJsonString());
                 }
-            } catch (ParseException | IOException e) {
+            } catch (ParseException e) {
                 e.printStackTrace();
                 System.out.println("Sending request was failed.");
             }
             stopCounter();
         });
-
     }
 
     private void updateApiModeView(Boolean value) {

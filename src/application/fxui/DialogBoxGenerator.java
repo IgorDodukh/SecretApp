@@ -28,6 +28,7 @@ import java.net.URISyntaxException;
 import java.util.*;
 import java.util.List;
 
+import static application.api.settings.RequestsBuilder.responseList;
 import static application.fxui.Controller.getSelectedResourceValue;
 import static application.configs.GetPropertyValues.getTimeoutProperty;
 
@@ -163,7 +164,7 @@ public class DialogBoxGenerator {
         });
     }
 
-    public static void successPopupBox(String resultMessage) {
+    static void successPopupBox(String resultMessage) {
         Platform.runLater(() -> {
             Alert successDialog = new Alert(Alert.AlertType.INFORMATION);
             try {
@@ -174,9 +175,13 @@ public class DialogBoxGenerator {
             String resourceName = getSelectedResourceValue();
 
             Hyperlink link = new Hyperlink();
-            link.setText("Open created " + resourceName.substring(0, resourceName.length() - 1));
+            link.setText("Open list of created " + resourceName.substring(0, resourceName.length() - 1) + "(s)");
 
-            successDialog.setTitle("Creating completed. Running time: " + ExecutionTimeCounter.executionTime);
+//            ButtonType detailsButtonType = new ButtonType("Details", ButtonBar.ButtonData.NEXT_FORWARD);
+//            successDialog.getDialogPane().getButtonTypes().addAll(detailsButtonType, ButtonType.OK);
+
+
+            successDialog.setTitle("Running time: " + ExecutionTimeCounter.executionTime);
             successDialog.setHeaderText("Oh boy, you are lucky.");
 //            successDialog.setContentText(resultMessage);
             successDialog.initStyle(StageStyle.UTILITY);
@@ -191,15 +196,12 @@ public class DialogBoxGenerator {
             successDialog.getDialogPane().setContent(expContent);
 
             link.setOnAction(t -> {
-                String linkToItem = RequestsBuilder.guidList.get(0);
-                String resourceUrl = Controller.viewResourceUrl.get(Controller.getSelectedResourceIndex());
-                String environmentUrl = BrowserSettings.fsEnvironment.get(Controller.getSelectedEnvironmentIndex());
-
-                try {
-                    Desktop.getDesktop().browse(new URI(environmentUrl + resourceUrl.replace("GUID", linkToItem)));
-                } catch (IOException | URISyntaxException e) {
-                    e.printStackTrace();
-                }
+                resultsListBox(responseList);
+//                try {
+//                    Desktop.getDesktop().browse(new URI(environmentUrl + resourceUrl.replace("GUID", linkToItem)));
+//                } catch (IOException | URISyntaxException e) {
+//                    e.printStackTrace();
+//                }
             });
             try {
                 appStyles.setDialogStyle(successDialog);
@@ -208,6 +210,10 @@ public class DialogBoxGenerator {
             }
 
             successDialog.showAndWait();
+//            Optional<ButtonType> result = successDialog.showAndWait();
+//            if (result.get().getButtonData() == ButtonBar.ButtonData.NEXT_FORWARD) {
+//                resultsListBox(responseList);
+//            } else successDialog.close();
         });
     }
 
@@ -255,59 +261,6 @@ public class DialogBoxGenerator {
         } else System.out.println("Person select cancelled");
     }
 
-    static void userTypePopupBox() throws IOException {
-        List<String> choices = new ArrayList<>();
-        choices.add("Merchant");
-        choices.add("Merchant Admin");
-        choices.add("Merchandiser");
-        choices.add("Picker");
-        choices.add("Packer");
-        choices.add("Shipper");
-        choices.add("CSR");
-        choices.add("CSR Manager");
-        choices.add("Purchase Manager");
-        choices.add("Warehouse Manager");
-
-        ChoiceDialog<String> userTypesDialog = new ChoiceDialog<>("Merchant", choices);
-        appStyles.setDialogLogo(userTypesDialog, "users_group.png");
-        userTypesDialog.setTitle("User Type Selecting");
-        userTypesDialog.setHeaderText("Please select type of user\nwhich you would like to create");
-        userTypesDialog.initStyle(StageStyle.UTILITY);
-
-        userTypesDialog.selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if(Objects.equals(newValue, "Merchant")){
-                System.out.println("--" + newValue);
-            } else if(Objects.equals(newValue, "Merchant Admin")){
-                System.out.println("--" + newValue);
-            } else if(Objects.equals(newValue, "Merchandiser")){
-                System.out.println("--" + newValue);
-            } else if(Objects.equals(newValue, "Picker")){
-                System.out.println("--" + newValue);
-            } else if(Objects.equals(newValue, "Packer")){
-                System.out.println("--" + newValue);
-            } else if(Objects.equals(newValue, "Shipper")){
-                System.out.println("--" + newValue);
-            } else if(Objects.equals(newValue, "CSR")){
-                System.out.println("--" + newValue);
-            } else if(Objects.equals(newValue, "CSR Manager")){
-                System.out.println("--" + newValue);
-            } else if(Objects.equals(newValue, "Purchase Manager")){
-                System.out.println("--" + newValue);
-            } else if(Objects.equals(newValue, "Warehouse Manager")){
-                System.out.println("--" + newValue);
-            }
-        });
-
-        appStyles.setDialogStyle(userTypesDialog);
-
-// Traditional way to get the response value.
-        Optional<String> result = userTypesDialog.showAndWait();
-        if (result.isPresent()){
-            userTypeToCreate = result.get();
-            DialogBoxGenerator.confirmationPopupBox();
-        } else System.out.println("User Type selecting cancelled");
-    }
-
     public static void resultsListBox(ArrayList jArray) {
         Platform.runLater(() -> {
             Alert responseBody = new Alert(Alert.AlertType.INFORMATION);
@@ -332,7 +285,9 @@ public class DialogBoxGenerator {
             ListView<String> listView = new ListView<>();
             ObservableList<String> items = FXCollections.observableArrayList ();
 
-            /**Add items to the ObservableList*/
+            /**
+             * Add items to the ObservableList
+             * */
             for(Object item: jArray){
                 items.add(item.toString());
             }
